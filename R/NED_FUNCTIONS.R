@@ -6,7 +6,6 @@
 
 ## Author: R. Kyle Bocinsky
 ## Date: 09/14/2013
-pkgTest("RCurl")
 
 extractNED <- function(template, label, raw.dir, extraction.dir=NULL, res, drain=F, NHD.raw.dir=NULL, NRCS.raw.dir=NULL, force.redo=F){
   if(is.null(extraction.dir)){

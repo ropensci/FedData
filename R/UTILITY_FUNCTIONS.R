@@ -7,10 +7,6 @@ pkgTest <- function(x)
   }
 }
 
-pkgTest("raster")
-pkgTest("rgdal")
-pkgTest("rgeos")
-
 substrRight <- function(x, n){
   substr(x, nchar(x)-n+1, nchar(x))
 }

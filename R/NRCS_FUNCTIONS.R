@@ -4,12 +4,6 @@
 ## Author: R. Kyle Bocinsky
 ## Date: 02/14/2014
 
-pkgTest("rgdal")
-pkgTest("rgeos")
-pkgTest("soiltexture")
-pkgTest("RColorBrewer")
-pkgTest("RSQLite")
-
 extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=NULL, force.redo=F){  
   if(is.null(extraction.dir)){
     extraction.dir <- paste(raw.dir,"/EXTRACTIONS",sep='')

@@ -1,11 +1,3 @@
-# The packages we will use.
-pkgTest("R.utils")
-pkgTest("sp")
-pkgTest("raster")
-pkgTest("rgdal")
-pkgTest("RCurl")
-pkgTest("parallel")
-
 getPRISM_MONTHLYData <- function(template, type, label, out.dir, monthly.dir, force.redo=FALSE){
   if(!file.exists(paste(out.dir,label,"/", sep=''))){
     dir.create(paste(out.dir,label,"/", sep=''))

@@ -1,8 +1,3 @@
-pkgTest("wild1")
-pkgTest("gdistance")
-pkgTest("gstat")
-pkgTest("rgeos")
-
 # A function that loads the National Hydrography Dataset for a provided study area defined by "x."
 extractNHD <- function(template, label, raw.dir, extraction.dir=NULL, remove.modern=TRUE, force.redo=FALSE){
   if(is.null(extraction.dir)){

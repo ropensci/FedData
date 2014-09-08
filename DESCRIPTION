@@ -7,4 +7,4 @@ Author: R. Kyle Bocinsky <bocinsky@gmail.com>
 Maintainer: R. Kyle Bocinsky <bocinsky@gmail.com>
 Description: Scripts to automate downloading geodata available from the US Federal government.
 License: GPL-3
-Imports: dplR, parallel, plyr, dplyr, xtable, spatial.tools, gdata, rgdal, ncdf4, raster, maps, sp, abind
+Imports: raster, rgdal, rgeos, soiltexture, RColorBrewer, RSQLite, wild1, gdistance, gstat, R.utils, sp, RCurl, parallel, dplR, plyr, dplyr, xtable, spatial.tools, gdata, rgdal, ncdf4, maps, abind, zoo, data.table

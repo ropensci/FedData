@@ -1,9 +1,3 @@
-## The dplR library for dendro analysis
-pkgTest("RCurl")
-pkgTest("dplR")
-pkgTest("parallel")
-pkgTest("data.table")
-
 getITRDB <- function(raw.dir, output.dir, type='standard', download=F, force.redo=F){
   
   raw.dir <- paste(raw.dir,type,"/",sep='')

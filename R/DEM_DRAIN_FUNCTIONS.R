@@ -1,8 +1,3 @@
-pkgTest("wild1")
-pkgTest("gdistance")
-pkgTest("gstat")
-pkgTest("rgeos")
-
 # The master function of the DEM draining.
 # Given a digital elevation model (DEM), return
 # a version with estimates for elevations under 
