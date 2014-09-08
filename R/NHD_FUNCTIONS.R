@@ -47,7 +47,7 @@ loadHUC4 <- function(x, raw.dir, dsn.vectors, force.redo=FALSE){
 # A method for downloading and processing the HUC4 shapefile from
 # the National Hydrography Dataset.
 getHUC4 <- function(x, raw.dir, force.redo=F){  
-  if(url.exists('ftp://ftp.igsb.uiowa.edu/gis_library/basins/huc_04.zip')){
+  if(url.exists('ftp://ftp.igsb.uiowa.edu/gis_library/USA/huc_04.zip')){
     system(paste("wget -np -nd -N ftp://ftp.igsb.uiowa.edu/gis_library/USA/huc_04.zip --directory-prefix=",raw.dir, sep=''))
   }else{
     stop("Unable to download HUC4 shapefile!")
