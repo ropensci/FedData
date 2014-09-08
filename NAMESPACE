@@ -1,0 +1,82 @@
+# DEM_DRAIN_FUNCTIONS
+export(drainDEM)
+export(getNearestMinimum)
+export(fillIDW)
+export(getNRCS_Dams)
+export(bootstrapDrainDEM)
+export(make.monotonic)
+
+# GHCN_FUNCTIONS
+export(downloadGHCN)
+export(getGHCN)
+export(extractGHCNDaily)
+export(getGHCNStationMetadataSPDF)
+
+# ITRDB_FUNCTIONS
+export(getITRDB)
+export(seriesToMatrix)
+export(is.int)
+export(getITRDB_MANN08)
+export(getITRDBMetadataSPDF)
+export(getITRDBMetadataSPDF_MANN08)
+export(sanitizeITRDBnames)
+
+# NED_FUNCTIONS
+export(extractNED)
+export(getNED)
+
+# NHD_FUNCTIONS
+export(extractNHD)
+export(loadHUC4)
+export(getHUC4)
+export(getNHDSubregions)
+export(loadNHDLayers)
+export(removeModernFeatures)
+export(splitAndExport)
+export(loadNHDSubregions)
+export(getAreaList)
+export(mergeStreams)
+export(forceMergeStreams)
+
+# NRCS_FUNCTIONS
+export(extractNRCS)
+export(loadNRCSStudyAreas)
+export(getNRCSStudyAreas)
+export(loadNRCSMapUnitPolygons)
+export(getNRCSMapUnitPolygons)
+export(loadAndAggregateSoilTable)
+export(loadHiResRaster)
+export(createHiResRaster)
+export(getSoilData)
+export(correctSoilComponents)
+export(loadSoilData)
+export(calculateTexture)
+export(loadSFNF_Data)
+export(textureClass.rasters)
+
+# UTILITY_FUNCTIONS
+export(pkgTest)
+export(substrRight)
+export(createArea)
+export(polygonFromExtent)
+export(SPDFfromPolygon)
+export(crop.to.studyArea)
+export(plot.stacked)
+export(sequential.duplicated)
+export(scalebar.new)
+
+# PRISM_FUNCTIONS
+export(getPRISM_MONTHLYData)
+export(extractPRISM_MONTHLYMonth)
+export(extractPRISM_MONTHLY)
+export(calcANNUALGDD_MONTHLY)
+export(subsetPRISM_MONTHLY)
+export(annualizePRISM_MONTHLY)
+export(getPRISM_MONTHLYPointsData)
+export(extractPRISM_MONTHLYPointsYear)
+export(extractPRISM_MONTHLYPointsMonth)
+export(extractPRISM_MONTHLYPointsFromFile)
+export(extractPRISM_DAILY)
+export(getPRISM_DAILYData)
+export(extractPRISM_DAILYYear)
+

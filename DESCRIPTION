@@ -1,0 +1,10 @@
+Package: FedData
+Type: Package
+Title: Scripts to automate downloading geodata available from the US Federal government
+Version: 1.0
+Date: 2014-08-07
+Author: R. Kyle Bocinsky <bocinsky@gmail.com>
+Maintainer: R. Kyle Bocinsky <bocinsky@gmail.com>
+Description: Scripts to automate downloading geodata available from the US Federal government.
+License: GPL-3
+Imports: dplR, parallel, plyr, dplyr, xtable, spatial.tools, gdata, rgdal, ncdf4, raster, maps, sp, abind
