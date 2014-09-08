@@ -212,7 +212,7 @@ splitAndExport <- function(shapes, layers, dsn.vectors){
     Areas <- spChFIDs(Areas, as.character(paste("AREA_",row.names(as(Areas, "data.frame")),sep='')))
     
     # Join waterbodies and reservoir layers
-    Reservoirs <- rbind(Lakes,Areas)
+    Reservoirs <- spRbind(Lakes,Areas)
   }else{
     if(!is.null(Lakes)){
       Reservoirs <- Lakes
