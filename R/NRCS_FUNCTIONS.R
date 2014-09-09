@@ -26,7 +26,7 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   suppressWarnings(writeOGR(template.poly.latlon, dsn.vectors, "sim_poly","ESRI Shapefile", overwrite_layer=TRUE))
   
   # Load the NRCS study areas
-#   cat("\nLoading map of NRCS survey areas\n")
+  #   cat("\nLoading map of NRCS survey areas\n")
   NRCS.areas <- loadNRCSStudyAreas(x=template, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=force.redo)
   
   template.poly.latlon <- SPDFfromPolygon(spTransform(polygonFromExtent(template),CRS(projection(NRCS.areas))))
@@ -35,7 +35,7 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   #   plot(NRCS.areas)
   
   # Load the NRCS mapunit polygons
-#   cat("\nLoading NRCS mapunit polygons\n")
+  #   cat("\nLoading NRCS mapunit polygons\n")
   NRCS.polys <- loadNRCSMapUnitPolygons(x=template, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=force.redo)
   
   #   plot(NRCS.polys)
@@ -43,23 +43,23 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   # Load tabular soil data for study area
   getSoilData(x=template, areas=NRCS.areas[NRCS.areas@data$iscomplete != 0,], polys=NRCS.polys, raw.dir=raw.dir, dsn.vectors=dsn.vectors, tables.dir=tables.dir, force.redo=T)
   
-#   texture <- calculateTexture(raw.dir=raw.dir, dsn.vectors=dsn.vectors, tables.dir=tables.dir)
+  #   texture <- calculateTexture(raw.dir=raw.dir, dsn.vectors=dsn.vectors, tables.dir=tables.dir)
   
-#   if("NM678" %in% NRCS.areas$areasymbol){
-#     if(!is.na(SFNF.dir)){
-#       if(NRCS.areas[NRCS.areas$areasymbol=="NM678",]$iscomplete == 0){
-#         if(is.null(SFNF.dir)){
-#           SFNF.dir <- readline("Please provide a path for the SFNF data:")
-#         }
-#         SFNF <- loadSFNF_Data(x=template, areas=NRCS.areas, polys=NRCS.polys, SFNF.dir=SFNF.dir, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=force.redo)
-#         texture <- rbind(texture,SFNF)
-#       }
-#     }
-#   }
+  #   if("NM678" %in% NRCS.areas$areasymbol){
+  #     if(!is.na(SFNF.dir)){
+  #       if(NRCS.areas[NRCS.areas$areasymbol=="NM678",]$iscomplete == 0){
+  #         if(is.null(SFNF.dir)){
+  #           SFNF.dir <- readline("Please provide a path for the SFNF data:")
+  #         }
+  #         SFNF <- loadSFNF_Data(x=template, areas=NRCS.areas, polys=NRCS.polys, SFNF.dir=SFNF.dir, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=force.redo)
+  #         texture <- rbind(texture,SFNF)
+  #       }
+  #     }
+  #   }
   
-#   names(texture) <- c("MUKEY","LEVEL","MUKEY_P","SAND","SILT","CLAY","TOP","BOTTOM")
+  #   names(texture) <- c("MUKEY","LEVEL","MUKEY_P","SAND","SILT","CLAY","TOP","BOTTOM")
   
-#   write.csv(texture,paste(tables.dir,"/level_texture.csv",sep=''),row.names=F)
+  #   write.csv(texture,paste(tables.dir,"/level_texture.csv",sep=''),row.names=F)
   #   
   #   
   #   colors <- colorRampPalette(brewer.pal(9,"Greens"))(1000)
@@ -78,14 +78,14 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   #   # Create a final NRCS soils polygon file
   #   NRCS.final <- NRCS.polys[,c(4)]
   
-
+  
   # Create VEPII IDs for each MUKEY
   NRCS.polys <- loadNRCSMapUnitPolygons(x=template, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=F)
   NRCS.polys.mukeys <- data.frame(MUKEY=unique(NRCS.polys$MUKEY),ID=1:length(unique(NRCS.polys$MUKEY)))
   NRCS.polys <- merge(NRCS.polys,NRCS.polys.mukeys)
   
   # Export final vector dataset for the study area.
-#   cat("Exporting final vector dataset for the study area.\n")
+  #   cat("Exporting final vector dataset for the study area.\n")
   suppressWarnings(writeOGR(NRCS.polys, dsn.vectors, "soils","ESRI Shapefile", overwrite_layer=TRUE))
   
   return(NRCS.polys)
@@ -144,9 +144,9 @@ loadNRCSMapUnitPolygons <- function(x, raw.dir="../Input/NRCS", dsn.vectors="Out
     NRCS.areas <- NRCS.areas[NRCS.areas@data$iscomplete != 0,]
     
     NRCS.polys <- getNRCSMapUnitPolygons(x, NRCS.areas, raw.dir=raw.dir)
-
+    
     # Export final vector dataset for the study area.
-#     cat("Exporting final vector dataset for the study area.\n")
+    #     cat("Exporting final vector dataset for the study area.\n")
     suppressWarnings(writeOGR(NRCS.polys, dsn.vectors, "soils","ESRI Shapefile", overwrite_layer=TRUE))
   }else{
     NRCS.polys <- readOGR(dsn.vectors,"soils")
@@ -258,7 +258,7 @@ getSoilData <- function(x, areas, polys, raw.dir="../Input/NRCS", dsn.vectors="O
     # Load the USGS survey data from the map units specified.
     NRCS.muaggatt <- loadAndAggregateSoilTable("muaggatt",areas, raw.dir=raw.dir)
     names(NRCS.muaggatt) <- c(dbListFields(dbcon, "muaggatt"),"area")
-#     NRCS.muaggatt <- NRCS.muaggatt[NRCS.muaggatt$mukey %in% unique(polys$MUKEY),]
+    #     NRCS.muaggatt <- NRCS.muaggatt[NRCS.muaggatt$mukey %in% unique(polys$MUKEY),]
     write.csv(NRCS.muaggatt,paste(tables.dir,"/muaggatt.csv",sep=''),row.names=F)
   }
   
@@ -266,7 +266,7 @@ getSoilData <- function(x, areas, polys, raw.dir="../Input/NRCS", dsn.vectors="O
   if(!file.exists(paste(tables.dir,"/comp.csv",sep='')) | force.redo){
     NRCS.comp <- loadAndAggregateSoilTable("comp",areas, raw.dir=raw.dir)
     names(NRCS.comp)<- c(dbListFields(dbcon, "component"),"area")
-#     NRCS.comp <- NRCS.comp[NRCS.comp$mukey %in% unique(polys$MUKEY),]
+    #     NRCS.comp <- NRCS.comp[NRCS.comp$mukey %in% unique(polys$MUKEY),]
     NRCS.comp <- correctSoilComponents(NRCS.comp)
     write.csv(NRCS.comp,paste(tables.dir,"/comp.csv",sep=''),row.names=F)
   }
@@ -275,15 +275,23 @@ getSoilData <- function(x, areas, polys, raw.dir="../Input/NRCS", dsn.vectors="O
   if(!file.exists(paste(tables.dir,"/chorizon.csv",sep='')) | force.redo){
     NRCS.chorizon <- loadAndAggregateSoilTable("chorizon",areas, raw.dir=raw.dir)
     names(NRCS.chorizon)<- c(dbListFields(dbcon, "chorizon"),"area")
-#     NRCS.chorizon <- NRCS.chorizon[NRCS.chorizon$cokey %in% unique(NRCS.comp$cokey),]
+    #     NRCS.chorizon <- NRCS.chorizon[NRCS.chorizon$cokey %in% unique(NRCS.comp$cokey),]
     write.csv(NRCS.chorizon,paste(tables.dir,"/chorizon.csv",sep=''),row.names=F)
+  }  
+  
+  # Crop yield data
+  if(!file.exists(paste(tables.dir,"/ccrpyd.csv",sep='')) | force.redo){
+    NRCS.ccrpyd <- loadAndAggregateSoilTable("ccrpyd",areas, raw.dir=raw.dir)
+    names(NRCS.ccrpyd)<- c(dbListFields(dbcon, "ccrpyd"),"area")
+    #     NRCS.chorizon <- NRCS.chorizon[NRCS.chorizon$cokey %in% unique(NRCS.comp$cokey),]
+    write.csv(NRCS.ccrpyd,paste(tables.dir,"/ccrpyd.csv",sep=''),row.names=F)
   }  
   
   # Load the primary mapunit data
   if(!file.exists(paste(tables.dir,"/mapunit.csv",sep='')) | force.redo){
     NRCS.mapunit <- loadAndAggregateSoilTable("mapunit",areas, raw.dir=raw.dir)
     names(NRCS.mapunit) <- c(dbListFields(dbcon, "mapunit"),"area")
-#     NRCS.mapunit <- NRCS.mapunit[NRCS.mapunit$mukey %in% unique(polys$MUKEY),]
+    #     NRCS.mapunit <- NRCS.mapunit[NRCS.mapunit$mukey %in% unique(polys$MUKEY),]
     write.csv(NRCS.mapunit,paste(tables.dir,"/mapunit.csv",sep=''),row.names=F)
   }
   
@@ -291,11 +299,9 @@ getSoilData <- function(x, areas, polys, raw.dir="../Input/NRCS", dsn.vectors="O
   if(!file.exists(paste(tables.dir,"/chfrags.csv",sep='')) | force.redo){
     NRCS.chfrags <- loadAndAggregateSoilTable("chfrags",areas, raw.dir=raw.dir)
     names(NRCS.chfrags)<- c(dbListFields(dbcon, "chfrags"),"area")
-#     NRCS.chfrags <- NRCS.chfrags[NRCS.chfrags$chkey %in% unique(NRCS.chorizon$chkey),]
+    #     NRCS.chfrags <- NRCS.chfrags[NRCS.chfrags$chkey %in% unique(NRCS.chorizon$chkey),]
     write.csv(NRCS.chfrags,paste(tables.dir,"/chfrag.csv",sep=''),row.names=F)
   }  
-  
-  
 }
 
 
@@ -525,8 +531,7 @@ textureClass.rasters <- function(SAND.rast, SILT.rast, CLAY.rast, class.sys = "U
   texture.complete <- data.frame(CELL=as.numeric(texture.css.complete$CELL), TEXTURE=TT.points.in.classes(texture.css.complete, class.sys = class.sys, PiC.type="t"))
   texture.incomplete <- data.frame(CELL=as.numeric(texture.css.incomplete$CELL), TEXTURE=NA) 
   texture <- rbind(texture.complete,texture.incomplete)
-#   texture$CELL <- as.numeric(texture$CELL)
+  #   texture$CELL <- as.numeric(texture$CELL)
   texture <- texture[order(texture$CELL),]
   return(texture)
 }
-
