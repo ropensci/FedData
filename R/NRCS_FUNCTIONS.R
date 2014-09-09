@@ -282,7 +282,7 @@ getSoilData <- function(x, areas, polys, raw.dir="../Input/NRCS", dsn.vectors="O
   # Crop yield data
   if(!file.exists(paste(tables.dir,"/ccrpyd.csv",sep='')) | force.redo){
     NRCS.ccrpyd <- loadAndAggregateSoilTable("ccrpyd",areas, raw.dir=raw.dir)
-    names(NRCS.ccrpyd)<- c(dbListFields(dbcon, "ccrpyd"),"area")
+    names(NRCS.ccrpyd)<- c(dbListFields(dbcon, "cocropyld"),"area")
     #     NRCS.chorizon <- NRCS.chorizon[NRCS.chorizon$cokey %in% unique(NRCS.comp$cokey),]
     write.csv(NRCS.ccrpyd,paste(tables.dir,"/ccrpyd.csv",sep=''),row.names=F)
   }  
