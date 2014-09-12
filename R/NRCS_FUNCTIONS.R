@@ -4,7 +4,7 @@
 ## Author: R. Kyle Bocinsky
 ## Date: 02/14/2014
 
-extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=NULL, force.redo=F){  
+extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=NULL, NED.dir=NULL, fillReservoirs=T, force.redo=F){  
   if(is.null(extraction.dir)){
     extraction.dir <- paste(raw.dir,"/EXTRACTIONS",sep='')
   }
@@ -87,6 +87,46 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   # Export final vector dataset for the study area.
   #   cat("Exporting final vector dataset for the study area.\n")
   suppressWarnings(writeOGR(NRCS.polys, dsn.vectors, "soils","ESRI Shapefile", overwrite_layer=TRUE))
+  
+  if(fillReservoirs){
+    if(is.null(NED.dir)){
+      NED.dir <- readline("Please provide a path for the raw NHD data directory:")
+    }
+    
+    NED <- extractNED(template=sim.poly, label=area.name, raw.dir=NED.dir, res="1", drain=T, force.redo=F)
+
+    if(!file.exists(paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))){
+      NRCS.rast <- raster::rasterize(NRCS.vect,NED,field="ID", na.rm=T)
+      writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''), drivername="GTiff", type="Int16", mvFlag=-32768, options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
+    }
+    
+    if(!file.exists(paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec_filled.tif",sep=''))){
+      NRCS.rast <- raster::rasterize(NRCS.vect,NED,field="ID", na.rm=T)
+      writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''), drivername="GTiff", type="Int16", mvFlag=-32768, options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
+    }
+    NRCS.rast <- raster(paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))
+    if(file.exists(paste(MASTER.DATA,"NHD/EXTRACTIONS/",area.name,"/vectors/Reservoirs.shp", sep=''))){
+      source("../src/NRCS_RES_FILLER_FUNCTIONS.R")
+      reservoirs <- readOGR(paste(MASTER.DATA,"NHD/EXTRACTIONS/",area.name,"/vectors", sep=''),"Reservoirs", verbose=F)
+      dams <- readOGR(paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/vectors", sep=''),"Dams", verbose=F)
+      areas <- readOGR(paste(MASTER.DATA,"NHD/EXTRACTIONS/",area.name,"/vectors", sep=''),"NHDArea", verbose=F)
+      areas <- areas[areas$AreaSqKm>0.16,]
+      for(i in 1:length(areas)){
+        areas@polygons[[i]] <- remove.holes(areas@polygons[[i]])
+      }
+      
+      # Get raster cells in reservoirs and dams, and set them to NA
+      projection(dams) <- projection(reservoirs)
+      bad.data.vect <- gUnion(dams,reservoirs)
+      bad.data.vect <- gUnion(bad.data.vect,areas)
+      bad.data.rast <- raster::extract(NRCS.rast, bad.data.vect, cellnumbers=T)
+      NRCS.rast[bad.data.rast[[1]][,1]] <- NA
+      
+      # Fill the missing reservoir/dam soils using linear discriminant analysis
+      NRCS.rast.filled <- fillReservoirSoils(gapped.soil.raster=NRCS.rast, dem.raster=NED,  label=area.name, raw.dir=paste(MASTER.DATA,"NRCS/",sep=''), force.redo=F)
+      projection(NRCS.rast.filled) <- projection(NRCS.rast)
+      NRCS.rast <- NRCS.rast.filled
+    }
   
   return(NRCS.polys)
 }
