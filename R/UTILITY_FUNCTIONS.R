@@ -231,4 +231,5 @@ scalebar.new <- function (d, xy = NULL, height = NULL, line.offset=c(0,0), side=
   }else if(lab.side=='bottom'){
     text(mean(c(xstart,xend)), xy[2], labels = label, adj = c(0.5,1.5), 
          ...)
-  }}
+  }
+}
