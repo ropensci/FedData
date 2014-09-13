@@ -1,5 +1,4 @@
-pkgTest <- function(x)
-{
+pkgTest <- function(x){
   if (!require(x,character.only = TRUE))
   {
     install.packages(x,dep=TRUE, type="source")
@@ -207,7 +206,7 @@ scalebar.new <- function (d, xy = NULL, height = NULL, line.offset=c(0,0), side=
   
   rect(xleft=xstart, ybottom=xy[2], xright=xend, ytop=xy[2]+height, col='black',border=NA, lend=1)
   
-#   lines(matrix(c(xstart, xy[2], xend, xy[2]), byrow = T, nrow = 2), lend=1, lwd = lwd, ...)
+  #   lines(matrix(c(xstart, xy[2], xend, xy[2]), byrow = T, nrow = 2), lend=1, lwd = lwd, ...)
   
   if (missing(label)) {
     label <- paste(d)

@@ -94,7 +94,7 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
     }
     
     NED <- extractNED(template=sim.poly, label=area.name, raw.dir=NED.dir, res="1", drain=T, force.redo=F)
-
+    
     if(!file.exists(paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))){
       NRCS.rast <- raster::rasterize(NRCS.vect,NED,field="ID", na.rm=T)
       writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''), drivername="GTiff", type="Int16", mvFlag=-32768, options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
@@ -127,7 +127,8 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
       projection(NRCS.rast.filled) <- projection(NRCS.rast)
       NRCS.rast <- NRCS.rast.filled
     }
-  
+    
+  }
   return(NRCS.polys)
 }
 
