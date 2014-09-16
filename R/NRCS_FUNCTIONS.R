@@ -35,12 +35,13 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   #   plot(NRCS.areas)
   
   # Load the NRCS mapunit polygons
-  #   cat("\nLoading NRCS mapunit polygons\n")
+    cat("\nLoading NRCS mapunit polygons\n")
   NRCS.polys <- loadNRCSMapUnitPolygons(x=template, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=force.redo)
   
   #   plot(NRCS.polys)
   
   # Load tabular soil data for study area
+  cat("\nLoad tabular soil data for study area\n")
   getSoilData(x=template, areas=NRCS.areas[NRCS.areas@data$iscomplete != 0,], polys=NRCS.polys, raw.dir=raw.dir, dsn.vectors=dsn.vectors, tables.dir=tables.dir, force.redo=T)
   
   #   texture <- calculateTexture(raw.dir=raw.dir, dsn.vectors=dsn.vectors, tables.dir=tables.dir)
@@ -80,12 +81,13 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   
   
   # Create VEPII IDs for each MUKEY
-  NRCS.polys <- loadNRCSMapUnitPolygons(x=template, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=F)
+  cat("\nCreate VEPII IDs for each MUKEY\n")
+#   NRCS.polys <- loadNRCSMapUnitPolygons(x=template, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=F)
   NRCS.polys.mukeys <- data.frame(MUKEY=unique(NRCS.polys$MUKEY),ID=1:length(unique(NRCS.polys$MUKEY)))
   NRCS.polys <- merge(NRCS.polys,NRCS.polys.mukeys)
   
   # Export final vector dataset for the study area.
-  #   cat("Exporting final vector dataset for the study area.\n")
+    cat("Exporting final vector dataset for the study area.\n")
   suppressWarnings(writeOGR(NRCS.polys, dsn.vectors, "soils","ESRI Shapefile", overwrite_layer=TRUE))
   
   if(fillReservoirs){
