@@ -30,7 +30,7 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   #   plot(NRCS.areas)
   
   # Load the NRCS mapunit polygons
-    cat("\nLoading NRCS mapunit polygons\n")
+#     cat("\nLoading NRCS mapunit polygons\n")
   if(file.exists(paste(extraction.dir,"/",label,"/vectors/soils.shp", sep='')) & !force.redo){
     NRCS.polys <- readOGR(dsn.vectors, "soils", verbose=F)
   }else{
@@ -40,8 +40,8 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   #   plot(NRCS.polys)
   
   # Load tabular soil data for study area
-  cat("\nLoad tabular soil data for study area\n")
-  getSoilData(x=template, areas=NRCS.areas[NRCS.areas@data$iscomplete != 0,], polys=NRCS.polys, raw.dir=raw.dir, dsn.vectors=dsn.vectors, tables.dir=tables.dir, force.redo=T)
+#   cat("\nLoad tabular soil data for study area\n")
+  getSoilData(x=template, areas=NRCS.areas[NRCS.areas@data$iscomplete != 0,], polys=NRCS.polys, raw.dir=raw.dir, dsn.vectors=dsn.vectors, tables.dir=tables.dir, force.redo=force.redo)
   
   #   texture <- calculateTexture(raw.dir=raw.dir, dsn.vectors=dsn.vectors, tables.dir=tables.dir)
   
@@ -80,10 +80,10 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   
   
   # Create VEPII IDs for each MUKEY
-  cat("\nCreate VEPII IDs for each MUKEY\n")
+#   cat("\nCreate VEPII IDs for each MUKEY\n")
 #   NRCS.polys <- loadNRCSMapUnitPolygons(x=template, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=F)
-  NRCS.polys.mukeys <- data.frame(MUKEY=unique(NRCS.polys$MUKEY),ID=1:length(unique(NRCS.polys$MUKEY)))
-  NRCS.polys <- sp::merge(NRCS.polys,NRCS.polys.mukeys)
+#   NRCS.polys.mukeys <- data.frame(MUKEY=unique(NRCS.polys$MUKEY),ID=1:length(unique(NRCS.polys$MUKEY)))
+#   NRCS.polys <- sp::merge(NRCS.polys,NRCS.polys.mukeys)
   
   # Export final vector dataset for the study area.
     cat("Exporting final vector dataset for the study area.\n")
@@ -95,14 +95,14 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
     }
     
     if(is.null(NED.raw.dir)){
-      NED.dir <- readline("Please provide a path for the raw NHD data directory:")
+      NED.raw.dir <- readline("Please provide a path for the raw NHD data directory:")
     }
     
     if(is.null(NHD.raw.dir)){
-      NED.dir <- readline("Please provide a path for the raw NHD data directory:")
+      NHD.raw.dir <- readline("Please provide a path for the raw NHD data directory:")
     }
     
-    NED <- extractNED(template=sim.poly, label=area.name, raw.dir=NED.dir, res="1", drain=T, force.redo=F)
+    NED <- extractNED(template=sim.poly, label=area.name, raw.dir=NED.raw.dir, res="1", drain=T, force.redo=F)
     
     if(!file.exists(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))){
       NRCS.rast <- raster::rasterize(NRCS.vect,NED,field="ID", na.rm=T)
@@ -111,8 +111,8 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
     
     NRCS.rast <- raster(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))
     
-    if(file.exists(paste(NHD.dir,"EXTRACTIONS/",area.name,"/vectors/Reservoirs.shp", sep=''))){
-      reservoirs <- readOGR(paste(NHD.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"Reservoirs", verbose=F)
+    if(file.exists(paste(NHD.raw.dir,"EXTRACTIONS/",area.name,"/vectors/Reservoirs.shp", sep=''))){
+      reservoirs <- readOGR(paste(NHD.raw.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"Reservoirs", verbose=F)
       dams <- readOGR(paste(raw.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"Dams", verbose=F)
 #       areas <- readOGR(paste(NHD.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"NHDArea", verbose=F)
 #       areas <- areas[areas$AreaSqKm>0.16,]
@@ -133,7 +133,7 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
       projection(NRCS.rast.filled) <- projection(NRCS.rast)
       NRCS.rast <- NRCS.rast.filled
     }
-    writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec_filled.tif",sep=''), drivername="GTiff", type="Int16", mvFlag=-32768, options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
+    writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec_filled.tif",sep=''), drivername="GTiff", type="Int16", mvFlag=-32768, options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
   }
   return(NRCS.polys)
 }
