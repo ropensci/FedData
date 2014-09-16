@@ -4,7 +4,7 @@
 ## Author: R. Kyle Bocinsky
 ## Date: 02/14/2014
 
-extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=NULL, NED.raw.dir=NULL, NHD.raw.dir=NULL, fillReservoirs=T, force.redo=F){  
+extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=NULL, NED.raw.dir=NULL, NHD.raw.dir=NULL, fillReservoirs=T, force.redo=F, return.rast=F){  
   if(is.null(extraction.dir)){
     extraction.dir <- paste(raw.dir,"/EXTRACTIONS",sep='')
   }
@@ -30,7 +30,7 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   #   plot(NRCS.areas)
   
   # Load the NRCS mapunit polygons
-#     cat("\nLoading NRCS mapunit polygons\n")
+  #     cat("\nLoading NRCS mapunit polygons\n")
   if(file.exists(paste(extraction.dir,"/",label,"/vectors/soils.shp", sep='')) & !force.redo){
     NRCS.polys <- readOGR(dsn.vectors, "soils", verbose=F)
   }else{
@@ -41,7 +41,7 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   #   plot(NRCS.polys)
   
   # Load tabular soil data for study area
-#   cat("\nLoad tabular soil data for study area\n")
+  #   cat("\nLoad tabular soil data for study area\n")
   getSoilData(x=template, areas=NRCS.areas[NRCS.areas@data$iscomplete != 0,], polys=NRCS.polys, raw.dir=raw.dir, dsn.vectors=dsn.vectors, tables.dir=tables.dir, force.redo=force.redo)
   
   #   texture <- calculateTexture(raw.dir=raw.dir, dsn.vectors=dsn.vectors, tables.dir=tables.dir)
@@ -81,13 +81,13 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   
   
   # Create VEPII IDs for each MUKEY
-#   cat("\nCreate VEPII IDs for each MUKEY\n")
-#   NRCS.polys <- loadNRCSMapUnitPolygons(x=template, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=F)
-#   NRCS.polys.mukeys <- data.frame(MUKEY=unique(NRCS.polys$MUKEY),ID=1:length(unique(NRCS.polys$MUKEY)))
-#   NRCS.polys <- sp::merge(NRCS.polys,NRCS.polys.mukeys)
+  #   cat("\nCreate VEPII IDs for each MUKEY\n")
+  #   NRCS.polys <- loadNRCSMapUnitPolygons(x=template, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=F)
+  #   NRCS.polys.mukeys <- data.frame(MUKEY=unique(NRCS.polys$MUKEY),ID=1:length(unique(NRCS.polys$MUKEY)))
+  #   NRCS.polys <- sp::merge(NRCS.polys,NRCS.polys.mukeys)
   
   # Export final vector dataset for the study area.
-#     cat("Exporting final vector dataset for the study area.\n")
+  #     cat("Exporting final vector dataset for the study area.\n")
   
   if(fillReservoirs){
     cat("Filling reservoirs.\n")
@@ -106,37 +106,65 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
     NED <- extractNED(template=sim.poly, label=area.name, raw.dir=NED.raw.dir, res="1", drain=T, force.redo=F)
     
     if(!file.exists(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))){
-      NRCS.rast <- raster::rasterize(NRCS.vect,NED,field="ID", na.rm=T)
+      NRCS.rast <- raster::rasterize(NRCS.polys,NED,field="MUKEY", na.rm=T)
       writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''), drivername="GTiff", type="Int16", mvFlag=-32768, options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
+    }else{
+      NRCS.rast <- raster(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))
     }
-    
-    NRCS.rast <- raster(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))
     
     if(file.exists(paste(NHD.raw.dir,"EXTRACTIONS/",area.name,"/vectors/Reservoirs.shp", sep=''))){
       reservoirs <- readOGR(paste(NHD.raw.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"Reservoirs", verbose=F)
-      dams <- readOGR(paste(raw.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"Dams", verbose=F)
-#       areas <- readOGR(paste(NHD.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"NHDArea", verbose=F)
-#       areas <- areas[areas$AreaSqKm>0.16,]
-#       for(i in 1:length(areas)){
-#         areas@polygons[[i]] <- remove.holes(areas@polygons[[i]])
-#       }
-      
-      # Get raster cells in reservoirs and dams, and set them to NA
-      projection(dams) <- projection(reservoirs)
-      bad.data.vect <- gUnion(dams,reservoirs)
-      bad.data.vect <- spTransform(bad.data.vect,CRS(projection(NRCS.rast)))
-#       bad.data.vect <- gUnion(bad.data.vect,areas)
-      bad.data.rast <- raster::extract(NRCS.rast, bad.data.vect, cellnumbers=T)
-      NRCS.rast[bad.data.rast[[1]][,1]] <- NA
-      
-      # Fill the missing reservoir/dam soils using linear discriminant analysis
-      NRCS.rast.filled <- fillReservoirSoils(gapped.soil.raster=NRCS.rast, dem.raster=NED,  label=area.name, raw.dir=paste(MASTER.DATA,"NRCS/",sep=''), force.redo=F)
-      projection(NRCS.rast.filled) <- projection(NRCS.rast)
-      NRCS.rast <- NRCS.rast.filled
+    }else{
+      NHD <- extractNED(template=sim.poly, label=area.name, raw.dir=NHD.raw.dir, force.redo=F)
     }
+    
+    if(file.exists(paste(raw.dir,"EXTRACTIONS/",area.name,"/vectors/Dams.shp", sep=''))){
+      dams <- readOGR(paste(raw.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"Dams", verbose=F)
+    }else{
+      mapunits <- read.csv(paste(raw.dir,"EXTRACTIONS/",label,"/tables/mapunit.csv",sep=''))
+      dam.mukeys <- mapunits[mapunits$muname=="Dam",]$mukey
+      
+      dams <- NRCS.polys[NRCS.polys$MUKEY%in%dam.mukeys,]
+      
+      writeOGR(dams, paste(raw.dir,"EXTRACTIONS/",area.name,"/vectors",sep=''), "Dams", "ESRI Shapefile", overwrite_layer=TRUE)
+      
+    }
+    #       areas <- readOGR(paste(NHD.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"NHDArea", verbose=F)
+    #       areas <- areas[areas$AreaSqKm>0.16,]
+    #       for(i in 1:length(areas)){
+    #         areas@polygons[[i]] <- remove.holes(areas@polygons[[i]])
+    #       }
+    
+    # Get raster cells in reservoirs and dams, and set them to NA
+    projection(dams) <- projection(reservoirs)
+    bad.data.vect <- gUnion(dams,reservoirs)
+    bad.data.vect <- spTransform(bad.data.vect,CRS(projection(NRCS.rast)))
+    #       bad.data.vect <- gUnion(bad.data.vect,areas)
+    bad.data.rast <- raster::extract(NRCS.rast, bad.data.vect, cellnumbers=T)
+    NRCS.rast[bad.data.rast[[1]][,1]] <- NA
+    
+    # Fill the missing reservoir/dam soils using linear discriminant analysis
+    NRCS.rast.filled <- fillReservoirSoils(gapped.soil.raster=NRCS.rast, dem.raster=NED,  label=area.name, raw.dir=paste(MASTER.DATA,"NRCS/",sep=''), force.redo=F)
+    projection(NRCS.rast.filled) <- projection(NRCS.rast)
+    NRCS.rast <- NRCS.rast.filled
+    
     writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec_filled.tif",sep=''), drivername="GTiff", type="Int16", mvFlag=-32768, options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
   }
-  return(NRCS.polys)
+  
+  if(return.rast){
+    if(!exists(NRCS.rast)){
+      if(!file.exists(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))){
+        NRCS.rast <- raster::rasterize(NRCS.polys,NED,field="MUKEY", na.rm=T)
+        writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''), drivername="GTiff", type="Int16", mvFlag=-32768, options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
+      }else{
+        NRCS.rast <- raster(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))
+      }
+    }
+    return(NRCS.rast)
+  }else{
+    return(NRCS.polys)
+  }
+  
 }
 
 
@@ -628,15 +656,15 @@ fillReservoirSoils <- function(gapped.soil.raster, dem.raster, label, raw.dir, f
   
   # Coerce the rasters into attribute tables
   
-  dem.hiRes.sp <- as.data.frame(dem.raster, xy=T)
-  nrcs.hiRes.sp <- as.data.frame(gapped.soil.raster, xy=T)
-  slope.hiRes.sp <- as.data.frame(slope.hiRes, xy=T)
-  aspect.sine.hiRes <- as.data.frame(aspect.sine.hiRes, xy=T)
-  aspect.cosine.hiRes <- as.data.frame(aspect.cosine.hiRes, xy=T)
-  twi.hiRes.sp <- as.data.frame(twi.hiRes, xy=T)
+  dem.hiRes.sp <- raster::as.data.frame(dem.raster, xy=T)
+  nrcs.hiRes.sp <- raster::as.data.frame(gapped.soil.raster, xy=T)
+  slope.hiRes.sp <- raster::as.data.frame(slope.hiRes, xy=T)
+  aspect.sine.hiRes <- raster::as.data.frame(aspect.sine.hiRes, xy=T)
+  aspect.cosine.hiRes <- raster::as.data.frame(aspect.cosine.hiRes, xy=T)
+  twi.hiRes.sp <- raster::as.data.frame(twi.hiRes, xy=T)
   
   # Merge all tables together based on easting and northing
-  merged.sp <- data.frame(x=dem.hiRes.sp$x, y=dem.hiRes.sp$y, elevation=dem.hiRes.sp$DEM_1_DRAINED, mukey=nrcs.hiRes.sp$RASTERIZED_MUKEYS_1arcsec, slope=slope.hiRes.sp$slope, aspect_sine=aspect.sine.hiRes$layer, aspect_cosine=aspect.cosine.hiRes$layer, twi=twi.hiRes.sp$TWI)
+  merged.sp <- data.frame(x=dem.hiRes.sp$x, y=dem.hiRes.sp$y, elevation=dem.hiRes.sp$DEM_1_DRAINED, mukey=nrcs.hiRes.sp$layer, slope=slope.hiRes.sp$slope, aspect_sine=aspect.sine.hiRes$layer, aspect_cosine=aspect.cosine.hiRes$layer, twi=twi.hiRes.sp$TWI)
   
   # Rename merged variables to clarify
   names(merged.sp) <- c("easting","northing","elevation","mukey","slope","aspect_sin","aspect_cos","twi")
