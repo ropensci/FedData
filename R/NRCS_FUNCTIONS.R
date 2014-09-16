@@ -144,7 +144,7 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
     NRCS.rast[bad.data.rast[[1]][,1]] <- NA
     
     # Fill the missing reservoir/dam soils using linear discriminant analysis
-    NRCS.rast.filled <- fillReservoirSoils(gapped.soil.raster=NRCS.rast, dem.raster=NED,  label=area.name, raw.dir=paste(MASTER.DATA,"NRCS/",sep=''), force.redo=F)
+    NRCS.rast.filled <- fillReservoirSoils(gapped.soil.raster=NRCS.rast, dem.raster=NED,  label=area.name, raw.dir=paste(MASTER.DATA,"NRCS/",sep=''), force.redo=force.redo)
     projection(NRCS.rast.filled) <- projection(NRCS.rast)
     NRCS.rast <- NRCS.rast.filled
     
@@ -664,7 +664,7 @@ fillReservoirSoils <- function(gapped.soil.raster, dem.raster, label, raw.dir, f
   twi.hiRes.sp <- raster::as.data.frame(twi.hiRes, xy=T)
   
   # Merge all tables together based on easting and northing
-  merged.sp <- data.frame(x=dem.hiRes.sp$x, y=dem.hiRes.sp$y, elevation=dem.hiRes.sp$DEM_1_DRAINED, mukey=nrcs.hiRes.sp$layer, slope=slope.hiRes.sp$slope, aspect_sine=aspect.sine.hiRes$layer, aspect_cosine=aspect.cosine.hiRes$layer, twi=twi.hiRes.sp$TWI)
+  merged.sp <- data.frame(x=dem.hiRes.sp$x, y=dem.hiRes.sp$y, elevation=dem.hiRes.sp$DEM_1_DRAINED, mukey=nrcs.hiRes.sp$RASTERIZED_MUKEYS_1arcsec, slope=slope.hiRes.sp$slope, aspect_sine=aspect.sine.hiRes$layer, aspect_cosine=aspect.cosine.hiRes$layer, twi=twi.hiRes.sp$TWI)
   
   # Rename merged variables to clarify
   names(merged.sp) <- c("easting","northing","elevation","mukey","slope","aspect_sin","aspect_cos","twi")
