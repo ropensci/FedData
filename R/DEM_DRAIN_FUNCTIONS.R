@@ -20,7 +20,6 @@ drainDEM <- function(template, dem, label, NED.raw.dir, NHD.raw.dir, NRCS.raw.di
   
   writeOGR(dams, paste(NRCS.raw.dir,"/EXTRACTIONS/",label,"/vectors",sep=''), "Dams", "ESRI Shapefile", overwrite_layer=TRUE)
   
-  Areas <- readOGR(paste(NHD.raw.dir,"/EXTRACTIONS/",label,"/vectors",sep=''),"Area")
   Streams <- readOGR(paste(NHD.raw.dir,"/EXTRACTIONS/",label,"/vectors",sep=''),"Streams")
   Reservoirs <- readOGR(paste(NHD.raw.dir,"/EXTRACTIONS/",label,"/vectors",sep=''),"Reservoirs")
   Dams <- readOGR(paste(NRCS.raw.dir,"/EXTRACTIONS/",label,"/vectors",sep=''),"Dams")

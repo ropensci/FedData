@@ -325,7 +325,7 @@ forceMergeStreams <- function(streams, proj4string){
         if(joined[j]) next
         if(i==j) next
         if(all(tail(streams@lines[[i]]@Lines[[1]]@coords, n=1) == head(streams@lines[[j]]@Lines[[1]]@coords, n=1))){
-          gapped.list <- c(gapped.list,Lines(Line(spRbind(streams@lines[[i]]@Lines[[1]]@coords,streams@lines[[j]]@Lines[[1]]@coords)),ID=as.character(counter)))
+          gapped.list <- c(gapped.list,Lines(Line(rbind(streams@lines[[i]]@Lines[[1]]@coords,streams@lines[[j]]@Lines[[1]]@coords)),ID=as.character(counter)))
           counter <- counter+1
           joined[c(i,j)] <- TRUE
           break
