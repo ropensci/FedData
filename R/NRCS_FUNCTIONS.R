@@ -35,6 +35,7 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
     NRCS.polys <- readOGR(dsn.vectors, "soils", verbose=F)
   }else{
     NRCS.polys <- loadNRCSMapUnitPolygons(x=template, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=force.redo)
+    suppressWarnings(writeOGR(NRCS.polys, dsn.vectors, "soils","ESRI Shapefile", overwrite_layer=TRUE))
   }
   
   #   plot(NRCS.polys)
@@ -86,10 +87,10 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
 #   NRCS.polys <- sp::merge(NRCS.polys,NRCS.polys.mukeys)
   
   # Export final vector dataset for the study area.
-    cat("Exporting final vector dataset for the study area.\n")
-  suppressWarnings(writeOGR(NRCS.polys, dsn.vectors, "soils","ESRI Shapefile", overwrite_layer=TRUE))
+#     cat("Exporting final vector dataset for the study area.\n")
   
   if(fillReservoirs){
+    cat("Filling reservoirs.\n")
     if(file.exists(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec_filled.tif",sep='')) & !force.redo){
       return(NRCS.polys)
     }
