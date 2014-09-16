@@ -4,7 +4,7 @@
 ## Author: R. Kyle Bocinsky
 ## Date: 02/14/2014
 
-extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=NULL, NED.dir=NULL, NHD.dir=NULL, fillReservoirs=T, force.redo=F){  
+extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=NULL, NED.raw.dir=NULL, NHD.raw.dir=NULL, fillReservoirs=T, force.redo=F){  
   if(is.null(extraction.dir)){
     extraction.dir <- paste(raw.dir,"/EXTRACTIONS",sep='')
   }
@@ -89,40 +89,41 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   suppressWarnings(writeOGR(NRCS.polys, dsn.vectors, "soils","ESRI Shapefile", overwrite_layer=TRUE))
   
   if(fillReservoirs){
-    if(file.exists(paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec_filled.tif",sep='')) & !force.redo){
+    if(file.exists(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec_filled.tif",sep='')) & !force.redo){
       return(NRCS.polys)
     }
     
-    if(is.null(NED.dir)){
+    if(is.null(NED.raw.dir)){
       NED.dir <- readline("Please provide a path for the raw NHD data directory:")
     }
     
-    if(is.null(NHD.dir)){
+    if(is.null(NHD.raw.dir)){
       NED.dir <- readline("Please provide a path for the raw NHD data directory:")
     }
     
     NED <- extractNED(template=sim.poly, label=area.name, raw.dir=NED.dir, res="1", drain=T, force.redo=F)
     
-    if(!file.exists(paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))){
+    if(!file.exists(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))){
       NRCS.rast <- raster::rasterize(NRCS.vect,NED,field="ID", na.rm=T)
-      writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''), drivername="GTiff", type="Int16", mvFlag=-32768, options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
+      writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''), drivername="GTiff", type="Int16", mvFlag=-32768, options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
     }
     
-    NRCS.rast <- raster(paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))
+    NRCS.rast <- raster(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))
     
     if(file.exists(paste(NHD.dir,"EXTRACTIONS/",area.name,"/vectors/Reservoirs.shp", sep=''))){
       reservoirs <- readOGR(paste(NHD.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"Reservoirs", verbose=F)
       dams <- readOGR(paste(raw.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"Dams", verbose=F)
-      areas <- readOGR(paste(NHD.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"NHDArea", verbose=F)
-      areas <- areas[areas$AreaSqKm>0.16,]
-      for(i in 1:length(areas)){
-        areas@polygons[[i]] <- remove.holes(areas@polygons[[i]])
-      }
+#       areas <- readOGR(paste(NHD.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"NHDArea", verbose=F)
+#       areas <- areas[areas$AreaSqKm>0.16,]
+#       for(i in 1:length(areas)){
+#         areas@polygons[[i]] <- remove.holes(areas@polygons[[i]])
+#       }
       
       # Get raster cells in reservoirs and dams, and set them to NA
       projection(dams) <- projection(reservoirs)
       bad.data.vect <- gUnion(dams,reservoirs)
-      bad.data.vect <- gUnion(bad.data.vect,areas)
+      bad.data.vect <- spTransform(bad.data.vect,CRS(projection(NRCS.rast)))
+#       bad.data.vect <- gUnion(bad.data.vect,areas)
       bad.data.rast <- raster::extract(NRCS.rast, bad.data.vect, cellnumbers=T)
       NRCS.rast[bad.data.rast[[1]][,1]] <- NA
       
@@ -131,6 +132,7 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
       projection(NRCS.rast.filled) <- projection(NRCS.rast)
       NRCS.rast <- NRCS.rast.filled
     }
+    writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec_filled.tif",sep=''), drivername="GTiff", type="Int16", mvFlag=-32768, options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
   }
   return(NRCS.polys)
 }
