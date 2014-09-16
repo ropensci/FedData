@@ -187,6 +187,12 @@ splitAndExport <- function(shapes, layers, dsn.vectors){
     if(any(shapes[[index]]$FCode %in% c(39004,39009,39010,39001))){
       Lakes <- shapes[[index]][shapes[[index]]$FCode %in% c(39004,39009,39010,39001),]
       Lakes$ReachCode <- NULL
+      
+      Lakes <- Lakes[Lakes$AreaSqKm>0.16,]
+      for(i in 1:length(Lakes)){
+        Lakes@polygons[[i]] <- remove.holes(Lakes@polygons[[i]])
+      }
+      
     }else{
       Lakes <- NULL
     }
@@ -197,7 +203,7 @@ splitAndExport <- function(shapes, layers, dsn.vectors){
   
   # "Areas" are large Bureau of Reclamation reservoirs
   index <- match("NHDArea",layers)
-  if(class(shapes[[index]])=="SpatialLinesDataFrame"){
+  if(class(shapes[[index]])=="SpatialPolygonsDataFrame"){
     if(any(shapes[[index]]$FCode %in% c(40309))){
       Areas <- shapes[[index]][shapes[[index]]$FCode %in% c(40309),]
       
