@@ -12,11 +12,6 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   dsn.vectors <- paste(extraction.dir,"/",label,"/vectors",sep='')
   dir.create(dsn.vectors, showWarnings = FALSE, recursive = TRUE)
   
-  if(file.exists(paste(extraction.dir,"/",label,"/vectors/soils.shp", sep='')) & !force.redo){
-    NRCS.polys <- readOGR(dsn.vectors, "soils", verbose=F)
-    return(NRCS.polys)
-  }
-  
   tables.dir <- paste(extraction.dir,"/",label,"/tables",sep='')
   dir.create(tables.dir, showWarnings = FALSE, recursive = TRUE)
   
@@ -36,7 +31,11 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   
   # Load the NRCS mapunit polygons
     cat("\nLoading NRCS mapunit polygons\n")
-  NRCS.polys <- loadNRCSMapUnitPolygons(x=template, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=force.redo)
+  if(file.exists(paste(extraction.dir,"/",label,"/vectors/soils.shp", sep='')) & !force.redo){
+    NRCS.polys <- readOGR(dsn.vectors, "soils", verbose=F)
+  }else{
+    NRCS.polys <- loadNRCSMapUnitPolygons(x=template, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=force.redo)
+  }
   
   #   plot(NRCS.polys)
   
@@ -84,7 +83,7 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   cat("\nCreate VEPII IDs for each MUKEY\n")
 #   NRCS.polys <- loadNRCSMapUnitPolygons(x=template, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=F)
   NRCS.polys.mukeys <- data.frame(MUKEY=unique(NRCS.polys$MUKEY),ID=1:length(unique(NRCS.polys$MUKEY)))
-  NRCS.polys <- merge(NRCS.polys,NRCS.polys.mukeys)
+  NRCS.polys <- sp::merge(NRCS.polys,NRCS.polys.mukeys)
   
   # Export final vector dataset for the study area.
     cat("Exporting final vector dataset for the study area.\n")
