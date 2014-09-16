@@ -89,6 +89,10 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   suppressWarnings(writeOGR(NRCS.polys, dsn.vectors, "soils","ESRI Shapefile", overwrite_layer=TRUE))
   
   if(fillReservoirs){
+    if(file.exists(paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec_filled.tif",sep='')) & !force.redo){
+      return(NRCS.polys)
+    }
+    
     if(is.null(NED.dir)){
       NED.dir <- readline("Please provide a path for the raw NHD data directory:")
     }
@@ -100,13 +104,9 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
       writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''), drivername="GTiff", type="Int16", mvFlag=-32768, options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
     }
     
-    if(!file.exists(paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec_filled.tif",sep=''))){
-      NRCS.rast <- raster::rasterize(NRCS.vect,NED,field="ID", na.rm=T)
-      writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''), drivername="GTiff", type="Int16", mvFlag=-32768, options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
-    }
     NRCS.rast <- raster(paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))
+    
     if(file.exists(paste(MASTER.DATA,"NHD/EXTRACTIONS/",area.name,"/vectors/Reservoirs.shp", sep=''))){
-      source("../src/NRCS_RES_FILLER_FUNCTIONS.R")
       reservoirs <- readOGR(paste(MASTER.DATA,"NHD/EXTRACTIONS/",area.name,"/vectors", sep=''),"Reservoirs", verbose=F)
       dams <- readOGR(paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/vectors", sep=''),"Dams", verbose=F)
       areas <- readOGR(paste(MASTER.DATA,"NHD/EXTRACTIONS/",area.name,"/vectors", sep=''),"NHDArea", verbose=F)
@@ -127,7 +127,6 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
       projection(NRCS.rast.filled) <- projection(NRCS.rast)
       NRCS.rast <- NRCS.rast.filled
     }
-    
   }
   return(NRCS.polys)
 }
@@ -576,3 +575,101 @@ textureClass.rasters <- function(SAND.rast, SILT.rast, CLAY.rast, class.sys = "U
   texture <- texture[order(texture$CELL),]
   return(texture)
 }
+
+fillReservoirSoils <- function(gapped.soil.raster, dem.raster, label, raw.dir, force.redo=F){
+  if(file.exists(paste(raw.dir,"/EXTRACTIONS/",label,"/",'RASTERIZED_MUKEYS_1arcsec_filled.tif',sep='')) & !force.redo){
+    NRCS.rast.hiRes <- raster(readGDAL(paste(raw.dir,"/EXTRACTIONS/",label,"/",'RASTERIZED_MUKEYS_1arcsec_filled.tif',sep=''), silent=T))
+    return(NRCS.rast.hiRes)
+  }
+  
+  # Create a RAM disk for quick read/write in GRASS
+  system("diskutil erasevolume HFS+ 'ramdisk' `hdiutil attach -nomount ram://16384000`")
+  # Create GRASS things on RAM disk
+  system("mkdir /Volumes/ramdisk/home")
+  system("mkdir /Volumes/ramdisk/gisDbase")
+  
+  # Location of your GRASS installation:
+  loc <- initGRASS("/usr/local/opt/grass-64/grass-6.4.4", home="/Volumes/ramdisk/home", gisDbase="/Volumes/ramdisk/gisDbase",mapset="PERMANENT",override=TRUE)
+  gmeta6()
+  gc()
+  
+  # # Compute the Topographic Wetness Index ("TWI") for the DEM
+  # First, export the hiRes DEM as a GRASS raster dataset
+  writeRAST6(as(dem.raster,"SpatialGridDataFrame"), flags=c("o","overwrite","quiet"), "DEM", useGDAL=TRUE)
+  # Then set the GRASS mapping region to the DEM
+  execGRASS("g.region", flags=c("quiet"), parameters=list(rast="DEM"))
+  
+  # Then, run the r.topidx function on the GRASS dataset
+  execGRASS("r.topidx", flags=c("quiet","overwrite"), parameters=list(input="DEM",output="TWI"))
+  twi.hiRes <- raster(readRAST6("TWI",ignore.stderr = TRUE))
+  twi.hiRes[is.na(twi.hiRes)] <- 25
+  
+  # Discard GRASS
+  system("hdiutil detach /volumes/ramdisk")
+  
+  # Calculate slope, aspect, and flow direction (in degrees) on the hiRes DEM
+  slope.hiRes <- terrain(dem.raster, opt='slope', unit='degrees')
+  aspect.hiRes <- terrain(dem.raster, opt='aspect', unit='degrees')
+  slope.hiRes[is.na(slope.hiRes)] <- 0
+  aspect.hiRes[is.na(aspect.hiRes)] <- 90
+  
+  # Aspect has to be split into sine and cosine components, because it is
+  # circular.
+  aspect.sine.hiRes <- sin_d(aspect.hiRes)
+  aspect.cosine.hiRes <- cos_d(aspect.hiRes)
+  
+  # Coerce the rasters into attribute tables
+  
+  dem.hiRes.sp <- as.data.frame(dem.raster, xy=T)
+  nrcs.hiRes.sp <- as.data.frame(gapped.soil.raster, xy=T)
+  slope.hiRes.sp <- as.data.frame(slope.hiRes, xy=T)
+  aspect.sine.hiRes <- as.data.frame(aspect.sine.hiRes, xy=T)
+  aspect.cosine.hiRes <- as.data.frame(aspect.cosine.hiRes, xy=T)
+  twi.hiRes.sp <- as.data.frame(twi.hiRes, xy=T)
+  
+  # Merge all tables together based on easting and northing
+  merged.sp <- data.frame(x=dem.hiRes.sp$x, y=dem.hiRes.sp$y, elevation=dem.hiRes.sp$DEM_1_DRAINED, mukey=nrcs.hiRes.sp$RASTERIZED_MUKEYS_1arcsec, slope=slope.hiRes.sp$slope, aspect_sine=aspect.sine.hiRes$layer, aspect_cosine=aspect.cosine.hiRes$layer, twi=twi.hiRes.sp$TWI)
+  
+  # Rename merged variables to clarify
+  names(merged.sp) <- c("easting","northing","elevation","mukey","slope","aspect_sin","aspect_cos","twi")
+  
+  merged.sp.nonNull <- merged.sp[!is.na(merged.sp$mukey),]
+  merged.sp.null <- merged.sp[is.na(merged.sp$mukey),]
+  
+  # MUKEYs are a factor. Make them a factor
+  merged.sp.nonNull$mukey <- as.character(merged.sp.nonNull$mukey)
+  
+  merged.sp.nonNull.prior <- merged.sp.nonNull
+  
+  # Perform the linear discriminant analysis
+  merged.sp.nonNull.lda <- lda(mukey~easting+northing+elevation+slope+aspect_sin+aspect_cos+twi, data= merged.sp.nonNull)
+  
+  # Predict values for NULL soils, and append to soils.null
+  merged.sp.null.predict <- predict(merged.sp.nonNull.lda,merged.sp.null[,c(1,2,3,5:8)])
+  merged.sp.null$mukey <- merged.sp.null.predict$class
+  
+  # Convert MUKEYs to character for merging
+  merged.sp.null$mukey2 <- as.character(merged.sp.null$mukey)
+  merged.sp.nonNull$mukey2 <- as.character(merged.sp.nonNull$mukey)
+  
+  # Extract just the spatial and MUKEY data
+  merged.sp.null <- merged.sp.null[,c(1,2,9)]
+  merged.sp.nonNull <- merged.sp.nonNull[,c(1,2,9)]
+  
+  # Merge the null, nonNull, and edge datasets
+  merged.sp.correct <- rbind(merged.sp.null, merged.sp.nonNull)
+  
+  # Change MUKEY to numeric for rasterization
+  merged.sp.correct$mukey2 <- as.numeric(merged.sp.correct$mukey2)
+  
+  # Rasterize, first by making a SpatialPointsDataFrame, then by gridding it
+  coordinates(merged.sp.correct) <- ~easting+northing
+  gridded(merged.sp.correct) <- TRUE
+  names(merged.sp.correct) <- "mukey"
+  
+  # Generate raster object, and write it
+  NRCS.rast.hiRes <- raster(merged.sp.correct)
+  writeGDAL(as(NRCS.rast.hiRes, "SpatialGridDataFrame"),paste(raw.dir,"/EXTRACTIONS/",label,"/",'RASTERIZED_MUKEYS_1arcsec_filled.tif',sep=''), drivername="GTiff", type="Int16", mvFlag=-32768, options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
+  return(NRCS.rast.hiRes)
+}
+
