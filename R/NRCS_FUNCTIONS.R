@@ -4,7 +4,7 @@
 ## Author: R. Kyle Bocinsky
 ## Date: 02/14/2014
 
-extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=NULL, NED.dir=NULL, fillReservoirs=T, force.redo=F){  
+extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=NULL, NED.dir=NULL, NHD.dir=NULL, fillReservoirs=T, force.redo=F){  
   if(is.null(extraction.dir)){
     extraction.dir <- paste(raw.dir,"/EXTRACTIONS",sep='')
   }
@@ -97,6 +97,10 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
       NED.dir <- readline("Please provide a path for the raw NHD data directory:")
     }
     
+    if(is.null(NHD.dir)){
+      NED.dir <- readline("Please provide a path for the raw NHD data directory:")
+    }
+    
     NED <- extractNED(template=sim.poly, label=area.name, raw.dir=NED.dir, res="1", drain=T, force.redo=F)
     
     if(!file.exists(paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))){
@@ -106,10 +110,10 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
     
     NRCS.rast <- raster(paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))
     
-    if(file.exists(paste(MASTER.DATA,"NHD/EXTRACTIONS/",area.name,"/vectors/Reservoirs.shp", sep=''))){
-      reservoirs <- readOGR(paste(MASTER.DATA,"NHD/EXTRACTIONS/",area.name,"/vectors", sep=''),"Reservoirs", verbose=F)
-      dams <- readOGR(paste(MASTER.DATA,"NRCS/EXTRACTIONS/",area.name,"/vectors", sep=''),"Dams", verbose=F)
-      areas <- readOGR(paste(MASTER.DATA,"NHD/EXTRACTIONS/",area.name,"/vectors", sep=''),"NHDArea", verbose=F)
+    if(file.exists(paste(NHD.dir,"EXTRACTIONS/",area.name,"/vectors/Reservoirs.shp", sep=''))){
+      reservoirs <- readOGR(paste(NHD.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"Reservoirs", verbose=F)
+      dams <- readOGR(paste(raw.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"Dams", verbose=F)
+      areas <- readOGR(paste(NHD.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"NHDArea", verbose=F)
       areas <- areas[areas$AreaSqKm>0.16,]
       for(i in 1:length(areas)){
         areas@polygons[[i]] <- remove.holes(areas@polygons[[i]])

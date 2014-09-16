@@ -200,6 +200,11 @@ splitAndExport <- function(shapes, layers, dsn.vectors){
   if(class(shapes[[index]])=="SpatialLinesDataFrame"){
     if(any(shapes[[index]]$FCode %in% c(40309))){
       Areas <- shapes[[index]][shapes[[index]]$FCode %in% c(40309),]
+      
+      Areas <- Areas[Areas$AreaSqKm>0.16,]
+      for(i in 1:length(Areas)){
+        Areas@polygons[[i]] <- remove.holes(Areas@polygons[[i]])
+      }
     }else{
       Areas <- NULL
     }
