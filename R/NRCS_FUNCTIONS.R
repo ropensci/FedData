@@ -107,7 +107,7 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
     
     if(!file.exists(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))){
       NRCS.rast <- raster::rasterize(NRCS.polys,NED,field="MUKEY", na.rm=T)
-      writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''), drivername="GTiff", type="Int16", mvFlag=-32768, options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
+      writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''), drivername="GTiff", type="Int32", options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
     }else{
       NRCS.rast <- raster(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))
     }
@@ -148,14 +148,14 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
     projection(NRCS.rast.filled) <- projection(NRCS.rast)
     NRCS.rast <- NRCS.rast.filled
     
-    writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec_filled.tif",sep=''), drivername="GTiff", type="Int16", mvFlag=-32768, options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
+    writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec_filled.tif",sep=''), drivername="GTiff", type="Int32", options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
   }
   
   if(return.rast){
     if(!exists(NRCS.rast)){
       if(!file.exists(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))){
         NRCS.rast <- raster::rasterize(NRCS.polys,NED,field="MUKEY", na.rm=T)
-        writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''), drivername="GTiff", type="Int16", mvFlag=-32768, options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
+        writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''), drivername="GTiff", type="Int32", options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
       }else{
         NRCS.rast <- raster(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))
       }
@@ -673,12 +673,12 @@ fillReservoirSoils <- function(gapped.soil.raster, dem.raster, label, raw.dir, f
   merged.sp.null <- merged.sp[is.na(merged.sp$mukey),]
   
   # MUKEYs are a factor. Make them a factor
-  merged.sp.nonNull$mukey <- as.character(merged.sp.nonNull$mukey)
+  merged.sp.nonNull$mukey <- as.factor(merged.sp.nonNull$mukey)
   
   merged.sp.nonNull.prior <- merged.sp.nonNull
   
   # Perform the linear discriminant analysis
-  merged.sp.nonNull.lda <- lda(mukey~easting+northing+elevation+slope+aspect_sin+aspect_cos+twi, data= merged.sp.nonNull)
+  merged.sp.nonNull.lda <- lda(mukey~., data = merged.sp.nonNull, na.action=na.omit)
   
   # Predict values for NULL soils, and append to soils.null
   merged.sp.null.predict <- predict(merged.sp.nonNull.lda,merged.sp.null[,c(1,2,3,5:8)])
@@ -705,7 +705,7 @@ fillReservoirSoils <- function(gapped.soil.raster, dem.raster, label, raw.dir, f
   
   # Generate raster object, and write it
   NRCS.rast.hiRes <- raster(merged.sp.correct)
-  writeGDAL(as(NRCS.rast.hiRes, "SpatialGridDataFrame"),paste(raw.dir,"/EXTRACTIONS/",label,"/",'RASTERIZED_MUKEYS_1arcsec_filled.tif',sep=''), drivername="GTiff", type="Int16", mvFlag=-32768, options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
+#   writeGDAL(as(NRCS.rast.hiRes, "SpatialGridDataFrame"),paste(raw.dir,"/EXTRACTIONS/",label,"/",'RASTERIZED_MUKEYS_1arcsec_filled.tif',sep=''), drivername="GTiff", type="Int32", options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
   return(NRCS.rast.hiRes)
 }
 
