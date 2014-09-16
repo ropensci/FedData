@@ -53,6 +53,7 @@ export(loadSoilData)
 export(calculateTexture)
 export(loadSFNF_Data)
 export(textureClass.rasters)
+export(fillReservoirSoils)
 
 # UTILITY_FUNCTIONS
 export(pkgTest)
