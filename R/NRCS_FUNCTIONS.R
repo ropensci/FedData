@@ -393,7 +393,7 @@ getSoilData <- function(x, areas, polys, raw.dir="../Input/NRCS", dsn.vectors="O
   # These data are organized by plant symbols, the components in which they exist, and the soil components where they exist
   if(!file.exists(paste(tables.dir,"/ceplants.csv",sep='')) | force.redo){
     NRCS.ceplants <- loadAndAggregateSoilTable("ceplants",areas, raw.dir=raw.dir)
-    names(NRCS.ceplants)<- c(dbListFields(dbcon, "ceplants"),"area")
+    names(NRCS.ceplants)<- c(dbListFields(dbcon, "coeplants"),"area")
     #     NRCS.chfrags <- NRCS.chfrags[NRCS.chfrags$chkey %in% unique(NRCS.chorizon$chkey),]
     write.csv(NRCS.ceplants,paste(tables.dir,"/ceplants.csv",sep=''),row.names=F)
   }
