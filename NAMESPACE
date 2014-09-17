@@ -81,3 +81,6 @@ export(extractPRISM_DAILY)
 export(getPRISM_DAILYData)
 export(extractPRISM_DAILYYear)
 
+# PLANTS_FUNCTIONS
+export(loadPLANTS)
+
