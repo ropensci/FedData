@@ -92,65 +92,65 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   if(fillReservoirs){
     cat("Filling reservoirs.\n")
     if(file.exists(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec_filled.tif",sep='')) & !force.redo){
-      return(NRCS.polys)
-    }
-    
-    if(is.null(NED.raw.dir)){
-      NED.raw.dir <- readline("Please provide a path for the raw NHD data directory:")
-    }
-    
-    if(is.null(NHD.raw.dir)){
-      NHD.raw.dir <- readline("Please provide a path for the raw NHD data directory:")
-    }
-    
-    NED <- extractNED(template=sim.poly, label=area.name, raw.dir=NED.raw.dir, res="1", drain=T, force.redo=F)
-    
-    if(!file.exists(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))){
-      NRCS.rast <- raster::rasterize(NRCS.polys,NED,field="MUKEY", na.rm=T)
-      writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''), drivername="GTiff", type="Int32", options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
+      NRCS.rast <- raster(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec_filled.tif",sep=''))
     }else{
-      NRCS.rast <- raster(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))
-    }
-    
-    if(file.exists(paste(NHD.raw.dir,"EXTRACTIONS/",area.name,"/vectors/Reservoirs.shp", sep=''))){
-      reservoirs <- readOGR(paste(NHD.raw.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"Reservoirs", verbose=F)
-    }else{
-      NHD <- extractNED(template=sim.poly, label=area.name, raw.dir=NHD.raw.dir, force.redo=F)
-    }
-    
-    if(file.exists(paste(raw.dir,"EXTRACTIONS/",area.name,"/vectors/Dams.shp", sep=''))){
-      dams <- readOGR(paste(raw.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"Dams", verbose=F)
-    }else{
-      mapunits <- read.csv(paste(raw.dir,"EXTRACTIONS/",label,"/tables/mapunit.csv",sep=''))
-      dam.mukeys <- mapunits[mapunits$muname=="Dam",]$mukey
       
-      dams <- NRCS.polys[NRCS.polys$MUKEY%in%dam.mukeys,]
+      if(is.null(NED.raw.dir)){
+        NED.raw.dir <- readline("Please provide a path for the raw NHD data directory:")
+      }
       
-      writeOGR(dams, paste(raw.dir,"EXTRACTIONS/",area.name,"/vectors",sep=''), "Dams", "ESRI Shapefile", overwrite_layer=TRUE)
+      if(is.null(NHD.raw.dir)){
+        NHD.raw.dir <- readline("Please provide a path for the raw NHD data directory:")
+      }
       
+      NED <- extractNED(template=sim.poly, label=area.name, raw.dir=NED.raw.dir, res="1", drain=T, force.redo=F)
+      
+      if(!file.exists(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))){
+        NRCS.rast <- raster::rasterize(NRCS.polys,NED,field="MUKEY", na.rm=T)
+        writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''), drivername="GTiff", type="Int32", options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
+      }else{
+        NRCS.rast <- raster(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))
+      }
+      
+      if(file.exists(paste(NHD.raw.dir,"EXTRACTIONS/",area.name,"/vectors/Reservoirs.shp", sep=''))){
+        reservoirs <- readOGR(paste(NHD.raw.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"Reservoirs", verbose=F)
+      }else{
+        NHD <- extractNED(template=sim.poly, label=area.name, raw.dir=NHD.raw.dir, force.redo=F)
+      }
+      
+      if(file.exists(paste(raw.dir,"EXTRACTIONS/",area.name,"/vectors/Dams.shp", sep=''))){
+        dams <- readOGR(paste(raw.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"Dams", verbose=F)
+      }else{
+        mapunits <- read.csv(paste(raw.dir,"EXTRACTIONS/",label,"/tables/mapunit.csv",sep=''))
+        dam.mukeys <- mapunits[mapunits$muname=="Dam",]$mukey
+        
+        dams <- NRCS.polys[NRCS.polys$MUKEY%in%dam.mukeys,]
+        
+        writeOGR(dams, paste(raw.dir,"EXTRACTIONS/",area.name,"/vectors",sep=''), "Dams", "ESRI Shapefile", overwrite_layer=TRUE)
+        
+      }
+      #       areas <- readOGR(paste(NHD.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"NHDArea", verbose=F)
+      #       areas <- areas[areas$AreaSqKm>0.16,]
+      #       for(i in 1:length(areas)){
+      #         areas@polygons[[i]] <- remove.holes(areas@polygons[[i]])
+      #       }
+      
+      # Get raster cells in reservoirs and dams, and set them to NA
+      projection(dams) <- projection(reservoirs)
+      bad.data.vect <- gUnion(dams,reservoirs)
+      bad.data.vect <- spTransform(bad.data.vect,CRS(projection(NRCS.rast)))
+      #       bad.data.vect <- gUnion(bad.data.vect,areas)
+      bad.data.rast <- raster::extract(NRCS.rast, bad.data.vect, cellnumbers=T)
+      NRCS.rast[bad.data.rast[[1]][,1]] <- NA
+      
+      # Fill the missing reservoir/dam soils using linear discriminant analysis
+      NRCS.rast.filled <- fillReservoirSoils(gapped.soil.raster=NRCS.rast, dem.raster=NED,  label=area.name, raw.dir=paste(MASTER.DATA,"NRCS/",sep=''), force.redo=force.redo)
+      projection(NRCS.rast.filled) <- projection(NRCS.rast)
+      NRCS.rast <- NRCS.rast.filled
+      
+      writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec_filled.tif",sep=''), drivername="GTiff", type="Int32", options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
     }
-    #       areas <- readOGR(paste(NHD.dir,"EXTRACTIONS/",area.name,"/vectors", sep=''),"NHDArea", verbose=F)
-    #       areas <- areas[areas$AreaSqKm>0.16,]
-    #       for(i in 1:length(areas)){
-    #         areas@polygons[[i]] <- remove.holes(areas@polygons[[i]])
-    #       }
-    
-    # Get raster cells in reservoirs and dams, and set them to NA
-    projection(dams) <- projection(reservoirs)
-    bad.data.vect <- gUnion(dams,reservoirs)
-    bad.data.vect <- spTransform(bad.data.vect,CRS(projection(NRCS.rast)))
-    #       bad.data.vect <- gUnion(bad.data.vect,areas)
-    bad.data.rast <- raster::extract(NRCS.rast, bad.data.vect, cellnumbers=T)
-    NRCS.rast[bad.data.rast[[1]][,1]] <- NA
-    
-    # Fill the missing reservoir/dam soils using linear discriminant analysis
-    NRCS.rast.filled <- fillReservoirSoils(gapped.soil.raster=NRCS.rast, dem.raster=NED,  label=area.name, raw.dir=paste(MASTER.DATA,"NRCS/",sep=''), force.redo=force.redo)
-    projection(NRCS.rast.filled) <- projection(NRCS.rast)
-    NRCS.rast <- NRCS.rast.filled
-    
-    writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec_filled.tif",sep=''), drivername="GTiff", type="Int32", options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
   }
-  
   if(return.rast){
     if(!exists(NRCS.rast)){
       if(!file.exists(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))){
@@ -705,7 +705,7 @@ fillReservoirSoils <- function(gapped.soil.raster, dem.raster, label, raw.dir, f
   
   # Generate raster object, and write it
   NRCS.rast.hiRes <- raster(merged.sp.correct)
-#   writeGDAL(as(NRCS.rast.hiRes, "SpatialGridDataFrame"),paste(raw.dir,"/EXTRACTIONS/",label,"/",'RASTERIZED_MUKEYS_1arcsec_filled.tif',sep=''), drivername="GTiff", type="Int32", options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
+  #   writeGDAL(as(NRCS.rast.hiRes, "SpatialGridDataFrame"),paste(raw.dir,"/EXTRACTIONS/",label,"/",'RASTERIZED_MUKEYS_1arcsec_filled.tif',sep=''), drivername="GTiff", type="Int32", options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
   return(NRCS.rast.hiRes)
 }
 
