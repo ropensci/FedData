@@ -151,9 +151,16 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
       writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec_filled.tif",sep=''), drivername="GTiff", type="Int32", options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
     }
   }
+  
   if(return.rast){
     if(!exists(NRCS.rast)){
       if(!file.exists(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))){
+        if(is.null(NED.raw.dir)){
+          NED.raw.dir <- readline("Please provide a path for the raw NHD data directory:")
+        }
+        
+        NED <- extractNED(template=sim.poly, label=area.name, raw.dir=NED.raw.dir, res="1", drain=T, force.redo=F)
+        
         NRCS.rast <- raster::rasterize(NRCS.polys,NED,field="MUKEY", na.rm=T)
         writeGDAL(as(NRCS.rast, "SpatialGridDataFrame"),paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''), drivername="GTiff", type="Int32", options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
       }else{
