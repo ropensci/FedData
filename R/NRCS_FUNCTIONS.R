@@ -153,7 +153,7 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
   }
   
   if(return.rast){
-    if(!exists(NRCS.rast)){
+    if(!fillReservoirs){
       if(!file.exists(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))){
         if(is.null(NED.raw.dir)){
           NED.raw.dir <- readline("Please provide a path for the raw NHD data directory:")
@@ -166,7 +166,10 @@ extractNRCS <- function(template, label, raw.dir, extraction.dir=NULL, SFNF.dir=
       }else{
         NRCS.rast <- raster(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec.tif",sep=''))
       }
+    }else{
+      NRCS.rast <- raster(paste(raw.dir,"EXTRACTIONS/",area.name,"/RASTERIZED_MUKEYS_1arcsec_filled.tif",sep=''))
     }
+    
     return(NRCS.rast)
   }else{
     return(NRCS.polys)
