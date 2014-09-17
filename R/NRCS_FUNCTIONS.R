@@ -387,9 +387,17 @@ getSoilData <- function(x, areas, polys, raw.dir="../Input/NRCS", dsn.vectors="O
     names(NRCS.chfrags)<- c(dbListFields(dbcon, "chfrags"),"area")
     #     NRCS.chfrags <- NRCS.chfrags[NRCS.chfrags$chkey %in% unique(NRCS.chorizon$chkey),]
     write.csv(NRCS.chfrags,paste(tables.dir,"/chfrag.csv",sep=''),row.names=F)
-  }  
+  }
+  
+  # Read in the plant community data
+  # These data are organized by plant symbols, the components in which they exist, and the soil components where they exist
+  if(!file.exists(paste(tables.dir,"/ceplants.csv",sep='')) | force.redo){
+    NRCS.ceplants <- loadAndAggregateSoilTable("ceplants",areas, raw.dir=raw.dir)
+    names(NRCS.ceplants)<- c(dbListFields(dbcon, "ceplants"),"area")
+    #     NRCS.chfrags <- NRCS.chfrags[NRCS.chfrags$chkey %in% unique(NRCS.chorizon$chkey),]
+    write.csv(NRCS.ceplants,paste(tables.dir,"/ceplants.csv",sep=''),row.names=F)
+  }
 }
-
 
 correctSoilComponents <- function(x){
   out <- lapply(unique(x$mukey), function(i){    temp <- x[x$mukey==i,]; temp$comppct_r_corr <- temp$comppct_r/sum(temp$comppct_r); return(temp)})
