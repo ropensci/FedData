@@ -105,7 +105,7 @@ getNED <- function(x, raw.dir="./Input/NED", res=NULL){
           stop(paste('Please find a copy of the n',n,'w',w,'.zip NED grid in ESRI ARCGRID format, available from the USGS.',sep=''))
         }
       }
-      unzip(paste(raw.dir,'/',res,'/n',n,'w',w,'.zip',sep=''),exdir=paste(raw.dir,'/',res, sep=''))
+      unzip(paste(raw.dir,'/',res,'/n',n,'w',w,'.zip',sep=''),exdir=paste(raw.dir,'/',res,'/n',n,'w',w, sep=''))
       tiles[t] <- raster(readGDAL(paste(raw.dir,'/',res,'/n',n,'w',w,'/grdn',n,'w',w,'_',res,sep='')))
       unlink(paste(raw.dir,'/',res,'/n',n,'w',w,sep=''), recursive = TRUE)
       t <- t+1
