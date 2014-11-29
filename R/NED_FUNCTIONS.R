@@ -95,11 +95,11 @@ getNED <- function(x, raw.dir="./Input/NED", res=NULL){
   for(w in wests){
     for(n in norths){
       if(!file.exists(paste(raw.dir,'/',res,'/n',n,'w',w,'.zip',sep=''))){
-        if(url.exists(paste('ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/GridFloat/n',n,'w',w,'.zip',sep=''))){
-          cat(paste('\nDownloading: ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/GridFloat/n',n,'w',w,'.zip\n',sep=''))
+        if(url.exists(paste('ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/ArcGrid/n',n,'w',w,'.zip',sep=''))){
+          cat(paste('\nDownloading: ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/ArcGrid/n',n,'w',w,'.zip\n',sep=''))
           flush.console()
           f = CFILE(paste(raw.dir,'/',res,'/n',n,'w',w,'.zip',sep=''), mode="wb")
-          curlPerform(url = paste('ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/GridFloat/n',n,'w',w,'.zip',sep=''), writedata = f@ref)
+          curlPerform(url = paste('ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/ArcGrid/n',n,'w',w,'.zip',sep=''), writedata = f@ref)
           close(f)
         }else{
           stop(paste('Please find a copy of the n',n,'w',w,'.zip NED grid in ESRI ARCGRID format, available from the USGS.',sep=''))
