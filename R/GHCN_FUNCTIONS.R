@@ -1,5 +1,3 @@
-pkgTest("zoo")
-
 downloadGHCN <- function(ID, data.dir="../DATA/"){
   if(!file.exists(data.dir)){
     dir.create(data.dir, recursive=T)
