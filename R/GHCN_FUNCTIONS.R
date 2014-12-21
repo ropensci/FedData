@@ -32,6 +32,8 @@ getGHCN <- function(ID, data.dir="../DATA/", element, months=c(1:12), fun){
   # to convert back to data frame
   series <- data.frame(YEAR = time(series), coredata(series))
   
+  names(series) <- c("YEAR",ID)
+  
   return(series)
   
 }
