@@ -38,7 +38,7 @@ getPRISM_MONTHLYData <- function(template, type, label, out.dir, monthly.dir, fo
   #   writeGDAL(as(all.data, "SpatialGridDataFrame"), paste(out.dir,label,"/",type,"_MONTHLY_FINAL_800.nc", sep=''), drivername="netCDF", type="Float32", options=c("FORMAT=NC4","COMPRESS=DEFLATE","ZLEVEL=9"))
   write.csv(names(all.data),paste(out.dir,label,"/",type,"_MONTHLY_FINAL_800_BANDS.csv", sep=''), row.names=F, col.names=F)
   
-  unlink(paste(out.dir,'TEMP/', sep=''), recursive=T, force=T)
+#   unlink(paste(out.dir,'TEMP/', sep=''), recursive=T, force=T)
   
   gc()
   gc()
