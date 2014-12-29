@@ -6,23 +6,26 @@ getPRISM_MONTHLYData <- function(template, type, label, out.dir, monthly.dir, fo
   if(!force.redo & file.exists(paste(out.dir,label,"/",type,"_MONTHLY_FINAL_800.tif", sep=''))){
     all.data <- brick(paste(out.dir,label,"/",type,"_MONTHLY_FINAL_800.tif", sep=''))*1
     names(all.data) <- read.csv(paste(out.dir,label,"/",type,"_MONTHLY_FINAL_800_BANDS.csv", sep=''))$x
-#     names(all.data) <- as.Date(read.csv(paste(out.dir,label,"/",type,"_MONTHLY_FINAL_800_BANDS.csv", sep=''))$x, format="Y%Y.M%m")
+    #     names(all.data) <- as.Date(read.csv(paste(out.dir,label,"/",type,"_MONTHLY_FINAL_800_BANDS.csv", sep=''))$x, format="Y%Y.M%m")
     return(all.data)
   }
   
   # Convert template to decimal degrees for data request
   sim.poly.latlon <- spTransform(template, CRS("+proj=longlat +datum=NAD83"))
-    
-  dir.create(paste(out.dir,'TEMP/', sep=''))
-  system(paste("ls ",paste(monthly.dir,type,sep=''),'/* | parallel unzip -qqo {} -d ',out.dir,'TEMP/',sep=''))
   
-  monthly.files <- list.files(paste(out.dir,'TEMP', sep=''), recursive=T, full.names=T)
+  monthly.files <- list.files(paste(monthly.dir,type,sep=''), recursive=T, full.names=T)
+  
+  if(!length(grep("*\\.bil$", monthly.files, value=TRUE))>0){
+    system(paste("ls ",paste(monthly.dir,type,sep=''),'/* | parallel unzip -qqo {} -d ',paste(monthly.dir,type,sep=''),sep='')) 
+    monthly.files <- list.files(paste(monthly.dir,type,sep=''), recursive=T, full.names=T)
+  }
+  
   monthly.files <- grep("*\\.bil$", monthly.files, value=TRUE)
   monthly.files <- grep("spqc", monthly.files, value=TRUE, invert=T)
   monthly.files <- grep("/cai", monthly.files, value=TRUE)
   
   all.data <- mclapply(as.list(monthly.files),function(monthly.file,...){ extractPRISM_MONTHLYMonth(template=sim.poly.latlon, file=monthly.file) }, mc.cores=detectCores())
-      
+  
   all.data <- brick(all.data)
   
   all.data <- all.data[[order(names(all.data))]]
@@ -32,9 +35,9 @@ getPRISM_MONTHLYData <- function(template, type, label, out.dir, monthly.dir, fo
   }
   
   writeRaster(all.data,paste(out.dir,label,"/",type,"_MONTHLY_FINAL_800.tif", sep=''), datatype="FLT4S", options=c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"),overwrite=T,setStatistics=FALSE)
-#   writeGDAL(as(all.data, "SpatialGridDataFrame"), paste(out.dir,label,"/",type,"_MONTHLY_FINAL_800.nc", sep=''), drivername="netCDF", type="Float32", options=c("FORMAT=NC4","COMPRESS=DEFLATE","ZLEVEL=9"))
+  #   writeGDAL(as(all.data, "SpatialGridDataFrame"), paste(out.dir,label,"/",type,"_MONTHLY_FINAL_800.nc", sep=''), drivername="netCDF", type="Float32", options=c("FORMAT=NC4","COMPRESS=DEFLATE","ZLEVEL=9"))
   write.csv(names(all.data),paste(out.dir,label,"/",type,"_MONTHLY_FINAL_800_BANDS.csv", sep=''), row.names=F, col.names=F)
-
+  
   unlink(paste(out.dir,'TEMP/', sep=''), recursive=T, force=T)
   
   gc()
@@ -92,7 +95,7 @@ calcANNUALGDD_MONTHLY <- function(extraction.dir, months, t.base, t.cap=NULL){
     tmin.brick <- calc(tmin.brick,function(x) { x[x>t.cap] <- t.cap; return(x) })
     tmax.brick <- calc(tmax.brick,function(x) { x[x>t.cap] <- t.cap; return(x) })
   }
-
+  
   GDD.brick <- ((tmin.brick+tmax.brick)/2)-t.base
   GDD.brick.months <- as.numeric(gsub("Y\\d{4}[.]M","",names(GDD.brick)))
   
@@ -123,7 +126,7 @@ subsetPRISM_MONTHLY <- function(extraction.dir, element, months, fun){
   brick.months <- as.numeric(gsub("Y\\d{4}[.]M","",brick.names))
   
   annual.brick <- annualizePRISM_MONTHLY(brick=all.brick,months=months,fun=fun)
-
+  
   return(annual.brick)
 }
 
@@ -156,7 +159,7 @@ annualizePRISM_MONTHLY <- function(prism.brick, months=c(1:12), fun){
     signal.brick.temp <- zApply(signal.brick.temp, by=getZ(signal.brick.temp), fun=mean)
   }
   signal.brick.temp <- signal.brick.temp[[(1:nlayers(signal.brick.temp))[names(signal.brick.temp)!="X0"]]]
-#   signal.brick.temp <- round(signal.brick.temp, digits=3)
+  #   signal.brick.temp <- round(signal.brick.temp, digits=3)
   
   return(signal.brick.temp)
 }
@@ -283,8 +286,8 @@ getPRISM_DAILYData <- function(type, label, out.dir, daily.dir, template, year.r
   
   writeRaster(all.data,paste(out.dir,label,"/",type,"_DAILY_FINAL_800.tif", sep=''), datatype="FLT4S", options=c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"),overwrite=T,setStatistics=FALSE)
   
-#   writeRaster(all.data, paste(out.dir,label,"/",type,"_DAILY_FINAL_800.tif", sep=''), drivername="GTiff", type="Float32")
-#   writeGDAL(as(all.data, "SpatialGridDataFrame"), paste(out.dir,label,"/",type,"_DAILY_FINAL_800.tif", sep=''), drivername="GTiff", type="Float32")
+  #   writeRaster(all.data, paste(out.dir,label,"/",type,"_DAILY_FINAL_800.tif", sep=''), drivername="GTiff", type="Float32")
+  #   writeGDAL(as(all.data, "SpatialGridDataFrame"), paste(out.dir,label,"/",type,"_DAILY_FINAL_800.tif", sep=''), drivername="GTiff", type="Float32")
   write.csv(names(all.data),paste(out.dir,label,"/",type,"_DAILY_FINAL_800_BANDS.csv", sep=''), row.names=F, col.names=F)
   
   gc()
