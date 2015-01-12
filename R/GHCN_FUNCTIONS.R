@@ -3,8 +3,8 @@ downloadGHCN <- function(ID, data.dir="../DATA/"){
     dir.create(data.dir, recursive=T)
   }
   
-  system(paste("wget -np -nd -N paste(ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/all//",ID,".dly",sep='') --directory-prefix=",data.dir," ,sep=''))
-  system(paste("wget -np -nd -N http://websoilsurvey.sc.egov.usda.gov/DataAvailability/SoilDataAvailabilityShapefile.zip --directory-prefix=",raw.dir, sep=''))
+#   system(paste("wget -np -nd -N paste(ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/all//",ID,".dly",sep='') --directory-prefix=",data.dir," ,sep=''))
+#   system(paste("wget -np -nd -N http://websoilsurvey.sc.egov.usda.gov/DataAvailability/SoilDataAvailabilityShapefile.zip --directory-prefix=",raw.dir, sep=''))
   
   
   for(i in ID){
