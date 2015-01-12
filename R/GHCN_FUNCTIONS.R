@@ -3,6 +3,10 @@ downloadGHCN <- function(ID, data.dir="../DATA/"){
     dir.create(data.dir, recursive=T)
   }
   
+  system(paste("wget -np -nd -N paste(ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/all//",ID,".dly",sep='') --directory-prefix=",data.dir," ,sep=''))
+  system(paste("wget -np -nd -N http://websoilsurvey.sc.egov.usda.gov/DataAvailability/SoilDataAvailabilityShapefile.zip --directory-prefix=",raw.dir, sep=''))
+  
+  
   for(i in ID){
     if(!file.exists(paste(data.dir,i,".dly",sep=''))){
       system(paste("wget -nd --directory-prefix=",data.dir," ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/all//",i,".dly",sep=''))
@@ -53,20 +57,6 @@ extractGHCNDaily <- function(id, data.dir="../DATA/", element){
   names(daily)[1:4] <- c("STATION","YEAR","MONTH","ELEMENT")
   daily <- daily[daily$ELEMENT==toupper(element),c(2:3,seq(5,125,4))]
   daily[daily==-9999] <- NA
-  #   if(fun=="sum"){
-  #     daily <- cbind(daily[,1:2],AGG=rowSums(daily[,3:33], na.rm=T))
-  #   }else if(fun=="mean"){
-  #     daily <- cbind(daily[,1:2],AGG=rowMeans(daily[,3:33], na.rm=T))
-  #   }
-  #   daily$YEAR[daily$MONTH %in% previous.year] <- daily$YEAR[daily$MONTH %in% previous.year]+1
-  #   daily <- daily[!(daily$MONTH %in% (1:12)[!(1:12 %in% c(previous.year,current.year,next.year))]),]
-  #   daily <- daily[complete.cases(daily),]
-  #   if(fun=="sum"){
-  #     monthly <- aggregate(daily, by=list(daily$YEAR), FUN=sum)[,c(1,4)]
-  #   }else if(fun=="mean"){
-  #     monthly <- aggregate(daily, by=list(daily$YEAR), FUN=mean)[,c(1,4)]
-  #   }
-  #   names(monthly) <- c("YEAR",id)
   
   return(daily)
 }
