@@ -99,7 +99,7 @@ getNED <- function(x, raw.dir="./Input/NED", res=NULL){
           cat(paste('\nDownloading: ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/ArcGrid/n',n,'w',w,'.zip\n',sep=''))
           flush.console()
           
-          file.download(paste('ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/ArcGrid/n',n,'w',w,'.zip',sep=''), destfile=paste(raw.dir,'/',res,'/n',n,'w',w,'.zip',sep=''), mode="wb")
+          download.file(paste('ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/ArcGrid/n',n,'w',w,'.zip',sep=''), destfile=paste(raw.dir,'/',res,'/n',n,'w',w,'.zip',sep=''), mode="wb")
           
 #           f = CFILE(paste(raw.dir,'/',res,'/n',n,'w',w,'.zip',sep=''), mode="wb")
 #           curlPerform(url = paste('ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/ArcGrid/n',n,'w',w,'.zip',sep=''), writedata = f@ref)
