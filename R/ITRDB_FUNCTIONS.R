@@ -442,7 +442,7 @@ is.int <- function(x) {
   y
 }
 
-getITRDBMetadataSPDF <- function(series.names, data.dir){
+getITRDBMetadata <- function(series.names, data.dir){
   dendros.study <- read.csv(paste(data.dir,"ITRDB_METADATA.csv",sep=''))
   dendros.study <- dendros.study[!is.na(dendros.study$LON) & (dendros.study$SERIES %in% series.names),]
   dendros.study <- dendros.study[order(dendros.study$SERIES),]
