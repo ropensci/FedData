@@ -25,28 +25,14 @@ getNHD <- function(template, label, raw.dir, extraction.dir=NULL, force.redo=FAL
   if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){
     template <- SPDFfromPolygon(spTransform(polygonFromExtent(template),CRS("+proj=longlat +ellps=GRS80")))
   }
-  
-  writeOGR(template,dsn.vectors,"template","ESRI Shapefile", overwrite_layer=TRUE)
-  
-  HUC4 <- loadHUC4(template=template, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=force.redo)
+    
+  HUC4 <- getHUC4(template=template, raw.dir=raw.dir, force.redo=force.redo)
   
   area.list <- getAreaList(HUC4)
   
   shapes <- loadNHDSubregions(template=template, area.list=area.list, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=force.redo)
   
   return(shapes)
-}
-
-# A method for loading the HUC4 shapefile from the
-# National Hydrography Dataset.
-loadHUC4 <- function(template, raw.dir, dsn.vectors, force.redo=FALSE){
-  if(!("HUC4" %in% ogrListLayers(dsn.vectors)) | force.redo){
-    HUC4 <- getHUC4(template=template, raw.dir=raw.dir, force.redo=force.redo)
-    writeOGR(HUC4, dsn.vectors, "HUC4","ESRI Shapefile", overwrite_layer=TRUE)
-  }else{
-    HUC4 <- readOGR(normalizePath(dsn.vectors),"HUC4", verbose=F)
-  }
-  return(HUC4)
 }
 
 # A method for downloading and processing the HUC4 shapefile from
@@ -140,7 +126,11 @@ loadNHDLayers <- function(template, area.list, raw.dir, dsn.vectors, force.redo=
     if(is.null(shapes)) return(shapes)
 #     shapes <- spTransform(shapes,CRS(projection(template)))
     suppressWarnings(writeOGR(shapes,dsn.vectors,layer,"ESRI Shapefile", overwrite_layer=TRUE))
+    return(shapes)
   })
+  names(merged.data) <- layers
+  null.layers <- sapply(merged.data,is.null)
+  merged.data <- merged.data[!null.layers]
   
-  return(shapes)
+  return(merged.data)
 }
