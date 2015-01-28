@@ -1,7 +1,29 @@
+# UTILITY_FUNCTIONS
+export(pkgTest)
+export(substrRight)
+export(createArea)
+export(polygonFromExtent)
+export(SPDFfromPolygon)
+export(cropToPoly)
+export(plot.stacked)
+export(sequential.duplicated)
+export(scalebar.new)
+
+# NED_FUNCTIONS
+export(getNED)
+
 # GHCN_FUNCTIONS
 export(downloadGHCNDaily)
 export(getGHCNDaily)
 export(getGHCNStations)
+
+# NHD_FUNCTIONS
+export(getNHD)
+export(getHUC4)
+export(getNHDSubregions)
+export(loadNHDLayers)
+export(loadNHDSubregions)
+export(getAreaList)
 
 # ITRDB_FUNCTIONS
 export(getITRDB)
@@ -10,17 +32,9 @@ export(is.int)
 export(getITRDBMetadata)
 export(sanitizeITRDBnames)
 
-# NED_FUNCTIONS
-export(getNED)
 
-# NHD_FUNCTIONS
-export(getNHD)
-export(loadHUC4)
-export(getHUC4)
-export(getNHDSubregions)
-export(loadNHDLayers)
-export(loadNHDSubregions)
-export(getAreaList)
+
+
 
 # NRCS_FUNCTIONS
 export(extractNRCS)
@@ -39,16 +53,7 @@ export(loadSFNF_Data)
 export(textureClass.rasters)
 export(fillReservoirSoils)
 
-# UTILITY_FUNCTIONS
-export(pkgTest)
-export(substrRight)
-export(createArea)
-export(polygonFromExtent)
-export(SPDFfromPolygon)
-export(cropToPoly)
-export(plot.stacked)
-export(sequential.duplicated)
-export(scalebar.new)
+
 
 # PRISM_FUNCTIONS
 export(getPRISM_MONTHLYData)
