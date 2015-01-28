@@ -53,7 +53,7 @@ downloadGHCNDaily <- function(ID, data.dir="../DATA/", force.redo=F){
 }
 
 getGHCNDaily <- function(template=NULL, elements=NULL, data.dir=getwd(), standardize=F, force.redo=F){
-  
+  cat("\nGetting spatial data of GHCN stations")
   stations.sp <- getGHCNStations(template=template, data.dir=data.dir, elements=elements, standardize=standardize)
   
   # If the user didn't specify target elements, get them all.
@@ -63,9 +63,12 @@ getGHCNDaily <- function(template=NULL, elements=NULL, data.dir=getwd(), standar
   
   stations.sp <- stations.sp[!duplicated(stations.sp@data[,c("ID","LATITUDE","LONGITUDE")]),c("ID","LATITUDE","LONGITUDE")]
   
+  cat("\nDownloading daily GHCN data")
   downloadGHCNDaily(stations.sp$ID,data.dir=data.dir,force.redo=force.redo)
   
-  daily <- lapply(stations.sp$ID,function(id){
+  daily <- lapply(1:length(stations.sp$ID),function(i){
+    id <- stations.sp$ID[i]
+    cat("\nProcessing daily GHCH station ",i,"of",length(stations.sp$ID))
     daily <- read.fwf(paste(data.dir,id,".dly",sep=''),c(11,4,2,4,rep(c(5,1,1,1),31)))
     names(daily)[1:4] <- c("STATION","YEAR","MONTH","ELEMENT")
     daily <- daily[daily$ELEMENT %in% toupper(elements),c(2:4,seq(5,125,4))]
