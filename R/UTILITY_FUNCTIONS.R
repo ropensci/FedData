@@ -48,8 +48,8 @@ SPDFfromPolygon <- function(x){
   return(x)
 }
 
-# A method to crop vector shapefiles to a given study area.
-crop.to.studyArea <- function(x,y) {
+# A method to crop vector shapefiles to a given polygon.
+cropToPoly <- function(x,y) {
   gI <- gIntersects(x,y,byid=TRUE)
   out <- vector(mode="list",length=length(which(gI)))
   ii <- 1
@@ -231,4 +231,14 @@ scalebar.new <- function (d, xy = NULL, height = NULL, line.offset=c(0,0), side=
     text(mean(c(xstart,xend)), xy[2], labels = label, adj = c(0.5,1.5), 
          ...)
   }
+}
+
+wgetDownload <- function(url, destdir, timestamping=T){
+  if(timestamping){
+    status <- system(paste("wget -N -nd --quiet --directory-prefix=",destdir," ",url,sep=''))
+  }else{
+    status <- system(paste("wget -nd --quiet --directory-prefix=",destdir," ",url,sep=''))
+  }
+  if (status!=0) 
+    warning("Download of ",url," had nonzero exit status")
 }

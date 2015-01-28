@@ -5,6 +5,7 @@
 #     Options are "1" for the 1 arc-second NED (~30 meter), 
 #     or "13" for the 1/3 arc-second NED (~10 meter)
 # If template is a sp* or extent object, res must be provided!
+# USES RCurl, raster, sp, rgdal
 getNED <- function(template, label, res, raw.dir, extraction.dir=paste(raw.dir,"/EXTRACTIONS",sep=''), force.redo=F){  
   
   dir.create(paste(extraction.dir,"/",label,"/",sep=''), showWarnings=F, recursive=T)
@@ -50,19 +51,10 @@ getNED <- function(template, label, res, raw.dir, extraction.dir=paste(raw.dir,"
   t <- 1
   for(w in wests){
     for(n in norths){
-      if(!file.exists(paste(raw.dir,'/',res,'/n',n,'w',w,'.zip',sep=''))){
-        if(url.exists(paste('ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/ArcGrid/n',n,'w',w,'.zip',sep=''))){
-          cat(paste('\nDownloading: ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/ArcGrid/n',n,'w',w,'.zip\n',sep=''))
-          flush.console()
-                    
-          f = CFILE(paste(raw.dir,'/',res,'/n',n,'w',w,'.zip',sep=''), mode="wb")
-          curlPerform(url = paste('ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/ArcGrid/n',n,'w',w,'.zip',sep=''), writedata = f@ref)
-          close(f)
-          
-        }else{
-          stop(paste('Please find a copy of the n',n,'w',w,'.zip NED grid in ESRI ARCGRID format, available from the USGS.',sep=''))
-        }
-      }
+      url <- paste('ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/ArcGrid/n',n,'w',w,'.zip',sep='')
+      destdir <- paste(raw.dir,'/',res,'/',sep='')
+      wgetDownload(url=url, destdir=destdir)
+
       unzip(paste(raw.dir,'/',res,'/n',n,'w',w,'.zip',sep=''),exdir=paste(raw.dir,'/',res,'/n',n,'w',w, sep=''))
       tiles[t] <- raster(readGDAL(paste(raw.dir,'/',res,'/n',n,'w',w,'/grdn',n,'w',w,'_',res,sep='')))
       unlink(paste(raw.dir,'/',res,'/n',n,'w',w,sep=''), recursive = TRUE)
