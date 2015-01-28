@@ -442,39 +442,6 @@ is.int <- function(x) {
   y
 }
 
-getITRDB_MANN08 <- function(data.dir){
-  if(!file.exists(paste(data.dir,"mann2008datainfilled.txt",sep=''))){
-    system(paste("wget -nd --output-document=",paste(data.dir,"mann2008datainfilled.txt",sep='')," ftp://ftp.ncdc.noaa.gov/pub/data/paleo/reconstructions/pcn/proxy/mann2008/mann2008datainfilled.txt",sep=''))
-  }
-  
-  if(!file.exists(paste(data.dir,"1209proxynames.txt",sep=''))){
-    system(paste("wget -nd --output-document=",paste(data.dir,"1209proxynames.txt",sep='')," ftp://ftp.ncdc.noaa.gov/pub/data/paleo/reconstructions/pcn/proxy/mann2008/1209proxynames.txt",sep=''))
-  }
-  
-  mann2008.data <- read.csv(paste(data.dir,"mann2008datainfilled.txt",sep=''), header=T, skip=25)
-  mann2008.meta <- read.delim(paste(data.dir,"1209proxynames.txt",sep=''),header=T)
-  names(mann2008.data)[1] <- "YEAR"
-  
-  mann2008.meta <- mann2008.meta[mann2008.meta$Data.type.code %in% c(9000,3000),c(26,8,6,7,9)]
-  names(mann2008.meta) <- c("NAME","ELEVATION","LATITUDE","LONGITUDE","SPECIES")
-  
-  mann2008.data <- mann2008.data[,names(mann2008.data) %in% c("YEAR",as.character(mann2008.meta$NAME))]
-  mann2008.data <- data.matrix(mann2008.data)
-  mann2008.data[mann2008.data=="NaN"] <- NA
-  mann2008.data <- mann2008.data[c(-8:-1),]
-  
-  write.csv(mann2008.meta,paste(data.dir,"mann2008_meta.csv",sep=''), row.names=F)
-  
-  # Standardize columns
-  years <- as.data.frame(mann2008.data[,1])
-  data <- as.data.frame(scale(mann2008.data[,-1]))
-  mann2008.data <- cbind(years,data)
-  names(mann2008.data)[1] <- "YEAR"
-  
-  return(as.data.frame(mann2008.data))
-  
-}
-
 getITRDBMetadataSPDF <- function(series.names, data.dir){
   dendros.study <- read.csv(paste(data.dir,"ITRDB_METADATA.csv",sep=''))
   dendros.study <- dendros.study[!is.na(dendros.study$LON) & (dendros.study$SERIES %in% series.names),]
@@ -482,18 +449,6 @@ getITRDBMetadataSPDF <- function(series.names, data.dir){
   
   dendros.study <- SpatialPointsDataFrame(dendros.study[,c("LON","LAT")],dendros.study, proj4string=CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"))
   suppressWarnings(writeOGR(dendros.study,paste(data.dir,"ITRDB_METADATA.kml",sep=''),"ITRDB_METADATA",driver="KML", overwrite_layer=TRUE))
-  
-  return(dendros.study)
-}
-
-
-getITRDBMetadataSPDF_MANN08 <- function(data.dir){
-  dendros.study <- read.csv(paste(data.dir,"mann2008_meta.csv",sep=''))
-  dendros.study <- dendros.study[!is.na(dendros.study$LONGITUDE),]
-  dendros.study <- dendros.study[order(dendros.study$NAME),]
-  
-  dendros.study <- SpatialPointsDataFrame(dendros.study[,c("LONGITUDE","LATITUDE")],dendros.study, proj4string=CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"))
-  suppressWarnings(writeOGR(dendros.study,paste(data.dir,"mann2008_meta.kml",sep=''),"mann2008_meta",driver="KML", overwrite_layer=TRUE))
   
   return(dendros.study)
 }

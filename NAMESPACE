@@ -1,11 +1,3 @@
-# DEM_DRAIN_FUNCTIONS
-export(drainDEM)
-export(getNearestMinimum)
-export(fillIDW)
-export(getNRCS_Dams)
-export(bootstrapDrainDEM)
-export(make.monotonic)
-
 # GHCN_FUNCTIONS
 export(downloadGHCNDaily)
 export(getGHCNDaily)
@@ -15,13 +7,10 @@ export(getGHCNStations)
 export(getITRDB)
 export(seriesToMatrix)
 export(is.int)
-export(getITRDB_MANN08)
-export(getITRDBMetadataSPDF)
-export(getITRDBMetadataSPDF_MANN08)
+export(getITRDBMetadata)
 export(sanitizeITRDBnames)
 
 # NED_FUNCTIONS
-export(extractNED)
 export(getNED)
 
 # NHD_FUNCTIONS

@@ -1,14 +1,14 @@
-getGHCNStations <- function(template=NULL, elements=NULL, standardize=F, data.dir="../DATA/"){
+getGHCNStations <- function(template=NULL, elements=NULL, standardize=F, raw.dir="../DATA/"){
   if(!is.null(template) & !is(template,"SpatialPolygonsDataFrame")){
     template <- polygonFromExtent(template)
   }
   
-  download.file(url="ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt",destfile=paste(data.dir,"ghcnd-inventory.txt",sep=''),mode='wb')
+  download.file(url="ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt",destfile=paste(raw.dir,"ghcnd-inventory.txt",sep=''),mode='wb')
   
-  system(paste("sed -i -E 's/#/ /' ",paste(data.dir,"ghcnd-inventory.txt",sep=''),sep=''))
-  system(paste("rm ",paste(data.dir,"ghcnd-inventory.txt-E",sep=''),sep=''))
+  system(paste("sed -i -E 's/#/ /' ",paste(raw.dir,"ghcnd-inventory.txt",sep=''),sep=''))
+  system(paste("rm ",paste(raw.dir,"ghcnd-inventory.txt-E",sep=''),sep=''))
   
-  station.inventory <- read.fwf(paste(data.dir,"ghcnd-inventory.txt",sep=''),c(11,1,8,1,9,1,4,1,4,1,4))[,seq(1,11,2)]
+  station.inventory <- read.fwf(paste(raw.dir,"ghcnd-inventory.txt",sep=''),c(11,1,8,1,9,1,4,1,4,1,4))[,seq(1,11,2)]
   names(station.inventory) <- c("ID","LATITUDE","LONGITUDE","ELEMENT","YEAR_START","YEAR_END")
   
   if(!is.null(elements)){
@@ -34,13 +34,13 @@ getGHCNStations <- function(template=NULL, elements=NULL, standardize=F, data.di
   return(stations.sp)
 }
 
-downloadGHCNDaily <- function(ID, data.dir="../DATA/", force.redo=F){
-  if(!file.exists(data.dir)){
-    dir.create(data.dir, recursive=T)
+downloadGHCNDaily <- function(ID, raw.dir="../DATA/", force.redo=F){
+  if(!file.exists(raw.dir)){
+    dir.create(raw.dir, recursive=T)
   }
   
   urls <- paste("ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/all/",ID,".dly",sep='')
-  out.files <- paste(data.dir,ID,'.dly',sep='')
+  out.files <- paste(raw.dir,ID,'.dly',sep='')
   
   if(!force.redo){
     existing.files <- sapply(out.files,file.exists)
@@ -52,9 +52,9 @@ downloadGHCNDaily <- function(ID, data.dir="../DATA/", force.redo=F){
 
 }
 
-getGHCNDaily <- function(template=NULL, elements=NULL, data.dir=getwd(), standardize=F, force.redo=F){
+getGHCNDaily <- function(template=NULL, elements=NULL, raw.dir=getwd(), standardize=F, force.redo=F){
   cat("\nGetting spatial data of GHCN stations")
-  stations.sp <- getGHCNStations(template=template, data.dir=data.dir, elements=elements, standardize=standardize)
+  stations.sp <- getGHCNStations(template=template, raw.dir=raw.dir, elements=elements, standardize=standardize)
   
   # If the user didn't specify target elements, get them all.
   if(is.null(elements)){
@@ -64,12 +64,12 @@ getGHCNDaily <- function(template=NULL, elements=NULL, data.dir=getwd(), standar
   stations.sp <- stations.sp[!duplicated(stations.sp@data[,c("ID","LATITUDE","LONGITUDE")]),c("ID","LATITUDE","LONGITUDE")]
   
   cat("\nDownloading daily GHCN data")
-  downloadGHCNDaily(stations.sp$ID,data.dir=data.dir,force.redo=force.redo)
+  downloadGHCNDaily(stations.sp$ID,raw.dir=raw.dir,force.redo=force.redo)
   
   daily <- lapply(1:length(stations.sp$ID),function(i){
     id <- stations.sp$ID[i]
     cat("\nProcessing daily GHCH station ",i,"of",length(stations.sp$ID))
-    daily <- read.fwf(paste(data.dir,id,".dly",sep=''),c(11,4,2,4,rep(c(5,1,1,1),31)))
+    daily <- read.fwf(paste(raw.dir,id,".dly",sep=''),c(11,4,2,4,rep(c(5,1,1,1),31)))
     names(daily)[1:4] <- c("STATION","YEAR","MONTH","ELEMENT")
     daily <- daily[daily$ELEMENT %in% toupper(elements),c(2:4,seq(5,125,4))]
     daily[daily==-9999] <- NA
@@ -109,7 +109,7 @@ getGHCNDaily <- function(template=NULL, elements=NULL, data.dir=getwd(), standar
 
 
 # 
-# getGHCNMonthly <- function(id, data.dir="../DATA/", element, months=c(1:12), fun=NULL){
+# getGHCNMonthly <- function(id, raw.dir="../DATA/", element, months=c(1:12), fun=NULL){
 #   # If more months than a year, break
 #   if(length(months)>12){
 #     stop("ERROR! Too many months.")
@@ -120,7 +120,7 @@ getGHCNDaily <- function(template=NULL, elements=NULL, data.dir=getwd(), standar
 #   current.year <- months[months>=1 & months<=12]
 #   next.year <- months[months>12]-12
 #   
-#   daily <- read.fwf(paste(data.dir,id,".dly",sep=''),c(11,4,2,4,rep(c(5,1,1,1),31)))
+#   daily <- read.fwf(paste(raw.dir,id,".dly",sep=''),c(11,4,2,4,rep(c(5,1,1,1),31)))
 #   names(daily)[1:4] <- c("STATION","YEAR","MONTH","ELEMENT")
 #   daily <- daily[daily$ELEMENT==toupper(element),c(2:3,seq(5,125,4))]
 #   daily[daily==-9999] <- NA
@@ -143,7 +143,7 @@ getGHCNDaily <- function(template=NULL, elements=NULL, data.dir=getwd(), standar
 #   return(monthly)
 # }
 # 
-# getGHCNAnnual <- function(id, data.dir="../DATA/", element, months=c(1:12), fun=NULL){
+# getGHCNAnnual <- function(id, raw.dir="../DATA/", element, months=c(1:12), fun=NULL){
 #   # If more months than a year, break
 #   if(length(months)>12){
 #     stop("ERROR! Too many months.")
@@ -154,7 +154,7 @@ getGHCNDaily <- function(template=NULL, elements=NULL, data.dir=getwd(), standar
 #   current.year <- months[months>=1 & months<=12]
 #   next.year <- months[months>12]-12
 #   
-#   daily <- read.fwf(paste(data.dir,id,".dly",sep=''),c(11,4,2,4,rep(c(5,1,1,1),31)))
+#   daily <- read.fwf(paste(raw.dir,id,".dly",sep=''),c(11,4,2,4,rep(c(5,1,1,1),31)))
 #   names(daily)[1:4] <- c("STATION","YEAR","MONTH","ELEMENT")
 #   daily <- daily[daily$ELEMENT==toupper(element),c(2:3,seq(5,125,4))]
 #   daily[daily==-9999] <- NA
@@ -179,18 +179,18 @@ getGHCNDaily <- function(template=NULL, elements=NULL, data.dir=getwd(), standar
 # 
 
 
-# getGHCNStationMetadataSPDF <- function(station.names=NULL, data.dir="../DATA/", write.output=T){
-#   if(!file.exists(paste(data.dir,"ghcnd-stations.txt",sep=''))){
-#     system(paste("wget -nd --output-document=",paste(data.dir,"ghcnd-stations.txt",sep='')," ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily//ghcnd-stations.txt",sep=''))
-#     system(paste("sed -i -E 's/#/ /' ",paste(data.dir,"ghcnd-stations.txt",sep=''),sep=''))
-#     system(paste("rm ",paste(data.dir,"ghcnd-stations.txt-E",sep=''),sep=''))
-#     system(paste("wget -nd --output-document=",paste(data.dir,"ghcnd-inventory.txt",sep='')," ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily//ghcnd-inventory.txt",sep=''))
-#     system(paste("sed -i -E 's/#/ /' ",paste(data.dir,"ghcnd-inventory.txt",sep=''),sep=''))
-#     system(paste("rm ",paste(data.dir,"ghcnd-inventory.txt-E",sep=''),sep=''))
+# getGHCNStationMetadataSPDF <- function(station.names=NULL, raw.dir="../DATA/", write.output=T){
+#   if(!file.exists(paste(raw.dir,"ghcnd-stations.txt",sep=''))){
+#     system(paste("wget -nd --output-document=",paste(raw.dir,"ghcnd-stations.txt",sep='')," ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily//ghcnd-stations.txt",sep=''))
+#     system(paste("sed -i -E 's/#/ /' ",paste(raw.dir,"ghcnd-stations.txt",sep=''),sep=''))
+#     system(paste("rm ",paste(raw.dir,"ghcnd-stations.txt-E",sep=''),sep=''))
+#     system(paste("wget -nd --output-document=",paste(raw.dir,"ghcnd-inventory.txt",sep='')," ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily//ghcnd-inventory.txt",sep=''))
+#     system(paste("sed -i -E 's/#/ /' ",paste(raw.dir,"ghcnd-inventory.txt",sep=''),sep=''))
+#     system(paste("rm ",paste(raw.dir,"ghcnd-inventory.txt-E",sep=''),sep=''))
 #   }
 #   
 #   # Read the USHCN station metadata
-#   station.meta <- read.fwf(paste(data.dir,"ghcnd-stations.txt",sep=''),c(11,1,8,1,9,1,6,1,2,1,30,1,3,1,3,1,5))[,seq(1,11,2)]
+#   station.meta <- read.fwf(paste(raw.dir,"ghcnd-stations.txt",sep=''),c(11,1,8,1,9,1,6,1,2,1,30,1,3,1,3,1,5))[,seq(1,11,2)]
 #   names(station.meta) <- c("ID","LATITUDE","LONGITUDE","ELEVATION","STATE","NAME")
 #   station.meta$NAME <- gsub("^\\s+|\\s+$", "", station.meta$NAME)
 #   
@@ -204,7 +204,7 @@ getGHCNDaily <- function(template=NULL, elements=NULL, data.dir=getwd(), standar
 #   stations.sp$NAME <- stations.sp$ID
 #   
 #   if(write.output){
-#     suppressWarnings(writeOGR(stations.sp,paste(data.dir,"ghcnd-stations.kml",sep=''),"ghcnd-stations",driver="KML", overwrite_layer=TRUE))
+#     suppressWarnings(writeOGR(stations.sp,paste(raw.dir,"ghcnd-stations.kml",sep=''),"ghcnd-stations",driver="KML", overwrite_layer=TRUE))
 #   }
 #   
 #   return(stations.sp)
