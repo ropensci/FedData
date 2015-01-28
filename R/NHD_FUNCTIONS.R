@@ -80,15 +80,10 @@ getAreaList <- function(HUC4){
 }
 
 # A method for loading subregions from the National Hydrography Dataset, given HUC4 areas.
-loadNHDSubregions <- function(template, area.list, raw.dir, dsn.vectors, remove.modern=TRUE, force.redo=FALSE){
+loadNHDSubregions <- function(template, area.list, raw.dir, dsn.vectors, force.redo=FALSE){
   getNHDSubregions(area.list, raw.dir=raw.dir)
   
   shapes <- loadNHDLayers(template=template, area.list=area.list, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=force.redo)
-  
-  # Remove modern features
-  if(remove.modern){
-    shapes <- removeModernFeatures(shapes, layers)
-  }
   
   return(shapes)
 }

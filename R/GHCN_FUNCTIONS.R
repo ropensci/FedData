@@ -3,8 +3,10 @@ getGHCNStations <- function(template=NULL, elements=NULL, standardize=F, raw.dir
     template <- polygonFromExtent(template)
   }
   
-  download.file(url="ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt",destfile=paste(raw.dir,"ghcnd-inventory.txt",sep=''),mode='wb')
-  
+  url <- "ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt"
+  destdir <- raw.dir
+  wgetDownload(url=url, destdir=destdir)
+    
   system(paste("sed -i -E 's/#/ /' ",paste(raw.dir,"ghcnd-inventory.txt",sep=''),sep=''))
   system(paste("rm ",paste(raw.dir,"ghcnd-inventory.txt-E",sep=''),sep=''))
   
