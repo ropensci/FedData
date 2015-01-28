@@ -5,9 +5,7 @@ export(createArea)
 export(polygonFromExtent)
 export(SPDFfromPolygon)
 export(cropToPoly)
-export(plot.stacked)
 export(sequential.duplicated)
-export(scalebar.new)
 
 # NED_FUNCTIONS
 export(getNED)
