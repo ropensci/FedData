@@ -6,6 +6,7 @@ export(polygonFromExtent)
 export(SPDFfromPolygon)
 export(cropToPoly)
 export(sequential.duplicated)
+export(scalebar.new)
 
 # NED_FUNCTIONS
 export(getNED)
@@ -23,17 +24,6 @@ export(loadNHDLayers)
 export(loadNHDSubregions)
 export(getAreaList)
 
-# ITRDB_FUNCTIONS
-export(getITRDB)
-export(seriesToMatrix)
-export(is.int)
-export(getITRDBMetadata)
-export(sanitizeITRDBnames)
-
-
-
-
-
 # NRCS_FUNCTIONS
 export(extractNRCS)
 export(loadNRCSStudyAreas)
@@ -50,6 +40,23 @@ export(calculateTexture)
 export(loadSFNF_Data)
 export(textureClass.rasters)
 export(fillReservoirSoils)
+
+
+
+
+
+# ITRDB_FUNCTIONS
+export(getITRDB)
+export(seriesToMatrix)
+export(is.int)
+export(getITRDBMetadata)
+export(sanitizeITRDBnames)
+
+
+
+
+
+
 
 
 
