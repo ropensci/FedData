@@ -1,5 +1,5 @@
 # FedData Tester
-# devtools::install_github("bocinsky/FedData")
+devtools::install_github("bocinsky/FedData")
 library(FedData)
 
 test.raw.dir <- "/Users/Bocinsky/Desktop/FedDataTest/"
