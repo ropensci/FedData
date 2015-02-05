@@ -153,7 +153,7 @@ scalebar.new <- function (d, xy = NULL, height = NULL, line.offset=c(0,0), side=
     height <- dd * 0.1
   }
   
-  rect(xleft=xstart, ybottom=xy[2], xright=xend, ytop=xy[2]+height, col='black',border=NA, lend=1)
+  rect(xleft=xstart, ybottom=xy[2], xright=xend, ytop=xy[2]+height, col='black',border=NA, lend=1, xpd=T)
   
   #   lines(matrix(c(xstart, xy[2], xend, xy[2]), byrow = T, nrow = 2), lend=1, lwd = lwd, ...)
   
