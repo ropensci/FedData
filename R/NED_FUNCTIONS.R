@@ -8,10 +8,12 @@
 # USES RCurl, raster, sp, rgdal
 getNED <- function(template, label, res, raw.dir, extraction.dir=paste(raw.dir,"/EXTRACTIONS",sep=''), force.redo=F){  
   
-  dir.create(paste(extraction.dir,"/",label,"/",sep=''), showWarnings=F, recursive=T)
+  rasters.dir <- paste(extraction.dir,"/",label,"/NED/rasters",sep='')
   
-  if(file.exists(paste(extraction.dir,"/",label,"/NED_",res,".tif", sep='')) & !force.redo){
-    extracted.DEM <- raster(paste(extraction.dir,"/",label,"/NED_",res,".tif", sep=''))
+  dir.create(rasters.dir, showWarnings = FALSE, recursive = TRUE)
+  
+  if(file.exists(paste(rasters.dir,"/NED_",res,".tif", sep='')) & !force.redo){
+    extracted.DEM <- raster(paste(rasters.dir,"/NED_",res,".tif", sep=''))
     return(extracted.DEM)
   }
   
@@ -78,7 +80,7 @@ getNED <- function(template, label, res, raw.dir, extraction.dir=paste(raw.dir,"
   # pre-crop
   mosaic.all <- raster::crop(mosaic.all,extent.latlon, snap="out")
   
-  writeGDAL(as(mosaic.all, "SpatialGridDataFrame"), paste(extraction.dir,"/",label,"/DEM_",res,".tif", sep=''), drivername="GTiff", type="Float32", options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
+  writeGDAL(as(mosaic.all, "SpatialGridDataFrame"), paste(rasters.dir,"/DEM_",res,".tif", sep=''), drivername="GTiff", type="Float32", options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
   
   return(mosaic.all)
 }

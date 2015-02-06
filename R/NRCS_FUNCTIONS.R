@@ -4,28 +4,23 @@
 ## Author: R. Kyle Bocinsky
 ## Date: 02/14/2014
 
-getNRCS <- function(template, label, raw.dir, extraction.dir=NULL, force.redo=FALSE){  
-  if(is.null(extraction.dir)){
-    extraction.dir <- paste(raw.dir,"/EXTRACTIONS",sep='')
-  }
+getNRCS <- function(template, label, raw.dir, extraction.dir=paste(raw.dir,"/EXTRACTIONS",sep=''), force.redo=FALSE){  
+  vectors.dir <- paste(extraction.dir,"/",label,"/NRCS/vectors",sep='')
+  tables.dir <- paste(extraction.dir,"/",label,"/NRCS/tables",sep='')
   
-  dir.create(paste(extraction.dir,"/",label,"/",sep=''), showWarnings = FALSE, recursive=T)
-  dsn.vectors <- paste(extraction.dir,"/",label,"/vectors",sep='')
-  dir.create(dsn.vectors, showWarnings = FALSE, recursive = TRUE)
-  
-  tables.dir <- paste(extraction.dir,"/",label,"/tables",sep='')
+  dir.create(vectors.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(tables.dir, showWarnings = FALSE, recursive = TRUE)
   
-  if(!force.redo & length(list.files(dsn.vectors))>0 & length(list.files(tables.dir))>0){
-    if(!file.exists(paste(dsn.vectors,"/NRCSMapunits.shp",sep=''))) break
-    NRCSMapunits <- readOGR(normalizePath(dsn.vectors),"NRCSMapunits", verbose=F)
+  if(!force.redo & length(list.files(vectors.dir))>0 & length(list.files(tables.dir))>0){
+    if(!file.exists(paste(vectors.dir,"/NRCSMapunits.shp",sep=''))) break
+    NRCSMapunits <- readOGR(normalizePath(vectors.dir),"NRCSMapunits", verbose=F)
     
     files <- list.files(tables.dir)
     files <- files[grepl("csv",files)]
     files <- files[order(files)]
     
     tables <- lapply(files,function(file){
-      read.csv(paste(normalizePath(dsn.vectors),file,'.csv',sep=''))
+      read.csv(paste(normalizePath(vectors.dir),file,'.csv',sep=''))
     })
     names(tables) <- files
     
@@ -46,7 +41,7 @@ getNRCS <- function(template, label, raw.dir, extraction.dir=NULL, force.redo=FA
   NRCSMapunits <- getNRCSMapunits(template=template, areas=NRCSAreas, raw.dir=raw.dir)
   
   # Save the mapunit polygons as a shapefile
-  suppressWarnings(writeOGR(NRCSMapunits, dsn.vectors, "NRCSMapunits","ESRI Shapefile", overwrite_layer=TRUE))
+  suppressWarnings(writeOGR(NRCSMapunits, vectors.dir, "NRCSMapunits","ESRI Shapefile", overwrite_layer=TRUE))
   
   # Get all of the tabular data
   NRCSData <- getNRCSData(areas=NRCSAreas, raw.dir=raw.dir)

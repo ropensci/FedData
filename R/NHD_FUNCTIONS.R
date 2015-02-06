@@ -1,22 +1,18 @@
 # A function that loads the National Hydrography Dataset for a provided study area defined by "x."
-getNHD <- function(template, label, raw.dir, extraction.dir=NULL, force.redo=FALSE){
-  if(is.null(extraction.dir)){
-    extraction.dir <- paste(raw.dir,"/EXTRACTIONS",sep='')
-  }
+getNHD <- function(template, label, raw.dir, extraction.dir=paste(raw.dir,"/EXTRACTIONS",sep=''), force.redo=FALSE){
   
-  dir.create(paste(extraction.dir,"/",label,"/",sep=''), showWarnings = FALSE, recursive=T)
-  dsn.vectors <- paste(extraction.dir,"/",label,"/vectors",sep='')
-  dir.create(dsn.vectors, showWarnings = FALSE, recursive = TRUE)
+  vectors.dir <- paste(extraction.dir,"/",label,"/NHD/vectors",sep='')
+  dir.create(vectors.dir, showWarnings = FALSE, recursive = TRUE)
   
-  if(!force.redo & length(list.files(dsn.vectors))>0){
-    files <- list.files(dsn.vectors)
+  if(!force.redo & length(list.files(vectors.dir))>0){
+    files <- list.files(vectors.dir)
     files <- files[grepl("shp",files)]
     files <- files[!grepl("template",files)]
     files <- gsub(".shp","",files)
     files <- files[order(files)]
     
     shapes <- lapply(files,function(file){
-      readOGR(normalizePath(dsn.vectors),file, verbose=F)
+      readOGR(normalizePath(vectors.dir),file, verbose=F)
     })
     names(shapes) <- files
     return(shapes)
@@ -30,7 +26,7 @@ getNHD <- function(template, label, raw.dir, extraction.dir=NULL, force.redo=FAL
   
   area.list <- getAreaList(HUC4)
   
-  shapes <- loadNHDSubregions(template=template, area.list=area.list, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=force.redo)
+  shapes <- loadNHDSubregions(template=template, area.list=area.list, raw.dir=raw.dir, vectors.dir=vectors.dir, force.redo=force.redo)
   
   return(shapes)
 }
@@ -66,10 +62,10 @@ getAreaList <- function(HUC4){
 }
 
 # A method for loading subregions from the National Hydrography Dataset, given HUC4 areas.
-loadNHDSubregions <- function(template, area.list, raw.dir, dsn.vectors, force.redo=FALSE){
+loadNHDSubregions <- function(template, area.list, raw.dir, vectors.dir, force.redo=FALSE){
   getNHDSubregions(area.list, raw.dir=raw.dir)
   
-  shapes <- loadNHDLayers(template=template, area.list=area.list, raw.dir=raw.dir, dsn.vectors=dsn.vectors, force.redo=force.redo)
+  shapes <- loadNHDLayers(template=template, area.list=area.list, raw.dir=raw.dir, vectors.dir=vectors.dir, force.redo=force.redo)
   
   return(shapes)
 }
@@ -86,7 +82,7 @@ getNHDSubregions <- function(area.list, raw.dir){
 }
 
 # A method for loading layers from specified regions in the National Hydrology Dataset
-loadNHDLayers <- function(template, area.list, raw.dir, dsn.vectors, force.redo=FALSE){
+loadNHDLayers <- function(template, area.list, raw.dir, vectors.dir, force.redo=FALSE){
   # Get the spatial data for each area
   all.data <- lapply(area.list, function(area){
     unzip(paste(raw.dir,'/NHDM',area,'_92v200.zip',sep=''),exdir=paste(raw.dir, sep=''))
@@ -125,7 +121,7 @@ loadNHDLayers <- function(template, area.list, raw.dir, dsn.vectors, force.redo=
     shapes <- raster::crop(shapes,spTransform(template,CRS(projection(shapes))))
     if(is.null(shapes)) return(shapes)
 #     shapes <- spTransform(shapes,CRS(projection(template)))
-    suppressWarnings(writeOGR(shapes,dsn.vectors,layer,"ESRI Shapefile", overwrite_layer=TRUE))
+    suppressWarnings(writeOGR(shapes,vectors.dir,layer,"ESRI Shapefile", overwrite_layer=TRUE))
     return(shapes)
   })
   names(merged.data) <- layers
