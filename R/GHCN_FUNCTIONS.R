@@ -29,8 +29,7 @@ getGHCNStations <- function(template=NULL, elements=NULL, standardize=F, raw.dir
   stations.sp <- SpatialPointsDataFrame(coords=station.inventory[,c("LONGITUDE","LATITUDE")],station.inventory[,c("ID","ELEMENT","YEAR_START","YEAR_END"),drop=F],proj4string=CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"))
   
   if(!is.null(template)){
-    stations.sp <- spTransform(stations.sp,CRS(projection(template)))
-    stations.sp <- raster::crop(stations.sp,template)
+    stations.sp <- stations.sp[!is.na(over(stations.sp,spTransform(template,CRS(projection(stations.sp))))[,1]),]
   }
 
   return(stations.sp)
