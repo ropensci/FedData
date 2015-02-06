@@ -4,9 +4,9 @@
 ## Author: R. Kyle Bocinsky
 ## Date: 02/14/2014
 
-getNRCS <- function(template, label, raw.dir, extraction.dir=paste(raw.dir,"/EXTRACTIONS",sep=''), force.redo=FALSE){  
-  vectors.dir <- paste(extraction.dir,"/",label,"/NRCS/vectors",sep='')
-  tables.dir <- paste(extraction.dir,"/",label,"/NRCS/tables",sep='')
+getNRCS <- function(template, label, raw.dir="./RAW/NRCS/", extraction.dir="./EXTRACTIONS/NRCS/", force.redo=FALSE){  
+  vectors.dir <- paste(extraction.dir,"/",label,"/vectors",sep='')
+  tables.dir <- paste(extraction.dir,"/",label,"/tables",sep='')
   
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)

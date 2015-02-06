@@ -1,4 +1,4 @@
-getGHCNStations <- function(template=NULL, elements=NULL, standardize=F, raw.dir="../DATA/"){
+getGHCNStations <- function(template=NULL, elements=NULL, standardize=F, raw.dir){
   if(!is.null(template) & !is(template,"SpatialPolygonsDataFrame")){
     template <- polygonFromExtent(template)
   }
@@ -53,7 +53,7 @@ downloadGHCNDaily <- function(ID, raw.dir="../DATA/", force.redo=F){
 
 }
 
-getGHCNDaily <- function(template=NULL, elements=NULL, raw.dir, standardize=F, force.redo=F){
+getGHCNDaily <- function(template=NULL, elements=NULL, raw.dir="./RAW/GHCN/", standardize=F, force.redo=F){
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   
   cat("\nGetting spatial data of GHCN stations")

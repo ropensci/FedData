@@ -16,7 +16,7 @@ county <- county[county$STATE=="GA" & county$NAME=="Cherokee",]
 
 # Get the NED (USA ONLY)
 # Returns a raster
-NED <- getNED(template=county, label=paste(county$STATE,'_',county$NAME, sep=''), res='1', raw.dir=paste(test.raw.dir,'NED/', sep=''), extraction.dir=paste(test.extraction.dir,'NED/', sep=''), force.redo=F)
+NED <- getNED(template=county, label=paste(county$STATE,'_',county$NAME, sep=''), res='1', raw.dir=paste(test.raw.dir,'NED/', sep=''), extraction.dir=test.extraction.dir, force.redo=F)
 
 # Get the daily GHCN data (GLOBAL)
 # Returns a list: the first element is the spatial locations of stations,
@@ -25,10 +25,10 @@ GHCN.prcp <- getGHCNDaily(template=county, elements=c('prcp'), raw.dir=paste(tes
 GHCN.temp <- getGHCNDaily(template=county, elements=c('tmin','tmax'), raw.dir=paste(test.raw.dir,'GHCN/', sep=''), standardize=T)
 
 # Get the NHD (USA ONLY)
-NHD <- getNHD(template=county, label=paste(county$STATE,'_',county$NAME, sep=''), raw.dir=paste(test.raw.dir,'NHD/', sep=''), extraction.dir=paste(test.extraction.dir,'NHD/', sep=''), force.redo=F)
+NHD <- getNHD(template=county, label=paste(county$STATE,'_',county$NAME, sep=''), raw.dir=paste(test.raw.dir,'NHD/', sep=''), extraction.dir=test.extraction.dir, force.redo=F)
 
 # Get the NRCS SSURGO2 data
-NRCS <- getNRCS(template=county, label=paste(county$STATE,'_',county$NAME, sep=''), raw.dir=paste(test.raw.dir,'NRCS/', sep=''), extraction.dir=paste(test.extraction.dir,'NRCS/', sep=''), force.redo=F)
+NRCS <- getNRCS(template=county, label=paste(county$STATE,'_',county$NAME, sep=''), raw.dir=paste(test.raw.dir,'NRCS/', sep=''), extraction.dir=test.extraction.dir, force.redo=F)
 
 
 

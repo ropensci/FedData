@@ -6,9 +6,9 @@
 #     or "13" for the 1/3 arc-second NED (~10 meter)
 # If template is a sp* or extent object, res must be provided!
 # USES RCurl, raster, sp, rgdal
-getNED <- function(template, label, res, raw.dir, extraction.dir=paste(raw.dir,"/EXTRACTIONS",sep=''), force.redo=F){  
+getNED <- function(template, label, res, raw.dir="./RAW/NED/", extraction.dir="./EXTRACTIONS/NED/", force.redo=F){  
   
-  rasters.dir <- paste(extraction.dir,"/",label,"/NED/rasters",sep='')
+  rasters.dir <- paste(extraction.dir,"/",label,"/rasters",sep='')
   
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(rasters.dir, showWarnings = FALSE, recursive = TRUE)
