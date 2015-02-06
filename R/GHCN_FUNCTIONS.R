@@ -26,7 +26,7 @@ getGHCNStations <- function(template=NULL, elements=NULL, standardize=F, raw.dir
 #   station.inventory <- unique(station.inventory[,c("ID","LATITUDE","LONGITUDE")])
   
   # Convert to SPDF
-  stations.sp <- SpatialPointsDataFrame(coords=station.inventory[,c("LONGITUDE","LATITUDE")],station.inventory[,c("ID","ELEMENT","YEAR_START","YEAR_END"),drop=F],proj4string=CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"))
+  stations.sp <- SpatialPointsDataFrame(coords=station.inventory[,c("LONGITUDE","LATITUDE")],station.inventory,proj4string=CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"))
   
   if(!is.null(template)){
     stations.sp <- stations.sp[!is.na(over(stations.sp,spTransform(template,CRS(projection(stations.sp))))[,1]),]
@@ -105,7 +105,7 @@ getGHCNDaily <- function(template=NULL, elements=NULL, raw.dir="./RAW/GHCN/", st
     return(out.list)
   })
   
-  return(list(stations.sp,daily))
+  return(list(spatial=stations.sp,tabular=daily))
 }
 
 
