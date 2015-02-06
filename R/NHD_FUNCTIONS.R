@@ -2,6 +2,9 @@
 getNHD <- function(template, label, raw.dir, extraction.dir=paste(raw.dir,"/EXTRACTIONS",sep=''), force.redo=FALSE){
   
   vectors.dir <- paste(extraction.dir,"/",label,"/NHD/vectors",sep='')
+  
+  dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
+  dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(vectors.dir, showWarnings = FALSE, recursive = TRUE)
   
   if(!force.redo & length(list.files(vectors.dir))>0){

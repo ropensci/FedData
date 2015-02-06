@@ -8,6 +8,8 @@ getNRCS <- function(template, label, raw.dir, extraction.dir=paste(raw.dir,"/EXT
   vectors.dir <- paste(extraction.dir,"/",label,"/NRCS/vectors",sep='')
   tables.dir <- paste(extraction.dir,"/",label,"/NRCS/tables",sep='')
   
+  dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
+  dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(vectors.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(tables.dir, showWarnings = FALSE, recursive = TRUE)
   

@@ -53,7 +53,9 @@ downloadGHCNDaily <- function(ID, raw.dir="../DATA/", force.redo=F){
 
 }
 
-getGHCNDaily <- function(template=NULL, elements=NULL, raw.dir=getwd(), standardize=F, force.redo=F){
+getGHCNDaily <- function(template=NULL, elements=NULL, raw.dir, standardize=F, force.redo=F){
+  dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
+  
   cat("\nGetting spatial data of GHCN stations")
   stations.sp <- getGHCNStations(template=template, raw.dir=raw.dir, elements=elements, standardize=standardize)
   

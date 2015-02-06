@@ -2,7 +2,11 @@
 devtools::install_github("bocinsky/FedData")
 library(FedData)
 
-test.raw.dir <- "/Users/Bocinsky/Desktop/FedDataTest/"
+test.raw.dir <- "/Users/Bocinsky/Desktop/FedDataTest/RAW/"
+dir.create(test.raw.dir, recursive=T)
+
+test.extraction.dir <- "/Users/Bocinsky/Desktop/FedDataTest/EXTRACTIONS/"
+dir.create(test.extraction.dir, recursive=T)
 
 # Get a random contiguous USA county for testing
 county <- readOGR("/Volumes/DATA/NATIONAL_ATLAS/countyp010","countyp010g")
@@ -12,19 +16,19 @@ county <- county[county$STATE=="GA" & county$NAME=="Cherokee",]
 
 # Get the NED (USA ONLY)
 # Returns a raster
-NED <- getNED(template=county, label=paste(county$STATE,'_',county$NAME, sep=''), res='1', raw.dir=test.raw.dir, force.redo=F)
+NED <- getNED(template=county, label=paste(county$STATE,'_',county$NAME, sep=''), res='1', raw.dir=paste(test.raw.dir,'NED/', sep=''), extraction.dir=paste(test.extraction.dir,'NED/', sep=''), force.redo=F)
 
 # Get the daily GHCN data (GLOBAL)
 # Returns a list: the first element is the spatial locations of stations,
 # and the second is a list of the stations and their daily data
-GHCN.prcp <- getGHCNDaily(template=county, elements=c('prcp'), raw.dir=test.raw.dir, standardize=F)
-GHCN.temp <- getGHCNDaily(template=county, elements=c('tmin','tmax'), raw.dir=test.raw.dir, standardize=T)
+GHCN.prcp <- getGHCNDaily(template=county, elements=c('prcp'), raw.dir=paste(test.raw.dir,'GHCN/', sep=''), standardize=F)
+GHCN.temp <- getGHCNDaily(template=county, elements=c('tmin','tmax'), raw.dir=paste(test.raw.dir,'GHCN/', sep=''), standardize=T)
 
 # Get the NHD (USA ONLY)
-NHD <- getNHD(template=county, label=paste(county$STATE,'_',county$NAME, sep=''), raw.dir=test.raw.dir, force.redo=F)
+NHD <- getNHD(template=county, label=paste(county$STATE,'_',county$NAME, sep=''), raw.dir=paste(test.raw.dir,'NHD/', sep=''), extraction.dir=paste(test.extraction.dir,'NHD/', sep=''), force.redo=F)
 
 # Get the NRCS SSURGO2 data
-
+NRCS <- getNRCS(template=county, label=paste(county$STATE,'_',county$NAME, sep=''), raw.dir=paste(test.raw.dir,'NRCS/', sep=''), extraction.dir=paste(test.extraction.dir,'NRCS/', sep=''), force.redo=F)
 
 
 

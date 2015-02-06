@@ -10,6 +10,7 @@ getNED <- function(template, label, res, raw.dir, extraction.dir=paste(raw.dir,"
   
   rasters.dir <- paste(extraction.dir,"/",label,"/NED/rasters",sep='')
   
+  dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(rasters.dir, showWarnings = FALSE, recursive = TRUE)
   
   if(file.exists(paste(rasters.dir,"/NED_",res,".tif", sep='')) & !force.redo){
