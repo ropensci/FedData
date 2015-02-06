@@ -174,8 +174,8 @@ getNRCSStudyAreaData <- function(area,date,raw.dir){
   names(NRCSTableMapping) <- c("TABLE","FILE")
   NRCSTableMapping[,"FILE"] <- paste(NRCSTableMapping[,"FILE"],'.txt',sep='')
   
-  tablesData <- tablesData[NRCSTableMapping[,"FILE"]]
-  tablesHeaders <- tablesHeaders[NRCSTableMapping[,"TABLE"]]
+  tablesData <- tablesData[as.character(NRCSTableMapping[,"FILE"])]
+  tablesHeaders <- tablesHeaders[as.character(NRCSTableMapping[,"TABLE"])]
   
   notNull <- (!sapply(tablesData,is.null) & !sapply(tablesHeaders,is.null))
   tablesData <- tablesData[notNull]
