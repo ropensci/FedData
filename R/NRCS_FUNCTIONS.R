@@ -24,7 +24,7 @@ getNRCS <- function(template, label, raw.dir, extraction.dir=paste(raw.dir,"/EXT
     })
     names(tables) <- files
     
-    return(list(MAPUNITS=shapes,TABLES=tables))
+    return(list(spatial=shapes,tabular=tables))
   }
   
   if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){
