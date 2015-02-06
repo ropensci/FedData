@@ -30,7 +30,7 @@ getGHCNStations <- function(template=NULL, elements=NULL, standardize=F, raw.dir
   
   if(!is.null(template)){
     stations.sp <- spTransform(stations.sp,CRS(projection(template)))
-    stations.sp <- cropToPoly(stations.sp,template)
+    stations.sp <- raster::crop(stations.sp,template)
   }
 
   return(stations.sp)

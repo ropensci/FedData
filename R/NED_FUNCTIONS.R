@@ -76,7 +76,7 @@ getNED <- function(template, label, res, raw.dir, extraction.dir=paste(raw.dir,"
   }
   
   # pre-crop
-  mosaic.all <- crop(mosaic.all,extent.latlon, snap="out")
+  mosaic.all <- raster::crop(mosaic.all,extent.latlon, snap="out")
   
   writeGDAL(as(mosaic.all, "SpatialGridDataFrame"), paste(extraction.dir,"/",label,"/DEM_",res,".tif", sep=''), drivername="GTiff", type="Float32", options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
   

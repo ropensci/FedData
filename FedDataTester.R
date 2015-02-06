@@ -6,9 +6,9 @@ test.raw.dir <- "/Users/Bocinsky/Desktop/FedDataTest/"
 
 # Get a random contiguous USA county for testing
 county <- readOGR("/Volumes/DATA/NATIONAL_ATLAS/countyp010","countyp010g")
-# county <- county[county$STATE=="GA" & county$NAME=="Cherokee",]
-county <- county[!(county$STATE %in% c("AK","HI","PR","VI")),]
-county <- county[sample(1:length(county),1),]
+county <- county[county$STATE=="GA" & county$NAME=="Cherokee",]
+# county <- county[!(county$STATE %in% c("AK","HI","PR","VI")),]
+# county <- county[sample(1:length(county),1),]
 
 # Get the NED (USA ONLY)
 # Returns a raster

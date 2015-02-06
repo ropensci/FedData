@@ -51,7 +51,7 @@ getHUC4 <- function(template, raw.dir, force.redo=F){
   HUC4@proj4string <- CRS("+proj=utm +zone=15 +datum=NAD83 +ellps=WGS84")
   
   # Get a list of NHD subregions within the project study area
-  HUC4 <- cropToPoly(HUC4,spTransform(template,CRS(projection(HUC4))))
+  HUC4 <- raster::crop(HUC4,spTransform(template,CRS(projection(HUC4))))
   
   unlink(paste(raw.dir,"/huc_04",sep=''), recursive = TRUE)
   
@@ -122,7 +122,7 @@ loadNHDLayers <- function(template, area.list, raw.dir, dsn.vectors, force.redo=
     null.shapes <- sapply(shapes,is.null)
     shapes <- do.call("rbind", shapes[!null.shapes])
     if(is.null(shapes)) return(shapes)
-    shapes <- cropToPoly(shapes,spTransform(template,CRS(projection(shapes))))
+    shapes <- raster::crop(shapes,spTransform(template,CRS(projection(shapes))))
     if(is.null(shapes)) return(shapes)
 #     shapes <- spTransform(shapes,CRS(projection(template)))
     suppressWarnings(writeOGR(shapes,dsn.vectors,layer,"ESRI Shapefile", overwrite_layer=TRUE))

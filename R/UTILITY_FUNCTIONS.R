@@ -48,39 +48,6 @@ SPDFfromPolygon <- function(x){
   return(x)
 }
 
-# A method to crop vector shapefiles to a given polygon.
-cropToPoly <- function(x,y) {
-  gI <- gIntersects(x,y,byid=TRUE)
-  out <- vector(mode="list",length=length(which(gI)))
-  ii <- 1
-  if(length(out)==0) return(NULL)
-  for (i in seq(along=gI)){
-    if (gI[i]) {
-      out[[ii]] <- gIntersection(x[i,], y)
-      row.names(out[[ii]]) <- row.names(x)[i]
-      ii <- ii+1
-    }
-  }
-  out_class <- sapply(out, class)
-  
-  if(class(x)[1]=="SpatialLinesDataFrame" | class(x)[1]=="SpatialLines"){
-    ri <- do.call("rbind", out[out_class == "SpatialLines"])
-    if(class(x)[1]=="SpatialLines"){
-      return(ri)
-    }
-    ri <- SpatialLinesDataFrame(ri,as.data.frame(x))
-    return(ri)
-  }else if(class(x)[1]=="SpatialPolygonsDataFrame"){
-    ri <- do.call("rbind", out[out_class == "SpatialPolygons"])
-    ri <- SpatialPolygonsDataFrame(ri,as.data.frame(x)[row.names(ri),])
-    return(ri)
-  }else if(class(x)[1]=="SpatialPointsDataFrame"){
-    ri <- do.call("rbind", out[out_class == "SpatialPoints"])
-    ri <- SpatialPointsDataFrame(ri,as.data.frame(x)[row.names(ri),],match.ID = TRUE)
-    return(ri)
-  }
-}
-
 sequential.duplicated <- function(x, rows=F){
   if(!rows){
     duplicates <- c(FALSE,unlist(lapply(1:(length(x)-1), function(i){duplicated(x[i:(i+1)])[2]})))
@@ -90,13 +57,17 @@ sequential.duplicated <- function(x, rows=F){
   return(duplicates)
 }
 
-wgetDownload <- function(url, destdir, timestamping=T){
-  if(timestamping){
+wgetDownload <- function(url, destdir, timestamping=T, nc=T){
+  if(nc){
+    status <- system(paste("wget -nc -nd --quiet --directory-prefix=",destdir," ",url,sep=''))
+  }else if(timestamping){
     status <- system(paste("wget -N -nd --quiet --directory-prefix=",destdir," ",url,sep=''))
   }else{
     status <- system(paste("wget -nd --quiet --directory-prefix=",destdir," ",url,sep=''))
-  }
-  if (status!=0) 
+  } 
+  
+  # If status is still not zero, report a warning
+  if (status!=0)
     warning("Download of ",url," had nonzero exit status")
 }
 

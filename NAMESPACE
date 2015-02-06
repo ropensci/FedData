@@ -4,9 +4,9 @@ export(substrRight)
 export(createArea)
 export(polygonFromExtent)
 export(SPDFfromPolygon)
-export(cropToPoly)
 export(sequential.duplicated)
 export(scalebar.new)
+export(wgetDownload)
 
 # NED_FUNCTIONS
 export(getNED)
@@ -25,21 +25,15 @@ export(loadNHDSubregions)
 export(getAreaList)
 
 # NRCS_FUNCTIONS
-export(extractNRCS)
-export(loadNRCSStudyAreas)
+export(getNRCS)
 export(getNRCSStudyAreas)
-export(loadNRCSMapUnitPolygons)
-export(getNRCSMapUnitPolygons)
-export(loadAndAggregateSoilTable)
-export(loadHiResRaster)
-export(createHiResRaster)
-export(getSoilData)
-export(correctSoilComponents)
-export(loadSoilData)
-export(calculateTexture)
-export(loadSFNF_Data)
-export(textureClass.rasters)
-export(fillReservoirSoils)
+export(getNRCSStudyAreaMapunits)
+export(getNRCSMapunits)
+export(getNRCSStudyAreaData)
+export(getNRCSData)
+export(extractNRCSData)
+
+
 
 
 
