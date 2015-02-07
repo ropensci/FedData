@@ -22,7 +22,7 @@ getNRCS <- function(template, label, raw.dir="./RAW/NRCS/", extraction.dir="./EX
     files <- files[order(files)]
     
     tables <- lapply(files,function(file){
-      read.csv(paste(normalizePath(vectors.dir),file,'.csv',sep=''))
+      read.csv(paste(normalizePath(vectors.dir),'/',file,'.csv',sep=''))
     })
     names(tables) <- files
     
