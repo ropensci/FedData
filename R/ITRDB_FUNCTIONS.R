@@ -54,7 +54,7 @@ getITRDB <- function(raw.dir, output.dir, type='standard', download=F, force.red
   meta$NAME <- toupper(meta$NAME)
   meta$SERIES <- toupper(meta$SERIES)
   meta$LAT <- format(as.numeric(meta$LAT)/100, nsmall=2)
-  meta$LON <- format(as.numeric(meta$LON)/100,nsmall=2)
+  meta$LON <- format(as.numeric(meta$LON)/100, nsmall=2)
   
   locations <- meta[c("LAT","LON")]
   

@@ -17,8 +17,8 @@ NED <- getNED(template=county, label=paste(county$STATE,'_',county$NAME, sep='')
 # Get the daily GHCN data (GLOBAL)
 # Returns a list: the first element is the spatial locations of stations,
 # and the second is a list of the stations and their daily data
-GHCN.prcp <- getGHCNDaily(template=county, elements=c('prcp'), standardize=F)
-GHCN.temp <- getGHCNDaily(template=county, elements=c('tmin','tmax'), standardize=T)
+GHCN.prcp <- getGHCNDaily(template=county, label=paste(county$STATE,'_',county$NAME, sep=''), elements=c('prcp'), standardize=F)
+GHCN.temp <- getGHCNDaily(template=county, label=paste(county$STATE,'_',county$NAME, sep=''), elements=c('tmin','tmax'), standardize=T)
 
 # Get the NHD (USA ONLY)
 NHD <- getNHD(template=county, label=paste(county$STATE,'_',county$NAME, sep=''))
