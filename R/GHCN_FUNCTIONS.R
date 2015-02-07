@@ -77,7 +77,7 @@ getGHCNDaily <- function(template=NULL, elements=NULL, label=NULL, raw.dir="./RA
     stations.sp <- stations.sp[stations.sp$ID %in% names(stations.sp.splits.all)[stations.sp.splits.all],]
   }
   
-  stations.out <- stations.sp[,c("ID","LATITUDE","LONGITUDE")]
+  stations.out <- stations.sp[,c("ID","ELEMENT","YEAR_START","YEAR_END")]
   stations.sp <- stations.sp[!duplicated(stations.sp@data[,c("ID","LATITUDE","LONGITUDE")]),c("ID","LATITUDE","LONGITUDE")]
   
   cat("\nDownloading daily GHCN data")
