@@ -85,7 +85,7 @@ getGHCNDaily <- function(template=NULL, elements=NULL, label=NULL, raw.dir="./RA
     if(!is.null(daily)){
       names(daily) <- elements
       
-      daily <- lapply(as.character(stations.sp$ID),function(USC00091585){
+      daily <- lapply(as.character(stations.sp$ID),function(station){
         stationDaily <- tryCatch(lapply(daily,'[[',station),error=function(e){return(NULL)})
         stationDaily <- stationDaily[!sapply(stationDaily,is.null)]
         return(stationDaily)
