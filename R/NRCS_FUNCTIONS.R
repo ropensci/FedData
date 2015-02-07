@@ -15,7 +15,7 @@ getNRCS <- function(template, label, raw.dir="./RAW/NRCS/", extraction.dir="./EX
   
   if(!force.redo & length(list.files(vectors.dir))>0 & length(list.files(tables.dir))>0){
     if(!file.exists(paste(vectors.dir,"/NRCSMapunits.shp",sep=''))) break
-    NRCSMapunits <- readOGR(normalizePath(vectors.dir),"NRCSMapunits", verbose=F)
+    NRCSMapunits <- rgdal::readOGR(normalizePath(vectors.dir),"NRCSMapunits", verbose=F)
     
     files <- list.files(tables.dir)
     files <- files[grepl("csv",files)]
@@ -30,7 +30,7 @@ getNRCS <- function(template, label, raw.dir="./RAW/NRCS/", extraction.dir="./EX
   }
   
   if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){
-    template <- SPDFfromPolygon(spTransform(polygonFromExtent(template),CRS("+proj=longlat +ellps=GRS80")))
+    template <- SPDFfromPolygon(sp::spTransform(polygonFromExtent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
   }
   
   # Get shapefile of NRCS study areas in the template
@@ -43,7 +43,7 @@ getNRCS <- function(template, label, raw.dir="./RAW/NRCS/", extraction.dir="./EX
   NRCSMapunits <- getNRCSMapunits(template=template, areas=NRCSAreas, raw.dir=raw.dir)
   
   # Save the mapunit polygons as a shapefile
-  suppressWarnings(writeOGR(NRCSMapunits, vectors.dir, "NRCSMapunits","ESRI Shapefile", overwrite_layer=TRUE))
+  suppressWarnings(rgdal::writeOGR(NRCSMapunits, vectors.dir, "NRCSMapunits","ESRI Shapefile", overwrite_layer=TRUE))
   
   # Get all of the tabular data
   NRCSData <- getNRCSData(areas=NRCSAreas, raw.dir=raw.dir)
@@ -71,14 +71,14 @@ getNRCSStudyAreas <- function(template=NULL, raw.dir){
   unzip(paste(raw.dir,"/SoilDataAvailabilityShapefile.zip",sep=''),exdir=paste(raw.dir,"/SoilDataAvailabilityShapefile",sep=''))
   
   cat("Loading the NRCS study areas.\n")
-  NRCSAreas <- readOGR(normalizePath(paste(raw.dir,"/SoilDataAvailabilityShapefile/",sep='')), layer="soilsa_a_nrcs", verbose=FALSE)
+  NRCSAreas <- rgdal::readOGR(normalizePath(paste(raw.dir,"/SoilDataAvailabilityShapefile/",sep='')), layer="soilsa_a_nrcs", verbose=FALSE)
   
   if(is.null(template)){
     return(NRCSAreas)
   }
   
   # Get a list of NHD subregions within the project study area
-  NRCSAreas <- raster::crop(NRCSAreas,spTransform(template,CRS(projection(NRCSAreas))))
+  NRCSAreas <- raster::crop(NRCSAreas,sp::spTransform(template,sp::CRS(projection(NRCSAreas))))
   
   unlink(paste(raw.dir,"/SoilDataAvailabilityShapefile",sep=''), recursive = TRUE)
   
@@ -111,7 +111,7 @@ getNRCSStudyAreaMapunits <- function(area,date,raw.dir){
   
   unzip(paste(raw.dir,'/wss_SSA_',area,'_soildb_',state,'_2003_[',date,'].zip', sep=''),exdir=raw.dir)
   
-  mapunits <- readOGR(paste(raw.dir,'/',area,'/spatial',sep=''), layer=paste("soilmu_a_",tolower(area),sep=''), verbose=F)
+  mapunits <- rgdal::readOGR(paste(raw.dir,'/',area,'/spatial',sep=''), layer=paste("soilmu_a_",tolower(area),sep=''), verbose=F)
   
   unlink(paste(raw.dir,'/',area,sep=''), recursive=T, force=T)
   
@@ -123,14 +123,14 @@ getNRCSMapunits <- function(template, areas, raw.dir){
   cat("Loading the NRCS soil survey polygons for each region.\n")
   NRCSPolys <- vector("list", length(areas))
   
-  template <- spTransform(template,CRS(projection(areas)))
+  template <- sp::spTransform(template,CRS(projection(areas)))
   
   for(i in 1:length(areas)){
     area <- as.character(areas$areasymbol[i])
     date <- as.Date(areas$saverest[i])
     poly <- getNRCSStudyAreaMapunits(area=area, date=date, raw.dir=raw.dir)
     poly <- poly[!is.na(poly %over% template),]
-    poly <- spChFIDs(poly, as.character(paste(area,'_',row.names(poly@data),sep='')))
+    poly <- sp::spChFIDs(poly, as.character(paste(area,'_',row.names(poly@data),sep='')))
     NRCSPolys[[i]] <- poly
   }
   

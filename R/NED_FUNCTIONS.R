@@ -14,12 +14,12 @@ getNED <- function(template, label, res, raw.dir="./RAW/NED/", extraction.dir=".
   dir.create(rasters.dir, showWarnings = FALSE, recursive = TRUE)
   
   if(file.exists(paste(rasters.dir,"/NED_",res,".tif", sep='')) & !force.redo){
-    extracted.DEM <- raster(paste(rasters.dir,"/NED_",res,".tif", sep=''))
+    extracted.DEM <- raster::raster(paste(rasters.dir,"/NED_",res,".tif", sep=''))
     return(extracted.DEM)
   }
   
   # Convert polygon to decimal degrees for data request
-  extent.latlon <- extent(projectExtent(template, CRS("+proj=longlat +ellps=WGS84")))
+  extent.latlon <- raster::extent(raster::projectExtent(template, sp::CRS("+proj=longlat +ellps=WGS84")))
   
   if(is.null(res) & (class(template) %in% c("RasterLayer","RasterStack","RasterBrick"))){
     y.dim <- extent.latlon@ymax - extent.latlon@ymin
@@ -59,7 +59,7 @@ getNED <- function(template, label, res, raw.dir="./RAW/NED/", extraction.dir=".
       wgetDownload(url=url, destdir=destdir)
 
       unzip(paste(raw.dir,'/',res,'/n',n,'w',w,'.zip',sep=''),exdir=paste(raw.dir,'/',res,'/n',n,'w',w, sep=''))
-      tiles[t] <- raster(readGDAL(paste(raw.dir,'/',res,'/n',n,'w',w,'/grdn',n,'w',w,'_',res,sep='')))
+      tiles[t] <- raster::raster(rgdal::readGDAL(paste(raw.dir,'/',res,'/n',n,'w',w,'/grdn',n,'w',w,'_',res,sep='')))
       unlink(paste(raw.dir,'/',res,'/n',n,'w',w,sep=''), recursive = TRUE)
       t <- t+1
     }
@@ -70,7 +70,7 @@ getNED <- function(template, label, res, raw.dir="./RAW/NED/", extraction.dir=".
     flush.console()
     
     tiles$fun <- mean
-    mosaic.all <- do.call(mosaic, tiles)
+    mosaic.all <- do.call(raster::mosaic, tiles)
     
     rm(tiles)
     gc()
@@ -79,9 +79,9 @@ getNED <- function(template, label, res, raw.dir="./RAW/NED/", extraction.dir=".
   }
   
   # Crop
-  mosaic.all <- raster::crop(mosaic.all,spTransform(template,CRS(projection(mosaic.all))), snap="out")
+  mosaic.all <- raster::crop(mosaic.all,sp::spTransform(template,sp::CRS(raster::projection(mosaic.all))), snap="out")
   
-  writeGDAL(as(mosaic.all, "SpatialGridDataFrame"), paste(rasters.dir,"/DEM_",res,".tif", sep=''), drivername="GTiff", type="Float32", options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
+  rgdal::writeGDAL(as(mosaic.all, "SpatialGridDataFrame"), paste(rasters.dir,"/DEM_",res,".tif", sep=''), drivername="GTiff", type="Float32", options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
   
   return(mosaic.all)
 }

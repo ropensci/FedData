@@ -15,21 +15,21 @@ createArea <- function(North,South,East,West,projection.string){
   datainUTM<-matrix(c(East, West, West, East,East, North,North,South,South,North),nrow=5)
   
   # Set universal projection
-  master.proj <- CRS(projection.string)
+  master.proj <- sp::CRS(projection.string)
   
   # Create SpatialPolygon of simulation area
-  sim.poly <- Polygons(list(Polygon(datainUTM, hole=FALSE)),ID='A')
-  sim.poly <- SpatialPolygons(list(sim.poly), proj4string=master.proj)
+  sim.poly <- sp::Polygons(list(Polygon(datainUTM, hole=FALSE)),ID='A')
+  sim.poly <- sp::SpatialPolygons(list(sim.poly), proj4string=master.proj)
   IDs <- sapply(slot(sim.poly, "polygons"), function(x) slot(x, "ID"))
   df <- data.frame(rep(0, length(IDs)), row.names=IDs)
-  sim.poly <- SpatialPolygonsDataFrame(sim.poly,df)
+  sim.poly <- SP::SpatialPolygonsDataFrame(sim.poly,df)
   
   return(sim.poly)
 }
 
 polygonFromExtent <- function(x, proj4string=NULL){
   if(is.null(proj4string)){
-    proj4string <- projection(x)
+    proj4string <- raster::projection(x)
   }
   
   if(class(x)!="extent"){
@@ -37,14 +37,14 @@ polygonFromExtent <- function(x, proj4string=NULL){
   }
   
   extent.matrix <- rbind( c(x@xmin,x@ymin), c(x@xmin,x@ymax), c(x@xmax,x@ymax), c(x@xmax,x@ymin), c(x@xmin,x@ymin) ) # clockwise, 5 points to close it
-  extent.SP <- SpatialPolygons( list(Polygons(list(Polygon(extent.matrix)),"extent")), proj4string=CRS(proj4string) )
+  extent.SP <- sp::SpatialPolygons( list(sp::Polygons(list(sp::Polygon(extent.matrix)),"extent")), proj4string=sp::CRS(proj4string) )
   return(extent.SP)
 }
 
 SPDFfromPolygon <- function(x){
   IDs <- sapply(slot(x, "polygons"), function(x) slot(x, "ID"))
   df <- data.frame(rep(0, length(IDs)), row.names=IDs)
-  x <- SpatialPolygonsDataFrame(x,df)
+  x <- sp::SpatialPolygonsDataFrame(x,df)
   return(x)
 }
 
@@ -87,7 +87,7 @@ scalebar.new <- function (d, xy = NULL, height = NULL, line.offset=c(0,0), side=
     lat <- mean(pr$yaxp[1:2])
     if (missing(d)) {
       dx <- (pr$usr[2] - pr$usr[1])/10
-      d <- pointDistance(cbind(0, lat), cbind(dx, lat), 
+      d <- raster::pointDistance(cbind(0, lat), cbind(dx, lat), 
                          TRUE)
       d <- signif(d/1000, 2)
       label <- NULL

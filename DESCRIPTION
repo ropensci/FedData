@@ -5,6 +5,6 @@ Version: 1.0
 Date: 2015-02-06
 Author: R. Kyle Bocinsky <bocinsky@gmail.com>
 Maintainer: R. Kyle Bocinsky <bocinsky@gmail.com>
-Description: Scripts to automate downloading geodata available from the US Federal government.
+Description: Scripts to automate downloading geospatial data available from the several federated data sources.
 License: GPL-3
-Depends: raster, rgdal, rgeos, dplR, plyr, abind, zoo, igraph, Hmisc
+Depends: raster, rgdal, igraph, Hmisc

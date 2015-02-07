@@ -15,14 +15,14 @@ getNHD <- function(template, label, raw.dir="./RAW/NHD/", extraction.dir="./EXTR
     files <- files[order(files)]
     
     shapes <- lapply(files,function(file){
-      readOGR(normalizePath(vectors.dir),file, verbose=F)
+      rgdal::readOGR(normalizePath(vectors.dir),file, verbose=F)
     })
     names(shapes) <- files
     return(shapes)
   }
   
   if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){
-    template <- SPDFfromPolygon(spTransform(polygonFromExtent(template),CRS("+proj=longlat +ellps=GRS80")))
+    template <- SPDFfromPolygon(sp::spTransform(polygonFromExtent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
   }
     
   HUC4 <- getHUC4(template=template, raw.dir=raw.dir, force.redo=force.redo)
@@ -45,9 +45,9 @@ getHUC4 <- function(template, raw.dir, force.redo=F){
   unzip(paste(raw.dir,"/huc_04.zip",sep=''),exdir=paste(raw.dir,"/huc_04",sep=''))
   
   cat("Loading the NHD HUC4 dataset.\n")
-  HUC4 <- readOGR(normalizePath(paste(raw.dir,"/huc_04/",sep='')), layer="huc_04", verbose=FALSE)
+  HUC4 <- rgdal::readOGR(normalizePath(paste(raw.dir,"/huc_04/",sep='')), layer="huc_04", verbose=FALSE)
   
-  HUC4@proj4string <- CRS("+proj=utm +zone=15 +datum=NAD83 +ellps=WGS84")
+  HUC4@proj4string <- sp::CRS("+proj=utm +zone=15 +datum=NAD83 +ellps=WGS84")
   
   # Get a list of NHD subregions within the project study area
   HUC4 <- raster::crop(HUC4,spTransform(template,CRS(projection(HUC4))))
@@ -94,17 +94,17 @@ loadNHDLayers <- function(template, area.list, raw.dir, vectors.dir, force.redo=
     dsn <- normalizePath(paste(raw.dir,"/NHDM",area,".gdb",sep=''))
     
     # List all layers in the geodatabase
-    layers <- ogrListLayers(dsn)
+    layers <- rgdal::ogrListLayers(dsn)
     
     # Get each layer in the geodatabase
     shapes <- lapply(layers,function(layer){
-      tryCatch(suppressWarnings(readOGR(dsn=dsn, layer=layer, verbose=F)),error=function(e) NULL)
+      tryCatch(suppressWarnings(rgdal::readOGR(dsn=dsn, layer=layer, verbose=F)),error=function(e) NULL)
     })
     names(shapes) <- layers
     
     # Rename the features to prepare for merging
     shapes <- lapply(shapes, function(shape){
-      tryCatch(spChFIDs(shape, as.character(paste(area,"_",row.names(shape@data),sep=''))),error=function(e) NULL)
+      tryCatch(sp::spChFIDs(shape, as.character(paste(area,"_",row.names(shape@data),sep=''))),error=function(e) NULL)
     })
     
     unlink(paste(raw.dir,"/NHDM",area,".gdb",sep=''), recursive = TRUE)
@@ -121,10 +121,10 @@ loadNHDLayers <- function(template, area.list, raw.dir, vectors.dir, force.redo=
     null.shapes <- sapply(shapes,is.null)
     shapes <- do.call("rbind", shapes[!null.shapes])
     if(is.null(shapes)) return(shapes)
-    shapes <- raster::crop(shapes,spTransform(template,CRS(projection(shapes))))
+    shapes <- raster::crop(shapes,sp::spTransform(template,CRS(projection(shapes))))
     if(is.null(shapes)) return(shapes)
 #     shapes <- spTransform(shapes,CRS(projection(template)))
-    suppressWarnings(writeOGR(shapes,vectors.dir,layer,"ESRI Shapefile", overwrite_layer=TRUE))
+    suppressWarnings(rgdal::writeOGR(shapes,vectors.dir,layer,"ESRI Shapefile", overwrite_layer=TRUE))
     return(shapes)
   })
   names(merged.data) <- layers
