@@ -80,6 +80,22 @@ getGHCNDaily <- function(template=NULL, elements=NULL, label=NULL, raw.dir="./RA
   stations.out <- stations.sp[,c("ID","ELEMENT","YEAR_START","YEAR_END")]
   stations.sp <- stations.sp[!duplicated(stations.sp@data[,c("ID","LATITUDE","LONGITUDE")]),c("ID","LATITUDE","LONGITUDE")]
   
+  if(!force.redo){
+    daily <- tryCatch(lapply(elements,function(element){readRDS(paste(tables.dir,"/",element,".Rds",sep=''))}), warning = function(w){return(NULL)})
+    if(!is.null(daily)){
+      names(daily) <- elements
+      daily <- lapply(as.character(stations.sp$ID),function(station){
+        return(tryCatch(lapply(daily,'[[',station),error=function(e){return(NULL)}))
+      })
+      names(daily) <- as.character(stations.sp$ID)
+      daily <- daily[!sapply(daily,is.null)]
+      # Make sure station names and elements are the same
+      if(all(names(daily) %in% stations.sp$ID) & all(sapply(daily,function(dat){all(names(dat) %in% elements)}))){
+        return(list(spatial=stations.out,tabular=daily))
+      }
+    }
+  }
+  
   cat("\nDownloading daily GHCN data")
   downloadGHCNDaily(stations.sp$ID,raw.dir=raw.dir,force.redo=force.redo)
   
@@ -118,6 +134,16 @@ getGHCNDaily <- function(template=NULL, elements=NULL, label=NULL, raw.dir="./RA
     
     return(out.list)
   })
+  names(daily) <- stations.sp$ID
+  
+  daily.split <- lapply(elements,function(element){
+    lapply(daily,'[[',element)
+  })
+  names(daily.split) <- elements
+  junk <- lapply(elements,function(element){
+    saveRDS(daily.split[[element]],paste(tables.dir,"/",element,".Rds",sep=''),compress='xz')
+  })
+
   
   return(list(spatial=stations.out,tabular=daily))
 }

@@ -13,8 +13,7 @@ getNRCS <- function(template, label, raw.dir="./RAW/NRCS/", extraction.dir="./EX
   dir.create(vectors.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(tables.dir, showWarnings = FALSE, recursive = TRUE)
   
-  if(!force.redo & length(list.files(vectors.dir))>0 & length(list.files(tables.dir))>0){
-    if(!file.exists(paste(vectors.dir,"/NRCSMapunits.shp",sep=''))) break
+  if(!force.redo & length(list.files(vectors.dir))>0 & length(list.files(tables.dir))>0 & file.exists(paste(vectors.dir,"/NRCSMapunits.shp",sep=''))){
     NRCSMapunits <- rgdal::readOGR(normalizePath(vectors.dir),"NRCSMapunits", verbose=F)
     
     files <- list.files(tables.dir)
