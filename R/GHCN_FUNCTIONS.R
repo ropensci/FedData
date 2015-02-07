@@ -84,13 +84,16 @@ getGHCNDaily <- function(template=NULL, elements=NULL, label=NULL, raw.dir="./RA
     daily <- tryCatch(lapply(elements,function(element){readRDS(paste(tables.dir,"/",element,".Rds",sep=''))}), warning = function(w){return(NULL)})
     if(!is.null(daily)){
       names(daily) <- elements
-      daily <- lapply(as.character(stations.sp$ID),function(station){
-        return(tryCatch(lapply(daily,'[[',station),error=function(e){return(NULL)}))
+      
+      daily <- lapply(as.character(stations.sp$ID),function(USC00091585){
+        stationDaily <- tryCatch(lapply(daily,'[[',station),error=function(e){return(NULL)})
+        stationDaily <- stationDaily[!sapply(stationDaily,is.null)]
+        return(stationDaily)
       })
       names(daily) <- as.character(stations.sp$ID)
       daily <- daily[!sapply(daily,is.null)]
       # Make sure station names and elements are the same
-      if(all(names(daily) %in% stations.sp$ID) & all(sapply(daily,function(dat){all(names(dat) %in% elements)}))){
+      if(setequal(names(daily),stations.sp$ID) & all(sapply(daily,function(dat){setequal(names(dat),elements)}))){
         return(list(spatial=stations.out,tabular=daily))
       }
     }
