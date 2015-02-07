@@ -5,8 +5,8 @@
 ## Date: 02/14/2014
 
 getNRCS <- function(template, label, raw.dir="./RAW/NRCS/", extraction.dir="./EXTRACTIONS/NRCS/", force.redo=FALSE){  
-  vectors.dir <- paste(extraction.dir,"/",label,"/vectors",sep='')
-  tables.dir <- paste(extraction.dir,"/",label,"/tables",sep='')
+  vectors.dir <- paste(extraction.dir,"/",label,"/spatial",sep='')
+  tables.dir <- paste(extraction.dir,"/",label,"/tabular",sep='')
   
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
@@ -22,11 +22,11 @@ getNRCS <- function(template, label, raw.dir="./RAW/NRCS/", extraction.dir="./EX
     files <- files[order(files)]
     
     tables <- lapply(files,function(file){
-      read.csv(paste(normalizePath(vectors.dir),'/',file,'.csv',sep=''))
+      read.csv(paste(normalizePath(tables.dir),'/',file,sep=''))
     })
     names(tables) <- files
     
-    return(list(spatial=shapes,tabular=tables))
+    return(list(spatial=NRCSMapunits,tabular=tables))
   }
   
   if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){

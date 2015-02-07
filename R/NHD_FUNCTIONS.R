@@ -1,7 +1,7 @@
 # A function that loads the National Hydrography Dataset for a provided study area defined by "x."
 getNHD <- function(template, label, raw.dir="./RAW/NHD/", extraction.dir="./EXTRACTIONS/NHD/", force.redo=FALSE){
   
-  vectors.dir <- paste(extraction.dir,"/",label,"/vectors",sep='')
+  vectors.dir <- paste(extraction.dir,"/",label,"/spatial",sep='')
   
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
