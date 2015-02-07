@@ -39,9 +39,11 @@ plot(NED)
 plot(county, add=T)
 plot(GHCN.prcp[[1]], pch=17, add=T)
 plot(GHCN.temp[[1]], pch=19, add=T)
-plot(NHD$NHDFlowline, add=T)
-# plot(NHD$NHDWaterbody, add=T)
-# plot(NHD$NHDArea, add=T)
+plot(NHD$NHDFlowline, col='gray50', border='gray50', add=T)
+plot(NHD$NHDWaterbody, col='gray50', border='gray50', add=T)
+plot(NHD$NHDArea, col='gray50', border='gray50', add=T)
+
+
 
 
 
