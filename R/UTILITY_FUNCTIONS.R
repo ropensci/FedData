@@ -22,7 +22,7 @@ createArea <- function(North,South,East,West,projection.string){
   sim.poly <- sp::SpatialPolygons(list(sim.poly), proj4string=master.proj)
   IDs <- sapply(slot(sim.poly, "polygons"), function(x) slot(x, "ID"))
   df <- data.frame(rep(0, length(IDs)), row.names=IDs)
-  sim.poly <- SP::SpatialPolygonsDataFrame(sim.poly,df)
+  sim.poly <- sp::SpatialPolygonsDataFrame(sim.poly,df)
   
   return(sim.poly)
 }

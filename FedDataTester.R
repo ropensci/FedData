@@ -43,7 +43,7 @@ plot(NHD$NHDFlowline, col='gray50', border='gray50', add=T)
 plot(NHD$NHDWaterbody, col='gray50', border='gray50', add=T)
 plot(NHD$NHDArea, col='gray50', border='gray50', add=T)
 
-
+plot(NRCS[['spatial']])
 
 
 
