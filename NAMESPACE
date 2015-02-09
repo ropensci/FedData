@@ -1,1 +1,74 @@
-exportPattern("^[[:alpha:]]+")
+# UTILITY_FUNCTIONS
+export(pkgTest)
+export(substrRight)
+export(createArea)
+export(polygonFromExtent)
+export(SPDFfromPolygon)
+export(sequential.duplicated)
+export(scalebar.new)
+export(wgetDownload)
+
+# NED_FUNCTIONS
+export(getNED)
+
+# GHCN_FUNCTIONS
+export(downloadGHCNDaily)
+export(getGHCNDaily)
+export(getGHCNStations)
+
+# NHD_FUNCTIONS
+export(getNHD)
+export(getHUC4)
+export(getNHDSubregions)
+export(loadNHDLayers)
+export(loadNHDSubregions)
+export(getAreaList)
+
+# NRCS_FUNCTIONS
+export(getNRCS)
+export(getNRCSStudyAreas)
+export(getNRCSStudyAreaMapunits)
+export(getNRCSMapunits)
+export(getNRCSStudyAreaData)
+export(getNRCSData)
+export(extractNRCSData)
+
+
+
+
+
+
+
+# ITRDB_FUNCTIONS
+export(getITRDB)
+export(seriesToMatrix)
+export(is.int)
+export(getITRDBMetadata)
+export(sanitizeITRDBnames)
+
+
+
+
+
+
+
+
+
+# PRISM_FUNCTIONS
+export(getPRISM_MONTHLYData)
+export(extractPRISM_MONTHLYMonth)
+export(extractPRISM_MONTHLY)
+export(calcANNUALGDD_MONTHLY)
+export(subsetPRISM_MONTHLY)
+export(annualizePRISM_MONTHLY)
+export(getPRISM_MONTHLYPointsData)
+export(extractPRISM_MONTHLYPointsYear)
+export(extractPRISM_MONTHLYPointsMonth)
+export(extractPRISM_MONTHLYPointsFromFile)
+export(extractPRISM_DAILY)
+export(getPRISM_DAILYData)
+export(extractPRISM_DAILYYear)
+
+# PLANTS_FUNCTIONS
+export(loadPLANTS)
+
