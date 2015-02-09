@@ -1,5 +1,5 @@
 getGHCNStations <- function(template=NULL, elements=NULL, standardize=F, raw.dir){
-  if(!is.null(template) & !is(template,"SpatialPolygonsDataFrame")){
+  if(!is.null(template) & (!is(template,"SpatialPolygonsDataFrame") & !is(template,"SpatialPolygons"))){
     template <- polygonFromExtent(template)
   }
   
@@ -14,10 +14,10 @@ getGHCNStations <- function(template=NULL, elements=NULL, standardize=F, raw.dir
   names(station.inventory) <- c("ID","LATITUDE","LONGITUDE","ELEMENT","YEAR_START","YEAR_END")
   
   # Convert to SPDF
-  stations.sp <- SpatialPointsDataFrame(coords=station.inventory[,c("LONGITUDE","LATITUDE")],station.inventory,proj4string=sp::CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"))
+  stations.sp <- SpatialPointsDataFrame(coords=station.inventory[,c("LONGITUDE","LATITUDE")],station.inventory,proj4string=sp::CRS("+proj=longlat"))
   
   if(!is.null(template)){
-    stations.sp <- stations.sp[!is.na(sp::over(stations.sp,sp::spTransform(template,sp::CRS(projection(stations.sp))))[,1]),]
+    stations.sp <- stations.sp[!is.na(sp::over(stations.sp,sp::spTransform(template,sp::CRS(projection(stations.sp))))),]
   }
   
   return(stations.sp)
