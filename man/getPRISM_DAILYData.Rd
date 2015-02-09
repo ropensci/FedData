@@ -8,7 +8,7 @@
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-getPRISM_DAILYData(type, label, out.dir, daily.dir, template, year.range, date.format = "X%Y.%m.%d", force.redo = FALSE)
+getPRISM_DAILYData(type, label, out.dir, daily.dir, template, year.range, date.format = "X\%Y.\%m.\%d", force.redo = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
