@@ -3,6 +3,8 @@ getGHCNStations <- function(template=NULL, elements=NULL, standardize=F, raw.dir
     template <- polygonFromExtent(template)
   }
   
+  template <- as(template,"SpatialPolygons")
+  
   url <- "ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt"
   destdir <- raw.dir
   wgetDownload(url=url, destdir=destdir)
