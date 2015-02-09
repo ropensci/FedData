@@ -5,14 +5,13 @@ library(FedData)
 setwd("/Users/Bocinsky/Desktop/FedDataTest")
 
 # Get a random contiguous USA county for testing
-county <- rgdal::readOGR("/Volumes/DATA/NATIONAL_ATLAS/countyp010","countyp010g")
-county <- county[county$STATE=="GA" & county$NAME=="Cherokee",]
-# county <- county[!(county$STATE %in% c("AK","HI","PR","VI")),]
+county <- rgdal::readOGR("/Volumes/DATA/USCENSUS/tl_2014_us_county","tl_2014_us_county")
+county <- county[county$STATEFP==13 & county$NAME=="Cherokee",]
 # county <- county[sample(1:length(county),1),]
 
 # Get the NED (USA ONLY)
 # Returns a raster
-NED <- getNED(template=county, label=paste(county$STATE,'_',county$NAME, sep=''), res='1')
+NED <- getNED(template=county, label=paste(county$GEOID,'_',county$NAME, sep=''), res='1')
 
 # Get the daily GHCN data (GLOBAL)
 # Returns a list: the first element is the spatial locations of stations,
