@@ -10,23 +10,6 @@ substrRight <- function(x, n){
   substr(x, nchar(x)-n+1, nchar(x))
 }
 
-createArea <- function(North,South,East,West,projection.string){
-  # Create matrix of coordinates
-  datainUTM<-matrix(c(East, West, West, East,East, North,North,South,South,North),nrow=5)
-  
-  # Set universal projection
-  master.proj <- sp::CRS(projection.string)
-  
-  # Create SpatialPolygon of simulation area
-  sim.poly <- sp::Polygons(list(Polygon(datainUTM, hole=FALSE)),ID='A')
-  sim.poly <- sp::SpatialPolygons(list(sim.poly), proj4string=master.proj)
-  IDs <- sapply(slot(sim.poly, "polygons"), function(x) slot(x, "ID"))
-  df <- data.frame(rep(0, length(IDs)), row.names=IDs)
-  sim.poly <- sp::SpatialPolygonsDataFrame(sim.poly,df)
-  
-  return(sim.poly)
-}
-
 polygonFromExtent <- function(x, proj4string=NULL){
   if(is.null(proj4string)){
     proj4string <- raster::projection(x)
