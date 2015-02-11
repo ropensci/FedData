@@ -52,7 +52,7 @@ getNHD <- function(template, label, raw.dir="./RAW/NHD/", extraction.dir="./EXTR
   
   # Merge like datasets
   allShapes <- lapply(layers,function(layer){
-    shapes <- sapply(all.data, '[[', layer)
+    shapes <- sapply(subregionShapes, '[[', layer)
     null.shapes <- sapply(shapes,is.null)
     shapes <- do.call("rbind", shapes[!null.shapes])
     if(is.null(shapes)) return(shapes)
