@@ -1,4 +1,17 @@
-# A function that loads the National Hydrography Dataset for a provided study area defined by "x."
+#' Download and crop the National Hydrography Dataset.
+#'
+#' \code{getNHD} returns a list of Spatial* objects extracted 
+#' from the National Hydrography Dataset.
+#' 
+#' @param template A Raster* or Spatial* object to serve 
+#' as a template for cropping.
+#' @param label A character string naming the study area.
+#' @param raw.dir A character string indicating where raw downloaded files should be put.
+#' The directory will be created if missing. Defaults to "./RAW/NHD/".
+#' @param extraction.dir A character string indicating where the extracted and cropped NHD shapefiles should be put.
+#' The directory will be created if missing. Defaults to "./EXTRACTIONS/NHD/".
+#' @param force.redo If an extraction for this template and label already exists, should a new one be created?
+#' @return A list of Spatial* objects extracted from the National Hydrography Dataset.
 getNHD <- function(template, label, raw.dir="./RAW/NHD/", extraction.dir="./EXTRACTIONS/NHD/", force.redo=FALSE){
   
   vectors.dir <- paste(extraction.dir,"/",label,"/spatial",sep='')
@@ -27,109 +40,152 @@ getNHD <- function(template, label, raw.dir="./RAW/NHD/", extraction.dir="./EXTR
     
   HUC4 <- getHUC4(template=template, raw.dir=raw.dir, force.redo=force.redo)
   
-  area.list <- getAreaList(HUC4)
+  area.list <- formatC(HUC4$HUC4, width = 4, format = "d", flag = "0")
   
-  shapes <- loadNHDSubregions(template=template, area.list=area.list, raw.dir=raw.dir, vectors.dir=vectors.dir, force.redo=force.redo)
-  
-  return(shapes)
-}
-
-# A method for downloading and processing the HUC4 shapefile from
-# the National Hydrography Dataset.
-getHUC4 <- function(template, raw.dir, force.redo=F){
-  url <- 'ftp://ftp.igsb.uiowa.edu/gis_library/USA/huc_04.zip'
-  destdir <- raw.dir
-  wgetDownload(url=url, destdir=destdir)
-  
-  cat("Unzipping the NHD HUC4 dataset.\n")
-  unzip(paste(raw.dir,"/huc_04.zip",sep=''),exdir=paste(raw.dir,"/huc_04",sep=''))
-  
-  cat("Loading the NHD HUC4 dataset.\n")
-  HUC4 <- rgdal::readOGR(normalizePath(paste(raw.dir,"/huc_04/",sep='')), layer="huc_04", verbose=FALSE)
-  
-  HUC4@proj4string <- sp::CRS("+proj=utm +zone=15 +datum=NAD83 +ellps=WGS84")
-  
-  # Get a list of NHD subregions within the project study area
-  HUC4 <- raster::crop(HUC4,spTransform(template,CRS(projection(HUC4))))
-  
-  unlink(paste(raw.dir,"/huc_04",sep=''), recursive = TRUE)
-  
-  return(HUC4)
-}
-
-# Get a list of HUC4 NHD subregions
-getAreaList <- function(HUC4){
-  area.list <- HUC4$HUC4
-  area.list <- formatC(area.list, width = 4, format = "d", flag = "0")
-  return(area.list)
-}
-
-# A method for loading subregions from the National Hydrography Dataset, given HUC4 areas.
-loadNHDSubregions <- function(template, area.list, raw.dir, vectors.dir, force.redo=FALSE){
-  getNHDSubregions(area.list, raw.dir=raw.dir)
-  
-  shapes <- loadNHDLayers(template=template, area.list=area.list, raw.dir=raw.dir, vectors.dir=vectors.dir, force.redo=force.redo)
-  
-  return(shapes)
-}
-
-# A method for downloading medium resolution regions from the National
-# Hydrography Dataset, given a list of regions.
-getNHDSubregions <- function(area.list, raw.dir){
-  # Download the corresponding NHD subregion files.
-  for(area in area.list){
-    url <- paste('ftp://nhdftp.usgs.gov/DataSets/Staged/SubRegions/FileGDB/MediumResolution/NHDM',area,'_92v200.zip',sep='')
-    destdir <- raw.dir
-    wgetDownload(url=url, destdir=destdir)
-  }
-}
-
-# A method for loading layers from specified regions in the National Hydrology Dataset
-loadNHDLayers <- function(template, area.list, raw.dir, vectors.dir, force.redo=FALSE){
   # Get the spatial data for each area
-  all.data <- lapply(area.list, function(area){
-    unzip(paste(raw.dir,'/NHDM',area,'_92v200.zip',sep=''),exdir=paste(raw.dir, sep=''))
-    
-    # Get the path to the geodatabase
-    dsn <- normalizePath(paste(raw.dir,"/NHDM",area,".gdb",sep=''))
-    
-    # List all layers in the geodatabase
-    layers <- rgdal::ogrListLayers(dsn)
-    
-    # Get each layer in the geodatabase
-    shapes <- lapply(layers,function(layer){
-      tryCatch(suppressWarnings(rgdal::readOGR(dsn=dsn, layer=layer, verbose=F)),error=function(e) NULL)
-    })
-    names(shapes) <- layers
-    
-    # Rename the features to prepare for merging
-    shapes <- lapply(shapes, function(shape){
-      tryCatch(sp::spChFIDs(shape, as.character(paste(area,"_",row.names(shape@data),sep=''))),error=function(e) NULL)
-    })
-    
-    unlink(paste(raw.dir,"/NHDM",area,".gdb",sep=''), recursive = TRUE)
-    
-    return(shapes)
+  subregionShapes <- lapply(area.list, function(area){
+    return(getNHDSubregion(template=template, area=area, raw.dir=raw.dir))
   })
   
   # Get all layer names
-  layers <- unique(unlist(lapply(all.data,names)))
+  layers <- unique(unlist(lapply(subregionShapes,names)))
   
   # Merge like datasets
-  merged.data <- lapply(layers,function(layer){
+  allShapes <- lapply(layers,function(layer){
     shapes <- sapply(all.data, '[[', layer)
     null.shapes <- sapply(shapes,is.null)
     shapes <- do.call("rbind", shapes[!null.shapes])
     if(is.null(shapes)) return(shapes)
     shapes <- raster::crop(shapes,sp::spTransform(template,CRS(projection(shapes))))
     if(is.null(shapes)) return(shapes)
-#     shapes <- spTransform(shapes,CRS(projection(template)))
+    #     shapes <- spTransform(shapes,CRS(projection(template)))
     suppressWarnings(rgdal::writeOGR(shapes,vectors.dir,layer,"ESRI Shapefile", overwrite_layer=TRUE))
     return(shapes)
   })
-  names(merged.data) <- layers
-  null.layers <- sapply(merged.data,is.null)
-  merged.data <- merged.data[!null.layers]
+  names(allShapes) <- layers
   
-  return(merged.data)
+  # Remove null layers
+  allShapes <- allShapes[!sapply(allShapes,is.null)]
+    
+  return(allShapes)
+}
+
+#' Download a zipped directory containing a shapefile of the HUC4 subregions of the NHD.
+#'
+#' @param raw.dir A character string indicating where raw downloaded files should be put.
+#' @return A character string representing the full local path of the HUC4 zipped directory.
+downloadHUC4 <- function(raw.dir){
+  url <- 'ftp://ftp.igsb.uiowa.edu/gis_library/USA/huc_04.zip'
+  wgetDownload(url=url, destdir=raw.dir)
+  return(normalizePath(paste(raw.dir,'huc_04.zip',sep='')))
+}
+
+
+#' Download and crop a shapefile of the HUC4 
+#' regions of the National Hydrography Dataset.
+#'
+#' \code{getHUC4} returns a \code{\link{SpatialPolygonsDataFrame}} of the HUC4 regions within
+#' the specified \code{template}.
+#' 
+#' @param template A Raster* or Spatial* object to serve 
+#' as a template for cropping.
+#' @param raw.dir A character string indicating where raw downloaded files should be put.
+#' The directory will be created if missing.
+#' @return A \code{\link{SpatialPolygonsDataFrame}} of the HUC4 regions within
+#' the specified \code{template}.
+getHUC4 <- function(template=NULL, raw.dir){
+  tmpdir <- tempdir()
+  
+  huc4File <- downloadHUC4(raw.dir)
+  
+  cat("Unzipping the NHD HUC4 dataset.\n")
+  unzip(huc4File, exdir=tmpdir)
+  
+  cat("Loading the NHD HUC4 dataset.\n")
+  HUC4 <- rgdal::readOGR(tmpdir, layer="huc_04", verbose=FALSE)
+  
+  HUC4@proj4string <- sp::CRS("+proj=utm +zone=15 +datum=NAD83 +ellps=WGS84")
+  
+  # Get a list of NHD subregions within the project study area
+  if(!is.null(template)){
+    HUC4 <- raster::crop(HUC4,spTransform(template,CRS(projection(HUC4))))
+  }
+  
+  unlink(tmpdir, recursive = TRUE)
+  
+  return(HUC4)
+}
+
+
+
+#' Download a zipped NHD HUC4 subregion.
+#'
+#' HUC4 subregion are specified by a unique character string, best obtained using the \code{\link{getHUC4}} function.
+#' \code{downloadNHDSubregion} returns the path to the downloaded zip file.
+#'
+#' @param area A 4-character string indicating the HUC4 NHD subregion to download.
+#' @param raw.dir A character string indicating where raw downloaded files should be put.
+#' The directory will be created if missing.
+#' @return A character string representing the full local path of the downloaded zip file.
+downloadNHDSubregion <- function(area, raw.dir){
+
+  url <- paste('ftp://nhdftp.usgs.gov/DataSets/Staged/SubRegions/FileGDB/MediumResolution/NHDM',area,'_92v200.zip',sep='')
+  destdir <- raw.dir
+  wgetDownload(url=url, destdir=destdir)
+  
+  return(normalizePath(paste(destdir,'/NHDM',area,'_92v200.zip',sep='')))
+}
+
+#' Download and crop data from a zipped HUC4 subregion
+#' of the National Hydrography Dataset.
+#'
+#' \code{getNHDSubregion} returns a list of \code{\link{SpatialPolygonsDataFrame}}s of the layers of the HUC4 subregion,
+#'  within the specified \code{template}.
+#' 
+#' @param template A Raster* or Spatial* object to serve 
+#' as a template for cropping.
+#' @param area A 4-character string indicating the HUC4 NHD subregion to download and crop.
+#' @param raw.dir A character string indicating where raw downloaded files should be put.
+#' The directory will be created if missing.
+#' @return A \code{\link{SpatialPolygonsDataFrame}} of the HUC4 regions within
+#' the specified \code{template}.
+getNHDSubregion <- function(template=NULL, area, raw.dir){
+  tmpdir <- tempdir()
+  
+  file <- downloadNHDSubregion(area=area, raw.dir=raw.dir)
+  
+  unzip(file,exdir=tmpdir)
+  
+  # Get the path to the geodatabase
+  dsn <- list.files(tmpdir, full.names=T)
+  dsn <- dsn[grepl("gdb",dsn)]
+  dsn <- normalizePath(dsn)
+  
+  # List all layers in the geodatabase
+  layers <- rgdal::ogrListLayers(dsn)
+  layers <- layers[grepl("NHD",layers)]
+  
+  # Get each layer in the geodatabase
+  shapes <- lapply(layers,function(layer){
+    tryCatch(suppressWarnings(rgdal::readOGR(dsn=dsn, layer=layer, verbose=F)),error=function(e) NULL)
+  })
+  names(shapes) <- layers
+  
+  # Rename the features to prepare for merging
+  shapes <- lapply(shapes, function(shape){
+    tryCatch(sp::spChFIDs(shape, as.character(shape$Permanent_Identifier)),error=function(e) NULL)
+  })
+  
+  # Crop each feature to the template area
+  if(!is.null(template)){
+    shapes <- lapply(shapes,function(shape){
+      tryCatch(raster::crop(shape,spTransform(template,CRS(projection(shape)))),error=function(e) NULL)
+    }) 
+  }
+  
+  shapes <- shapes[!sapply(shapes,is.null)]
+  
+  unlink(tmpdir, recursive = TRUE)
+  
+  return(shapes)
 }

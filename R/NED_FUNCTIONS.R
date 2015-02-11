@@ -1,10 +1,10 @@
-#' Automatically download and crop the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.
+#' Download and crop the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.
 #'
 #' \code{getNED} returns a \code{\link{RasterLayer}} of elevation data cropped to a given
 #' template study area.
 #'
-#' @param template A \code{\link[raster]{Raster*}} or \code{\link[sp]{Spatial*}} object to serve 
-#' as a template for cropping, and perhaps resolution. If a \code{\link[raster]{Raster*}} with
+#' @param template A Raster* or Spatial* object to serve 
+#' as a template for cropping, and perhaps resolution. If a Raster* with
 #' a resolution that is less than 1/3 arc-second, \code{getNED} defaults to the 1/3 
 #' arc-second dataset. Otherwise, it defaults to the 1 arc-second dataset.
 #' @param label A character string naming the study area.
@@ -23,11 +23,6 @@ getNED <- function(template, label, res=NULL, raw.dir="./RAW/NED/", extraction.d
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(rasters.dir, showWarnings = FALSE, recursive = TRUE)
   
-  if(file.exists(paste(rasters.dir,"/NED_",res,".tif", sep='')) & !force.redo){
-    extracted.DEM <- raster::raster(paste(rasters.dir,"/NED_",res,".tif", sep=''))
-    return(extracted.DEM)
-  }
-  
   # Convert polygon to decimal degrees for data request
   extent.latlon <- raster::extent(raster::projectExtent(template, sp::CRS("+proj=longlat +ellps=WGS84")))
   
@@ -44,6 +39,11 @@ getNED <- function(template, label, res=NULL, raw.dir="./RAW/NED/", extraction.d
     res <- "1"
   }
   
+  if(file.exists(paste(rasters.dir,"/NED_",res,".tif", sep='')) & !force.redo){
+    extracted.DEM <- raster::raster(paste(rasters.dir,"/NED_",res,".tif", sep=''))
+    return(extracted.DEM)
+  }
+  
   # Open USGS NED download service.
   # NED tiles are labeled by their northwest corner. Thus, coordinate 36.42N, -105.71W is in grid n37w106
   wests <- seq(ceiling(abs(extent.latlon@xmax)),ceiling(abs(extent.latlon@xmin)))
@@ -53,26 +53,10 @@ getNED <- function(template, label, res=NULL, raw.dir="./RAW/NED/", extraction.d
 
   cat("\nArea of interest includes",nrow(tilesLocations),"NED tiles.")
   
-  # Automatically download 1x1 degree tiles from the USGS
-  cat("\nChecking availability of 1x1 degree tiles from the USGS for the study area.\n")
-  dir.create(paste(raw.dir,'/',res, sep=''), showWarnings = FALSE, recursive = TRUE)
-  
-  # Download tiles
-  tileFiles <- apply(tilesLocations,1,function(loc){
-    outFile <- downloadNED(res=res, tileNorthing=loc[1], tileWesting=loc[2], raw.dir=raw.dir)
-    return(outFile)
+  # Download and crop tiles
+  tiles <- apply(tilesLocations,1,function(loc){
+    return(getNEDTile(template=template, res=res, tileNorthing=loc[1], tileWesting=loc[2], raw.dir=raw.dir))
   })
-  
-  # Extract tiles from zip directories, and get a list of rasters
-  # Force the rasters into memory
-  tiles <- lapply(tileFiles,unzipNED)
-
-  # Crop all tiles
-  tiles <- lapply(tiles, function(tile){
-    tryCatch(raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))), snap="out"),error=function(e){return(NULL)})
-    })
-  
-  tiles <- tiles[!sapply(tiles,is.null)]
   
   # Mosaic all tiles
   if(length(tiles)>1){
@@ -87,8 +71,8 @@ getNED <- function(template, label, res=NULL, raw.dir="./RAW/NED/", extraction.d
     tiles <- tiles[[1]]
   }
   
-  raster::writeRaster(tiles, paste(rasters.dir,"/DEM_",res,".tif", sep=''), datatype="FLT4S", options=c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"),overwrite=T,setStatistics=FALSE)
-  
+  writeRaster(tiles, paste(rasters.dir,"/DEM_",res,".tif", sep=''), datatype="FLT4S", options=c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"),overwrite=T,setStatistics=FALSE)
+
   return(tiles)
 }
 
@@ -107,7 +91,22 @@ getNED <- function(template, label, res=NULL, raw.dir="./RAW/NED/", extraction.d
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing. Defaults to "./RAW/NED/".
 #' @return A character string representing the full local path of the downloaded directory.
-downloadNED <- function(res, tileNorthing, tileWesting, raw.dir){
+downloadNEDTile <- function(res=NULL, tileNorthing, tileWesting, raw.dir){
+  if(is.null(res) & (class(template) %in% c("RasterLayer","RasterStack","RasterBrick"))){
+    y.dim <- extent.latlon@ymax - extent.latlon@ymin
+    y.res <- y.dim/nrow(template)
+    if(y.res < (1/60)/60){
+      res <- "13"
+    }else{
+      res <- "1"
+    }
+  }else if(is.null(res)){
+    warning("If template is a sp* or extent object, res should be provided! \n Defaulting to 1 arc-second NED.\n", immediate.=T)
+    res <- "1"
+  }
+  
+  dir.create(paste(raw.dir,'/',res, sep=''), showWarnings = FALSE, recursive = TRUE)
+  
   tileWesting <- formatC(tileWesting, width = 3, format = "d", flag = "0") 
   tileNorthing <- formatC(tileNorthing, width = 2, format = "d", flag = "0") 
   
@@ -118,21 +117,37 @@ downloadNED <- function(res, tileNorthing, tileWesting, raw.dir){
   return(normalizePath(paste(destdir,'n',tileNorthing,'w',tileWesting,'.zip',sep='')))
 }
 
-#' Unzip a zipped tile from the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.
+#' Download and crop tile from the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.
 #'
-#' \code{unzipNED} decompresses a downloaded NED tile and returns a \code{\link[raster]{RasterLayer}}
-#' of the extracted tile. The raster layer is held completely in memory.
+#' \code{getNEDTile} returns a \code{\link{RasterLayer}} cropped within the specified \code{template}.
 #' 
-#' @param file A character string indicating where raw downloaded files should be put.
+#' @param template A Raster* or Spatial* object to serve 
+#' as a template for cropping. If missing, whole NED tile will be returned
+#' @param res A character string representing the desired resolution of the NED. "1"
+#' indicates the 1 arc-second NED, while "13" indicates the 1/3 arc-second dataset. Defaults to NULL.
+#' @param tileNorthing An integer representing the northing (latitude, in degrees north of the equator) of the northwest corner of the tile to 
+#' be downloaded.
+#' @param tileWesting An integer representing the westing (longitude, in degrees west of the prime meridian) of the northwest corner of the tile to 
+#' be downloaded. 
+#' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing. Defaults to "./RAW/NED/".
-#' @return A character string representing the full local path of a downloaded zip file to be decompressed.
-unzipNED <- function(file){
-  unzip(file,exdir="./temp")
+#' @return A \code{\link{RasterLayer}} cropped within the specified \code{template}.
+getNEDTile <- function(template=NULL, res, tileNorthing, tileWesting, raw.dir){
+  tmpdir <- tempdir()
   
-  dirs <- list.dirs("./temp",full.names = TRUE,recursive=F)
+  file <- downloadNEDTile(res=res, tileNorthing=tileNorthing, tileWesting=tileWesting, raw.dir=raw.dir)
+  
+  unzip(file,exdir=tmpdir)
+  
+  dirs <- list.dirs(tmpdir,full.names = TRUE,recursive=F)
   dirs <- dirs[grepl("grdn",dirs)]
   
   tile <- raster::raster(rgdal::readGDAL(dirs))
-  unlink("./temp", recursive = TRUE)
+  unlink(tmpdir, recursive = TRUE)
+  
+  if(!is.null(template)){
+    tile <- raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))), snap="out")
+  }
+  
   return(tile)
 }

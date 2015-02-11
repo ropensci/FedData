@@ -2,14 +2,14 @@
 % Please edit documentation in R/NED_FUNCTIONS.R
 \name{getNED}
 \alias{getNED}
-\title{Automatically download and crop the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.}
+\title{Download and crop the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.}
 \usage{
 getNED(template, label, res = NULL, raw.dir = "./RAW/NED/",
   extraction.dir = "./EXTRACTIONS/NED/", force.redo = F)
 }
 \arguments{
-\item{template}{A \code{\link[raster]{Raster*}} or \code{\link[sp]{Spatial*}} object to serve
-as a template for cropping, and perhaps resolution. If a \code{\link[raster]{Raster*}} with
+\item{template}{A Raster* or Spatial* object to serve
+as a template for cropping, and perhaps resolution. If a Raster* with
 a resolution that is less than 1/3 arc-second, \code{getNED} defaults to the 1/3
 arc-second dataset. Otherwise, it defaults to the 1 arc-second dataset.}
 
