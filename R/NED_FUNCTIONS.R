@@ -76,7 +76,7 @@ getNED <- function(template, label, res, raw.dir="./RAW/NED/", extraction.dir=".
 
     gc()
   }else{
-    tiles <- unlist(tiles)
+    tiles <- tiles[[1]]
   }
   
   raster::writeRaster(tiles, paste(rasters.dir,"/DEM_",res,".tif", sep=''), datatype="FLT4S", options=c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"),overwrite=T,setStatistics=FALSE)
