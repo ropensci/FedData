@@ -36,52 +36,70 @@ getNED <- function(template, label, res, raw.dir="./RAW/NED/", extraction.dir=".
   
   # Open USGS NED download service.
   # NED tiles are labeled by their northwest corner. Thus, coordinate 36.42N, -105.71W is in grid n37w106
-  wests <- c(ceiling(abs(extent.latlon@xmax)),ceiling(abs(extent.latlon@xmin)))
-  wests <- unique(append(wests,seq(wests[1],wests[2])))
-  norths <- c(ceiling(abs(extent.latlon@ymin)),ceiling(abs(extent.latlon@ymax)))
-  norths <- unique(append(norths,seq(norths[1],norths[2])))
-  
+  wests <- seq(ceiling(abs(extent.latlon@xmax)),ceiling(abs(extent.latlon@xmin)))
+  norths <- seq(ceiling(abs(extent.latlon@ymin)),ceiling(abs(extent.latlon@ymax)))
   wests <- formatC(wests, width = 3, format = "d", flag = "0") 
   norths <- formatC(norths, width = 2, format = "d", flag = "0") 
   
-  tiles <- vector("list", length(wests)*length(norths))
-  
-  cat("\nArea of interest includes",length(wests)*length(norths),"NED tiles.")
+  tilesLocations <- as.matrix(expand.grid(norths,wests,stringsAsFactors = FALSE))
+
+  cat("\nArea of interest includes",nrow(tilesLocations),"NED tiles.")
   
   # Automatically download 1x1 degree tiles from the USGS
   cat("\nChecking availability of 1x1 degree tiles from the USGS for the study area.\n")
   dir.create(paste(raw.dir,'/',res, sep=''), showWarnings = FALSE, recursive = TRUE)
-  t <- 1
-  for(w in wests){
-    for(n in norths){
-      url <- paste('ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/ArcGrid/n',n,'w',w,'.zip',sep='')
-      destdir <- paste(raw.dir,'/',res,'/',sep='')
-      wgetDownload(url=url, destdir=destdir)
+  
+  # Download tiles
+  tileFiles <- apply(tilesLocations,1,function(loc){
+    outFile <- downloadNED(res=res, tileNorthing=loc[1], tileWesting=loc[2], raw.dir=raw.dir)
+    return(outFile)
+  })
+  
+  # Extract tiles from zip directories, and get a list of rasters
+  # Force the rasters into memory
+  tiles <- lapply(tileFiles,unzipNED)
 
-      unzip(paste(raw.dir,'/',res,'/n',n,'w',w,'.zip',sep=''),exdir=paste(raw.dir,'/',res,'/n',n,'w',w, sep=''))
-      tiles[t] <- raster::raster(rgdal::readGDAL(paste(raw.dir,'/',res,'/n',n,'w',w,'/grdn',n,'w',w,'_',res,sep='')))
-      unlink(paste(raw.dir,'/',res,'/n',n,'w',w,sep=''), recursive = TRUE)
-      t <- t+1
-    }
-  }
+  # Crop all tiles
+  tiles <- lapply(tiles, function(tile){
+    tryCatch(raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))), snap="out"),error=function(e){return(NULL)})
+    })
+  
+  tiles <- tiles[!sapply(tiles,is.null)]
+  
   # Mosaic all tiles
   if(length(tiles)>1){
     cat('Mosaic-ing NED tiles.\n\n')
     flush.console()
     
     tiles$fun <- mean
-    mosaic.all <- do.call(raster::mosaic, tiles)
-    
-    rm(tiles)
+    tiles <- do.call(raster::mosaic, tiles)
+
     gc()
   }else{
-    mosaic.all <- tiles[[1]]
+    tiles <- unlist(tiles)
   }
   
-  # Crop
-  mosaic.all <- raster::crop(mosaic.all,sp::spTransform(template,sp::CRS(raster::projection(mosaic.all))), snap="out")
+  raster::writeRaster(tiles, paste(rasters.dir,"/DEM_",res,".tif", sep=''), datatype="FLT4S", options=c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"),overwrite=T,setStatistics=FALSE)
   
-  rgdal::writeGDAL(as(mosaic.all, "SpatialGridDataFrame"), paste(rasters.dir,"/DEM_",res,".tif", sep=''), drivername="GTiff", type="Float32", options=c("INTERLEAVE=PIXEL", "COMPRESS=DEFLATE", "ZLEVEL=9"))
+  return(tiles)
+}
+
+downloadNED <- function(res, tileNorthing, tileWesting, raw.dir){
   
-  return(mosaic.all)
+  url <- paste('ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/ArcGrid/n',tileNorthing,'w',tileWesting,'.zip',sep='')
+  destdir <- paste(raw.dir,'/',res,'/',sep='')
+  wgetDownload(url=url, destdir=destdir)
+  
+  return(normalizePath(paste(destdir,'n',tileNorthing,'w',tileWesting,'.zip',sep='')))
+}
+
+unzipNED <- function(file){
+  unzip(file,exdir="./temp")
+  
+  dirs <- list.dirs("./temp",full.names = TRUE,recursive=F)
+  dirs <- dirs[grepl("grdn",dirs)]
+  
+  tile <- raster::raster(rgdal::readGDAL(dirs))
+  unlink("./temp", recursive = TRUE)
+  return(tile)
 }
