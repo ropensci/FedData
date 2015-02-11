@@ -71,7 +71,7 @@ getNED <- function(template, label, res=NULL, raw.dir="./RAW/NED/", extraction.d
     tiles <- tiles[[1]]
   }
   
-  writeRaster(tiles, paste(rasters.dir,"/DEM_",res,".tif", sep=''), datatype="FLT4S", options=c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"),overwrite=T,setStatistics=FALSE)
+  writeRaster(tiles, paste(rasters.dir,"/DEM_",res,".tif", sep=''), datatype="FLT4S", options=c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"), overwrite=T, setStatistics=FALSE)
 
   return(tiles)
 }
@@ -92,15 +92,7 @@ getNED <- function(template, label, res=NULL, raw.dir="./RAW/NED/", extraction.d
 #' The directory will be created if missing. Defaults to "./RAW/NED/".
 #' @return A character string representing the full local path of the downloaded directory.
 downloadNEDTile <- function(res=NULL, tileNorthing, tileWesting, raw.dir){
-  if(is.null(res) & (class(template) %in% c("RasterLayer","RasterStack","RasterBrick"))){
-    y.dim <- extent.latlon@ymax - extent.latlon@ymin
-    y.res <- y.dim/nrow(template)
-    if(y.res < (1/60)/60){
-      res <- "13"
-    }else{
-      res <- "1"
-    }
-  }else if(is.null(res)){
+if(is.null(res)){
     warning("If template is a sp* or extent object, res should be provided! \n Defaulting to 1 arc-second NED.\n", immediate.=T)
     res <- "1"
   }
