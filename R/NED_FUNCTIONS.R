@@ -1,12 +1,22 @@
-# A function to automatically download and crop the National Elevation Dataset.
-# x, a model raster, sp*, or extent object
-# out.dir, a directory where the downloaded NED files should be stored
-# res, the intended resolution as a character string. 
-#     Options are "1" for the 1 arc-second NED (~30 meter), 
-#     or "13" for the 1/3 arc-second NED (~10 meter)
-# If template is a sp* or extent object, res must be provided!
-# USES RCurl, raster, sp, rgdal
-getNED <- function(template, label, res, raw.dir="./RAW/NED/", extraction.dir="./EXTRACTIONS/NED/", force.redo=F){  
+#' Automatically download and crop the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.
+#'
+#' \code{getNED} returns a \code{\link{RasterLayer}} of elevation data cropped to a given
+#' template study area.
+#'
+#' @param template A \code{\link[raster]{Raster*}} or \code{\link[sp]{Spatial*}} object to serve 
+#' as a template for cropping, and perhaps resolution. If a \code{\link[raster]{Raster*}} with
+#' a resolution that is less than 1/3 arc-second, \code{getNED} defaults to the 1/3 
+#' arc-second dataset. Otherwise, it defaults to the 1 arc-second dataset.
+#' @param label A character string naming the study area.
+#' @param res A character string representing the desired resolution of the NED. "1"
+#' indicates the 1 arc-second NED, while "13" indicates the 1/3 arc-second dataset. Defaults to NULL.
+#' @param raw.dir A character string indicating where raw downloaded files should be put.
+#' The directory will be created if missing. Defaults to "./RAW/NED/".
+#' @param extraction.dir A character string indicating where the extracted and cropped DEM should be put.
+#' The directory will be created if missing. Defaults to "./EXTRACTIONS/NED/".
+#' @param force.redo If an extraction for this template and label already exists, should a new one be created?
+#' @return A \code{\link[raster]{RasterLayer}} DEM cropped to the extent of the template.
+getNED <- function(template, label, res=NULL, raw.dir="./RAW/NED/", extraction.dir="./EXTRACTIONS/NED/", force.redo=F){  
   
   rasters.dir <- paste(extraction.dir,"/",label,"/rasters",sep='')
   
@@ -38,8 +48,6 @@ getNED <- function(template, label, res, raw.dir="./RAW/NED/", extraction.dir=".
   # NED tiles are labeled by their northwest corner. Thus, coordinate 36.42N, -105.71W is in grid n37w106
   wests <- seq(ceiling(abs(extent.latlon@xmax)),ceiling(abs(extent.latlon@xmin)))
   norths <- seq(ceiling(abs(extent.latlon@ymin)),ceiling(abs(extent.latlon@ymax)))
-  wests <- formatC(wests, width = 3, format = "d", flag = "0") 
-  norths <- formatC(norths, width = 2, format = "d", flag = "0") 
   
   tilesLocations <- as.matrix(expand.grid(norths,wests,stringsAsFactors = FALSE))
 
@@ -84,7 +92,24 @@ getNED <- function(template, label, res, raw.dir="./RAW/NED/", extraction.dir=".
   return(tiles)
 }
 
+#' Download a zipped tile from the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.
+#'
+#' Tiles are specified by a resolution, northing, and westing; northing and westing refer to the 
+#' northwest corner of each NED tile, in degrees; tiles are 1x1 degree.
+#' Tiles are downloaded in zipped ESRI ArcGrid format. \code{downloadNED} returns the path to the downloaded zip file.
+#'
+#' @param res A character string representing the desired resolution of the NED. "1"
+#' indicates the 1 arc-second NED, while "13" indicates the 1/3 arc-second dataset. Defaults to NULL.
+#' @param tileNorthing An integer representing the northing (latitude, in degrees north of the equator) of the northwest corner of the tile to 
+#' be downloaded.
+#' @param tileWesting An integer representing the westing (longitude, in degrees west of the prime meridian) of the northwest corner of the tile to 
+#' be downloaded. 
+#' @param raw.dir A character string indicating where raw downloaded files should be put.
+#' The directory will be created if missing. Defaults to "./RAW/NED/".
+#' @return A character string representing the full local path of the downloaded directory.
 downloadNED <- function(res, tileNorthing, tileWesting, raw.dir){
+  tileWesting <- formatC(tileWesting, width = 3, format = "d", flag = "0") 
+  tileNorthing <- formatC(tileNorthing, width = 2, format = "d", flag = "0") 
   
   url <- paste('ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/ArcGrid/n',tileNorthing,'w',tileWesting,'.zip',sep='')
   destdir <- paste(raw.dir,'/',res,'/',sep='')
@@ -93,6 +118,14 @@ downloadNED <- function(res, tileNorthing, tileWesting, raw.dir){
   return(normalizePath(paste(destdir,'n',tileNorthing,'w',tileWesting,'.zip',sep='')))
 }
 
+#' Unzip a zipped tile from the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.
+#'
+#' \code{unzipNED} decompresses a downloaded NED tile and returns a \code{\link[raster]{RasterLayer}}
+#' of the extracted tile. The raster layer is held completely in memory.
+#' 
+#' @param file A character string indicating where raw downloaded files should be put.
+#' The directory will be created if missing. Defaults to "./RAW/NED/".
+#' @return A character string representing the full local path of a downloaded zip file to be decompressed.
 unzipNED <- function(file){
   unzip(file,exdir="./temp")
   
