@@ -85,7 +85,7 @@ downloadHUC4 <- function(raw.dir){
 #' regions of the National Hydrography Dataset.
 #'
 #' \code{getHUC4} returns a \code{\link{SpatialPolygonsDataFrame}} of the HUC4 regions within
-#' the specified \code{template}.
+#' the specified \code{template}. If template is not provided, returns the entire HUC4 dataset.
 #' 
 #' @param template A Raster* or Spatial* object to serve 
 #' as a template for cropping.
@@ -142,7 +142,7 @@ downloadNHDSubregion <- function(area, raw.dir){
 #' of the National Hydrography Dataset.
 #'
 #' \code{getNHDSubregion} returns a list of \code{\link{SpatialPolygonsDataFrame}}s of the layers of the HUC4 subregion,
-#'  within the specified \code{template}.
+#'  within the specified \code{template}. If template is not provided, returns the entire HUC4 subregion.
 #' 
 #' @param template A Raster* or Spatial* object to serve 
 #' as a template for cropping.
