@@ -38,7 +38,7 @@ getNHD <- function(template, label, raw.dir="./RAW/NHD/", extraction.dir="./EXTR
     template <- SPDFfromPolygon(sp::spTransform(polygonFromExtent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
   }
     
-  HUC4 <- getHUC4(template=template, raw.dir=raw.dir, force.redo=force.redo)
+  HUC4 <- getHUC4(template=template, raw.dir=raw.dir)
   
   area.list <- formatC(HUC4$HUC4, width = 4, format = "d", flag = "0")
   
