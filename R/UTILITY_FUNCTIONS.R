@@ -40,14 +40,14 @@ sequential.duplicated <- function(x, rows=F){
   return(duplicates)
 }
 
-wgetDownload <- function(url, destdir, timestamping=T, nc=T){
-  if(nc){
-    status <- system(paste("wget -nc -nd --quiet --directory-prefix=",destdir," ",url,sep=''))
+wgetDownload <- function(url, destdir, timestamping=T, nc=F){
+  if(!any(c(timestamping,nc))){
+    status <- system(paste("wget -nd --quiet --directory-prefix=",destdir," ",url,sep=''))
   }else if(timestamping){
     status <- system(paste("wget -N -nd --quiet --directory-prefix=",destdir," ",url,sep=''))
   }else{
-    status <- system(paste("wget -nd --quiet --directory-prefix=",destdir," ",url,sep=''))
-  } 
+    status <- system(paste("wget -nc -nd --quiet --directory-prefix=",destdir," ",url,sep=''))
+  }
   
   # If status is still not zero, report a warning
   if (status!=0)
@@ -71,7 +71,7 @@ scalebar.new <- function (d, xy = NULL, height = NULL, line.offset=c(0,0), side=
     if (missing(d)) {
       dx <- (pr$usr[2] - pr$usr[1])/10
       d <- raster::pointDistance(cbind(0, lat), cbind(dx, lat), 
-                         TRUE)
+                                 TRUE)
       d <- signif(d/1000, 2)
       label <- NULL
     }

@@ -20,6 +20,6 @@ the specified \code{template}.
 }
 \description{
 \code{getHUC4} returns a \code{\link{SpatialPolygonsDataFrame}} of the HUC4 regions within
-the specified \code{template}.
+the specified \code{template}. If template is not provided, returns the entire HUC4 dataset.
 }
 

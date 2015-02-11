@@ -8,7 +8,7 @@ getNEDTile(template = NULL, res, tileNorthing, tileWesting, raw.dir)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve
-as a template for cropping. If missing, whole NED tile will be returned}
+as a template for cropping.}
 
 \item{res}{A character string representing the desired resolution of the NED. "1"
 indicates the 1 arc-second NED, while "13" indicates the 1/3 arc-second dataset. Defaults to NULL.}
@@ -27,5 +27,6 @@ A \code{\link{RasterLayer}} cropped within the specified \code{template}.
 }
 \description{
 \code{getNEDTile} returns a \code{\link{RasterLayer}} cropped within the specified \code{template}.
+If template is not provided, returns the entire NED tile.
 }
 
