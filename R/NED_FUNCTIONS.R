@@ -50,7 +50,7 @@ getNED <- function(template, label, res=NULL, raw.dir="./RAW/NED/", extraction.d
   norths <- seq(ceiling(abs(extent.latlon@ymin)),ceiling(abs(extent.latlon@ymax)))
   
   tilesLocations <- as.matrix(expand.grid(norths,wests,stringsAsFactors = FALSE))
-
+  
   cat("\nArea of interest includes",nrow(tilesLocations),"NED tiles.")
   
   # Download and crop tiles
@@ -65,14 +65,14 @@ getNED <- function(template, label, res=NULL, raw.dir="./RAW/NED/", extraction.d
     
     tiles$fun <- mean
     tiles <- do.call(raster::mosaic, tiles)
-
+    
     gc()
   }else{
     tiles <- tiles[[1]]
   }
   
   writeRaster(tiles, paste(rasters.dir,"/DEM_",res,".tif", sep=''), datatype="FLT4S", options=c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"), overwrite=T, setStatistics=FALSE)
-
+  
   return(tiles)
 }
 
@@ -92,7 +92,7 @@ getNED <- function(template, label, res=NULL, raw.dir="./RAW/NED/", extraction.d
 #' The directory will be created if missing. Defaults to "./RAW/NED/".
 #' @return A character string representing the full local path of the downloaded directory.
 downloadNEDTile <- function(res=NULL, tileNorthing, tileWesting, raw.dir){
-if(is.null(res)){
+  if(is.null(res)){
     warning("If template is a sp* or extent object, res should be provided! \n Defaulting to 1 arc-second NED.\n", immediate.=T)
     res <- "1"
   }
@@ -125,7 +125,9 @@ if(is.null(res)){
 #' The directory will be created if missing. Defaults to "./RAW/NED/".
 #' @return A \code{\link{RasterLayer}} cropped within the specified \code{template}.
 getNEDTile <- function(template=NULL, res, tileNorthing, tileWesting, raw.dir){
-  tmpdir <- tempdir()
+  tmpdir <- tempfile()
+  if (!dir.create(tmpdir))
+    stop("failed to create my temporary directory")
   
   file <- downloadNEDTile(res=res, tileNorthing=tileNorthing, tileWesting=tileWesting, raw.dir=raw.dir)
   
@@ -135,6 +137,7 @@ getNEDTile <- function(template=NULL, res, tileNorthing, tileWesting, raw.dir){
   dirs <- dirs[grepl("grdn",dirs)]
   
   tile <- raster::raster(rgdal::readGDAL(dirs))
+  
   unlink(tmpdir, recursive = TRUE)
   
   if(!is.null(template)){

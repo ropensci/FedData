@@ -94,7 +94,9 @@ downloadHUC4 <- function(raw.dir){
 #' @return A \code{\link{SpatialPolygonsDataFrame}} of the HUC4 regions within
 #' the specified \code{template}.
 getHUC4 <- function(template=NULL, raw.dir){
-  tmpdir <- tempdir()
+  tmpdir <- tempfile()
+  if (!dir.create(tmpdir))
+    stop("failed to create my temporary directory")
   
   huc4File <- downloadHUC4(raw.dir)
   
@@ -150,7 +152,9 @@ downloadNHDSubregion <- function(area, raw.dir){
 #' @return A \code{\link{SpatialPolygonsDataFrame}} of the HUC4 regions within
 #' the specified \code{template}.
 getNHDSubregion <- function(template=NULL, area, raw.dir){
-  tmpdir <- tempdir()
+  tmpdir <- tempfile()
+  if (!dir.create(tmpdir))
+    stop("failed to create my temporary directory")
   
   file <- downloadNHDSubregion(area=area, raw.dir=raw.dir)
   
