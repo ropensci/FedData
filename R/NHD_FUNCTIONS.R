@@ -110,6 +110,10 @@ getHUC4 <- function(template=NULL, raw.dir){
   
   # Get a list of NHD subregions within the project study area
   if(!is.null(template)){
+    if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){
+      template <- SPDFfromPolygon(sp::spTransform(polygonFromExtent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
+    }
+    
     HUC4 <- raster::crop(HUC4,spTransform(template,CRS(projection(HUC4))))
   }
   
@@ -182,6 +186,10 @@ getNHDSubregion <- function(template=NULL, area, raw.dir){
   
   # Crop each feature to the template area
   if(!is.null(template)){
+    if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){
+      template <- SPDFfromPolygon(sp::spTransform(polygonFromExtent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
+    }
+    
     shapes <- lapply(shapes,function(shape){
       tryCatch(raster::crop(shape,spTransform(template,CRS(projection(shape)))),error=function(e) NULL)
     }) 

@@ -4,8 +4,8 @@
 \alias{getSSURGO}
 \title{Download and crop data from the NRCS SSURGO soils database.}
 \usage{
-getSSURGO(template, label, raw.dir = "./RAW/NRCS/",
-  extraction.dir = "./EXTRACTIONS/NRCS/", force.redo = FALSE)
+getSSURGO(template, label, raw.dir = "./RAW/SSURGO/",
+  extraction.dir = "./EXTRACTIONS/SSURGO/", force.redo = FALSE)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve
@@ -14,10 +14,10 @@ as a template for cropping.}
 \item{label}{A character string naming the study area.}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to "./RAW/NHD/".}
+The directory will be created if missing. Defaults to "./RAW/SSURGO/".}
 
-\item{extraction.dir}{A character string indicating where the extracted and cropped NHD shapefiles should be put.
-The directory will be created if missing. Defaults to "./EXTRACTIONS/NHD/".}
+\item{extraction.dir}{A character string indicating where the extracted and cropped SSURGO shapefiles should be put.
+The directory will be created if missing. Defaults to "./EXTRACTIONS/SSURGO/".}
 
 \item{force.redo}{If an extraction for this template and label already exists, should a new one be created? Defaults to FALSE.}
 }

@@ -18,10 +18,10 @@ as a template for cropping.}
 Common elements include "tmin", "tmax", and "prcp".}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to "./RAW/NHD/".}
+The directory will be created if missing. Defaults to "./RAW/GHCN/".}
 
-\item{extraction.dir}{A character string indicating where the extracted and cropped NHD shapefiles should be put.
-The directory will be created if missing. Defaults to "./EXTRACTIONS/NHD/".}
+\item{extraction.dir}{A character string indicating where the extracted and cropped GHCN shapefiles should be put.
+The directory will be created if missing. Defaults to "./EXTRACTIONS/GHCN/".}
 
 \item{standardize}{Select only common year/month/day? Defaults to FALSE.}
 
