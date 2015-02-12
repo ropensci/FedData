@@ -1,3 +1,7 @@
 .Rproj.user
 .Rhistory
 .RData
+.DS_Store
+R/PRISM_FUNCTIONS.R
+R/PLANTS_FUNCTIONS.R
+R/ITRDB_FUNCTIONS.R

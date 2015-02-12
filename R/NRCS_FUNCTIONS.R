@@ -1,10 +1,25 @@
-## All data is downloaded from the NRCS,
-## available at http://websoilsurvey.sc.egov.usda.gov
-
-## Author: R. Kyle Bocinsky
-## Date: 02/14/2014
-
-getNRCS <- function(template, label, raw.dir="./RAW/NRCS/", extraction.dir="./EXTRACTIONS/NRCS/", force.redo=FALSE){  
+#' Download and crop data from the SSURGO SSURGO soils database.
+#'
+#' This is an efficient method for spatially merging several different soil survey areas
+#' as well as merging their tabular data.
+#' 
+#' \code{getSSURGO} returns a named list of length 2:
+#' \enumerate{
+#' \item "spatial": A \code{\link{SpatialPolygonsDataFrame}} of soil mapunits 
+#' in the template, and 
+#' \item "tabular": A named list of \code{\link{data.frame}s} with the SSURGO tabular data.
+#' }
+#' 
+#' @param template A Raster* or Spatial* object to serve 
+#' as a template for cropping.
+#' @param label A character string naming the study area.
+#' @param raw.dir A character string indicating where raw downloaded files should be put.
+#' The directory will be created if missing. Defaults to "./RAW/SSURGO/".
+#' @param extraction.dir A character string indicating where the extracted and cropped SSURGO shapefiles should be put.
+#' The directory will be created if missing. Defaults to "./EXTRACTIONS/SSURGO/".
+#' @param force.redo If an extraction for this template and label already exists, should a new one be created? Defaults to FALSE.
+#' @return A named list containing the "spatial" and "tabular" data.
+getSSURGO <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir="./EXTRACTIONS/SSURGO/", force.redo=FALSE){  
   vectors.dir <- paste(extraction.dir,"/",label,"/spatial",sep='')
   tables.dir <- paste(extraction.dir,"/",label,"/tabular",sep='')
   
@@ -13,8 +28,8 @@ getNRCS <- function(template, label, raw.dir="./RAW/NRCS/", extraction.dir="./EX
   dir.create(vectors.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(tables.dir, showWarnings = FALSE, recursive = TRUE)
   
-  if(!force.redo & length(list.files(vectors.dir))>0 & length(list.files(tables.dir))>0 & file.exists(paste(vectors.dir,"/NRCSMapunits.shp",sep=''))){
-    NRCSMapunits <- rgdal::readOGR(normalizePath(vectors.dir),"NRCSMapunits", verbose=F)
+  if(!force.redo & length(list.files(vectors.dir))>0 & length(list.files(tables.dir))>0 & file.exists(paste(vectors.dir,"/SSURGOMapunits.shp",sep=''))){
+    SSURGOMapunits <- rgdal::readOGR(normalizePath(vectors.dir),"SSURGOMapunits", verbose=F)
     
     files <- list.files(tables.dir)
     files <- files[grepl("csv",files)]
@@ -25,76 +40,76 @@ getNRCS <- function(template, label, raw.dir="./RAW/NRCS/", extraction.dir="./EX
     })
     names(tables) <- files
     
-    return(list(spatial=NRCSMapunits,tabular=tables))
+    return(list(spatial=SSURGOMapunits,tabular=tables))
   }
   
   if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){
     template <- SPDFfromPolygon(sp::spTransform(polygonFromExtent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
   }
   
-  # Get shapefile of NRCS study areas in the template
-  NRCSAreas <- getNRCSStudyAreas(template=template, raw.dir=raw.dir)
+  # Get shapefile of SSURGO study areas in the template
+  SSURGOAreas <- getSSURGOStudyAreas(template=template, raw.dir=raw.dir)
   
-  # Remove NRCS study areas that are not availables
-  NRCSAreas <- NRCSAreas[NRCSAreas@data$iscomplete != 0,]
+  # Remove SSURGO study areas that are not availables
+  SSURGOAreas <- SSURGOAreas[SSURGOAreas@data$iscomplete != 0,]
   
   # Get all mapunit polygons for the study area
-  NRCSMapunits <- getNRCSMapunits(template=template, areas=NRCSAreas, raw.dir=raw.dir)
+  SSURGOMapunits <- getSSURGOMapunits(template=template, areas=SSURGOAreas, raw.dir=raw.dir)
   
   # Save the mapunit polygons as a shapefile
-  suppressWarnings(rgdal::writeOGR(NRCSMapunits, vectors.dir, "NRCSMapunits","ESRI Shapefile", overwrite_layer=TRUE))
+  suppressWarnings(rgdal::writeOGR(SSURGOMapunits, vectors.dir, "SSURGOMapunits","ESRI Shapefile", overwrite_layer=TRUE))
   
   # Get all of the tabular data
-  NRCSData <- getNRCSData(areas=NRCSAreas, raw.dir=raw.dir)
+  SSURGOData <- getSSURGOData(areas=SSURGOAreas, raw.dir=raw.dir)
   
   # Extract only the mapunits in the study area, and iterate through the data structure
-  NRCSData <- extractNRCSData(tables=NRCSData, mapunits=NRCSMapunits)
+  SSURGOData <- extractSSURGOData(tables=SSURGOData, mapunits=SSURGOMapunits)
   
   # Save the each data table as a csv
-  junk <- lapply(names(NRCSData), function(tab){
-    write.csv(NRCSData[[tab]],file=paste(tables.dir,'/',tab,'.csv',sep=''),row.names=F)
+  junk <- lapply(names(SSURGOData), function(tab){
+    write.csv(SSURGOData[[tab]],file=paste(tables.dir,'/',tab,'.csv',sep=''),row.names=F)
   })
   
-  return(list(spatial=NRCSMapunits,tabular=NRCSData))
+  return(list(spatial=SSURGOMapunits,tabular=SSURGOData))
 }
 
-getNRCSStudyAreas <- function(template=NULL, raw.dir){
-  # Import the shapefile of NRCS study areas.
+getSSURGOStudyAreas <- function(template=NULL, raw.dir){
+  # Import the shapefile of SSURGO study areas.
   # This is available at
-  # http://soildatamart.sc.egov.usda.gov/download/StatusMaps/soilsa_a_nrcs.zip
+  # http://soildatamart.sc.egov.usda.gov/download/StatusMaps/soilsa_a_SSURGO.zip
   url <- 'http://websoilsurvey.sc.egov.usda.gov/DataAvailability/SoilDataAvailabilityShapefile.zip'
   destdir <- raw.dir
   wgetDownload(url=url, destdir=destdir)
   
-  cat("Unzipping the NRCS study areas.\n")
+  cat("Unzipping the SSURGO study areas.\n")
   unzip(paste(raw.dir,"/SoilDataAvailabilityShapefile.zip",sep=''),exdir=paste(raw.dir,"/SoilDataAvailabilityShapefile",sep=''))
   
-  cat("Loading the NRCS study areas.\n")
-  NRCSAreas <- rgdal::readOGR(normalizePath(paste(raw.dir,"/SoilDataAvailabilityShapefile/",sep='')), layer="soilsa_a_nrcs", verbose=FALSE)
+  cat("Loading the SSURGO study areas.\n")
+  SSURGOAreas <- rgdal::readOGR(normalizePath(paste(raw.dir,"/SoilDataAvailabilityShapefile/",sep='')), layer="soilsa_a_SSURGO", verbose=FALSE)
   
   if(is.null(template)){
-    return(NRCSAreas)
+    return(SSURGOAreas)
   }
   
   # Get a list of NHD subregions within the project study area
-  NRCSAreas <- raster::crop(NRCSAreas,sp::spTransform(template,sp::CRS(projection(NRCSAreas))))
+  SSURGOAreas <- raster::crop(SSURGOAreas,sp::spTransform(template,sp::CRS(projection(SSURGOAreas))))
   
   unlink(paste(raw.dir,"/SoilDataAvailabilityShapefile",sep=''), recursive = TRUE)
   
   # Check to see if all survey areas are available
-  if(0 %in% NRCSAreas@data$iscomplete){
+  if(0 %in% SSURGOAreas@data$iscomplete){
     cat("WARNING! Some of the soil surveys in your area are unavailable.\n")
     cat("Soils and productivity data will have holes.\n")
     cat("Missing areas:\n")
-    cat(as.vector(NRCSAreas@data[NRCSAreas@data$iscomplete==0,]$areasymbol))
+    cat(as.vector(SSURGOAreas@data[SSURGOAreas@data$iscomplete==0,]$areasymbol))
     cat("\n\n")
     cat("Continuing with processing available soils.\n\n")
   }
   
-  return(NRCSAreas)
+  return(SSURGOAreas)
 }
 
-getNRCSStudyAreaMapunits <- function(area,date,raw.dir){  
+getSSURGOStudyAreaMapunits <- function(area,date,raw.dir){  
   cat("(Down)Loading soils polygons for",area,'\n')
   
   state <- substring(area,1,2)
@@ -117,34 +132,34 @@ getNRCSStudyAreaMapunits <- function(area,date,raw.dir){
   return(mapunits)
 }
 
-getNRCSMapunits <- function(template, areas, raw.dir){
-  # Load raw NRCS Map Unit polygons from the regions specified.
-  cat("Loading the NRCS soil survey polygons for each region.\n")
-  NRCSPolys <- vector("list", length(areas))
+getSSURGOMapunits <- function(template, areas, raw.dir){
+  # Load raw SSURGO Map Unit polygons from the regions specified.
+  cat("Loading the SSURGO soil survey polygons for each region.\n")
+  SSURGOPolys <- vector("list", length(areas))
   
   template <- sp::spTransform(template,CRS(projection(areas)))
   
   for(i in 1:length(areas)){
     area <- as.character(areas$areasymbol[i])
     date <- as.Date(areas$saverest[i])
-    poly <- getNRCSStudyAreaMapunits(area=area, date=date, raw.dir=raw.dir)
+    poly <- getSSURGOStudyAreaMapunits(area=area, date=date, raw.dir=raw.dir)
     poly <- poly[!is.na(poly %over% template),]
     poly <- sp::spChFIDs(poly, as.character(paste(area,'_',row.names(poly@data),sep='')))
-    NRCSPolys[[i]] <- poly
+    SSURGOPolys[[i]] <- poly
   }
   
-  # Merging all NRCS Map Unit polygons
-  cat("Merging all NRCS Map Unit polygons\n")
-  NRCSPolys <- do.call("rbind", NRCSPolys)
+  # Merging all SSURGO Map Unit polygons
+  cat("Merging all SSURGO Map Unit polygons\n")
+  SSURGOPolys <- do.call("rbind", SSURGOPolys)
   
   # Crop to area of x
-  cat("Cropping NRCS Map Unit polygons to the extent of the template\n")
-  NRCSPolys <- raster::crop(NRCSPolys,template)
+  cat("Cropping SSURGO Map Unit polygons to the extent of the template\n")
+  SSURGOPolys <- raster::crop(SSURGOPolys,template)
   
-  return(NRCSPolys)
+  return(SSURGOPolys)
 }
 
-getNRCSStudyAreaData <- function(area,date,raw.dir){  
+getSSURGOStudyAreaData <- function(area,date,raw.dir){  
   cat("(Down)Loading soils data for",area,'\n')
   state <- substring(area,1,2)
   
@@ -169,12 +184,12 @@ getNRCSStudyAreaData <- function(area,date,raw.dir){
   
   tablesHeaders <- Hmisc::mdb.get(paste(raw.dir,area,"/soildb_",state,"_2003.mdb",sep=''))
   
-  NRCSTableMapping <- tablesData[["mstab.txt"]][,c(1,5)]
-  names(NRCSTableMapping) <- c("TABLE","FILE")
-  NRCSTableMapping[,"FILE"] <- paste(NRCSTableMapping[,"FILE"],'.txt',sep='')
+  SSURGOTableMapping <- tablesData[["mstab.txt"]][,c(1,5)]
+  names(SSURGOTableMapping) <- c("TABLE","FILE")
+  SSURGOTableMapping[,"FILE"] <- paste(SSURGOTableMapping[,"FILE"],'.txt',sep='')
   
-  tablesData <- tablesData[as.character(NRCSTableMapping[,"FILE"])]
-  tablesHeaders <- tablesHeaders[as.character(NRCSTableMapping[,"TABLE"])]
+  tablesData <- tablesData[as.character(SSURGOTableMapping[,"FILE"])]
+  tablesHeaders <- tablesHeaders[as.character(SSURGOTableMapping[,"TABLE"])]
   
   notNull <- (!sapply(tablesData,is.null) & !sapply(tablesHeaders,is.null))
   tablesData <- tablesData[notNull]
@@ -192,36 +207,36 @@ getNRCSStudyAreaData <- function(area,date,raw.dir){
   return(tables)
 }
 
-getNRCSData <- function(areas, raw.dir){
-  # Load raw NRCS Map Unit polygons from the regions specified.
-  cat("Loading the NRCS soil survey data for each region.\n")
-  NRCSTables <- vector("list", length(areas))
+getSSURGOData <- function(areas, raw.dir){
+  # Load raw SSURGO Map Unit polygons from the regions specified.
+  cat("Loading the SSURGO soil survey data for each region.\n")
+  SSURGOTables <- vector("list", length(areas))
   
   for(i in 1:length(areas)){
     area <- as.character(areas$areasymbol[i])
     date <- as.Date(areas$saverest[i])
-    tables <- getNRCSStudyAreaData(area=area, date=date, raw.dir=raw.dir)
-    NRCSTables[[i]] <- tables
+    tables <- getSSURGOStudyAreaData(area=area, date=date, raw.dir=raw.dir)
+    SSURGOTables[[i]] <- tables
   }
   
-  # Merging all NRCS data tables
-  cat("Merging all NRCS data tables\n")
-  tableNames <- unique(unlist(sapply(NRCSTables,names)))
+  # Merging all SSURGO data tables
+  cat("Merging all SSURGO data tables\n")
+  tableNames <- unique(unlist(sapply(SSURGOTables,names)))
   tableNames <- tableNames[order(tableNames)]
   
-  NRCSTables <- lapply(tableNames,function(name){
-    tables <- lapply(NRCSTables,'[[',name)
+  SSURGOTables <- lapply(tableNames,function(name){
+    tables <- lapply(SSURGOTables,'[[',name)
     tables <- do.call("rbind", tables)
     tables <- unique(tables)
     return(tables)
   })
   
-  names(NRCSTables) <- tableNames
+  names(SSURGOTables) <- tableNames
   
-  return(NRCSTables)
+  return(SSURGOTables)
 }
 
-extractNRCSData <- function(tables,mapunits){
+extractSSURGOData <- function(tables,mapunits){
   mapunits <- as.character(unique(mapunits$MUKEY))
   
   mapping <- tables[['mdstatrshipdet']]

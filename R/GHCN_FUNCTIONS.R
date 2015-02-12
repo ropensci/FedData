@@ -14,9 +14,9 @@
 #' @param elements A character vector of elemets to extract.
 #' Common elements include "tmin", "tmax", and "prcp".
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
-#' The directory will be created if missing. Defaults to "./RAW/NHD/".
-#' @param extraction.dir A character string indicating where the extracted and cropped NHD shapefiles should be put.
-#' The directory will be created if missing. Defaults to "./EXTRACTIONS/NHD/".
+#' The directory will be created if missing. Defaults to "./RAW/GHCN/".
+#' @param extraction.dir A character string indicating where the extracted and cropped GHCN shapefiles should be put.
+#' The directory will be created if missing. Defaults to "./EXTRACTIONS/GHCN/".
 #' @param standardize Select only common year/month/day? Defaults to FALSE.
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created? Defaults to FALSE.
 #' @return A named list containing the "spatial" and "tabular" data.
