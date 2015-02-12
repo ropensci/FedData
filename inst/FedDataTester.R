@@ -22,8 +22,8 @@ GHCN.temp <- getGHCNDaily(template=county, label=paste(county$GEOID,'_',county$N
 # Get the NHD (USA ONLY)
 NHD <- getNHD(template=county, label=paste(county$GEOID,'_',county$NAME, sep=''))
 
-# Get the NRCS SSURGO2 data
-NRCS <- getNRCS(template=county, label=paste(county$GEOID,'_',county$NAME, sep=''))
+# Get the NRCS SSURGO data
+NRCS <- getSSURGO(template=county, label=paste(county$GEOID,'_',county$NAME, sep=''))
 
 
 
