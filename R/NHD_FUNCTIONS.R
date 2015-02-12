@@ -181,7 +181,7 @@ getNHDSubregion <- function(template=NULL, area, raw.dir){
   
   # Rename the features to prepare for merging
   shapes <- lapply(shapes, function(shape){
-    tryCatch(sp::spChFIDs(shape, as.character(shape$Permanent_Identifier)),error=function(e) NULL)
+    tryCatch(sp::spChFIDs(shape, paste(area,"_",shape$Permanent_Identifier,sep='')),error=function(e) NULL)
   })
   
   # Crop each feature to the template area

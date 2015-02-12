@@ -40,7 +40,7 @@ sequential.duplicated <- function(x, rows=F){
   return(duplicates)
 }
 
-wgetDownload <- function(url, destdir, timestamping=T, nc=F){
+wgetDownload <- function(url, destdir=getwd(), timestamping=T, nc=F){
   if(!any(c(timestamping,nc))){
     status <- system(paste("wget -nd --quiet --directory-prefix=",destdir," ",url,sep=''))
   }else if(timestamping){

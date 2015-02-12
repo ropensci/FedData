@@ -239,8 +239,9 @@ getSSURGOStudyArea <- function(template=NULL, area, date, raw.dir){
   names(tablesData) <- files
   tablesData <- tablesData[!sapply(tablesData,is.null)]
   
-  state <- substring(area,1,2)
-  tablesHeaders <- Hmisc::mdb.get(paste(tmpdir,'/',area,"/soildb_",state,"_2003.mdb",sep=''))
+  dbFile <- list.files(paste(tmpdir,'/',area,sep=''),full.names=T)
+  dbFile <- dbFile[grepl("mdb",dbFile)]
+  tablesHeaders <- Hmisc::mdb.get(dbFile)
   
   SSURGOTableMapping <- tablesData[["mstab.txt"]][,c(1,5)]
   names(SSURGOTableMapping) <- c("TABLE","FILE")
