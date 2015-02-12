@@ -27,10 +27,10 @@ The directory will be created if missing. Defaults to "./EXTRACTIONS/NED/".}
 \item{force.redo}{If an extraction for this template and label already exists, should a new one be created?}
 }
 \value{
-A \code{\link[raster]{RasterLayer}} DEM cropped to the extent of the template.
+A \code{RasterLayer} DEM cropped to the extent of the template.
 }
 \description{
-\code{getNED} returns a \code{\link{RasterLayer}} of elevation data cropped to a given
+\code{getNED} returns a \code{RasterLayer} of elevation data cropped to a given
 template study area.
 }
 

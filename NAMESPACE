@@ -1,1 +1,3 @@
+import(sp,raster,rgdal,igraph)
+importFrom(Hmisc,mdb.get)
 exportPattern("^[[:alpha:]]+")

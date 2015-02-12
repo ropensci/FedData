@@ -25,7 +25,7 @@ Date: \tab 2015-02-09\cr
 License: \tab GPL-3\cr
 }
 
-This package is designed with the large-scale GIS use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spaticially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the \code{\pkg{sp}}, \code{\pkg{raster}}, and \code{\pkg{rgdal}} packages, and requires three command line tools be installed by the user (and accesible through \code{\link{system}} calls in \emph{R}): \href{https://www.gnu.org/software/wget/}{wget} (for downloading with timestamping), \href{http://www.gdal.org}{\code{GDAL}} (for manipulating raster and vector spatial data), and \href{http://mdbtools.sourceforge.net}{mdbtools} (for extracting data from access databases).
+This package is designed with the large-scale GIS use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spaticially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the \pkg{sp}, \pkg{raster}, and \pkg{rgdal} packages, and requires three command line tools be installed by the user (and accesible through \code{\link{system}} calls in \emph{R}): \href{https://www.gnu.org/software/wget/}{wget} (for downloading with timestamping), \href{http://www.gdal.org}{\code{GDAL}} (for manipulating raster and vector spatial data), and \href{http://mdbtools.sourceforge.net}{mdbtools} (for extracting data from access databases).
 
 There are three general types of methods available for each dataset (and others for particular datasets):
 
@@ -44,10 +44,6 @@ Additionally, most functions can be forced to "start fresh" in downloading or pr
 
 \author{
 R. Kyle Bocinsky <bocinsky@gmail.com>
-}
-
-\seealso{
-\code{\pkg{sp}}, \code{\pkg{raster}}, and \code{\pkg{rgdal}}
 }
 
 \keyword{ package }
@@ -70,7 +66,7 @@ install.packages("FedData")
 library(FedData)
 
 # Get a random contiguous USA county for testing
-wgetDownload("http://dds.cr.usgs.gov/pub/data/nationalatlas/countyp010g.shp_nt00934.tar.gz",destdir=getwd())
+wgetDownload("http://dds.cr.usgs.gov/pub/data/nationalatlas/countyp010g.shp_nt00934.tar.gz ,destdir=getwd())
 untar("./countyp010g.shp_nt00934.tar.gz")
 county <- rgdal::readOGR(".","countyp010g")
 county <- county[!(county$STATE %in% c("AK","VI","PR","HI")),]

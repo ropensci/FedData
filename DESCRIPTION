@@ -7,4 +7,4 @@ Author: R. Kyle Bocinsky <bocinsky@gmail.com>
 Maintainer: R. Kyle Bocinsky <bocinsky@gmail.com>
 Description: Scripts to automate downloading geospatial data available from the several federated data sources.
 License: GPL-3
-Depends: raster, rgdal, igraph, Hmisc
+Depends: sp, raster, rgdal, igraph, Hmisc

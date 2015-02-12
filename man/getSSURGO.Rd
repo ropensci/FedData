@@ -31,7 +31,7 @@ as well as merging their tabular data.
 \details{
 \code{getSSURGO} returns a named list of length 2:
 \enumerate{
-\item "spatial": A \code{\link{SpatialPolygonsDataFrame}} of soil mapunits
+\item "spatial": A \code{SpatialPolygonsDataFrame} of soil mapunits
 in the template, and
 \item "tabular": A named list of \code{\link{data.frame}s} with the SSURGO tabular data.
 }

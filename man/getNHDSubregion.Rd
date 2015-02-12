@@ -17,11 +17,11 @@ as a template for cropping.}
 The directory will be created if missing.}
 }
 \value{
-A \code{\link{SpatialPolygonsDataFrame}} of the HUC4 regions within
+A \code{SpatialPolygonsDataFrame} of the HUC4 regions within
 the specified \code{template}.
 }
 \description{
-\code{getNHDSubregion} returns a list of \code{\link{SpatialPolygonsDataFrame}}s of the layers of the HUC4 subregion,
+\code{getNHDSubregion} returns a list of \code{SpatialPolygonsDataFrame}s of the layers of the HUC4 subregion,
  within the specified \code{template}. If template is not provided, returns the entire HUC4 subregion.
 }
 

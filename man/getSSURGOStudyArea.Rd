@@ -19,13 +19,13 @@ area for these data. This information may be gleaned from the SSURGO Inventory (
 The directory will be created if missing.}
 }
 \value{
-A \code{\link{SpatialPolygonsDataFrame}} of the SSURGO study areas within
+A \code{SpatialPolygonsDataFrame} of the SSURGO study areas within
 the specified \code{template}.
 }
 \description{
 \code{getSSURGOStudyArea} returns a named list of length 2:
 \enumerate{
-\item "spatial": A \code{\link{SpatialPolygonsDataFrame}} of soil mapunits
+\item "spatial": A \code{SpatialPolygonsDataFrame} of soil mapunits
 in the template, and
 \item "tabular": A named list of \code{\link{data.frame}s} with the SSURGO tabular data.
 }

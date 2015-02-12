@@ -14,11 +14,11 @@ as a template for cropping.}
 The directory will be created if missing.}
 }
 \value{
-A \code{\link{SpatialPolygonsDataFrame}} of the SSURGO study areas within
+A \code{SpatialPolygonsDataFrame} of the SSURGO study areas within
 the specified \code{template}.
 }
 \description{
-\code{getSSURGOInventory} returns a \code{\link{SpatialPolygonsDataFrame}} of the SSURGO study areas within
+\code{getSSURGOInventory} returns a \code{SpatialPolygonsDataFrame} of the SSURGO study areas within
 the specified \code{template}. If template is not provided, returns the entire SSURGO inventory of study areas.
 }
 

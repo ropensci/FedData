@@ -1,22 +1,38 @@
+#' Install and load a package.
+#'
+#'This is a convenience function that checks whether a package is installed, and if not, installs it.
+#'
+#' @param x A character string representing the name of a package.
 pkgTest <- function(x){
   if (!require(x,character.only = TRUE))
   {
-    install.packages(x,dep=TRUE)
+    install.packages(x,dependencies=TRUE)
     if(!require(x,character.only = TRUE)) stop("Package not found")
   }
 }
 
+#'Get the rightmost "n" characters of a character string.
+#'
+#' @param x A character string.
+#' @param n The number of characters to retrieve.
+#' @return A character string.
 substrRight <- function(x, n){
   substr(x, nchar(x)-n+1, nchar(x))
 }
 
+#'Turn an extent object into a polygon
+#'
+#' @param x An \code{\link{extent}} object, or an object from which an extent object can be retrieved.
+#' @param proj4string A PROJ.4 formatted string defining the required projection. If NULL, 
+#' the function will attempt to get the projection from x using \code{\link{projection}}
+#' @return A SpatialPolygons object.
 polygonFromExtent <- function(x, proj4string=NULL){
   if(is.null(proj4string)){
     proj4string <- raster::projection(x)
   }
   
   if(class(x)!="extent"){
-    x <- extent(x)
+    x <- raster::extent(x)
   }
   
   extent.matrix <- rbind( c(x@xmin,x@ymin), c(x@xmin,x@ymax), c(x@xmax,x@ymax), c(x@xmax,x@ymin), c(x@xmin,x@ymin) ) # clockwise, 5 points to close it
@@ -24,6 +40,10 @@ polygonFromExtent <- function(x, proj4string=NULL){
   return(extent.SP)
 }
 
+#'Turn an SpatialPolygons object into a SpatialPolygonsDataFrame.
+#'
+#' @param x An SpatialPolygons object.
+#' @return A SpatialPolygonsDataFrame object.
 SPDFfromPolygon <- function(x){
   IDs <- sapply(slot(x, "polygons"), function(x) slot(x, "ID"))
   df <- data.frame(rep(0, length(IDs)), row.names=IDs)
@@ -31,6 +51,11 @@ SPDFfromPolygon <- function(x){
   return(x)
 }
 
+#'Get a logical vector of which elements in a vector are sequentially duplicated.
+#'
+#' @param x An vector of any type, or, if \code{rows}, a matrix.
+#' @param rows Is x a matrix?
+#' @return A logical vector of the same length as x.
 sequential.duplicated <- function(x, rows=F){
   if(!rows){
     duplicates <- c(FALSE,unlist(lapply(1:(length(x)-1), function(i){duplicated(x[i:(i+1)])[2]})))
@@ -40,6 +65,15 @@ sequential.duplicated <- function(x, rows=F){
   return(duplicates)
 }
 
+#'Use the \code{wget} command line tool to download a file.
+#'
+#' If both \code{timestamping} and \code{nc} are TRUE, timestamping behavior trumps nc.
+#'
+#' @param url The location of a file.
+#' @param destdir Where the file should be downloaded to.
+#' @param timestamping Should only newer files be downloaded?
+#' @param nc Should files of the same type not be clobbered?
+#' @return A logical vector of the same length as x.
 wgetDownload <- function(url, destdir=getwd(), timestamping=T, nc=F){
   if(!any(c(timestamping,nc))){
     status <- system(paste("wget -nd --quiet --directory-prefix=",destdir," ",url,sep=''))
@@ -52,86 +86,4 @@ wgetDownload <- function(url, destdir=getwd(), timestamping=T, nc=F){
   # If status is still not zero, report a warning
   if (status!=0)
     warning("Download of ",url," had nonzero exit status")
-}
-
-scalebar.new <- function (d, xy = NULL, height = NULL, line.offset=c(0,0), side="right", lab.side='top', lonlat = NULL, label, adj = c(0.5, -0.5), lwd = 2, ...){
-  pr <- par()
-  if (is.null(lonlat)) {
-    if (pr$usr[1] > -181 & pr$usr[2] < 181 & pr$yaxp[1] > 
-          -200 & pr$yaxp[2] < 200) {
-      lonlat <- TRUE
-    }
-    else {
-      lonlat <- FALSE
-    }
-  }
-  
-  if (lonlat) {
-    lat <- mean(pr$yaxp[1:2])
-    if (missing(d)) {
-      dx <- (pr$usr[2] - pr$usr[1])/10
-      d <- raster::pointDistance(cbind(0, lat), cbind(dx, lat), 
-                                 TRUE)
-      d <- signif(d/1000, 2)
-      label <- NULL
-    }
-    p <- cbind(0, lat)
-    dd <- raster:::.destPoint(p, d * 1000)
-    dd <- dd[1, 1]
-  } else {
-    if (missing(d)) {
-      d <- round(10 * (pr$usr[2] - pr$usr[1])/10)/10
-      label <- NULL
-    }
-    dd <- d
-  }
-  
-  if (is.null(xy)) {
-    padding = c(5, 5)/100
-    parrange <- c(pr$usr[2] - pr$usr[1], pr$usr[4] - pr$usr[3])
-    xy <- c(pr$usr[1] + (padding[1] * parrange[1]), pr$usr[3] + 
-              (padding[2] * parrange[2]))
-  }
-  
-  xy <- xy + line.offset
-  
-  if(side=='right'){
-    xstart = xy[1]
-    xend = xy[1] + dd
-  }else{
-    xstart = xy[1] - dd
-    xend = xy[1]
-  }
-  
-  if(is.null(height)){
-    height <- dd * 0.1
-  }
-  
-  rect(xleft=xstart, ybottom=xy[2], xright=xend, ytop=xy[2]+height, col='black',border=NA, lend=1, xpd=T)
-  
-  #   lines(matrix(c(xstart, xy[2], xend, xy[2]), byrow = T, nrow = 2), lend=1, lwd = lwd, ...)
-  
-  if (missing(label)) {
-    label <- paste(d)
-  }
-  if (is.null(label)) {
-    label <- paste(d)
-  }
-  if (missing(adj)) {
-    adj <- c(0.5, -0.2 - lwd/20)
-  }
-  
-  if(lab.side=='top'){
-    text(mean(c(xstart,xend)), xy[2], labels = label, adj = c(0.5,-0.5), 
-         ...)
-  }else if(lab.side=='right'){
-    text(xend, xy[2], labels = label, adj = c(-0.1,0), 
-         ...)
-  }else if(lab.side=='left'){
-    text(xstart, xy[2], labels = label, adj = c(1.1,0), 
-         ...)
-  }else if(lab.side=='bottom'){
-    text(mean(c(xstart,xend)), xy[2], labels = label, adj = c(0.5,1.5), 
-         ...)
-  }
 }

@@ -33,7 +33,7 @@ A named list containing the "spatial" and "tabular" data.
 \description{
 \code{getGHCNDaily} returns a named list of length 2:
 \enumerate{
-\item "spatial": A \code{\link{SpatialPointsDataFrame}} of the locations of GHCN weather stations
+\item "spatial": A \code{SpatialPointsDataFrame} of the locations of GHCN weather stations
 in the template, and
 \item "tabular": A named list of \code{\link{data.frame}s} with the daily weather data for each station.
 The name of each list item is the station ID.

@@ -23,10 +23,10 @@ be downloaded.}
 The directory will be created if missing. Defaults to "./RAW/NED/".}
 }
 \value{
-A \code{\link{RasterLayer}} cropped within the specified \code{template}.
+A \code{RasterLayer} cropped within the specified \code{template}.
 }
 \description{
-\code{getNEDTile} returns a \code{\link{RasterLayer}} cropped within the specified \code{template}.
+\code{getNEDTile} returns a \code{RasterLayer} cropped within the specified \code{template}.
 If template is not provided, returns the entire NED tile.
 }
 

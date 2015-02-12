@@ -17,11 +17,11 @@ Common elements include "tmin", "tmax", and "prcp".}
 The directory will be created if missing.}
 }
 \value{
-A \code{\link{SpatialPolygonsDataFrame}} of the GHCN stations within
+A \code{SpatialPolygonsDataFrame} of the GHCN stations within
 the specified \code{template}
 }
 \description{
-\code{getGHCNInventory} returns a \code{\link{SpatialPolygonsDataFrame}} of the GHCN stations within
+\code{getGHCNInventory} returns a \code{SpatialPolygonsDataFrame} of the GHCN stations within
 the specified \code{template}. If template is not provided, returns the entire GHCN inventory.
 }
 \details{

@@ -2,7 +2,7 @@
 #'
 #' \code{getGHCNDaily} returns a named list of length 2: 
 #' \enumerate{
-#' \item "spatial": A \code{\link{SpatialPointsDataFrame}} of the locations of GHCN weather stations 
+#' \item "spatial": A \code{SpatialPointsDataFrame} of the locations of GHCN weather stations 
 #' in the template, and 
 #' \item "tabular": A named list of \code{\link{data.frame}s} with the daily weather data for each station.
 #' The name of each list item is the station ID.
@@ -173,7 +173,7 @@ getGHCNDailyStation <- function(ID, elements=NULL, raw.dir, standardize=F, force
 
 #' Download and crop the inventory of GHCN stations.
 #'
-#' \code{getGHCNInventory} returns a \code{\link{SpatialPolygonsDataFrame}} of the GHCN stations within
+#' \code{getGHCNInventory} returns a \code{SpatialPolygonsDataFrame} of the GHCN stations within
 #' the specified \code{template}. If template is not provided, returns the entire GHCN inventory.
 #' 
 #' Stations with multiple elements will have multiple points. This allows for easy mapping of stations
@@ -185,7 +185,7 @@ getGHCNDailyStation <- function(ID, elements=NULL, raw.dir, standardize=F, force
 #' Common elements include "tmin", "tmax", and "prcp".
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing.
-#' @return A \code{\link{SpatialPolygonsDataFrame}} of the GHCN stations within
+#' @return A \code{SpatialPolygonsDataFrame} of the GHCN stations within
 #' the specified \code{template}
 getGHCNInventory <- function(template=NULL, elements=NULL, raw.dir){
   if(!is.null(template) & (!is(template,"SpatialPolygonsDataFrame") & !is(template,"SpatialPolygons"))){
@@ -205,10 +205,10 @@ getGHCNInventory <- function(template=NULL, elements=NULL, raw.dir){
   names(station.inventory) <- c("ID","LATITUDE","LONGITUDE","ELEMENT","YEAR_START","YEAR_END")
   
   # Convert to SPDF
-  stations.sp <- SpatialPointsDataFrame(coords=station.inventory[,c("LONGITUDE","LATITUDE")],station.inventory,proj4string=sp::CRS("+proj=longlat"))
+  stations.sp <- sp::SpatialPointsDataFrame(coords=station.inventory[,c("LONGITUDE","LATITUDE")],station.inventory,proj4string=sp::CRS("+proj=longlat"))
   
   if(!is.null(template)){
-    stations.sp <- stations.sp[!is.na(sp::over(stations.sp,sp::spTransform(template,sp::CRS(projection(stations.sp))))),]
+    stations.sp <- stations.sp[!is.na(sp::over(stations.sp,sp::spTransform(template,sp::CRS(raster::projection(stations.sp))))),]
   }
   
   return(stations.sp)

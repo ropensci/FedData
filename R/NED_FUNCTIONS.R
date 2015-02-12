@@ -1,6 +1,6 @@
 #' Download and crop the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.
 #'
-#' \code{getNED} returns a \code{\link{RasterLayer}} of elevation data cropped to a given
+#' \code{getNED} returns a \code{RasterLayer} of elevation data cropped to a given
 #' template study area.
 #'
 #' @param template A Raster* or Spatial* object to serve 
@@ -15,7 +15,7 @@
 #' @param extraction.dir A character string indicating where the extracted and cropped DEM should be put.
 #' The directory will be created if missing. Defaults to "./EXTRACTIONS/NED/".
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created?
-#' @return A \code{\link[raster]{RasterLayer}} DEM cropped to the extent of the template.
+#' @return A \code{RasterLayer} DEM cropped to the extent of the template.
 getNED <- function(template, label, res=NULL, raw.dir="./RAW/NED/", extraction.dir="./EXTRACTIONS/NED/", force.redo=F){  
   
   rasters.dir <- paste(extraction.dir,"/",label,"/rasters",sep='')
@@ -71,7 +71,7 @@ getNED <- function(template, label, res=NULL, raw.dir="./RAW/NED/", extraction.d
     tiles <- tiles[[1]]
   }
   
-  writeRaster(tiles, paste(rasters.dir,"/DEM_",res,".tif", sep=''), datatype="FLT4S", options=c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"), overwrite=T, setStatistics=FALSE)
+  raster::writeRaster(tiles, paste(rasters.dir,"/NED_",res,".tif", sep=''), datatype="FLT4S", options=c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"), overwrite=T, setStatistics=FALSE)
   
   return(tiles)
 }
@@ -111,7 +111,7 @@ downloadNEDTile <- function(res=NULL, tileNorthing, tileWesting, raw.dir){
 
 #' Download and crop tile from the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.
 #'
-#' \code{getNEDTile} returns a \code{\link{RasterLayer}} cropped within the specified \code{template}.
+#' \code{getNEDTile} returns a \code{RasterLayer} cropped within the specified \code{template}.
 #' If template is not provided, returns the entire NED tile.
 #' 
 #' @param template A Raster* or Spatial* object to serve 
@@ -124,7 +124,7 @@ downloadNEDTile <- function(res=NULL, tileNorthing, tileWesting, raw.dir){
 #' be downloaded. 
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing. Defaults to "./RAW/NED/".
-#' @return A \code{\link{RasterLayer}} cropped within the specified \code{template}.
+#' @return A \code{RasterLayer} cropped within the specified \code{template}.
 getNEDTile <- function(template=NULL, res, tileNorthing, tileWesting, raw.dir){
   tmpdir <- tempfile()
   if (!dir.create(tmpdir))

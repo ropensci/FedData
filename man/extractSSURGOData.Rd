@@ -9,7 +9,7 @@ extractSSURGOData(tables, mapunits)
 \arguments{
 \item{tables}{A list of SSURGO tabular data.}
 
-\item{mapunits}{A \code{\link{SpatialPolygonsDataFrame}} of mapunits (likely dropped from SSURGO spatial data)
+\item{mapunits}{A \code{SpatialPolygonsDataFrame} of mapunits (likely dropped from SSURGO spatial data)
 defining which mapunits to retain.}
 }
 \value{
