@@ -8,7 +8,7 @@ Scripts to automate downloading geospatial data available from the several feder
 \description{
 This package contains scripts to automate downloading geospatial data available from the several federated data sources (mainly sources maintained by the US Federal government). Currently, the package allows for retrieval of four datasets: 
 \itemize{
-\item The \href{http://ned.usgs.gov}{National Elevation Dataset} digital elevtion models (1 and 1/3 arc-second; USGS)
+\item The \href{http://ned.usgs.gov}{National Elevation Dataset} digital elevation models (1 and 1/3 arc-second; USGS)
 \item The \href{http://nhd.usgs.gov}{National Hydrography Dataset} (USGS)
 \item The \href{http://websoilsurvey.sc.egov.usda.gov/}{Soil Survey Geographic} (SSURGO) database from the National Cooperative Soil Survey (NCSS), which is led by the Natural Resources Conservation Service (NRCS) under the USDA, and
 \item The \href{http://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn}{Global Historical Climatology Network} (GHCN), coordinated by National Climatic Data Center at NOAA.
