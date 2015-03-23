@@ -12,9 +12,13 @@ Additional data sources are in the works, including global DEM resources ([ETOPO
 This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spaticially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the [**sp**](http://cran.r-project.org/package=sp), [**raster**](http://cran.r-project.org/package=raster), and [**rgdal**](http://cran.r-project.org/package=rgdal) packages, and requires three command line tools be installed by the user (and accesible through `system()` calls in *R*): [wget](https://www.gnu.org/software/wget/) (for downloading with timestamping), [GDAL](http://www.gdal.org) (for manipulating raster and vector spatial data), and [mdbtools](http://mdbtools.sourceforge.net) (for extracting data from access databases).
 
 I **strongly** recommend [Homebrew](http://brew.sh) for installing *R* and each of these command-line tools. I suggest using these build parameters:
+
 `brew install wget`
+
 `brew install mdbtools`
+
 `brew install gdal --complete --enable-mdb --enable-opencl --enable-unsupported --with-libkml --with-python`
+
 `brew install r --with-openblas`
 
 This package has been built and tested on Mac OS 10.10 (Yosemite), and has been successfully run on an Ubuntu Linux cluster.
