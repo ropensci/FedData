@@ -21,7 +21,7 @@ I **strongly** recommend [Homebrew](http://brew.sh) for installing *R* and each 
 
 `brew install r --with-openblas`
 
-This package has been built and tested on Mac OS 10.10 (Yosemite), and has been successfully run on an Ubuntu Linux cluster.
+Remember, if installing *R* with Homebrew, you must **completely** remove old *R* installations, including the *R* framework, typically installed at `/Library/Frameworks`. This package has been built and tested on Mac OS 10.10 (Yosemite), and has been successfully run on an Ubuntu Linux cluster.
 
 ### Installation
 To install, use the following command in *R*:
