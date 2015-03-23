@@ -6,7 +6,7 @@
 Scripts to automate downloading geospatial data available from the several federated data sources
 }
 \description{
-This package contains scripts to automate downloading geospatial data available from the several federated data sources (mainly sources maintained by the US Federal government). Currently, the package allows for retrieval of four datasets: 
+This package contains scripts to automate downloading geospatial data available from the several federated data sources (mainly sources maintained by the US Federal government). Currently, the package allows for retrieval of five datasets: 
 \itemize{
 \item The \href{http://ned.usgs.gov}{National Elevation Dataset} digital elevation models (1 and 1/3 arc-second; USGS)
 \item The \href{http://nhd.usgs.gov}{National Hydrography Dataset} (USGS)
