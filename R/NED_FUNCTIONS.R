@@ -142,7 +142,7 @@ getNEDTile <- function(template=NULL, res, tileNorthing, tileWesting, raw.dir){
   unlink(tmpdir, recursive = TRUE)
   
   if(!is.null(template)){
-    tile <- raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))), snap="out")
+    tryCatch(tile <- raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))), snap="out"), error=function(e){tile <- raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))))})
   }
   
   return(tile)
