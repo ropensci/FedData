@@ -28,6 +28,10 @@ To install, use the following command in *R*:
 
 `devtools::install_github("bocinsky/FedData")`
 
+Some OS X systems have trouble installing the `rgdal` package. If your install fails, try the following command:
+
+`install.packages("rgdal", configure.args="--with-proj-include=/usr/local/include --with-proj-lib=/usr/local/lib")`
+
 A demo script is available in the `/inst` folder at the location of the installed package.
 
 ### Acknowledgements
