@@ -97,7 +97,9 @@ downloadNEDTile <- function(res=NULL, tileNorthing, tileWesting, raw.dir){
     res <- "1"
   }
   
-  dir.create(paste(raw.dir,'/',res, sep=''), showWarnings = FALSE, recursive = TRUE)
+  destdir <- paste(raw.dir,'/',res, sep='')
+  
+  dir.create(destdir, showWarnings = FALSE, recursive = TRUE)
   
   tileWesting <- formatC(tileWesting, width = 3, format = "d", flag = "0") 
   tileNorthing <- formatC(tileNorthing, width = 2, format = "d", flag = "0") 

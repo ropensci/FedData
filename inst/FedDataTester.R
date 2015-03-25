@@ -2,7 +2,7 @@
 devtools::install_github("bocinsky/FedData")
 library(FedData)
 
-setwd("/Users/Bocinsky/Desktop/FedDataTest")
+setwd("/Users/Bocinsky/Desktop/FedData Test")
 
 # Get a random contiguous USA county for testing
 wgetDownload("http://dds.cr.usgs.gov/pub/data/nationalatlas/countyp010g.shp_nt00934.tar.gz",destdir=getwd())
@@ -13,7 +13,7 @@ county <- county[sample(1:length(county),1),]
 
 # Get the NED (USA ONLY)
 # Returns a raster
-NED <- getNED(template=county, label=paste(county$STATE,'_',county$NAME, sep=''), res='1')
+NED <- getNED(template=county, label=paste(county$STATE,'_',county$NAME, sep=''), raw.dir="/Users/Bocinsky/Desktop/FedData Test/RAW/NED/",extraction.dir="/Users/Bocinsky/Desktop/FedData Test/EXTRACTIONS/NED/", res='1')
 
 # Get the daily GHCN data (GLOBAL)
 # Returns a list: the first element is the spatial locations of stations,

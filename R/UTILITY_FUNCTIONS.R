@@ -75,6 +75,7 @@ sequential.duplicated <- function(x, rows=F){
 #' @param nc Should files of the same type not be clobbered?
 #' @return A logical vector of the same length as x.
 wgetDownload <- function(url, destdir=getwd(), timestamping=T, nc=F){
+  destdir <- gsub(" ","\\ ",destdir, fixed=T)
   if(!any(c(timestamping,nc))){
     status <- system(paste("wget -nd --quiet --directory-prefix=",destdir," ",url,sep=''))
   }else if(timestamping){
