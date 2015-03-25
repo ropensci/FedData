@@ -28,10 +28,6 @@ NHD <- getNHD(template=county, label=paste(county$STATE,'_',county$NAME, sep='')
 SSURGO <- getSSURGO(template=county, label=paste(county$STATE,'_',county$NAME, sep=''))
 
 
-
-
-
-
 plot(NED)
 plot(county, add=T)
 plot(NHD$NHDFlowline, col='gray50', border='gray50', add=T)
@@ -42,5 +38,16 @@ plot(GHCN.prcp[[1]], pch=17, add=T)
 plot(GHCN.temp[[1]], pch=19, add=T)
 
 plot(SSURGO[['spatial']])
+
+
+itrdb.data <- getITRDB()
+itrdb.extraction <- extractITRDB(data=itrdb.data, 
+                                 recon.years=1:2000, 
+                                 spatial.poly=NULL, 
+                                 calib.years=1924:1983, 
+                                 species=NULL, 
+                                 measurement.type="Ring Width", 
+                                 chronology.type="Standard", 
+                                 makeSpatial=T)
 
 

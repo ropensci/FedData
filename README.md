@@ -35,4 +35,4 @@ Some OS X systems have trouble installing the `rgdal` package. If your install f
 A demo script is available in the `/inst` folder at the location of the installed package.
 
 ### Acknowledgements
-This package is a product of SKOPE ([Synthesized Knowledge of Past Environments](https://www.envirecon.org)) and the [Village Ecodynamics Project](http://village.anth.wsu.edu). This software is licensed under [GPLv3](https://www.gnu.org/copyleft/gpl.html).
+This package is a product of SKOPE ([Synthesized Knowledge of Past Environments](http://www.envirecon.org)) and the [Village Ecodynamics Project](http://village.anth.wsu.edu). This software is licensed under [GPLv3](http://www.gnu.org/copyleft/gpl.html).

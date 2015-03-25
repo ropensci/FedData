@@ -52,6 +52,9 @@ getITRDB <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=NU
   
   data <- downloadITRDB(raw.dir=raw.dir,force.redo=force.redo)
   
+  ## Nulling out to appease R CMD CHECK
+  LAT <- LON <- START <- END <- SPECIES <- MEASUREMENT_TYPE <- CHRONOLOGY_TYPE <- NULL
+  
   if(!is.null(calib.years)){
     data <- data[START < min(calib.years) & END > max(calib.years)]
   }
@@ -174,6 +177,9 @@ downloadITRDB <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
     itrdb.metadata <- data.table::rbindlist(lapply(all.data,'[[','meta'))
     itrdb.data <- lapply(all.data,'[[','data')
     itrdb.metadata[,data:=itrdb.data]
+    
+    ## Nulling out to appease R CMD CHECK
+    LAT <- LON <- START <- END <- NULL
     
     # Change latitude and longitude to numeric
     itrdb.metadata[,LAT:=as.numeric(as.character(LAT))]
@@ -350,6 +356,9 @@ read.crn.metadata <- function(file,SCHWEINGRUBER){
   }
   
   id <- paste(id,typeID.measurement,typeID.chronology,sep='')
+  
+  ## Nulling out to appease R CMD CHECK
+  lats <- lons <- NULL
   
   if(!SCHWEINGRUBER){
     # Parse the header of the CRN file

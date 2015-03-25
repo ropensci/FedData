@@ -71,6 +71,8 @@ getNED <- function(template, label, res=NULL, raw.dir="./RAW/NED/", extraction.d
     tiles <- tiles[[1]]
   }
   
+  tiles <- raster::crop(tiles,sp::spTransform(template,sp::CRS(raster::projection(tiles))), snap="out")
+  
   raster::writeRaster(tiles, paste(rasters.dir,"/NED_",res,".tif", sep=''), datatype="FLT4S", options=c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"), overwrite=T, setStatistics=FALSE)
   
   return(tiles)
