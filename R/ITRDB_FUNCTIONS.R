@@ -50,6 +50,11 @@ getITRDB <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=NU
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(ifelse(is.null(label),extraction.dir,paste(extraction.dir,'/',label,'/',sep='')), showWarnings = FALSE, recursive = TRUE)
   
+  if(!force.redo && !is.null(label) && file.exists(paste(extraction.dir,'/',label,'/',label,'.Rds',sep=''))){
+    out <- readRDS(paste(extraction.dir,'/',label,'/',label,'.Rds',sep=''))
+    return(out)
+  }
+  
   data <- downloadITRDB(raw.dir=raw.dir,force.redo=force.redo)
   
   ## Nulling out to appease R CMD CHECK
@@ -107,7 +112,9 @@ getITRDB <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=NU
   }
   
   out <- list(metadata=data,widths=widths,depths=depths)
-  saveRDS(out,file=ifelse(is.null(label),extraction.dir,paste(extraction.dir,'/',label,'/',label,'.Rds',sep='')), compress='xz')
+  if(!is.null(label)){
+    saveRDS(out,file=paste(extraction.dir,'/',label,'/',label,'.Rds',sep=''), compress='xz')
+  }
   
   return(out)
 }
@@ -141,7 +148,7 @@ downloadITRDB <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
   
   if(!force.redo && 
        file.exists(paste(raw.dir,"ITRDB",version,".Rds",sep=''))){
-    itrdb.metadata <- readRDS(paste(raw.dir,"ITRDB",version,".Rds",sep=''))
+    itrdb.metadata <- readRDS(paste(raw.dir,"/ITRDB",version,".Rds",sep=''))
   }else{
     all.data <- lapply(zips,function(file){
       
@@ -194,7 +201,7 @@ downloadITRDB <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
     # or nonsense years (There are ~50 weird ones)
     itrdb.metadata <- itrdb.metadata[START <= as.numeric(format(Sys.time(), "%Y")) & END <= as.numeric(format(Sys.time(), "%Y"))]
     
-    saveRDS(itrdb.metadata,paste(raw.dir,"ITRDB",version,".Rds",sep=''), compress="xz")
+    saveRDS(itrdb.metadata,paste(raw.dir,"/ITRDB",version,".Rds",sep=''), compress="xz")
   }
   
   return(itrdb.metadata)

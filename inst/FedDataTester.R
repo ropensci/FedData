@@ -40,14 +40,9 @@ plot(GHCN.temp[[1]], pch=19, add=T)
 plot(SSURGO[['spatial']])
 
 
-itrdb.data <- getITRDB()
-itrdb.extraction <- extractITRDB(data=itrdb.data, 
-                                 recon.years=1:2000, 
-                                 spatial.poly=NULL, 
-                                 calib.years=1924:1983, 
-                                 species=NULL, 
-                                 measurement.type="Ring Width", 
-                                 chronology.type="Standard", 
-                                 makeSpatial=T)
-
-
+itrdb.data <- getITRDB(recon.years=1:2000, 
+                       calib.years=1924:1983, 
+                       species=NULL, 
+                       measurement.type="Ring Width", 
+                       chronology.type="Standard", 
+                       makeSpatial=T)
