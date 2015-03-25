@@ -70,8 +70,8 @@ getITRDB <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=NU
   
   if(!is.null(template)){
     data <- data[LAT >= -90 & LAT <= 90 & LON >= -180 & LON <= 180]
-    sp.data <- SpatialPointsDataFrame(as.matrix(data[,c("LON","LAT"),with=F]),data=data[,"SERIES", with=F, drop=F], proj4string=CRS("+proj=longlat"))
-    data <- data[!is.na((sp.data %over% spTransform(template,CRS(projection(sp.data))))[,1])]
+    sp.data <- sp::SpatialPointsDataFrame(as.matrix(data[,c("LON","LAT"),with=F]),data=data[,"SERIES", with=F, drop=F], proj4string=sp::CRS("+proj=longlat"))
+    data <- data[!is.na((sp.data %over% sp::spTransform(template,sp::CRS(raster::projection(sp.data))))[,1])]
     rm(sp.data)
   }
   
@@ -100,7 +100,7 @@ getITRDB <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=NU
   
   data <- data[,data:=NULL]
   if(makeSpatial){
-    data <- SpatialPointsDataFrame(as.matrix(data[,c("LON","LAT"),with=F]),data=data, proj4string=CRS("+proj=longlat"))
+    data <- sp::SpatialPointsDataFrame(as.matrix(data[,c("LON","LAT"),with=F]),data=data, proj4string=sp::CRS("+proj=longlat"))
   }
   
   out <- list(metadata=data,widths=widths,depths=depths)
