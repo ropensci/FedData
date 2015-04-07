@@ -4,11 +4,21 @@
 #'
 #' @param x A character string representing the name of a package.
 pkgTest <- function(x){
-  if (!require(x,character.only = TRUE))
-  {
-    install.packages(x,dependencies=TRUE)
-    if(!require(x,character.only = TRUE)) stop("Package not found")
+  if(grepl("/",x)){
+    pkgName <- basename(x)
+  }else{
+    pkgName <- x
   }
+  if (!suppressWarnings(require(pkgName,character.only = TRUE)))
+  {
+    if(grepl("/",x)){
+      if(!suppressWarnings(require("devtools",character.only = TRUE))) install.packages("devtools")
+      devtools::install_github(x)
+    }else{
+      install.packages(x,dependencies=TRUE)
+    }
+  }
+  if(!suppressWarnings(require(pkgName,character.only = TRUE))) stop("Package not found")
 }
 
 #'Get the rightmost "n" characters of a character string.
