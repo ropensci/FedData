@@ -39,6 +39,8 @@ getNED <- function(template, label, res=NULL, raw.dir="./RAW/NED/", extraction.d
     res <- "1"
   }
   
+  template <- polygonFromExtent(extent.latlon,"+proj=longlat +ellps=WGS84")
+  
   if(file.exists(paste(rasters.dir,"/NED_",res,".tif", sep='')) & !force.redo){
     extracted.DEM <- raster::raster(paste(rasters.dir,"/NED_",res,".tif", sep=''))
     return(extracted.DEM)
@@ -146,7 +148,7 @@ getNEDTile <- function(template=NULL, res, tileNorthing, tileWesting, raw.dir){
   unlink(tmpdir, recursive = TRUE)
   
   if(!is.null(template)){
-    tryCatch(tile <- raster::crop(tile,sp::spTransform(as(template,'SpatialPolygons'),sp::CRS(raster::projection(tile))), snap="out"), error=function(e){tile <- raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))))})
+    tryCatch(tile <- raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))), snap="out"), error=function(e){tile <- raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))))})
   }
   
   return(tile)
