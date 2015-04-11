@@ -129,36 +129,54 @@ downloadSSURGOInventory <- function(raw.dir){
 #' @return A \code{SpatialPolygonsDataFrame} of the SSURGO study areas within
 #' the specified \code{template}.
 getSSURGOInventory <- function(template=NULL, raw.dir){
-  tmpdir <- tempfile()
-  if (!dir.create(tmpdir))
-    stop("failed to create my temporary directory")
-  
-  file <- downloadSSURGOInventory(raw.dir=raw.dir)
-  
-  unzip(file,exdir=tmpdir)
-
-  SSURGOAreas <- rgdal::readOGR(normalizePath(tmpdir), layer="soilsa_a_nrcs", verbose=FALSE)
-  
-  unlink(tmpdir, recursive = TRUE)
-  
+  # If there is a template, only download the areas in the template
+  # Thanks to Dylan Beaudette for this method!
   if(!is.null(template)){
     
     if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){
-      template <- SPDFfromPolygon(sp::spTransform(polygonFromExtent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
+      template <- sp::spTransform(polygonFromExtent(template),sp::CRS("+proj=longlat"))
+    }else{
+      template <- sp::spTransform(template,sp::CRS("+proj=longlat"))
     }
+    
+    bbox.text <- paste(bbox(template), collapse = ",")
+    u <- paste("http://sdmdataaccess.nrcs.usda.gov/Spatial/SDMNAD83Geographic.wfs?Service=WFS&Version=1.0.0&Request=GetFeature&Typename=SurveyAreaPoly&BBOX=", bbox.text, sep = "")
+    file.extension <- ".gml"
+    file.layer <- "SurveyAreaPoly"
+    
+    td <- tempdir()
+    tf <- tempfile(pattern = "file", tmpdir = td)
+    tf.full <- paste(tf, file.extension, sep = "")
+    download.file(url = u, destfile = tf.full, quiet = FALSE)
+    SSURGOAreas <- rgdal::readOGR(dsn = tf.full, layer = file.layer, disambiguateFIDs = TRUE, stringsAsFactors = FALSE)
+    projection(SSURGOAreas) <- projection(template)
     
     # Get a list of SSURGO study areas within the project study area
     SSURGOAreas <- raster::crop(SSURGOAreas,sp::spTransform(template,sp::CRS(raster::projection(SSURGOAreas))))
     
-    # Check to see if all survey areas are available
-    if(0 %in% SSURGOAreas@data$iscomplete){
-      cat("WARNING! Some of the soil surveys in your area are unavailable.\n")
-      cat("Soils and productivity data will have holes.\n")
-      cat("Missing areas:\n")
-      cat(as.vector(SSURGOAreas@data[SSURGOAreas@data$iscomplete==0,]$areasymbol))
-      cat("\n\n")
-      cat("Continuing with processing available soils.\n\n")
-    }
+  }else{
+    
+    tmpdir <- tempfile()
+    if (!dir.create(tmpdir))
+      stop("failed to create my temporary directory")
+    
+    file <- downloadSSURGOInventory(raw.dir=raw.dir)
+    
+    unzip(file,exdir=tmpdir)
+    
+    SSURGOAreas <- rgdal::readOGR(normalizePath(tmpdir), layer="soilsa_a_nrcs", verbose=FALSE)
+    
+    unlink(tmpdir, recursive = TRUE)
+  }
+  
+  # Check to see if all survey areas are available
+  if(0 %in% SSURGOAreas@data$iscomplete){
+    cat("WARNING! Some of the soil surveys in your area are unavailable.\n")
+    cat("Soils and productivity data will have holes.\n")
+    cat("Missing areas:\n")
+    cat(as.vector(SSURGOAreas@data[SSURGOAreas@data$iscomplete==0,]$areasymbol))
+    cat("\n\n")
+    cat("Continuing with processing available soils.\n\n")
   }
   
   return(SSURGOAreas)
