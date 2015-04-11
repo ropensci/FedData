@@ -5,7 +5,7 @@ library(raster)
 library(png)
 library(RColorBrewer)
 
-setwd("/Users/Bocinsky/Desktop/FedData Test")
+setwd("~/Desktop/FedData Test")
 
 # Get a random contiguous USA county for testing
 wgetDownload("http://dds.cr.usgs.gov/pub/data/nationalatlas/countyp010g.shp_nt00934.tar.gz",destdir=getwd())

@@ -56,7 +56,7 @@ getSSURGO <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir="
   # Get data for each study area
   SSURGOData <- lapply(1:length(SSURGOAreas), function(i){
     cat("\n(Down)Loading SSURGO data for subregion",i,"of",length(SSURGOAreas))
-    getSSURGOStudyArea(template=template, area=as.character(SSURGOAreas$areasymbol[i]), date=as.Date(SSURGOAreas$saverest[i]), raw.dir=raw.dir)
+    getSSURGOStudyArea(template=template, area=as.character(SSURGOAreas$areasymbol[i]), date=as.Date(SSURGOAreas$saverest[i],format="%m/%d/%Y"), raw.dir=raw.dir)
   })
   
   # Combine mapunits
@@ -153,6 +153,7 @@ getSSURGOInventory <- function(template=NULL, raw.dir){
     
     # Get a list of SSURGO study areas within the project study area
     SSURGOAreas <- raster::crop(SSURGOAreas,sp::spTransform(template,sp::CRS(raster::projection(SSURGOAreas))))
+    SSURGOAreas$saverest <- as.Date(SSURGOAreas$saverest, format = "%b %d %Y")
     
   }else{
     
