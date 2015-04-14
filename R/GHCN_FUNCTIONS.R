@@ -107,9 +107,9 @@ downloadGHCNDailyStation <- function(ID, raw.dir, force.redo=F){
   
   url <- paste("ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/all/",ID,".dly",sep='')
   if(!force.redo){
-    wgetDownload(url=url, destdir=raw.dir, timestamping=F, nc=T)
+    curlDownload(url=url, destdir=raw.dir, timestamping=F)
   }else{
-    wgetDownload(url=url, destdir=raw.dir, timestamping=F, nc=F)
+    curlDownload(url=url, destdir=raw.dir, timestamping=F)
   }
   
   return(normalizePath(paste(raw.dir,ID,".dly",sep='')))
@@ -196,7 +196,7 @@ getGHCNInventory <- function(template=NULL, elements=NULL, raw.dir){
   
   url <- "ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt"
   destdir <- raw.dir
-  wgetDownload(url=url, destdir=destdir)
+  curlDownload(url=url, destdir=destdir)
   
   system(paste("sed -i -E 's/#/ /' ",paste(raw.dir,"ghcnd-inventory.txt",sep=''),sep=''))
   system(paste("rm ",paste(raw.dir,"ghcnd-inventory.txt-E",sep=''),sep=''))

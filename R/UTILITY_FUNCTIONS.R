@@ -98,3 +98,35 @@ wgetDownload <- function(url, destdir=getwd(), timestamping=T, nc=F){
   if (status!=0)
     warning("Download of ",url," had nonzero exit status")
 }
+
+#'Use RCurl to download a file.
+#'
+#' This function makes it easy to implement timestamping and no-clobber of files.
+#' Unlike \link{wgetDownload}, it doesn't require an external command-line tool to 
+#' be installed.
+#'
+#' If both \code{timestamping} and \code{nc} are TRUE, nc behavior trumps timestamping.
+#'
+#' @param url The location of a file.
+#' @param destdir Where the file should be downloaded to.
+#' @param timestamping Should only newer files be downloaded?
+#' @param nc Should files of the same type not be clobbered?
+#' @return A logical vector of the same length as x.
+curlDownload <- function(url, destdir=getwd(), timestamping=T, nc=F){
+  
+  destdir <- normalizePath(destdir)
+  destfile <- paste0(destdir,'/',basename(url))
+  destfile <- gsub(" ","\\ ",destfile, fixed=T)
+
+  if(nc & file.exists(destfile)) return()
+  
+  if(timestamping){
+    status <- system(paste0("curl -Rs --globoff --create-dirs -z ",destfile," --url ",url," --output ",destfile))
+  }else{
+    status <- system(paste0("curl -Rs --globoff --create-dirs --url ",url," --output ",destfile))
+  }
+  
+  # If status is still not zero, report a warning
+  if (!(status %in% c(0,3)))
+    warning("Download of ",url," had nonzero exit status")
+}

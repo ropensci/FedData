@@ -113,7 +113,7 @@ downloadSSURGOInventory <- function(raw.dir){
   # http://soildatamart.sc.egov.usda.gov/download/StatusMaps/soilsa_a_SSURGO.zip
   url <- 'http://websoilsurvey.sc.egov.usda.gov/DataAvailability/SoilDataAvailabilityShapefile.zip'
   destdir <- raw.dir
-  wgetDownload(url=url, destdir=destdir)
+  curlDownload(url=url, destdir=destdir)
   return(normalizePath(paste(destdir,'SoilDataAvailabilityShapefile.zip',sep='')))
 }
 
@@ -199,9 +199,9 @@ downloadSSURGOStudyArea <- function(area, date, raw.dir){
   # Try to download with the state database, otherwise grab the US
   url <- paste("http://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/wss_SSA_",area,"_soildb_",state,"_2003_[",date,"].zip",sep='')
   destdir <- raw.dir
-  tryCatch(wgetDownload(url=url, destdir=destdir,nc=T,timestamping=F), warning = function(w) {
+  tryCatch(curlDownload(url=url, destdir=destdir, nc=T), warning = function(w) {
     url <- paste("http://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/wss_SSA_",area,"_soildb_US_2003_[",date,"].zip",sep='')
-    wgetDownload(url=url, destdir=destdir,nc=T,timestamping=F)
+    curlDownload(url=url, destdir=destdir, nc=T)
     state <<- "US"
   })
   

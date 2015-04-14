@@ -76,7 +76,7 @@ getNHD <- function(template, label, raw.dir="./RAW/NHD/", extraction.dir="./EXTR
 #' @return A character string representing the full local path of the HUC4 zipped directory.
 downloadHUC4 <- function(raw.dir){
   url <- 'ftp://ftp.igsb.uiowa.edu/gis_library/USA/huc_04.zip'
-  wgetDownload(url=url, destdir=raw.dir)
+  curlDownload(url=url, destdir=raw.dir)
   return(normalizePath(paste(raw.dir,'huc_04.zip',sep='')))
 }
 
@@ -137,7 +137,7 @@ downloadNHDSubregion <- function(area, raw.dir){
 
   url <- paste('ftp://nhdftp.usgs.gov/DataSets/Staged/SubRegions/FileGDB/MediumResolution/NHDM',area,'_92v200.zip',sep='')
   destdir <- raw.dir
-  wgetDownload(url=url, destdir=destdir)
+  curlDownload(url=url, destdir=destdir)
   
   return(normalizePath(paste(destdir,'/NHDM',area,'_92v200.zip',sep='')))
 }
