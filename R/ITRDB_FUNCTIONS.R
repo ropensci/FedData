@@ -85,6 +85,7 @@ getITRDB <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=NU
   }
   
   if(is.null(recon.years)){
+    if(dim(data)[[1]]==0) stop("No ITRDB chronologies within template polygon.")
     all.years <- range(as.numeric(unique(unlist(sapply(data[,data],rownames)))))
     recon.years <- all.years[[1]]:all.years[[2]]
   }
