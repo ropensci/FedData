@@ -81,6 +81,7 @@ getITRDB <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=NU
     sp.data <- sp::SpatialPointsDataFrame(as.matrix(data[,c("LON","LAT"),with=F]),data=data[,"SERIES", with=F, drop=F], proj4string=sp::CRS("+proj=longlat +datum=WGS84"))
     data <- data[!is.na((sp.data %over% sp::spTransform(template,sp::CRS(raster::projection(sp.data))))[,1])]
     rm(sp.data)
+    if(dim(data)[[1]]==0) stop("No ITRDB chronologies within template polygon.")
   }
   
   if(is.null(recon.years)){
