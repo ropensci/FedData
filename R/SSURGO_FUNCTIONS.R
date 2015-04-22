@@ -195,17 +195,13 @@ getSSURGOInventory <- function(template=NULL, raw.dir){
 #' @return A character string representing the full local path of the SSURGO study areas zipped directory.
 downloadSSURGOStudyArea <- function(area, date, raw.dir){
   state <- substring(area,1,2)
-  
+
   # Try to download with the state database, otherwise grab the US
-  url <- paste("http://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/wss_SSA_",area,"_soildb_",state,"_2003_[",date,"].zip",sep='')
+  url <- paste("http://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/wss_SSA_",area,"_[",date,"].zip",sep='')
   destdir <- raw.dir
-  tryCatch(curlDownload(url=url, destdir=destdir, nc=T), warning = function(w) {
-    url <- paste("http://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/wss_SSA_",area,"_soildb_US_2003_[",date,"].zip",sep='')
-    curlDownload(url=url, destdir=destdir, nc=T)
-    state <<- "US"
-  })
-  
-  return(normalizePath(paste(destdir,"wss_SSA_",area,"_soildb_",state,"_2003_[",date,"].zip",sep='')))
+  curlDownload(url=url, destdir=destdir, nc=T)
+
+  return(normalizePath(paste(destdir,"wss_SSA_",area,"_[",date,"].zip",sep='')))
 }
 
 #' Download and crop the spatial and tabular data for a SSURGO study area.
