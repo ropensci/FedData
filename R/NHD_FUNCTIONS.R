@@ -6,6 +6,8 @@
 #' @param template A Raster* or Spatial* object to serve 
 #' as a template for cropping.
 #' @param label A character string naming the study area.
+#' @param res A character string defining the resolution of the NHD to download.
+#' Either "medium" (the default), or "high".
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing. Defaults to "./RAW/NHD/".
 #' @param extraction.dir A character string indicating where the extracted and cropped NHD shapefiles should be put.
@@ -132,6 +134,8 @@ getHUC4 <- function(template=NULL, raw.dir){
 #' \code{downloadNHDSubregion} returns the path to the downloaded zip file.
 #'
 #' @param area A 4-character string indicating the HUC4 NHD subregion to download.
+#' @param res A character string defining the resolution of the NHD to download.
+#' Either "medium" (the default), or "high".
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing.
 #' @return A character string representing the full local path of the downloaded zip file.
@@ -157,6 +161,8 @@ downloadNHDSubregion <- function(area, res, raw.dir){
 #' @param template A Raster* or Spatial* object to serve 
 #' as a template for cropping.
 #' @param area A 4-character string indicating the HUC4 NHD subregion to download and crop.
+#' @param res A character string defining the resolution of the NHD to download.
+#' Either "medium" (the default), or "high".
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing.
 #' @return A \code{SpatialPolygonsDataFrame} of the HUC4 regions within

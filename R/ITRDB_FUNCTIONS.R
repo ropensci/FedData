@@ -134,12 +134,17 @@ getITRDB <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=NU
 downloadITRDB <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   
-  system(paste('wget -N -np -nd -r -l1 -A "*.zip" --directory-prefix=',raw.dir,' ftp://ftp.ncdc.noaa.gov/pub/data/paleo/treering/chronologies/',sep=''))
+  url <- 'ftp://ftp.ncdc.noaa.gov/pub/data/paleo/treering/chronologies/'
+  filenames = RCurl::getURL(url, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+  filenames = paste(url, strsplit(filenames, "\r*\n")[[1]], sep = "")
+  filenames <- filenames[grep("*.zip",filenames)]
   
+  for(file in filenames){
+    curlDownload(url=file,destdir=raw.dir)
+  }
+    
   ## A vector of the files in the output.dir
-  zips <- paste(raw.dir,list.files(raw.dir),sep='')
-  zips <- zips[grepl("\\.zip",zips)]
-  zips <- zips[grepl("crn",zips)]
+  zips <- paste0(raw.dir,basename(filenames))
   
   version <- max(as.numeric(gsub("[^0-9]", "",zips)))
   zips <- zips[grepl(version,zips)]

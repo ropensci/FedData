@@ -32,11 +32,8 @@ NHD <- getNHD(template=county, label=paste(county$STATE,'_',county$NAME, sep='')
 SSURGO <- getSSURGO(template=county, label=paste(county$STATE,'_',county$NAME, sep=''))
 
 # Get the ITRDB records
-itrdb.data <- getITRDB(recon.years=1:2000, 
-                       calib.years=1924:1983, 
-                       species=NULL, 
-                       measurement.type="Ring Width", 
-                       chronology.type="Standard", 
+itrdb.data <- getITRDB(template=county, 
+                       label=paste(county$STATE,'_',county$NAME, sep=''),
                        makeSpatial=T)
 
 
