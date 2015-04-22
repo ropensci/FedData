@@ -253,30 +253,25 @@ getSSURGOStudyArea <- function(template=NULL, area, date, raw.dir){
   names(tablesData) <- files
   tablesData <- tablesData[!sapply(tablesData,is.null)]
   
-  dbFile <- list.files(paste(tmpdir,'/',area,sep=''),full.names=T)
-  dbFile <- dbFile[grepl("mdb",dbFile)]
-  tablesHeaders <- Hmisc::mdb.get(dbFile)
-  
-  
-  FedData::tablesHeaders <- Hmisc::mdb.get(dbFile)
+  tablesHeaders <- FedData::tablesHeaders
   
   SSURGOTableMapping <- tablesData[["mstab.txt"]][,c(1,5)]
   names(SSURGOTableMapping) <- c("TABLE","FILE")
   SSURGOTableMapping[,"FILE"] <- paste(SSURGOTableMapping[,"FILE"],'.txt',sep='')
   
   tablesData <- tablesData[as.character(SSURGOTableMapping[,"FILE"])]
-#   tablesHeaders <- tablesHeaders[as.character(SSURGOTableMapping[,"TABLE"])]
+  tablesHeaders <- tablesHeaders[as.character(SSURGOTableMapping[,"TABLE"])]
   
-  notNull <- (!sapply(tablesData,is.null) & !sapply(FedData::tablesHeaders,is.null))
+  notNull <- (!sapply(tablesData,is.null) & !sapply(tablesHeaders,is.null))
   tablesData <- tablesData[notNull]
-
+  tablesHeaders <- tablesHeaders[notNull]
   
-  tables <- mapply(tablesData,FedData::tablesHeaders,FUN=function(theData,theHeader){
+  tables <- mapply(tablesData,tablesHeaders,FUN=function(theData,theHeader){
     names(theData) <- names(theHeader)
     return(theData)
   })
   
-  names(tables) <- names(FedData::tablesHeaders)
+  names(tables) <- names(tablesHeaders)
   
   tables <- extractSSURGOData(tables=tables, mapunits=mapunits)
   
