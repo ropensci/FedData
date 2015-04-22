@@ -23,6 +23,8 @@ I **strongly** recommend [Homebrew](http://brew.sh) for installing *R* and each 
 
 Remember, if installing *R* with Homebrew, you must **completely** remove old *R* installations, including the *R* framework, typically installed at `/Library/Frameworks`. This package has been built and tested on Mac OS 10.10 (Yosemite), and has been successfully run on an Ubuntu Linux cluster.
 
+**NOTE:** As of April 22, 2015, version 0.9-2 of the *rgdal* package for *R* does not work well with GDAL 1.11.2. Please install GDAL 1.11.1, or wait for an update to *rgdal*.
+
 ### Installation
 To install, use the following command in *R*:
 
