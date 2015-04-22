@@ -134,9 +134,9 @@ getSSURGOInventory <- function(template=NULL, raw.dir){
   if(!is.null(template)){
     
     if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){
-      template <- sp::spTransform(polygonFromExtent(template),sp::CRS("+proj=longlat"))
+      template <- sp::spTransform(polygonFromExtent(template),sp::CRS("+proj=longlat +datum=WGS84"))
     }else{
-      template <- sp::spTransform(template,sp::CRS("+proj=longlat"))
+      template <- sp::spTransform(template,sp::CRS("+proj=longlat +datum=WGS84"))
     }
     
     bbox.text <- paste(bbox(template), collapse = ",")

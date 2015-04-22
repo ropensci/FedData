@@ -38,7 +38,7 @@ getGHCNDaily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./RA
   cat("\nGetting spatial data of GHCN stations")
   if(!force.redo & file.exists(paste(vectors.dir,"/stations.shp",sep=''))){
     stations.sp <- rgdal::readOGR(dsn=vectors.dir,layer="stations")
-  }else{
+  }else{+proj=longlat
     stations.sp <- getGHCNInventory(template=template, raw.dir=raw.dir)
     suppressWarnings(rgdal::writeOGR(stations.sp, vectors.dir, "stations","ESRI Shapefile", overwrite_layer=TRUE))
   }
@@ -205,7 +205,7 @@ getGHCNInventory <- function(template=NULL, elements=NULL, raw.dir){
   names(station.inventory) <- c("ID","LATITUDE","LONGITUDE","ELEMENT","YEAR_START","YEAR_END")
   
   # Convert to SPDF
-  stations.sp <- sp::SpatialPointsDataFrame(coords=station.inventory[,c("LONGITUDE","LATITUDE")],station.inventory,proj4string=sp::CRS("+proj=longlat"))
+  stations.sp <- sp::SpatialPointsDataFrame(coords=station.inventory[,c("LONGITUDE","LATITUDE")],station.inventory,proj4string=sp::CRS("+proj=longlat +datum=WGS84"))
   
   if(!is.null(template)){
     stations.sp <- stations.sp[!is.na(sp::over(stations.sp,sp::spTransform(template,sp::CRS(raster::projection(stations.sp))))),]

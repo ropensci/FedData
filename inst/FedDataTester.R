@@ -1,9 +1,9 @@
 # FedData Tester
 devtools::install_github("bocinsky/FedData")
 library(FedData)
-library(raster)
-library(png)
-library(RColorBrewer)
+pkgTest("raster")
+pkgTest("png")
+pkgTest("RColorBrewer")
 
 setwd("~/Desktop/FedData Test")
 
