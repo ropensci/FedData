@@ -38,7 +38,7 @@ getGHCNDaily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./RA
   cat("\nGetting spatial data of GHCN stations")
   if(!force.redo & file.exists(paste(vectors.dir,"/stations.shp",sep=''))){
     stations.sp <- rgdal::readOGR(dsn=vectors.dir,layer="stations")
-  }else{+proj=longlat
+  }else{
     stations.sp <- getGHCNInventory(template=template, raw.dir=raw.dir)
     suppressWarnings(rgdal::writeOGR(stations.sp, vectors.dir, "stations","ESRI Shapefile", overwrite_layer=TRUE))
   }
