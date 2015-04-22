@@ -147,7 +147,7 @@ getSSURGOInventory <- function(template=NULL, raw.dir){
     td <- tempdir()
     tf <- tempfile(pattern = "file", tmpdir = td)
     tf.full <- paste(tf, file.extension, sep = "")
-    download.file(url = u, destfile = tf.full, quiet = FALSE)
+    download.file(url = u, destfile = tf.full, quiet = TRUE)
     SSURGOAreas <- rgdal::readOGR(dsn = tf.full, layer = file.layer, disambiguateFIDs = TRUE, stringsAsFactors = FALSE)
     projection(SSURGOAreas) <- projection(template)
     
