@@ -1,2 +1,2 @@
-import(sp,raster,rgdal,rgeos,igraph,data.table)
+import(sp,raster,rgdal,rgeos,igraph,data.table,RCurl)
 exportPattern("^[[:alpha:]]+")
