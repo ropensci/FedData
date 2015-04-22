@@ -194,7 +194,6 @@ getSSURGOInventory <- function(template=NULL, raw.dir){
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' @return A character string representing the full local path of the SSURGO study areas zipped directory.
 downloadSSURGOStudyArea <- function(area, date, raw.dir){
-  state <- substring(area,1,2)
 
   # Try to download with the state database, otherwise grab the US
   url <- paste("http://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/wss_SSA_",area,"_[",date,"].zip",sep='')
