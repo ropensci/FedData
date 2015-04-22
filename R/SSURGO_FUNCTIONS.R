@@ -253,8 +253,8 @@ getSSURGOStudyArea <- function(template=NULL, area, date, raw.dir){
   names(tablesData) <- files
   tablesData <- tablesData[!sapply(tablesData,is.null)]
   
-  dbFile <- list.files(paste(tmpdir,'/',area,sep=''),full.names=T)
-  dbFile <- dbFile[grepl("mdb",dbFile)]
+  data(tablesData, package="FedData")
+  
   tablesHeaders <- Hmisc::mdb.get(dbFile)
   
   SSURGOTableMapping <- tablesData[["mstab.txt"]][,c(1,5)]
@@ -266,7 +266,7 @@ getSSURGOStudyArea <- function(template=NULL, area, date, raw.dir){
   
   notNull <- (!sapply(tablesData,is.null) & !sapply(tablesHeaders,is.null))
   tablesData <- tablesData[notNull]
-  tablesHeaders <- tablesHeaders[notNull]
+
   
   tables <- mapply(tablesData,tablesHeaders,FUN=function(theData,theHeader){
     names(theData) <- names(theHeader)
