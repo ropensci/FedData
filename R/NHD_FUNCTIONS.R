@@ -12,7 +12,7 @@
 #' The directory will be created if missing. Defaults to "./EXTRACTIONS/NHD/".
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created?
 #' @return A list of Spatial* objects extracted from the National Hydrography Dataset.
-getNHD <- function(template, label, raw.dir="./RAW/NHD/", extraction.dir="./EXTRACTIONS/NHD/", force.redo=FALSE){
+getNHD <- function(template, label, res='medium', raw.dir="./RAW/NHD/", extraction.dir="./EXTRACTIONS/NHD/", force.redo=FALSE){
   
   vectors.dir <- paste(extraction.dir,"/",label,"/spatial",sep='')
   
@@ -44,7 +44,7 @@ getNHD <- function(template, label, raw.dir="./RAW/NHD/", extraction.dir="./EXTR
   
   # Get the spatial data for each area
   subregionShapes <- lapply(area.list, function(area){
-    return(getNHDSubregion(template=template, area=area, raw.dir=raw.dir))
+    return(getNHDSubregion(template=template, area=area, res=res, raw.dir=raw.dir))
   })
   
   # Get all layer names
@@ -75,9 +75,11 @@ getNHD <- function(template, label, raw.dir="./RAW/NHD/", extraction.dir="./EXTR
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' @return A character string representing the full local path of the HUC4 zipped directory.
 downloadHUC4 <- function(raw.dir){
+#   url <- "ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/WBD/FileGDB101/WBD_National.zip"
   url <- 'ftp://ftp.igsb.uiowa.edu/gis_library/USA/huc_04.zip'
   curlDownload(url=url, destdir=raw.dir)
   return(normalizePath(paste(raw.dir,'huc_04.zip',sep='')))
+#   return(normalizePath(paste(raw.dir,'WBD_National.zip',sep='')))
 }
 
 
@@ -133,13 +135,17 @@ getHUC4 <- function(template=NULL, raw.dir){
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing.
 #' @return A character string representing the full local path of the downloaded zip file.
-downloadNHDSubregion <- function(area, raw.dir){
-
-  url <- paste('ftp://nhdftp.usgs.gov/DataSets/Staged/SubRegions/FileGDB/MediumResolution/NHDM',area,'_92v200.zip',sep='')
+downloadNHDSubregion <- function(area, res, raw.dir){
+  if(res=="medium"){
+    url <- paste('ftp://nhdftp.usgs.gov/DataSets/Staged/SubRegions/FileGDB/MediumResolution/NHDM',area,'_931v220.zip',sep='')
+  }else{
+    url <- paste('ftp://nhdftp.usgs.gov/DataSets/Staged/SubRegions/FileGDB/HighResolution/NHDH',area,'_931v220.zip',sep='')
+  }
+  
   destdir <- raw.dir
   curlDownload(url=url, destdir=destdir)
   
-  return(normalizePath(paste(destdir,'/NHDM',area,'_92v200.zip',sep='')))
+  return(normalizePath(paste0(destdir,'/',basename(url))))
 }
 
 #' Download and crop data from a zipped HUC4 subregion
@@ -155,12 +161,12 @@ downloadNHDSubregion <- function(area, raw.dir){
 #' The directory will be created if missing.
 #' @return A \code{SpatialPolygonsDataFrame} of the HUC4 regions within
 #' the specified \code{template}.
-getNHDSubregion <- function(template=NULL, area, raw.dir){
+getNHDSubregion <- function(template=NULL, area, res, raw.dir){
   tmpdir <- tempfile()
   if (!dir.create(tmpdir))
     stop("failed to create my temporary directory")
   
-  file <- downloadNHDSubregion(area=area, raw.dir=raw.dir)
+  file <- downloadNHDSubregion(area=area, res=res, raw.dir=raw.dir)
   
   unzip(file,exdir=tmpdir)
   
