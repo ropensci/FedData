@@ -9,8 +9,8 @@ setwd("~/Desktop/FedData Test")
 
 # Get a random contiguous USA county for testing
 curlDownload("http://dds.cr.usgs.gov/pub/data/nationalatlas/countyp010g.shp_nt00934.tar.gz",destdir=getwd())
-untar("./countyp010g.shp_nt00934.tar.gz")
-county <- rgdal::readOGR(".","countyp010g")
+untar("./countyp010g.shp_nt00934.tar.gz",exdir = "./countyp010g/")
+county <- rgdal::readOGR("./countyp010g/","countyp010g")
 county <- county[!(county$STATE %in% c("AK","VI","PR","HI")),]
 county <- county[sample(1:length(county),1),]
 # county <- county[which(county$NAME=='Napa'),]
@@ -53,5 +53,3 @@ plot(NHD$NHDArea, col='gray50', border='gray50', add=T)
 plot(county, add=T)
 plot(GHCN.prcp[[1]], pch=17, add=T)
 plot(GHCN.temp[[1]], pch=19, add=T)
-
-# plot(SSURGO[['spatial']])

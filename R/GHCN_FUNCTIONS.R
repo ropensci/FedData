@@ -107,7 +107,7 @@ downloadGHCNDailyStation <- function(ID, raw.dir, force.redo=F){
   
   url <- paste("ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/all/",ID,".dly",sep='')
   if(!force.redo){
-    curlDownload(url=url, destdir=raw.dir, timestamping=F)
+    curlDownload(url=url, destdir=raw.dir, timestamping=T)
   }else{
     curlDownload(url=url, destdir=raw.dir, timestamping=F)
   }

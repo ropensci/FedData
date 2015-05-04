@@ -144,7 +144,7 @@ downloadITRDB <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
   for(file in filenames){
     curlDownload(url=file,destdir=raw.dir)
   }
-    
+  
   ## A vector of the files in the output.dir
   zips <- paste0(raw.dir,basename(filenames))
   

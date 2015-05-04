@@ -110,7 +110,7 @@ downloadNEDTile <- function(res=NULL, tileNorthing, tileWesting, raw.dir){
   
   url <- paste('ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/ArcGrid/n',tileNorthing,'w',tileWesting,'.zip',sep='')
   destdir <- paste(raw.dir,'/',res,'/',sep='')
-  wgetDownload(url=url, destdir=destdir)
+  curlDownload(url=url, destdir=destdir)
   
   return(normalizePath(paste(destdir,'n',tileNorthing,'w',tileWesting,'.zip',sep='')))
 }

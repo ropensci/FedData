@@ -99,7 +99,7 @@ wgetDownload <- function(url, destdir=getwd(), timestamping=T, nc=F){
     warning("Download of ",url," had nonzero exit status")
 }
 
-#'Use RCurl to download a file.
+#' Use RCurl to download a file.
 #'
 #' This function makes it easy to implement timestamping and no-clobber of files.
 #' Unlike \link{wgetDownload}, it doesn't require an external command-line tool to 
@@ -116,14 +116,29 @@ curlDownload <- function(url, destdir=getwd(), timestamping=T, nc=F){
   
   destdir <- normalizePath(destdir)
   destfile <- paste0(destdir,'/',basename(url))
-  destfile <- gsub(" ","\\ ",destfile, fixed=T)
+#   destfile <- gsub(" ","\\ ",destfile, fixed=T)
 
   if(nc & file.exists(destfile)) return()
   
-  if(timestamping){
-    status <- system(paste0("curl -Rs --globoff --create-dirs -z ",destfile," --url ",url," --output ",destfile))
+  if(timestamping & file.exists(destfile)){
+    temp.file <- paste0(tempfile(),'.png')
+    f <- CFILE(temp.file, "wb")
+    status <- curlPerform(url = url, writedata = f@ref, timecondition=T, timevalue=file.mtime(destfile))
+    close(f)
+    if(file.size(temp.file) > 0){
+      file.copy(temp.file,destfile, overwrite=T)
+    }
+    
+#     status <- system(paste0("curl -Rs --globoff --create-dirs -z ",destfile," --url ",url," --output ",destfile))
   }else{
-    status <- system(paste0("curl -Rs --globoff --create-dirs --url ",url," --output ",destfile))
+    temp.file <- paste0(tempfile(),'.png')
+    f <- CFILE(temp.file, "wb")
+    status <- curlPerform(url = url, writedata = f@ref)
+    close(f)
+    file.copy(temp.file,destfile, overwrite=T)
+    
+    
+#     status <- system(paste0("curl -Rs --globoff --create-dirs --url ",url," --output ",destfile))
   }
   
   # If status is still not zero, report a warning
