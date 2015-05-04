@@ -137,7 +137,7 @@ downloadITRDB <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   
   url <- 'ftp://ftp.ncdc.noaa.gov/pub/data/paleo/treering/chronologies/'
-  filenames = RCurl::getURL(url, ftp.use.epsv = FALSE, dirlistonly = TRUE)
+  filenames = RCurl::getURL(url, fresh.connect=T, ftp.use.epsv=T, forbid.reuse=T, dirlistonly = TRUE)
   filenames = paste(url, strsplit(filenames, "\r*\n")[[1]], sep = "")
   filenames <- filenames[grep("*.zip",filenames)]
   

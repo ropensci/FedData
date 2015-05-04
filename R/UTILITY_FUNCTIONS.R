@@ -121,19 +121,19 @@ curlDownload <- function(url, destdir=getwd(), timestamping=T, nc=F){
   if(nc & file.exists(destfile)) return()
   
   if(timestamping & file.exists(destfile)){
-    temp.file <- paste0(tempfile(),'.png')
+    temp.file <- paste0(tempdir(),"/",basename(url))
     f <- CFILE(temp.file, "wb")
-    status <- curlPerform(url = url, writedata = f@ref, timecondition=T, timevalue=file.mtime(destfile))
+    status <- curlPerform(url = url, writedata = f@ref, fresh.connect=T, ftp.use.epsv=T, forbid.reuse=T, timecondition=T, timevalue=file.mtime(destfile))
     close(f)
     if(file.size(temp.file) > 0){
       file.copy(temp.file,destfile, overwrite=T)
     }
     
-#     status <- system(paste0("curl -Rs --globoff --create-dirs -z ",destfile," --url ",url," --output ",destfile))
+#     status <- system(paste0("curl -R --globoff --create-dirs -z ",destfile," --url ",url," --output ",destfile))
   }else{
-    temp.file <- paste0(tempfile(),'.png')
+    temp.file <- paste0(tempdir(),"/",basename(url))
     f <- CFILE(temp.file, "wb")
-    status <- curlPerform(url = url, writedata = f@ref)
+    status <- curlPerform(url = url, writedata = f@ref, fresh.connect=T, ftp.use.epsv=T, forbid.reuse=T)
     close(f)
     file.copy(temp.file,destfile, overwrite=T)
     

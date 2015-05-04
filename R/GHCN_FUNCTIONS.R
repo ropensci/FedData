@@ -198,15 +198,19 @@ getGHCNInventory <- function(template=NULL, elements=NULL, raw.dir){
   destdir <- raw.dir
   curlDownload(url=url, destdir=destdir)
   
-  system(paste("sed -i -E 's/#/ /' ",paste(raw.dir,"ghcnd-inventory.txt",sep=''),sep=''))
-  system(paste("rm ",paste(raw.dir,"ghcnd-inventory.txt-E",sep=''),sep=''))
+#   system(paste("sed -i -E 's/#/ /' ",paste(raw.dir,"ghcnd-inventory.txt",sep=''),sep=''))
+#   system(paste("rm ",paste(raw.dir,"ghcnd-inventory.txt-E",sep=''),sep=''))
   
   station.inventory <- utils::read.fwf(paste(raw.dir,"ghcnd-inventory.txt",sep=''),c(11,1,8,1,9,1,4,1,4,1,4))[,seq(1,11,2)]
   names(station.inventory) <- c("ID","LATITUDE","LONGITUDE","ELEMENT","YEAR_START","YEAR_END")
   
   # Convert to SPDF
   stations.sp <- sp::SpatialPointsDataFrame(coords=station.inventory[,c("LONGITUDE","LATITUDE")],station.inventory,proj4string=sp::CRS("+proj=longlat +datum=WGS84"))
-  
+
+  if(!is.null(elements)){
+    stations.sp <- stations.sp[stations.sp$ELEMENT %in% toupper(elements),]
+  }
+
   if(!is.null(template)){
     stations.sp <- stations.sp[!is.na(sp::over(stations.sp,sp::spTransform(template,sp::CRS(raster::projection(stations.sp))))),]
   }
