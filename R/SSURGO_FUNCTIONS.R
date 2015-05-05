@@ -253,25 +253,25 @@ getSSURGOStudyArea <- function(template=NULL, area, date, raw.dir){
   names(tablesData) <- files
   tablesData <- tablesData[!sapply(tablesData,is.null)]
   
-  tablesHeaders <- FedData::tablesHeaders
+#   tablesHeaders <- FedData::tablesHeaders
   
   SSURGOTableMapping <- tablesData[["mstab.txt"]][,c(1,5)]
   names(SSURGOTableMapping) <- c("TABLE","FILE")
   SSURGOTableMapping[,"FILE"] <- paste(SSURGOTableMapping[,"FILE"],'.txt',sep='')
   
   tablesData <- tablesData[as.character(SSURGOTableMapping[,"FILE"])]
-  tablesHeaders <- tablesHeaders[as.character(SSURGOTableMapping[,"TABLE"])]
+  tablesHeads <- tablesHeaders[as.character(SSURGOTableMapping[,"TABLE"])]
   
-  notNull <- (!sapply(tablesData,is.null) & !sapply(tablesHeaders,is.null))
+  notNull <- (!sapply(tablesData,is.null) & !sapply(tablesHeads,is.null))
   tablesData <- tablesData[notNull]
-  tablesHeaders <- tablesHeaders[notNull]
+  tablesHeads <- tablesHeads[notNull]
   
-  tables <- mapply(tablesData,tablesHeaders,FUN=function(theData,theHeader){
+  tables <- mapply(tablesData,tablesHeads,FUN=function(theData,theHeader){
     names(theData) <- names(theHeader)
     return(theData)
   })
   
-  names(tables) <- names(tablesHeaders)
+  names(tables) <- names(tablesHeads)
   
   tables <- extractSSURGOData(tables=tables, mapunits=mapunits)
   

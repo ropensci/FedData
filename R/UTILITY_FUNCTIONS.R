@@ -12,7 +12,6 @@ pkgTest <- function(x){
   if (!suppressWarnings(require(pkgName,character.only = TRUE)))
   {
     if(grepl("/",x)){
-      if(!suppressWarnings(require("devtools",character.only = TRUE))) install.packages("devtools")
       devtools::install_github(x)
     }else{
       install.packages(x,dependencies=TRUE, repos="http://cran.rstudio.com")
