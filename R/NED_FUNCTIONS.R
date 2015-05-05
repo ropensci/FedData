@@ -136,7 +136,7 @@ getNEDTile <- function(template=NULL, res, tileNorthing, tileWesting, raw.dir){
   if (!dir.create(tmpdir))
     stop("failed to create my temporary directory")
   
-  cat("\n(Down)Loading NED tile for ",tileNorthing,"N and",tileWesting,"W.")
+  cat("\n(Down)Loading NED tile for",tileNorthing,"N and",tileWesting,"W.")
   
   file <- downloadNEDTile(res=res, tileNorthing=tileNorthing, tileWesting=tileWesting, raw.dir=raw.dir)
   

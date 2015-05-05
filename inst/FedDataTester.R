@@ -7,7 +7,6 @@ devtools::install_github("bocinsky/FedData")
 # install.packages("FedData")
 
 library(FedData)
-pkgTest("raster")
 pkgTest("png")
 pkgTest("RColorBrewer")
 
