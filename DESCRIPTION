@@ -8,4 +8,4 @@ Maintainer: R. Kyle Bocinsky <bocinsky@gmail.com>
 Description: Functions to automate downloading geospatial data available from several federated data sources (mainly sources maintained by the US Federal government). Currently, the package allows for retrieval of five datasets: The National Elevation Dataset digital elevation models (1 and 1/3 arc-second; USGS); The National Hydrography Dataset (USGS); The Soil Survey Geographic (SSURGO) database from the National Cooperative Soil Survey (NCSS), which is led by the Natural Resources Conservation Service (NRCS) under the USDA; the Global Historical Climatology Network (GHCN), coordinated by National Climatic Data Center at NOAA; and the International Tree Ring Data Bank. Additional data sources are in the works, including global DEM resources (ETOPO1, ETOPO5, ETOPO30, SRTM), global soils (HWSD), MODIS satellite data products, the National Atlas (US), Natural Earth, PRISM, and WorldClim.
 License: GPL-3
 Depends: R (>= 3.1.0), sp, rgdal, raster, RCurl
-Imports: rgeos, igraph, data.table
+Imports: rgeos, igraph, data.table, devtools

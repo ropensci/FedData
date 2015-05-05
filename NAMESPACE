@@ -1,4 +1,4 @@
-import(sp,raster,rgdal,rgeos,igraph,data.table,RCurl)
+import(sp,raster,rgdal,rgeos,igraph,data.table,RCurl,devtools)
 export(getGHCNDaily)
 export(downloadGHCNDailyStation)
 export(getGHCNDailyStation)

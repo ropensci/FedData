@@ -18,8 +18,9 @@ curlDownload("http://dds.cr.usgs.gov/pub/data/nationalatlas/countyp010g.shp_nt00
 untar("./countyp010g.shp_nt00934.tar.gz",exdir = "./countyp010g/")
 county <- rgdal::readOGR("./countyp010g/countyp010g.shp","countyp010g")
 county <- county[!(county$STATE %in% c("AK","VI","PR","HI")),]
-county <- county[sample(1:length(county),1),]
 # county <- county[which(county$NAME=='Napa'),]
+county <- county[sample(1:length(county),1),]
+
 
 # Get the NED (USA ONLY)
 # Returns a raster
