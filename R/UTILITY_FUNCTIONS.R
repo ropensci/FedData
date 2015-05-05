@@ -8,11 +8,11 @@ pkgTest <- function(x){
     pkgName <- basename(x)
   }else{
     pkgName <- x
-#   }
+  }
   if (!suppressWarnings(require(pkgName,character.only = TRUE)))
   {
     if(grepl("/",x)){
-      devtools::install_github(x)
+      suppressWarnings(devtools::install_github(x))
     }else{
       install.packages(x,dependencies=TRUE, repos="http://cran.rstudio.com")
     }
@@ -111,33 +111,49 @@ wgetDownload <- function(url, destdir=getwd(), timestamping=T, nc=F){
 #' @param timestamping Should only newer files be downloaded?
 #' @param nc Should files of the same type not be clobbered?
 #' @return A logical vector of the same length as x.
-curlDownload <- function(url, destdir=getwd(), timestamping=T, nc=F){
+curlDownload <- function(url, destdir=getwd(), timestamping=T, nc=F, verbose=F, progress=F){
   
   destdir <- normalizePath(destdir)
   destfile <- paste0(destdir,'/',basename(url))
-#   destfile <- gsub(" ","\\ ",destfile, fixed=T)
-
+  #   destfile <- gsub(" ","\\ ",destfile, fixed=T)
+  
   if(nc & file.exists(destfile)) return()
   
   if(timestamping & file.exists(destfile)){
+    cat("\nDownloading file (if necessary):",url,"\n")
     temp.file <- paste0(tempdir(),"/",basename(url))
     f <- CFILE(temp.file, "wb")
-    status <- curlPerform(url = url, writedata = f@ref, fresh.connect=T, ftp.use.epsv=T, forbid.reuse=T, timecondition=T, timevalue=file.mtime(destfile))
+    status <- curlPerform(url = url, 
+                          writedata = f@ref,
+                          verbose=verbose,
+                          noprogress=!progress,
+                          fresh.connect=T, 
+                          ftp.use.epsv=F, 
+                          forbid.reuse=T, 
+                          timecondition=T, 
+                          timevalue=base::file.mtime(destfile))
     close(f)
     if(file.size(temp.file) > 0){
       file.copy(temp.file,destfile, overwrite=T)
     }
     
-#     status <- system(paste0("curl -R --globoff --create-dirs -z ",destfile," --url ",url," --output ",destfile))
+    #     status <- system(paste0("curl -R --globoff --create-dirs -z ",destfile," --url ",url," --output ",destfile))
   }else{
+    cat("\nDownloading file:",url,"\n")
     temp.file <- paste0(tempdir(),"/",basename(url))
     f <- CFILE(temp.file, "wb")
-    status <- curlPerform(url = url, writedata = f@ref, fresh.connect=T, ftp.use.epsv=T, forbid.reuse=T)
+    status <- curlPerform(url = url, 
+                          writedata = f@ref,
+                          verbose=verbose,
+                          noprogress=!progress,
+                          fresh.connect=T, 
+                          ftp.use.epsv=F, 
+                          forbid.reuse=T)
     close(f)
     file.copy(temp.file,destfile, overwrite=T)
     
     
-#     status <- system(paste0("curl -Rs --globoff --create-dirs --url ",url," --output ",destfile))
+    #     status <- system(paste0("curl -Rs --globoff --create-dirs --url ",url," --output ",destfile))
   }
   
   # If status is still not zero, report a warning

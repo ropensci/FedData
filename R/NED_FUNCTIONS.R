@@ -62,7 +62,7 @@ getNED <- function(template, label, res=NULL, raw.dir="./RAW/NED/", extraction.d
   
   # Mosaic all tiles
   if(length(tiles)>1){
-    cat('Mosaic-ing NED tiles.\n\n')
+    cat('\nMosaic-ing NED tiles.\n')
     flush.console()
     
     tiles$fun <- mean

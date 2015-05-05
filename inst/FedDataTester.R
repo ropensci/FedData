@@ -1,7 +1,7 @@
 # FedData Tester
 
 # The development version is usually more up to date, but less stable
-devtools::install_github("bocinsky/FedData")
+suppressWarnings(devtools::install_github("bocinsky/FedData"))
 
 # Install the CRAN version
 # install.packages("FedData")
@@ -13,9 +13,9 @@ pkgTest("RColorBrewer")
 setwd("~/Desktop/FedData Test")
 
 # Get a random contiguous USA county for testing
-curlDownload("http://dds.cr.usgs.gov/pub/data/nationalatlas/countyp010g.shp_nt00934.tar.gz",destdir=getwd())
+curlDownload("http://dds.cr.usgs.gov/pub/data/nationalatlas/countyp010g.shp_nt00934.tar.gz", destdir=getwd(), verbose=T, progress=T)
 untar("./countyp010g.shp_nt00934.tar.gz",exdir = "./countyp010g/")
-county <- rgdal::readOGR("./countyp010g/countyp010g.shp","countyp010g")
+county <- rgdal::readOGR("./countyp010g/countyp010g.shp","countyp010g",verbose=F)
 county <- county[!(county$STATE %in% c("AK","VI","PR","HI")),]
 # county <- county[which(county$NAME=='Napa'),]
 county <- county[sample(1:length(county),1),]

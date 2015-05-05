@@ -4,7 +4,8 @@
 \alias{curlDownload}
 \title{Use RCurl to download a file.}
 \usage{
-curlDownload(url, destdir = getwd(), timestamping = T, nc = F)
+curlDownload(url, destdir = getwd(), timestamping = T, nc = F,
+  verbose = F, progress = F)
 }
 \arguments{
 \item{url}{The location of a file.}
