@@ -135,7 +135,7 @@ curlDownload <- function(url, destdir=getwd(), timestamping=T, nc=F, verbose=F, 
                           timecondition=T, 
                           timevalue=base::file.info(destfile)$mtime)
     close(f)
-    if(file.size(temp.file) > 0){
+    if(file.info(temp.file)$size > 0){
       file.copy(temp.file,destfile, overwrite=T)
     }
     
