@@ -60,14 +60,14 @@ getSSURGO <- function(template=NULL, label, areas=NULL, raw.dir="./RAW/SSURGO/",
     SSURGOAreas <- SSURGOAreas[SSURGOAreas@data$iscomplete != 0,]
     
   }else if(!is.null(areas)){
-    if (!suppressWarnings(require("SSOAP",character.only = TRUE))){
+    if (!requireNamespace(package="SSOAP", quietly=T)){
       install.packages("SSOAP", repos = "http://www.omegahat.org/R", type="source")
     }
-    if (!suppressWarnings(require("XMLSchema",character.only = TRUE))){
+    if (!requireNamespace(package="XMLSchema", quietly=T)){
       install.packages("XMLSchema", repos = "http://www.omegahat.org/R", type="source")
     }
-    if(!suppressWarnings(require("SSOAP",character.only = TRUE)) | !suppressWarnings(require("XMLSchema",character.only = TRUE))){
-      stop("'SSOAP' and 'XMLSchema' must be installed in order to load SSURGO by area name.")
+    if(!requireNamespace(package="SSOAP", quietly=T) | !requireNamespace(package="XMLSchema", quietly=T)){
+      stop("'SSOAP' and 'XMLSchema' must be installed in order to load SSURGO by area name.", call. = FALSE)
     }
     q <- paste0("SELECT areasymbol, saverest FROM sacatalog WHERE areasymbol IN (",paste(paste0("'",areas,"'"),collapse=','),");")
     SSURGOAreas <- soilDB::SDA_query(q)
@@ -75,7 +75,7 @@ getSSURGO <- function(template=NULL, label, areas=NULL, raw.dir="./RAW/SSURGO/",
   
   # Get data for each study area
   SSURGOData <- lapply(1:nrow(SSURGOAreas), function(i){
-    cat("\n(Down)Loading SSURGO data for subregion",i,"of",length(SSURGOAreas),":",as.character(SSURGOAreas$areasymbol[i]))
+    cat("\n(Down)Loading SSURGO data for survey area",i,"of",nrow(SSURGOAreas),":",as.character(SSURGOAreas$areasymbol[i]))
     getSSURGOStudyArea(template=template, area=as.character(SSURGOAreas$areasymbol[i]), date=as.Date(SSURGOAreas$saverest[i],format="%m/%d/%Y"), raw.dir=raw.dir)
   })
   
