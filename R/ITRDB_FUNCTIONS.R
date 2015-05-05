@@ -376,9 +376,9 @@ read.crn.metadata <- function(file,SCHWEINGRUBER){
   
   if(!SCHWEINGRUBER){
     # Parse the header of the CRN file
-    meta.1 <- as.character(read.fwf(file,c(6,3,52,4), skip=0, n=1, colClasses = "character", strip.white=T))
-    meta.2 <- as.character(read.fwf(file,c(6,3,13,18,6,5,6,9,6,5), skip=1,n=1, colClasses = "character", strip.white=T))
-    meta.3 <- as.character(read.fwf(file,c(6,3,52,2,12), skip=2, n=1, colClasses = "character", strip.white=T))
+    meta.1 <- as.character(read.fwf(file,c(6,3,52,4), skip=0, n=1, colClasses = "character", strip.white=T, stringsAsFactors=F))
+    meta.2 <- as.character(read.fwf(file,c(6,3,13,18,6,5,6,9,6,5), skip=1,n=1, colClasses = "character", strip.white=T, stringsAsFactors=F))
+    meta.3 <- as.character(read.fwf(file,c(6,3,52,2,12), skip=2, n=1, colClasses = "character", strip.white=T, stringsAsFactors=F))
     
     meta <- c(id,meta.1[3:4],type.measurement,type.chronology,meta.2[c(5:7,9:10)],meta.3[3])
     
@@ -493,7 +493,7 @@ read.crn.metadata <- function(file,SCHWEINGRUBER){
 #' @return A data.frame containing the data, or if \code{SCHWEINGRUBER==T}, a list containing four types of data.
 read.crn.data <- function(file,SCHWEINGRUBER){  
   if(!SCHWEINGRUBER){
-    years <- as.character(read.fwf(file,c(6,3,13,18,6,5,6,9,6,5),skip=1,n=1,colClasses = "character", strip.white=T))[9:10]
+    years <- as.character(read.fwf(file,c(6,3,13,18,6,5,6,9,6,5),skip=1,n=1,colClasses = "character", strip.white=T, stringsAsFactors=F))[9:10]
     
     if(any(grepl(" ",years))){
       years <- unlist(strsplit(years," "))
@@ -537,7 +537,7 @@ read.crn.data <- function(file,SCHWEINGRUBER){
     on.exit()
     ## Get chron stats if needed
     suppressWarnings(chron.stats <- read.fwf(con, c(yearStart, digits.year, 6, 6, 6, 7, 9, 9, 10),
-                                             skip=nlines-1, strip.white=TRUE, colClasses="character"))
+                                             skip=nlines-1, strip.white=TRUE, colClasses="character", stringsAsFactors=F))
     ## Unintuitively, the connection object seems to have been destroyed
     ## by the previous read.fwf.  We need to create a new one.
     con <- file(file, encoding = encoding)
@@ -552,12 +552,12 @@ read.crn.data <- function(file,SCHWEINGRUBER){
       ## Really read file
       dat <- read.fwf(con, c(yearStart, digits.year, rep(c(4, 3), 10)),
                       skip=skip.lines, n=nlines-skip.lines-1,
-                      strip.white=TRUE, colClasses="character")
+                      strip.white=TRUE, colClasses="character", stringsAsFactors=F)
     } else {
       ## Really read file
       dat <- read.fwf(con, c(yearStart, digits.year, rep(c(4, 3), 10)),
                       skip=skip.lines, n=nlines-skip.lines,
-                      strip.white=TRUE, colClasses="character")
+                      strip.white=TRUE, colClasses="character", stringsAsFactors=F)
     }
     
     #     dat <- dat[complete.cases(dat),]

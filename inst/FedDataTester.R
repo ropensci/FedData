@@ -14,7 +14,7 @@ setwd("~/Desktop/FedData Test")
 
 # Get a random contiguous USA county for testing
 curlDownload("http://www2.census.gov/geo/tiger/GENZ2013/cb_2013_us_county_20m.zip", destdir=getwd(), verbose=T, progress=T)
-unzip("./cb_2013_us_county_20m.zip",exdir = "./cb_2013_us_county_20m/")
+unzip("./cb_2013_us_county_20m.zip",exdir = "./cb_2013_us_county_20m")
 county <- rgdal::readOGR("./cb_2013_us_county_20m","cb_2013_us_county_20m",verbose=F)
 # Remove Hawaii, Alaska, Guam, the Virgin Islands, and Puerto Rico
 county <- county[!(county$STATEFP %in% c("02","52","43","15","72")),]
@@ -37,6 +37,8 @@ NHD <- getNHD(template=county, label=paste(county$STATE,'_',county$NAME, sep='')
 
 # Get the NRCS SSURGO data (USA ONLY)
 SSURGO <- getSSURGO(template=county, label=paste(county$STATE,'_',county$NAME, sep=''))
+# Or, download by Soil Survey Area names
+SSURGO <- getSSURGO(areas=c("CO670","CO075"), label="CO_TEST")
 
 # Get the ITRDB records
 itrdb.data <- getITRDB(template=county, 

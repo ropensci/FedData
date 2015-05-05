@@ -110,6 +110,8 @@ wgetDownload <- function(url, destdir=getwd(), timestamping=T, nc=F){
 #' @param destdir Where the file should be downloaded to.
 #' @param timestamping Should only newer files be downloaded?
 #' @param nc Should files of the same type not be clobbered?
+#' @param verbose Should cURL output be shown?
+#' @param progress Should a progress bar be shown with cURL output?
 #' @return A logical vector of the same length as x.
 curlDownload <- function(url, destdir=getwd(), timestamping=T, nc=F, verbose=F, progress=F){
   

@@ -15,6 +15,10 @@ curlDownload(url, destdir = getwd(), timestamping = T, nc = F,
 \item{timestamping}{Should only newer files be downloaded?}
 
 \item{nc}{Should files of the same type not be clobbered?}
+
+\item{verbose}{Should cURL output be shown?}
+
+\item{progress}{Should a progress bar be shown with cURL output?}
 }
 \value{
 A logical vector of the same length as x.

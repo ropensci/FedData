@@ -134,7 +134,7 @@ getGHCNDailyStation <- function(ID, elements=NULL, raw.dir, standardize=F, force
   
   file <- downloadGHCNDailyStation(ID=ID, raw.dir=paste(raw.dir,"/DAILY/",sep=''), force.redo=force.redo)
   
-  daily <- utils::read.fwf(file,c(11,4,2,4,rep(c(5,1,1,1),31)))
+  daily <- utils::read.fwf(file,c(11,4,2,4,rep(c(5,1,1,1),31)), stringsAsFactors=F)
   names(daily)[1:4] <- c("STATION","YEAR","MONTH","ELEMENT")
   
   if(is.null(elements)){
@@ -202,7 +202,7 @@ getGHCNInventory <- function(template=NULL, elements=NULL, raw.dir){
 #   system(paste("sed -i -E 's/#/ /' ",paste(raw.dir,"ghcnd-inventory.txt",sep=''),sep=''))
 #   system(paste("rm ",paste(raw.dir,"ghcnd-inventory.txt-E",sep=''),sep=''))
   
-  station.inventory <- utils::read.fwf(paste(raw.dir,"ghcnd-inventory.txt",sep=''),c(11,1,8,1,9,1,4,1,4,1,4))[,seq(1,11,2)]
+  station.inventory <- utils::read.fwf(paste(raw.dir,"ghcnd-inventory.txt",sep=''),c(11,1,8,1,9,1,4,1,4,1,4), stringsAsFactors=F)[,seq(1,11,2)]
   names(station.inventory) <- c("ID","LATITUDE","LONGITUDE","ELEMENT","YEAR_START","YEAR_END")
   
   # Convert to SPDF

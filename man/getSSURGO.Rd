@@ -4,7 +4,7 @@
 \alias{getSSURGO}
 \title{Download and crop data from the NRCS SSURGO soils database.}
 \usage{
-getSSURGO(template, label, raw.dir = "./RAW/SSURGO/",
+getSSURGO(template = NULL, label, areas = NULL, raw.dir = "./RAW/SSURGO/",
   extraction.dir = "./EXTRACTIONS/SSURGO/", force.redo = FALSE)
 }
 \arguments{
@@ -12,6 +12,9 @@ getSSURGO(template, label, raw.dir = "./RAW/SSURGO/",
 as a template for cropping.}
 
 \item{label}{A character string naming the study area.}
+
+\item{areas}{Optionally, a vector of area names [e.g., c("IN087","IN088")] may be provided.
+If a template is also provided, it will take precedence!}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
 The directory will be created if missing. Defaults to "./RAW/SSURGO/".}
