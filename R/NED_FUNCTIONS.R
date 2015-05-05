@@ -53,7 +53,7 @@ getNED <- function(template, label, res=NULL, raw.dir="./RAW/NED/", extraction.d
   
   tilesLocations <- as.matrix(expand.grid(norths,wests,stringsAsFactors = FALSE))
   
-  cat("\nArea of interest includes",nrow(tilesLocations),"NED tiles.")
+  cat("\nArea of interest includes",nrow(tilesLocations),"NED tiles.\n")
   
   # Download and crop tiles
   tiles <- apply(tilesLocations,1,function(loc){
@@ -136,6 +136,8 @@ getNEDTile <- function(template=NULL, res, tileNorthing, tileWesting, raw.dir){
   if (!dir.create(tmpdir))
     stop("failed to create my temporary directory")
   
+  cat("\n(Down)Loading NED tile for ",tileNorthing,"N and",tileWesting,"W.")
+  
   file <- downloadNEDTile(res=res, tileNorthing=tileNorthing, tileWesting=tileWesting, raw.dir=raw.dir)
   
   unzip(file,exdir=tmpdir)
@@ -143,7 +145,7 @@ getNEDTile <- function(template=NULL, res, tileNorthing, tileWesting, raw.dir){
   dirs <- list.dirs(tmpdir,full.names = TRUE,recursive=F)
   dirs <- dirs[grepl("grdn",dirs)]
   
-  tile <- raster::raster(rgdal::readGDAL(dirs))
+  tile <- raster::raster(rgdal::readGDAL(dirs, silent=T))
   
   unlink(tmpdir, recursive = TRUE)
   

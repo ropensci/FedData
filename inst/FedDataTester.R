@@ -1,5 +1,11 @@
 # FedData Tester
+
+# The development version is usually more up to date, but less stable
 devtools::install_github("bocinsky/FedData")
+
+# Install the CRAN version
+# install.packages("FedData")
+
 library(FedData)
 pkgTest("raster")
 pkgTest("png")

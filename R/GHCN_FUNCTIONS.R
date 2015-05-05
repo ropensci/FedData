@@ -37,8 +37,9 @@ getGHCNDaily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./RA
   
   cat("\nGetting spatial data of GHCN stations")
   if(!force.redo & file.exists(paste(vectors.dir,"/stations.shp",sep=''))){
-    stations.sp <- rgdal::readOGR(dsn=vectors.dir,layer="stations")
+    stations.sp <- rgdal::readOGR(dsn=vectors.dir,layer="stations",verbose=F)
   }else{
+    cat("\n(Down)Loading GHCN station inventory.")
     stations.sp <- getGHCNInventory(template=template, raw.dir=raw.dir)
     suppressWarnings(rgdal::writeOGR(stations.sp, vectors.dir, "stations","ESRI Shapefile", overwrite_layer=TRUE))
   }
@@ -79,6 +80,7 @@ getGHCNDaily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./RA
   }
   
   daily <- lapply(stations.sp$ID,function(station){
+    cat("\n(Down)Loading GHCN station data for station",station)
     return(getGHCNDailyStation(ID=station, elements=elements, raw.dir=raw.dir, standardize=standardize, force.redo=force.redo))
   })
   names(daily) <- stations.sp$ID

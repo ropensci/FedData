@@ -4,18 +4,18 @@
 #'
 #' @param x A character string representing the name of a package.
 pkgTest <- function(x){
-  if(grepl("/",x)){
-    pkgName <- basename(x)
-  }else{
+#   if(grepl("/",x)){
+#     pkgName <- basename(x)
+#   }else{
     pkgName <- x
-  }
+#   }
   if (!suppressWarnings(require(pkgName,character.only = TRUE)))
   {
-    if(grepl("/",x)){
-      devtools::install_github(x)
-    }else{
+#     if(grepl("/",x)){
+#       devtools::install_github(x)
+#     }else{
       install.packages(x,dependencies=TRUE, repos="http://cran.rstudio.com")
-    }
+#     }
   }
   if(!suppressWarnings(require(pkgName,character.only = TRUE))) stop("Package not found")
 }

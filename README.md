@@ -1,4 +1,4 @@
-# FedData (v1.2-1)
+# FedData (v1.1.0)
 An *R* package implementing functions to automate downloading geospatial data available from several federated data sources (mainly sources maintained by the US Federal government). Currently, the package allows for retrieval of five datasets: 
 
 * The [National Elevation Dataset (NED)](http://ned.usgs.gov) digital elevation models (1 and 1/3 arc-second; USGS)
