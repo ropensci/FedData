@@ -13,10 +13,11 @@ pkgTest("RColorBrewer")
 setwd("~/Desktop/FedData Test")
 
 # Get a random contiguous USA county for testing
-curlDownload("http://dds.cr.usgs.gov/pub/data/nationalatlas/countyp010g.shp_nt00934.tar.gz", destdir=getwd(), verbose=T, progress=T)
-untar("./countyp010g.shp_nt00934.tar.gz",exdir = "./countyp010g/")
-county <- rgdal::readOGR("./countyp010g/countyp010g.shp","countyp010g",verbose=F)
-county <- county[!(county$STATE %in% c("AK","VI","PR","HI")),]
+curlDownload("http://www2.census.gov/geo/tiger/GENZ2013/cb_2013_us_county_20m.zip", destdir=getwd(), verbose=T, progress=T)
+unzip("./cb_2013_us_county_20m.zip",exdir = "./cb_2013_us_county_20m/")
+county <- rgdal::readOGR("./cb_2013_us_county_20m","cb_2013_us_county_20m",verbose=F)
+# Remove Hawaii, Alaska, Guam, the Virgin Islands, and Puerto Rico
+county <- county[!(county$STATEFP %in% c("02","52","43","15","72")),]
 # county <- county[which(county$NAME=='Napa'),]
 county <- county[sample(1:length(county),1),]
 
