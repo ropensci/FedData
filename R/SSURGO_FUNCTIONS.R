@@ -140,15 +140,15 @@ getSSURGOInventory <- function(template=NULL, raw.dir){
     }
     
     bbox.text <- paste(bbox(template), collapse = ",")
-    u <- paste("http://sdmdataaccess.nrcs.usda.gov/Spatial/SDMNAD83Geographic.wfs?Service=WFS&Version=1.0.0&Request=GetFeature&Typename=SurveyAreaPoly&BBOX=", bbox.text, sep = "")
-    file.extension <- ".gml"
-    file.layer <- "SurveyAreaPoly"
     
-    td <- tempdir()
-    tf <- tempfile(pattern = "file", tmpdir = td)
-    tf.full <- paste(tf, file.extension, sep = "")
-    download.file(url = u, destfile = tf.full, quiet = TRUE)
-    SSURGOAreas <- rgdal::readOGR(dsn = tf.full, layer = file.layer, disambiguateFIDs = TRUE, stringsAsFactors = FALSE)
+    url <- paste("http://sdmdataaccess.nrcs.usda.gov/Spatial/SDMNAD83Geographic.wfs?Service=WFS&Version=1.0.0&Request=GetFeature&Typename=SurveyAreaPoly&BBOX=", bbox.text, sep = "")
+    
+    temp.file <- paste0(tempdir(),"/soils.gml")
+    f <- CFILE(temp.file, "wb")
+    status <- curlPerform(url = url, writedata = f@ref, fresh.connect=T, ftp.use.epsv=T, forbid.reuse=T)
+    close(f)
+
+    SSURGOAreas <- rgdal::readOGR(dsn = temp.file, layer = "SurveyAreaPoly", disambiguateFIDs = TRUE, stringsAsFactors = FALSE)
     projection(SSURGOAreas) <- projection(template)
     
     # Get a list of SSURGO study areas within the project study area
