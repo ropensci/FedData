@@ -93,7 +93,7 @@ getSSURGO <- function(template=NULL, label, areas=NULL, raw.dir="./RAW/SSURGO/",
   }
 
   
-  # Combine subregion data
+  # Combine study area data
   SSURGOTables <- lapply(SSURGOData,"[[","tabular")
   
   # Merging all SSURGO data tables

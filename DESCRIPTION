@@ -2,7 +2,7 @@ Package: FedData
 Type: Package
 Title: Functions to Automate Downloading Geospatial Data Available from Several Federated Data Sources
 Version: 1.1.0
-Date: 2015-05-05
+Date: 2015-05-06
 Author: R. Kyle Bocinsky <bocinsky@gmail.com>
 	Dylan Beaudette <Dylan.Beaudette@ca.usda.gov>
 Maintainer: R. Kyle Bocinsky <bocinsky@gmail.com>

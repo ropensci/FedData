@@ -10,6 +10,7 @@ library(FedData)
 pkgTest("png")
 pkgTest("RColorBrewer")
 
+
 setwd("~/Desktop/FedData Test")
 
 # Get a random contiguous USA county for testing
