@@ -5,6 +5,8 @@ language: r
 before_install:
 - sudo apt-get install aptitude
 - sudo aptitude install libgdal1-dev libproj-dev --assume-yes
+- Rscript -e 'install.packages("SSOAP", repos="http://www.omegahat.org/R", type="source")'
+- Rscript -e 'install.packages("XMLSchema", repos="http://www.omegahat.org/R", type="source")'
 
 r_binary_packages:
 - rgdal
@@ -16,9 +18,8 @@ r_binary_packages:
 r_github_packages:
 - bocinsky/FedData
 
-after_success:
-- Rscript -e 'install.packages("SSOAP", repos="http://www.omegahat.org/R", type="source")'
-- Rscript -e 'install.packages("XMLSchema", repos="http://www.omegahat.org/R", type="source")'
+# after_success:
+
 
 notifications:
 email:
