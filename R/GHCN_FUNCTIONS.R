@@ -145,7 +145,7 @@ getGHCNDailyStation <- function(ID, elements=NULL, raw.dir, standardize=F, force
   daily[daily==-9999] <- NA
   names(daily) <- c("YEAR","MONTH","ELEMENT",paste("D",1:31,sep=''))
   
-  ## Seperate by element
+  ## Separate by element
   out.list <- lapply(elements, function(element){
     return(daily[daily$ELEMENT==toupper(element),-3])
   })
@@ -198,9 +198,6 @@ getGHCNInventory <- function(template=NULL, elements=NULL, raw.dir){
   url <- "ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt"
   destdir <- raw.dir
   curlDownload(url=url, destdir=destdir)
-  
-#   system(paste("sed -i -E 's/#/ /' ",paste(raw.dir,"ghcnd-inventory.txt",sep=''),sep=''))
-#   system(paste("rm ",paste(raw.dir,"ghcnd-inventory.txt-E",sep=''),sep=''))
   
   station.inventory <- utils::read.fwf(paste(raw.dir,"ghcnd-inventory.txt",sep=''),c(11,1,8,1,9,1,4,1,4,1,4), stringsAsFactors=F)[,seq(1,11,2)]
   names(station.inventory) <- c("ID","LATITUDE","LONGITUDE","ELEMENT","YEAR_START","YEAR_END")

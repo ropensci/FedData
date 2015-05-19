@@ -230,11 +230,6 @@ read.crn <- function(file){
   
   all.data <- scan(file,what='character', multi.line=F, fill=T, sep="\n", quiet=T)
   all.data <- iconv(all.data,from="latin1",to="")
-  #   if(grepl("\\x",all.data))
-  #   all.data <- sub("\x","\\u",all.data)
-  #   #   all.data <- sub(", s\x9fdl.Passh\x9ah","     ",all.data)
-  # #   all.data <- sub("\\(junge B\x8aume","     ",all.data)
-  # #   all.data <- sub(", junge B\x8aume","     ",all.data)
   
   # This removes blank lines
   con <- file(file)

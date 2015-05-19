@@ -101,6 +101,10 @@ getSSURGO <- function(template=NULL, label, areas=NULL, raw.dir="./RAW/SSURGO/",
   tableNames <- unique(unlist(sapply(SSURGOTables,names)))
   tableNames <- tableNames[order(tableNames)]
   
+  # This function takes each table name, 
+  # gets that table from each study area,
+  # and binds the rows of those tables.
+  # Finally, it removes any duplicate lines.
   SSURGOTables <- lapply(tableNames,function(name){
     tables <- lapply(SSURGOTables,'[[',name)
     tables <- do.call("rbind", tables)
