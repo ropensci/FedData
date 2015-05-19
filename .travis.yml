@@ -6,7 +6,7 @@ before_install:
 - sudo apt-get update -qq
 - sudo apt-get --purge remove libcurl4-openssl-dev postgresql-*
 - sudo apt-get install aptitude 
-- sudo aptitude install libproj-dev gdal-bin libgdal-dev -y
+- sudo aptitude install libproj-dev gdal-bin libgdal-dev libgdal1-dev -y
 - sudo apt-get install libcurl4-openssl-dev
 - Rscript -e 'install.packages("SSOAP", repos="http://www.omegahat.org/R", type="source")'
 - Rscript -e 'install.packages("XMLSchema", repos="http://www.omegahat.org/R", type="source")'
