@@ -1,6 +1,6 @@
 #' Download and crop the National Hydrography Dataset.
 #'
-#' \code{getNHD} returns a list of Spatial* objects extracted 
+#' \code{get_nhd} returns a list of Spatial* objects extracted 
 #' from the National Hydrography Dataset.
 #' 
 #' @param template A Raster* or Spatial* object to serve 
@@ -14,7 +14,7 @@
 #' The directory will be created if missing. Defaults to "./EXTRACTIONS/NHD/".
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created?
 #' @return A list of Spatial* objects extracted from the National Hydrography Dataset.
-getNHD <- function(template, label, res='medium', raw.dir="./RAW/NHD/", extraction.dir="./EXTRACTIONS/NHD/", force.redo=FALSE){
+get_nhd <- function(template, label, res='medium', raw.dir="./RAW/NHD/", extraction.dir="./EXTRACTIONS/NHD/", force.redo=FALSE){
   
   vectors.dir <- paste(extraction.dir,"/",label,"/spatial",sep='')
   
@@ -37,22 +37,25 @@ getNHD <- function(template, label, res='medium', raw.dir="./RAW/NHD/", extracti
   }
   
   if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){
-    template <- SPDFfromPolygon(sp::spTransform(polygonFromExtent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
+    template <- spdf_from_polygon(sp::spTransform(polygon_from_extent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
   }
-    
-  HUC4 <- getHUC4(template=template, raw.dir=raw.dir)
+  
+  message("(Down)Loading the NHD HUC4 dataset.")
+  HUC4 <- get_huc4(template=template, raw.dir=raw.dir)
   
   area.list <- formatC(HUC4$HUC4, width = 4, format = "d", flag = "0")
   
   # Get the spatial data for each area
+  message("(Down)Loading the NHD subregion data.")
   subregionShapes <- lapply(area.list, function(area){
-    return(getNHDSubregion(template=template, area=area, res=res, raw.dir=raw.dir))
+    return(get_nhd_subregion(template=template, area=area, res=res, raw.dir=raw.dir))
   })
   
   # Get all layer names
   layers <- unique(unlist(lapply(subregionShapes,names)))
   
   # Merge like datasets
+  message("Merging all NHD data in study area.")
   allShapes <- lapply(layers,function(layer){
     shapes <- sapply(subregionShapes, '[[', layer)
     null.shapes <- sapply(shapes,is.null)
@@ -76,10 +79,10 @@ getNHD <- function(template, label, res='medium', raw.dir="./RAW/NHD/", extracti
 #'
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' @return A character string representing the full local path of the HUC4 zipped directory.
-downloadHUC4 <- function(raw.dir){
+download_huc4 <- function(raw.dir){
 #   url <- "ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/WBD/FileGDB101/WBD_National.zip"
   url <- 'ftp://ftp.igsb.uiowa.edu/gis_library/USA/huc_04.zip'
-  curlDownload(url=url, destdir=raw.dir)
+  curl_download(url=url, destdir=raw.dir)
   return(normalizePath(paste(raw.dir,'huc_04.zip',sep='')))
 #   return(normalizePath(paste(raw.dir,'WBD_National.zip',sep='')))
 }
@@ -88,7 +91,7 @@ downloadHUC4 <- function(raw.dir){
 #' Download and crop a shapefile of the HUC4 
 #' regions of the National Hydrography Dataset.
 #'
-#' \code{getHUC4} returns a \code{SpatialPolygonsDataFrame} of the HUC4 regions within
+#' \code{get_huc4} returns a \code{SpatialPolygonsDataFrame} of the HUC4 regions within
 #' the specified \code{template}. If template is not provided, returns the entire HUC4 dataset.
 #' 
 #' @param template A Raster* or Spatial* object to serve 
@@ -97,17 +100,15 @@ downloadHUC4 <- function(raw.dir){
 #' The directory will be created if missing.
 #' @return A \code{SpatialPolygonsDataFrame} of the HUC4 regions within
 #' the specified \code{template}.
-getHUC4 <- function(template=NULL, raw.dir){
+get_huc4 <- function(template=NULL, raw.dir){
   tmpdir <- tempfile()
   if (!dir.create(tmpdir))
     stop("failed to create my temporary directory")
   
-  huc4File <- downloadHUC4(raw.dir)
+  huc4File <- download_huc4(raw.dir)
   
-  cat("Unzipping the NHD HUC4 dataset.\n")
   unzip(huc4File, exdir=tmpdir)
   
-  cat("Loading the NHD HUC4 dataset.\n")
   HUC4 <- rgdal::readOGR(tmpdir, layer="huc_04", verbose=FALSE)
   
   HUC4@proj4string <- sp::CRS("+proj=utm +zone=15 +datum=NAD83 +ellps=WGS84")
@@ -115,7 +116,7 @@ getHUC4 <- function(template=NULL, raw.dir){
   # Get a list of NHD subregions within the project study area
   if(!is.null(template)){
     if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){
-      template <- SPDFfromPolygon(sp::spTransform(polygonFromExtent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
+      template <- spdf_from_polygon(sp::spTransform(polygon_from_extent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
     }
     
     HUC4 <- raster::crop(HUC4,sp::spTransform(template,sp::CRS(raster::projection(HUC4))))
@@ -130,8 +131,8 @@ getHUC4 <- function(template=NULL, raw.dir){
 
 #' Download a zipped NHD HUC4 subregion.
 #'
-#' HUC4 subregion are specified by a unique character string, best obtained using the \code{\link{getHUC4}} function.
-#' \code{downloadNHDSubregion} returns the path to the downloaded zip file.
+#' HUC4 subregion are specified by a unique character string, best obtained using the \code{\link{get_huc4}} function.
+#' \code{download_nhd_subregion} returns the path to the downloaded zip file.
 #'
 #' @param area A 4-character string indicating the HUC4 NHD subregion to download.
 #' @param res A character string defining the resolution of the NHD to download.
@@ -139,7 +140,7 @@ getHUC4 <- function(template=NULL, raw.dir){
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing.
 #' @return A character string representing the full local path of the downloaded zip file.
-downloadNHDSubregion <- function(area, res, raw.dir){
+download_nhd_subregion <- function(area, res, raw.dir){
   if(res=="medium"){
     url <- paste('ftp://nhdftp.usgs.gov/DataSets/Staged/SubRegions/FileGDB/MediumResolution/NHDM',area,'_931v220.zip',sep='')
   }else{
@@ -147,7 +148,7 @@ downloadNHDSubregion <- function(area, res, raw.dir){
   }
   
   destdir <- raw.dir
-  curlDownload(url=url, destdir=destdir)
+  curl_download(url=url, destdir=destdir)
   
   return(normalizePath(paste0(destdir,'/',basename(url))))
 }
@@ -155,7 +156,7 @@ downloadNHDSubregion <- function(area, res, raw.dir){
 #' Download and crop data from a zipped HUC4 subregion
 #' of the National Hydrography Dataset.
 #'
-#' \code{getNHDSubregion} returns a list of \code{SpatialPolygonsDataFrame}s of the layers of the HUC4 subregion,
+#' \code{get_nhd_subregion} returns a list of \code{SpatialPolygonsDataFrame}s of the layers of the HUC4 subregion,
 #'  within the specified \code{template}. If template is not provided, returns the entire HUC4 subregion.
 #' 
 #' @param template A Raster* or Spatial* object to serve 
@@ -167,12 +168,12 @@ downloadNHDSubregion <- function(area, res, raw.dir){
 #' The directory will be created if missing.
 #' @return A \code{SpatialPolygonsDataFrame} of the HUC4 regions within
 #' the specified \code{template}.
-getNHDSubregion <- function(template=NULL, area, res, raw.dir){
+get_nhd_subregion <- function(template=NULL, area, res, raw.dir){
   tmpdir <- tempfile()
   if (!dir.create(tmpdir))
     stop("failed to create my temporary directory")
   
-  file <- downloadNHDSubregion(area=area, res=res, raw.dir=raw.dir)
+  file <- download_nhd_subregion(area=area, res=res, raw.dir=raw.dir)
   
   unzip(file,exdir=tmpdir)
   
@@ -199,7 +200,7 @@ getNHDSubregion <- function(template=NULL, area, res, raw.dir){
   # Crop each feature to the template area
   if(!is.null(template)){
     if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){
-      template <- SPDFfromPolygon(sp::spTransform(polygonFromExtent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
+      template <- spdf_from_polygon(sp::spTransform(polygon_from_extent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
     }
     
     shapes <- lapply(shapes,function(shape){

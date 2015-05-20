@@ -1,6 +1,6 @@
 #' Download and crop the Global Historical Climate Network-Daily data.
 #'
-#' \code{getGHCNDaily} returns a named list of length 2: 
+#' \code{get_ghcn_daily} returns a named list of length 2: 
 #' \enumerate{
 #' \item "spatial": A \code{SpatialPointsDataFrame} of the locations of GHCN weather stations 
 #' in the template, and 
@@ -9,7 +9,8 @@
 #' }
 #' 
 #' @param template A Raster* or Spatial* object to serve 
-#' as a template for cropping.
+#' as a template for cropping. If missing, all stations
+#' will be downloaded!
 #' @param label A character string naming the study area.
 #' @param elements A character vector of elemets to extract.
 #' Common elements include "tmin", "tmax", and "prcp".
@@ -20,7 +21,7 @@
 #' @param standardize Select only common year/month/day? Defaults to FALSE.
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created? Defaults to FALSE.
 #' @return A named list containing the "spatial" and "tabular" data.
-getGHCNDaily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./RAW/GHCN/", extraction.dir="./EXTRACTIONS/GHCN/", standardize=F, force.redo=F){
+get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./RAW/GHCN/", extraction.dir="./EXTRACTIONS/GHCN/", standardize=F, force.redo=F){
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   
   if(is.null(template)){
@@ -35,11 +36,11 @@ getGHCNDaily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./RA
   dir.create(vectors.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(tables.dir, showWarnings = FALSE, recursive = TRUE)
   
-  cat("\n(Down)Loading GHCN station inventory.")
+  message("(Down)Loading GHCN station inventory.")
   if(!force.redo & file.exists(paste(vectors.dir,"/stations.shp",sep=''))){
     stations.sp <- rgdal::readOGR(dsn=vectors.dir,layer="stations",verbose=F)
   }else{
-    stations.sp <- getGHCNInventory(template=template, raw.dir=raw.dir)
+    stations.sp <- get_ghcn_inventory(template=template, raw.dir=raw.dir)
     suppressWarnings(rgdal::writeOGR(stations.sp, vectors.dir, "stations","ESRI Shapefile", overwrite_layer=TRUE))
   }
   
@@ -79,8 +80,8 @@ getGHCNDaily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./RA
   }
   
   daily <- lapply(stations.sp$ID,function(station){
-    cat("\n(Down)Loading GHCN station data for station",as.character(station))
-    return(getGHCNDailyStation(ID=station, elements=elements, raw.dir=raw.dir, standardize=standardize, force.redo=force.redo))
+    message("(Down)Loading GHCN station data for station ",as.character(station))
+    return(get_ghcn_daily_station(ID=station, elements=elements, raw.dir=raw.dir, standardize=standardize, force.redo=force.redo))
   })
   names(daily) <- stations.sp$ID
   
@@ -102,15 +103,15 @@ getGHCNDaily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./RA
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' @param force.redo If this weather station has been downloaded before, should it be updated? Defaults to FALSE.
 #' @return A character string representing the full local path of the GHCN station data.
-downloadGHCNDailyStation <- function(ID, raw.dir, force.redo=F){
+download_ghcn_daily_station <- function(ID, raw.dir, force.redo=F){
   
   dir.create(raw.dir, recursive=T, showWarnings=F)
   
   url <- paste("ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/all/",ID,".dly",sep='')
   if(!force.redo){
-    curlDownload(url=url, destdir=raw.dir, timestamping=T)
+    curl_download(url=url, destdir=raw.dir, timestamping=T)
   }else{
-    curlDownload(url=url, destdir=raw.dir, timestamping=F)
+    curl_download(url=url, destdir=raw.dir, timestamping=F)
   }
   
   return(normalizePath(paste(raw.dir,ID,".dly",sep='')))
@@ -119,7 +120,7 @@ downloadGHCNDailyStation <- function(ID, raw.dir, force.redo=F){
 
 #' Download and extract the daily data for a GHCN weather station.
 #'
-#' \code{getGHCNDailyStation} returns a named list of \code{\link{data.frame}s}, one for
+#' \code{get_ghcn_daily_station} returns a named list of \code{\link{data.frame}s}, one for
 #' each \code{elements}. If \code{elements} is undefined, it returns all available weather
 #' tables for the station
 #' 
@@ -130,9 +131,9 @@ downloadGHCNDailyStation <- function(ID, raw.dir, force.redo=F){
 #' @param standardize Select only common year/month/day? Defaults to FALSE.
 #' @param force.redo If this weather station has been downloaded before, should it be updated? Defaults to FALSE.
 #' @return A named list of \code{\link{data.frame}s}, one for each \code{elements}.
-getGHCNDailyStation <- function(ID, elements=NULL, raw.dir, standardize=F, force.redo=F){
+get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, force.redo=F){
   
-  file <- downloadGHCNDailyStation(ID=ID, raw.dir=paste(raw.dir,"/DAILY/",sep=''), force.redo=force.redo)
+  file <- download_ghcn_daily_station(ID=ID, raw.dir=paste(raw.dir,"/DAILY/",sep=''), force.redo=force.redo)
   
   daily <- utils::read.fwf(file,c(11,4,2,4,rep(c(5,1,1,1),31)), stringsAsFactors=F)
   names(daily)[1:4] <- c("STATION","YEAR","MONTH","ELEMENT")
@@ -174,7 +175,7 @@ getGHCNDailyStation <- function(ID, elements=NULL, raw.dir, standardize=F, force
 
 #' Download and crop the inventory of GHCN stations.
 #'
-#' \code{getGHCNInventory} returns a \code{SpatialPolygonsDataFrame} of the GHCN stations within
+#' \code{get_ghcn_inventory} returns a \code{SpatialPolygonsDataFrame} of the GHCN stations within
 #' the specified \code{template}. If template is not provided, returns the entire GHCN inventory.
 #' 
 #' Stations with multiple elements will have multiple points. This allows for easy mapping of stations
@@ -188,16 +189,16 @@ getGHCNDailyStation <- function(ID, elements=NULL, raw.dir, standardize=F, force
 #' The directory will be created if missing.
 #' @return A \code{SpatialPolygonsDataFrame} of the GHCN stations within
 #' the specified \code{template}
-getGHCNInventory <- function(template=NULL, elements=NULL, raw.dir){
+get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
   if(!is.null(template) & (!is(template,"SpatialPolygonsDataFrame") & !is(template,"SpatialPolygons"))){
-    template <- polygonFromExtent(template)
+    template <- polygon_from_extent(template)
   }
   
   template <- as(template,"SpatialPolygons")
   
   url <- "ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt"
   destdir <- raw.dir
-  curlDownload(url=url, destdir=destdir)
+  curl_download(url=url, destdir=destdir)
   
   station.inventory <- utils::read.fwf(paste(raw.dir,"ghcnd-inventory.txt",sep=''),c(11,1,8,1,9,1,4,1,4,1,4), stringsAsFactors=F)[,seq(1,11,2)]
   names(station.inventory) <- c("ID","LATITUDE","LONGITUDE","ELEMENT","YEAR_START","YEAR_END")

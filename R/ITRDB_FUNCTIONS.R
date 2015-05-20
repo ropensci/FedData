@@ -1,6 +1,6 @@
 #' Download the latest version of the ITRDB, and extract given parameters.
 #'
-#' \code{getITRDB} returns a named list of length 3: 
+#' \code{get_itrdb} returns a named list of length 3: 
 #' \enumerate{
 #' \item "metadata": A data.table or \code{SpatialPointsDataFrame} (if \code{makeSpatial==TRUE}) of the locations 
 #' and names of extracted ITRDB chrononlogies,
@@ -46,7 +46,7 @@
 #' The directory will be created if missing. Defaults to "./EXTRACTIONS/ITRDB/".
 #' @param force.redo If an extraction already exists, should a new one be created? Defaults to FALSE.
 #' @return A named list containing the "metadata", "widths", and "depths" data. 
-getITRDB <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=NULL, species=NULL, measurement.type=NULL, chronology.type=NULL, makeSpatial=F, raw.dir="./RAW/ITRDB/", extraction.dir="./EXTRACTIONS/ITRDB/", force.redo=FALSE){  
+get_itrdb <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=NULL, species=NULL, measurement.type=NULL, chronology.type=NULL, makeSpatial=F, raw.dir="./RAW/ITRDB/", extraction.dir="./EXTRACTIONS/ITRDB/", force.redo=FALSE){  
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(ifelse(is.null(label),extraction.dir,paste(extraction.dir,'/',label,'/',sep='')), showWarnings = FALSE, recursive = TRUE)
   
@@ -55,7 +55,7 @@ getITRDB <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=NU
     return(out)
   }
   
-  data <- downloadITRDB(raw.dir=raw.dir,force.redo=force.redo)
+  data <- download_itrdb(raw.dir=raw.dir,force.redo=force.redo)
   
   ## Nulling out to appease R CMD CHECK
   LAT <- LON <- START <- END <- SPECIES <- MEASUREMENT_TYPE <- CHRONOLOGY_TYPE <- NULL
@@ -79,7 +79,7 @@ getITRDB <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=NU
   if(!is.null(template)){
     data <- data[LAT >= -90 & LAT <= 90 & LON >= -180 & LON <= 180]
     sp.data <- sp::SpatialPointsDataFrame(as.matrix(data[,c("LON","LAT"),with=F]),data=data[,"SERIES", with=F, drop=F], proj4string=sp::CRS("+proj=longlat +datum=WGS84"))
-    data <- data[!is.na((sp.data %over% sp::spTransform(template,sp::CRS(raster::projection(sp.data))))[,1])]
+    data <- data[!is.na((sp.data %over% sp::spTransform(template,sp::CRS(raster::projection(sp.data)))))]
     rm(sp.data)
     if(dim(data)[[1]]==0) stop("No ITRDB chronologies within template polygon.")
   }
@@ -133,7 +133,7 @@ getITRDB <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=NU
 #' The directory will be created if missing. Defaults to "./RAW/ITRDB/".
 #' @param force.redo If a download already exists, should a new one be created? Defaults to FALSE.
 #' @return A data.table containing all of the ITRDB data. 
-downloadITRDB <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
+download_itrdb <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   
   url <- 'ftp://ftp.ncdc.noaa.gov/pub/data/paleo/treering/chronologies/'
@@ -142,7 +142,7 @@ downloadITRDB <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
   filenames <- filenames[grep("*.zip",filenames)]
   
   for(file in filenames){
-    curlDownload(url=file,destdir=raw.dir)
+    curl_download(url=file,destdir=raw.dir)
   }
   
   ## A vector of the files in the output.dir
@@ -151,7 +151,7 @@ downloadITRDB <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
   version <- max(as.numeric(gsub("[^0-9]", "",zips)))
   zips <- zips[grepl(version,zips)]
   
-  cat("Extracting chronology data from ITRDB version",version,"dated",as.character(as.Date(base::file.info(zips[[1]])$mtime)))
+  message("Extracting chronology data from ITRDB version ",version," dated ",as.character(as.Date(base::file.info(zips[[1]])$mtime)))
   
   if(!force.redo && 
        file.exists(paste(raw.dir,"ITRDB",version,".Rds",sep=''))){
@@ -167,18 +167,18 @@ downloadITRDB <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
       crns <- list.files(tmpdir, full.names=T)
       crns <- crns[grepl("\\.crn",crns)]
       
-      cat("\nExtracting chronology data from",length(crns),"files in",file)
+      message("Extracting chronology data from ",length(crns)," files in ",file)
       
       records <- lapply(crns,function(this.crn){
-        tryCatch(suppressWarnings(read.crn(this.crn)),error=function(e){return(NULL)})
+        tryCatch(suppressWarnings(read_crn(this.crn)),error=function(e){return(NULL)})
       })
       
       unlink(tmpdir, recursive = TRUE)
       
       if(sum(sapply(records, is.null))>0){
-        cat("\n\n",sum(sapply(records, is.null)),"files couldn't be extracted:")
+        message(sum(sapply(records, is.null))," files couldn't be extracted:")
         for(file in basename(crns)[sapply(records, is.null)])
-          cat("\n",file)
+          message(file)
       }
       
       records <- unlist(records,recursive=F)
@@ -221,11 +221,11 @@ downloadITRDB <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
 #' for the Schweingruber-type Tucson format. Chronologies that are unable to be read
 #' are reported to the user. This function automatically recognizes Schweingruber-type files.
 #' 
-#' This wraps two other functions: \code{\link{read.crn.metadata}} \code{\link{read.crn.data}}.
+#' This wraps two other functions: \code{\link{read_crn_metadata}} \code{\link{read_crn_data}}.
 #' 
 #' @param file A character string path pointing to a \code{*.crn} file to be read.
 #' @return A list containing the metadata and chronology.
-read.crn <- function(file){
+read_crn <- function(file){
   id <- toupper(gsub(".crn","",basename(file)))
   
   all.data <- scan(file,what='character', multi.line=F, fill=T, sep="\n", quiet=T)
@@ -236,15 +236,15 @@ read.crn <- function(file){
   writeLines(all.data,con)
   close(con)
   
-  tails <- substrRight(all.data,3)
+  tails <- substr_right(all.data,3)
   if(any(tails=="RAW")){
     SCHWEINGRUBER <- T
   }else{
     SCHWEINGRUBER <- F
   }
   
-  meta <- read.crn.metadata(file,SCHWEINGRUBER)
-  data <- read.crn.data(file,SCHWEINGRUBER)
+  meta <- read_crn_metadata(file,SCHWEINGRUBER)
+  data <- read_crn_data(file,SCHWEINGRUBER)
   
   if(!SCHWEINGRUBER){
     year.range <- range(as.numeric(rownames(data)))
@@ -303,7 +303,7 @@ read.crn <- function(file){
 #' This function includes improvements to the \code{\link{read.crn}} function from the 
 #' \pkg{dplR} library. The principle changes are better parsing of metadata, and support
 #' for the Schweingruber-type Tucson format. Chronologies that are unable to be read
-#' are reported to the user. The user (or \code{\link{read.crn}}) must tell the function whether
+#' are reported to the user. The user (or \code{\link{read_crn}}) must tell the function whether
 #' the file is a Schweingruber-type chronology.
 #' 
 #' Location information is converted to decimal degrees.
@@ -311,7 +311,7 @@ read.crn <- function(file){
 #' @param file A character string path pointing to a \code{*.crn} file to be read.
 #' @param SCHWEINGRUBER Is the file in the Schweingruber-type Tucson format?
 #' @return A data.frame containing the metadata.
-read.crn.metadata <- function(file,SCHWEINGRUBER){
+read_crn_metadata <- function(file,SCHWEINGRUBER){
   id <- toupper(gsub("\\.crn","",basename(file)))
   id <- gsub("_CRNS","",id)
   typeID <- regmatches(id,regexec("[0-9]+(.*)", id))[[1]][2]
@@ -486,7 +486,7 @@ read.crn.metadata <- function(file,SCHWEINGRUBER){
 #' @param file A character string path pointing to a \code{*.crn} file to be read.
 #' @param SCHWEINGRUBER Is the file in the Schweingruber-type Tucson format?
 #' @return A data.frame containing the data, or if \code{SCHWEINGRUBER==T}, a list containing four types of data.
-read.crn.data <- function(file,SCHWEINGRUBER){  
+read_crn_data <- function(file,SCHWEINGRUBER){  
   if(!SCHWEINGRUBER){
     years <- as.character(read.fwf(file,c(6,3,13,18,6,5,6,9,6,5),skip=1,n=1,colClasses = "character", strip.white=T, stringsAsFactors=F))[9:10]
     
@@ -536,14 +536,14 @@ read.crn.data <- function(file,SCHWEINGRUBER){
     ## Unintuitively, the connection object seems to have been destroyed
     ## by the previous read.fwf.  We need to create a new one.
     con <- file(file, encoding = encoding)
+    
     ## If columns 3 in chron.stats is an integer then there is no
     ## statistics line
     if((!is.integer(chron.stats[[3]]) | (chron.stats[[3]]==0)) & !grepl(" ",chron.stats[[3]])){
       names(chron.stats) <-
         c("SiteID", "nYears", "AC[1]", "StdDev", "MeanSens",
           "MeanRWI", "IndicesSum", "IndicesSS", "MaxSeries")
-      #       cat(gettext("Embedded chronology statistics\n", domain="R-dplR"))
-      #       print(chron.stats)
+
       ## Really read file
       dat <- read.fwf(con, c(yearStart, digits.year, rep(c(4, 3), 10)),
                       skip=skip.lines, n=nlines-skip.lines-1,
@@ -608,7 +608,7 @@ read.crn.data <- function(file,SCHWEINGRUBER){
     
   }else{
     raw.data <- scan(file,what='character', multi.line=F, fill=T, sep="\n", strip.white=T, quiet=T)
-    tails <- toupper(substrRight(raw.data,3))
+    tails <- toupper(substr_right(raw.data,3))
     raw.data <- split(raw.data,tails)
     
     raw.data <- lapply(raw.data,function(x){x[-c(1:3)]})

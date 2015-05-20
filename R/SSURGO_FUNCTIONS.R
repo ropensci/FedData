@@ -3,7 +3,7 @@
 #' This is an efficient method for spatially merging several different soil survey areas
 #' as well as merging their tabular data.
 #' 
-#' \code{getSSURGO} returns a named list of length 2:
+#' \code{get_ssurgo} returns a named list of length 2:
 #' \enumerate{
 #' \item "spatial": A \code{SpatialPolygonsDataFrame} of soil mapunits 
 #' in the template, and 
@@ -11,20 +11,16 @@
 #' }
 #' 
 #' @param template A Raster* or Spatial* object to serve 
-#' as a template for cropping.
+#' as a template for cropping; optionally, a vector of area names [e.g., c("IN087","IN088")] may be provided.
 #' @param label A character string naming the study area.
-#' @param areas Optionally, a vector of area names [e.g., c("IN087","IN088")] may be provided.
-#' If a template is also provided, it will take precedence!
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing. Defaults to "./RAW/SSURGO/".
 #' @param extraction.dir A character string indicating where the extracted and cropped SSURGO shapefiles should be put.
 #' The directory will be created if missing. Defaults to "./EXTRACTIONS/SSURGO/".
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created? Defaults to FALSE.
 #' @return A named list containing the "spatial" and "tabular" data.
-getSSURGO <- function(template=NULL, label, areas=NULL, raw.dir="./RAW/SSURGO/", extraction.dir="./EXTRACTIONS/SSURGO/", force.redo=FALSE){  
-  if(is.null(template) & is.null(areas)){
-    stop("Either template or areas vector must be provided.")
-  }
+get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir="./EXTRACTIONS/SSURGO/", force.redo=FALSE){  
+
   vectors.dir <- paste(extraction.dir,"/",label,"/spatial",sep='')
   tables.dir <- paste(extraction.dir,"/",label,"/tabular",sep='')
   
@@ -48,18 +44,7 @@ getSSURGO <- function(template=NULL, label, areas=NULL, raw.dir="./RAW/SSURGO/",
     return(list(spatial=SSURGOMapunits,tabular=tables))
   }
   
-  if(!is.null(template)){
-    
-    if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){
-      template <- SPDFfromPolygon(sp::spTransform(polygonFromExtent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
-    }
-    
-    # Get shapefile of SSURGO study areas in the template
-    SSURGOAreas <- getSSURGOInventory(template=template, raw.dir=raw.dir)
-    # Remove SSURGO study areas that are not available
-    SSURGOAreas <- SSURGOAreas[SSURGOAreas@data$iscomplete != 0,]
-    
-  }else if(!is.null(areas)){
+  if(class(template)=="character"){
     if (!requireNamespace(package="SSOAP", quietly=T)){
       install.packages("SSOAP", repos = "http://www.omegahat.org/R", type="source")
     }
@@ -71,24 +56,36 @@ getSSURGO <- function(template=NULL, label, areas=NULL, raw.dir="./RAW/SSURGO/",
     }
     q <- paste0("SELECT areasymbol, saverest FROM sacatalog WHERE areasymbol IN (",paste(paste0("'",areas,"'"),collapse=','),");")
     SSURGOAreas <- soilDB::SDA_query(q)
+    
+  }else{
+    
+    if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){
+      template <- spdf_from_polygon(sp::spTransform(polygon_from_extent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
+    }
+    
+    # Get shapefile of SSURGO study areas in the template
+    SSURGOAreas <- get_ssurgo_inventory(template=template, raw.dir=raw.dir)
+    # Remove SSURGO study areas that are not available
+    SSURGOAreas <- SSURGOAreas[SSURGOAreas@data$iscomplete != 0,]
+    
   }
   
   # Get data for each study area
   SSURGOData <- lapply(1:nrow(SSURGOAreas), function(i){
-    cat("\n(Down)Loading SSURGO data for survey area",i,"of",nrow(SSURGOAreas),":",as.character(SSURGOAreas$areasymbol[i]))
-    getSSURGOStudyArea(template=template, area=as.character(SSURGOAreas$areasymbol[i]), date=as.Date(SSURGOAreas$saverest[i],format="%m/%d/%Y"), raw.dir=raw.dir)
+    message("(Down)Loading SSURGO data for survey area ",i," of ",nrow(SSURGOAreas),": ",as.character(SSURGOAreas$areasymbol[i]))
+    get_ssurgo_study_area(template=template, area=as.character(SSURGOAreas$areasymbol[i]), date=as.Date(SSURGOAreas$saverest[i],format="%m/%d/%Y"), raw.dir=raw.dir)
   })
   
   # Combine mapunits
   SSURGOPolys <- lapply(SSURGOData,"[[","spatial")
   
   # Merging all SSURGO Map Unit polygons
-  cat("\nMerging all SSURGO Map Unit polygons")
+  message("Merging all SSURGO Map Unit polygons")
   SSURGOPolys <- do.call("rbind", SSURGOPolys)
   
   # Crop to area of template
   if(!is.null(template)){
-    cat("\nCropping all SSURGO Map Unit polygons to area of template")
+    message("Cropping all SSURGO Map Unit polygons to area of template")
     SSURGOPolys <- raster::crop(SSURGOPolys,sp::spTransform(template,sp::CRS(raster::projection(SSURGOPolys))))
   }
 
@@ -97,7 +94,7 @@ getSSURGO <- function(template=NULL, label, areas=NULL, raw.dir="./RAW/SSURGO/",
   SSURGOTables <- lapply(SSURGOData,"[[","tabular")
   
   # Merging all SSURGO data tables
-  cat("\nMerging all SSURGO data tables")
+  message("Merging all SSURGO data tables")
   tableNames <- unique(unlist(sapply(SSURGOTables,names)))
   tableNames <- tableNames[order(tableNames)]
   
@@ -116,7 +113,7 @@ getSSURGO <- function(template=NULL, label, areas=NULL, raw.dir="./RAW/SSURGO/",
   
   
   # Extract only the mapunits in the study area, and iterate through the data structure
-  SSURGOTables <- extractSSURGOData(tables=SSURGOTables, mapunits=SSURGOPolys)
+  SSURGOTables <- extract_ssurgo_data(tables=SSURGOTables, mapunits=SSURGOPolys)
   
   # Save the mapunit polygons
   suppressWarnings(rgdal::writeOGR(SSURGOPolys,vectors.dir,"SSURGOMapunits","ESRI Shapefile", overwrite_layer=TRUE))
@@ -133,19 +130,19 @@ getSSURGO <- function(template=NULL, label, areas=NULL, raw.dir="./RAW/SSURGO/",
 #'
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' @return A character string representing the full local path of the SSURGO study areas zipped directory.
-downloadSSURGOInventory <- function(raw.dir){
+download_ssurgo_inventory <- function(raw.dir){
   # Import the shapefile of SSURGO study areas.
   # This is available at
   # http://soildatamart.sc.egov.usda.gov/download/StatusMaps/soilsa_a_SSURGO.zip
   url <- 'http://websoilsurvey.sc.egov.usda.gov/DataAvailability/SoilDataAvailabilityShapefile.zip'
   destdir <- raw.dir
-  curlDownload(url=url, destdir=destdir)
+  curl_download(url=url, destdir=destdir)
   return(normalizePath(paste(destdir,'SoilDataAvailabilityShapefile.zip',sep='')))
 }
 
 #' Download and crop a shapefile of the SSURGO study areas.
 #'
-#' \code{getSSURGOInventory} returns a \code{SpatialPolygonsDataFrame} of the SSURGO study areas within
+#' \code{get_ssurgo_inventory} returns a \code{SpatialPolygonsDataFrame} of the SSURGO study areas within
 #' the specified \code{template}. If template is not provided, returns the entire SSURGO inventory of study areas.
 #' 
 #' @param template A Raster* or Spatial* object to serve 
@@ -154,13 +151,13 @@ downloadSSURGOInventory <- function(raw.dir){
 #' The directory will be created if missing.
 #' @return A \code{SpatialPolygonsDataFrame} of the SSURGO study areas within
 #' the specified \code{template}.
-getSSURGOInventory <- function(template=NULL, raw.dir){
+get_ssurgo_inventory <- function(template=NULL, raw.dir){
   # If there is a template, only download the areas in the template
   # Thanks to Dylan Beaudette for this method!
   if(!is.null(template)){
     
     if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){
-      template <- sp::spTransform(polygonFromExtent(template),sp::CRS("+proj=longlat +datum=WGS84"))
+      template <- sp::spTransform(polygon_from_extent(template),sp::CRS("+proj=longlat +datum=WGS84"))
     }else{
       template <- sp::spTransform(template,sp::CRS("+proj=longlat +datum=WGS84"))
     }
@@ -198,12 +195,12 @@ getSSURGOInventory <- function(template=NULL, raw.dir){
   
   # Check to see if all survey areas are available
   if(0 %in% SSURGOAreas@data$iscomplete){
-    cat("WARNING! Some of the soil surveys in your area are unavailable.\n")
-    cat("Soils and productivity data will have holes.\n")
-    cat("Missing areas:\n")
-    cat(as.vector(SSURGOAreas@data[SSURGOAreas@data$iscomplete==0,]$areasymbol))
-    cat("\n\n")
-    cat("Continuing with processing available soils.\n\n")
+    warning("Some of the soil surveys in your area are unavailable.\n
+            Soils and productivity data will have holes.\n
+            Missing areas:\n",
+            as.vector(SSURGOAreas@data[SSURGOAreas@data$iscomplete==0,]$areasymbol),
+            "\n\n
+            Continuing with processing available soils.\n\n")
   }
   
   return(SSURGOAreas)
@@ -211,27 +208,27 @@ getSSURGOInventory <- function(template=NULL, raw.dir){
 
 #' Download a zipped directory containing the spatial and tabular data for a SSURGO study area.
 #'
-#' \code{downloadSSURGOStudyArea} first tries to download data including a state-specific Access
+#' \code{download_ssurgo_study_area} first tries to download data including a state-specific Access
 #' template, then the general US template.
 #'
 #' @param area A character string indicating the SSURGO study area to be downloaded.
 #' @param date A character string indicating the date of the most recent update to the SSURGO 
-#' area for these data. This information may be gleaned from the SSURGO Inventory (\code{\link{getSSURGOInventory}}).
+#' area for these data. This information may be gleaned from the SSURGO Inventory (\code{\link{get_ssurgo_inventory}}).
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' @return A character string representing the full local path of the SSURGO study areas zipped directory.
-downloadSSURGOStudyArea <- function(area, date, raw.dir){
+download_ssurgo_study_area <- function(area, date, raw.dir){
   
   # Try to download with the state database, otherwise grab the US
   url <- paste("http://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/wss_SSA_",area,"_[",date,"].zip",sep='')
   destdir <- raw.dir
-  curlDownload(url=url, destdir=destdir, nc=T)
+  curl_download(url=url, destdir=destdir, nc=T)
   
   return(normalizePath(paste(destdir,"wss_SSA_",area,"_[",date,"].zip",sep='')))
 }
 
 #' Download and crop the spatial and tabular data for a SSURGO study area.
 #'
-#' \code{getSSURGOStudyArea} returns a named list of length 2:
+#' \code{get_ssurgo_study_area} returns a named list of length 2:
 #' \enumerate{
 #' \item "spatial": A \code{SpatialPolygonsDataFrame} of soil mapunits 
 #' in the template, and 
@@ -242,17 +239,17 @@ downloadSSURGOStudyArea <- function(area, date, raw.dir){
 #' as a template for cropping. If missing, whose study area is returned
 #' @param area A character string indicating the SSURGO study area to be downloaded.
 #' @param date A character string indicating the date of the most recent update to the SSURGO 
-#' area for these data. This information may be gleaned from the SSURGO Inventory (\code{\link{getSSURGOInventory}}).
+#' area for these data. This information may be gleaned from the SSURGO Inventory (\code{\link{get_ssurgo_inventory}}).
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing.
 #' @return A \code{SpatialPolygonsDataFrame} of the SSURGO study areas within
 #' the specified \code{template}.
-getSSURGOStudyArea <- function(template=NULL, area, date, raw.dir){
+get_ssurgo_study_area <- function(template=NULL, area, date, raw.dir){
   tmpdir <- tempfile()
   if (!dir.create(tmpdir))
     stop("failed to create my temporary directory")
   
-  file <- downloadSSURGOStudyArea(area=area, date=date, raw.dir=raw.dir)
+  file <- download_ssurgo_study_area(area=area, date=date, raw.dir=raw.dir)
   
   unzip(file,exdir=tmpdir)
   
@@ -262,7 +259,7 @@ getSSURGOStudyArea <- function(template=NULL, area, date, raw.dir){
   # Crop to study area
   if(!is.null(template)){
     if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){
-      template <- SPDFfromPolygon(sp::spTransform(polygonFromExtent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
+      template <- spdf_from_polygon(sp::spTransform(polygon_from_extent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
     }
     
     mapunits <- raster::crop(mapunits,sp::spTransform(template,sp::CRS(raster::projection(mapunits))))    
@@ -299,7 +296,7 @@ getSSURGOStudyArea <- function(template=NULL, area, date, raw.dir){
   
   names(tables) <- names(tablesHeads)
   
-  tables <- extractSSURGOData(tables=tables, mapunits=mapunits)
+  tables <- extract_ssurgo_data(tables=tables, mapunits=mapunits)
   
   unlink(tmpdir, recursive = TRUE)
   
@@ -308,14 +305,14 @@ getSSURGOStudyArea <- function(template=NULL, area, date, raw.dir){
 
 #' Extract data from a SSURGO databse pertaining to a set of mapunits.
 #'
-#' \code{extractSSURGOData} creates a directed graph of the joins in a SSURGO tabular dataset,
+#' \code{extract_ssurgo_data} creates a directed graph of the joins in a SSURGO tabular dataset,
 #' and then iterates through the tables, only retaining data pertinant to a set of mapunits.
 #' 
 #' @param tables A list of SSURGO tabular data.
 #' @param mapunits A \code{SpatialPolygonsDataFrame} of mapunits (likely dropped from SSURGO spatial data)
 #' defining which mapunits to retain.
 #' @return A list of extracted SSURGO tabular data.
-extractSSURGOData <- function(tables,mapunits){
+extract_ssurgo_data <- function(tables,mapunits){
   mapunits <- as.character(unique(mapunits$MUKEY))
   
   mapping <- tables[['mdstatrshipdet']]
