@@ -9,7 +9,8 @@
 #' }
 #' 
 #' @param template A Raster* or Spatial* object to serve 
-#' as a template for selecting chronologies.
+#' as a template for selecting chronologies. If missing, 
+#' all available global chronologies are returned.
 #' @param label A character string naming the study area.
 #' @param recon.years A numeric vector of years over which reconstructions are needed; 
 #' if missing, the union of all years in the available chronologies are given.
@@ -48,7 +49,16 @@
 #' @return A named list containing the "metadata", "widths", and "depths" data. 
 get_itrdb <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=NULL, species=NULL, measurement.type=NULL, chronology.type=NULL, makeSpatial=F, raw.dir="./RAW/ITRDB/", extraction.dir="./EXTRACTIONS/ITRDB/", force.redo=FALSE){  
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
-  dir.create(ifelse(is.null(label),extraction.dir,paste(extraction.dir,'/',label,'/',sep='')), showWarnings = FALSE, recursive = TRUE)
+  
+  if(is.null(template) & is.null(label)){
+    label <- "allChronologies"
+  }
+  
+  if(!is.null(template) & is.null(label)){
+    stop("Template provided but no label given.")
+  }
+  
+  dir.create(paste(extraction.dir,'/',label,'/',sep=''), showWarnings = FALSE, recursive = TRUE)
   
   if(!force.redo && !is.null(label) && file.exists(paste(extraction.dir,'/',label,'/',label,'.Rds',sep=''))){
     out <- readRDS(paste(extraction.dir,'/',label,'/',label,'.Rds',sep=''))

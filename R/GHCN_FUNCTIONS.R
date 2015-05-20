@@ -24,8 +24,12 @@
 get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./RAW/GHCN/", extraction.dir="./EXTRACTIONS/GHCN/", standardize=F, force.redo=F){
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   
-  if(is.null(template)){
+  if(is.null(template) & is.null(label)){
     label <- "allStations"
+  }
+  
+  if(!is.null(template) & is.null(label)){
+    stop("Template provided but no label given.")
   }
   
   vectors.dir <- paste(extraction.dir,"/",label,"/spatial",sep='')
