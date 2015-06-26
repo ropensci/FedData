@@ -126,14 +126,13 @@ get_ned_tile <- function(template=NULL, res="1", tileNorthing, tileWesting, raw.
   dirs <- list.dirs(tmpdir,full.names = TRUE,recursive=F)
   dirs <- dirs[grepl("grdn",dirs)]
   
-  tile <- raster::raster(rgdal::readGDAL(dirs, silent=T))
-  
-  unlink(tmpdir, recursive = TRUE)
+  tile <- raster::raster(dirs)
   
   if(!is.null(template)){
-#     tryCatch(tile <- raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))), snap="out"), error=function(e){tile <- raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))))})
-    tile <- raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))), snap="out")
+    tile <- raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))), snap="out")*1 # Multiply by 1 to force into memory
   }
+  
+  unlink(tmpdir, recursive = TRUE)
   
   return(tile)
 }
