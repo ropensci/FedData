@@ -21,10 +21,8 @@ get_ned <- function(template, label, res="1", raw.dir="./RAW/NED/", extraction.d
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(rasters.dir, showWarnings = FALSE, recursive = TRUE)
   
-  # Convert polygon to decimal degrees for data request
-  extent.latlon <- raster::extent(raster::projectExtent(template, sp::CRS("+proj=longlat +ellps=WGS84")))
-  
-  template <- polygon_from_extent(extent.latlon,"+proj=longlat +ellps=WGS84")
+  template <- sp::spTransform(polygon_from_extent(template),sp::CRS("+proj=longlat +ellps=WGS84"))
+  extent.latlon <- extent(template)
   
   if(file.exists(paste(rasters.dir,"/NED_",res,".tif", sep='')) & !force.redo){
     extracted.DEM <- raster::raster(paste(rasters.dir,"/NED_",res,".tif", sep=''))
