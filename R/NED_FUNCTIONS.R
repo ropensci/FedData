@@ -131,7 +131,8 @@ get_ned_tile <- function(template=NULL, res="1", tileNorthing, tileWesting, raw.
   unlink(tmpdir, recursive = TRUE)
   
   if(!is.null(template)){
-    tryCatch(tile <- raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))), snap="out"), error=function(e){tile <- raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))))})
+#     tryCatch(tile <- raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))), snap="out"), error=function(e){tile <- raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))))})
+    tile <- raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))), snap="out")
   }
   
   return(tile)
