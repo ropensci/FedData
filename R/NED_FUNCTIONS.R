@@ -129,10 +129,12 @@ get_ned_tile <- function(template=NULL, res="1", tileNorthing, tileWesting, raw.
   tile <- raster::raster(dirs)
   
   if(!is.null(template)){
-    tile <- raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))), snap="out")*1 # Multiply by 1 to force into memory
+    tile <- tryCatch(raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))), snap="out"), error=function(e){raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))))})
   }
   
-  unlink(tmpdir, recursive = TRUE)
+  tile <- tile*1
   
+  unlink(tmpdir, recursive = TRUE)
+   
   return(tile)
 }
