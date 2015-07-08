@@ -107,7 +107,7 @@ get_huc4 <- function(template=NULL, raw.dir){
   
   huc4File <- download_huc4(raw.dir)
   
-  unzip(huc4File, exdir=tmpdir)
+  utils::unzip(huc4File, exdir=tmpdir)
   
   HUC4 <- rgdal::readOGR(tmpdir, layer="huc_04", verbose=FALSE)
   
@@ -175,7 +175,7 @@ get_nhd_subregion <- function(template=NULL, area, res, raw.dir){
   
   file <- download_nhd_subregion(area=area, res=res, raw.dir=raw.dir)
   
-  unzip(file,exdir=tmpdir)
+  utils::unzip(file,exdir=tmpdir)
   
   # Get the path to the geodatabase
   dsn <- list.files(tmpdir, full.names=T)

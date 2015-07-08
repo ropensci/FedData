@@ -46,7 +46,7 @@ get_ned <- function(template, label, res="1", raw.dir="./RAW/NED/", extraction.d
   # Mosaic all tiles
   if(length(tiles)>1){
     message('Mosaicking NED tiles.')
-    flush.console()
+    utils::flush.console()
     
     tiles$fun <- mean
     tiles <- do.call(raster::mosaic, tiles)
@@ -119,7 +119,7 @@ get_ned_tile <- function(template=NULL, res="1", tileNorthing, tileWesting, raw.
   
   file <- download_ned_tile(res=res, tileNorthing=tileNorthing, tileWesting=tileWesting, raw.dir=raw.dir)
   
-  unzip(file,exdir=tmpdir)
+  utils::unzip(file,exdir=tmpdir)
   
   dirs <- list.dirs(tmpdir,full.names = TRUE,recursive=F)
   dirs <- dirs[grepl("grdn",dirs)]

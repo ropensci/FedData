@@ -194,11 +194,11 @@ get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, fo
 #' @return A \code{SpatialPolygonsDataFrame} of the GHCN stations within
 #' the specified \code{template}
 get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
-  if(!is.null(template) & (!is(template,"SpatialPolygonsDataFrame") & !is(template,"SpatialPolygons"))){
+  if(!is.null(template) & (!(methods::is(template,"SpatialPolygonsDataFrame")) & !(methods::is(template,"SpatialPolygons")))){
     template <- polygon_from_extent(template)
   }
   
-  template <- as(template,"SpatialPolygons")
+  template <- methods::as(template,"SpatialPolygons")
   
   url <- "ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt"
   destdir <- raw.dir

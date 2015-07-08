@@ -37,7 +37,7 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
     files <- files[order(files)]
     
     tables <- lapply(files,function(file){
-      read.csv(paste(normalizePath(tables.dir),'/',file,sep=''), stringsAsFactors=F)
+      utils::read.csv(paste(normalizePath(tables.dir),'/',file,sep=''), stringsAsFactors=F)
     })
     names(tables) <- files
     
@@ -46,10 +46,10 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
   
   if(class(template)=="character"){
     if (!requireNamespace(package="SSOAP", quietly=T)){
-      install.packages("SSOAP", repos = "http://www.omegahat.org/R", type="source")
+      utils::install.packages("SSOAP", repos = "http://www.omegahat.org/R", type="source")
     }
     if (!requireNamespace(package="XMLSchema", quietly=T)){
-      install.packages("XMLSchema", repos = "http://www.omegahat.org/R", type="source")
+      utils::install.packages("XMLSchema", repos = "http://www.omegahat.org/R", type="source")
     }
     if(!requireNamespace(package="SSOAP", quietly=T) | !requireNamespace(package="XMLSchema", quietly=T)){
       stop("'SSOAP' and 'XMLSchema' must be installed in order to load SSURGO by area name.", call. = FALSE)
@@ -120,7 +120,7 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
   
   # Save the each data table as a csv
   junk <- lapply(names(SSURGOTables), function(tab){
-    write.csv(SSURGOTables[[tab]],file=paste(tables.dir,'/',tab,'.csv',sep=''),row.names=F)
+    utils::write.csv(SSURGOTables[[tab]],file=paste(tables.dir,'/',tab,'.csv',sep=''),row.names=F)
   })
   
   return(list(spatial=SSURGOPolys,tabular=SSURGOTables))
@@ -186,7 +186,7 @@ get_ssurgo_inventory <- function(template=NULL, raw.dir){
     
     file <- download_ssurgo_inventory(raw.dir=raw.dir)
     
-    unzip(file,exdir=tmpdir)
+    utils::unzip(file,exdir=tmpdir)
     
     SSURGOAreas <- rgdal::readOGR(normalizePath(tmpdir), layer="soilsa_a_nrcs", verbose=FALSE)
     
@@ -251,7 +251,7 @@ get_ssurgo_study_area <- function(template=NULL, area, date, raw.dir){
   
   file <- download_ssurgo_study_area(area=area, date=date, raw.dir=raw.dir)
   
-  unzip(file,exdir=tmpdir)
+  utils::unzip(file,exdir=tmpdir)
   
   # Get spatial data
   mapunits <- rgdal::readOGR(paste(tmpdir,'/',area,'/spatial',sep=''), layer=paste("soilmu_a_",tolower(area),sep=''), verbose=F)
@@ -271,7 +271,7 @@ get_ssurgo_study_area <- function(template=NULL, area, date, raw.dir){
   # Read in all tables
   files <- list.files(paste(tmpdir,'/',area,'/tabular/',sep=''))
   tablesData <- lapply(files, function(file){
-    tryCatch(return(read.delim(paste(tmpdir,'/',area,'/tabular/',file,sep=''), header=F,sep="|", stringsAsFactors=F)), error = function(e){return(NULL)})
+    tryCatch(return(utils::read.delim(paste(tmpdir,'/',area,'/tabular/',file,sep=''), header=F,sep="|", stringsAsFactors=F)), error = function(e){return(NULL)})
   })
   names(tablesData) <- files
   tablesData <- tablesData[!sapply(tablesData,is.null)]

@@ -14,7 +14,7 @@ pkg_test <- function(x){
     if(grepl("/",x)){
       suppressWarnings(devtools::install_github(x))
     }else{
-      install.packages(x,dependencies=TRUE, repos="http://cran.rstudio.com")
+      utils::install.packages(x,dependencies=TRUE, repos="http://cran.rstudio.com")
     }
   }
   if(!suppressWarnings(require(pkgName,character.only = TRUE))) stop("Package not found")
@@ -54,7 +54,7 @@ polygon_from_extent <- function(x, proj4string=NULL){
 #' @param x An SpatialPolygons object.
 #' @return A SpatialPolygonsDataFrame object.
 spdf_from_polygon <- function(x){
-  IDs <- sapply(slot(x, "polygons"), function(x) slot(x, "ID"))
+  IDs <- sapply((methods::slot(x, "polygons")), function(x){methods::slot(x, "ID")})
   df <- data.frame(rep(0, length(IDs)), row.names=IDs)
   x <- sp::SpatialPolygonsDataFrame(x,df)
   return(x)

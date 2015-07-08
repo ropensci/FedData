@@ -172,7 +172,7 @@ download_itrdb <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
       tmpdir <- tempfile()
       if (!dir.create(tmpdir)) stop("failed to create my temporary directory")
       
-      unzip(file,exdir=tmpdir)
+      utils::unzip(file,exdir=tmpdir)
       
       crns <- list.files(tmpdir, full.names=T)
       crns <- crns[grepl("\\.crn",crns)]
@@ -198,12 +198,12 @@ download_itrdb <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
     
     all.data <- unlist(all.data, recursive=F)
     
+    ## Nulling out to appease R CMD CHECK
+    LAT <- LON <- START <- END <- data <- NULL
+    
     itrdb.metadata <- data.table::rbindlist(lapply(all.data,'[[','meta'))
     itrdb.data <- lapply(all.data,'[[','data')
     itrdb.metadata[,data:=itrdb.data]
-    
-    ## Nulling out to appease R CMD CHECK
-    LAT <- LON <- START <- END <- NULL
     
     # Change latitude and longitude to numeric
     itrdb.metadata[,LAT:=as.numeric(as.character(LAT))]
@@ -381,9 +381,9 @@ read_crn_metadata <- function(file,SCHWEINGRUBER){
   
   if(!SCHWEINGRUBER){
     # Parse the header of the CRN file
-    meta.1 <- as.character(read.fwf(file,c(6,3,52,4), skip=0, n=1, colClasses = "character", strip.white=T, stringsAsFactors=F))
-    meta.2 <- as.character(read.fwf(file,c(6,3,13,18,6,5,6,9,6,5), skip=1,n=1, colClasses = "character", strip.white=T, stringsAsFactors=F))
-    meta.3 <- as.character(read.fwf(file,c(6,3,52,2,12), skip=2, n=1, colClasses = "character", strip.white=T, stringsAsFactors=F))
+    meta.1 <- as.character(utils::read.fwf(file,c(6,3,52,4), skip=0, n=1, colClasses = "character", strip.white=T, stringsAsFactors=F))
+    meta.2 <- as.character(utils::read.fwf(file,c(6,3,13,18,6,5,6,9,6,5), skip=1,n=1, colClasses = "character", strip.white=T, stringsAsFactors=F))
+    meta.3 <- as.character(utils::read.fwf(file,c(6,3,52,2,12), skip=2, n=1, colClasses = "character", strip.white=T, stringsAsFactors=F))
     
     meta <- c(id,meta.1[3:4],type.measurement,type.chronology,meta.2[c(5:7,9:10)],meta.3[3])
     
@@ -498,7 +498,7 @@ read_crn_metadata <- function(file,SCHWEINGRUBER){
 #' @return A data.frame containing the data, or if \code{SCHWEINGRUBER==T}, a list containing four types of data.
 read_crn_data <- function(file,SCHWEINGRUBER){  
   if(!SCHWEINGRUBER){
-    years <- as.character(read.fwf(file,c(6,3,13,18,6,5,6,9,6,5),skip=1,n=1,colClasses = "character", strip.white=T, stringsAsFactors=F))[9:10]
+    years <- as.character(utils::read.fwf(file,c(6,3,13,18,6,5,6,9,6,5),skip=1,n=1,colClasses = "character", strip.white=T, stringsAsFactors=F))[9:10]
     
     if(any(grepl(" ",years))){
       years <- unlist(strsplit(years," "))
@@ -541,7 +541,7 @@ read_crn_data <- function(file,SCHWEINGRUBER){
     ## Do nothing. read.fwf closes (and destroys ?!?) the file connection
     on.exit()
     ## Get chron stats if needed
-    suppressWarnings(chron.stats <- read.fwf(con, c(yearStart, digits.year, 6, 6, 6, 7, 9, 9, 10),
+    suppressWarnings(chron.stats <- utils::read.fwf(con, c(yearStart, digits.year, 6, 6, 6, 7, 9, 9, 10),
                                              skip=nlines-1, strip.white=TRUE, colClasses="character", stringsAsFactors=F))
     ## Unintuitively, the connection object seems to have been destroyed
     ## by the previous read.fwf.  We need to create a new one.
@@ -555,12 +555,12 @@ read_crn_data <- function(file,SCHWEINGRUBER){
           "MeanRWI", "IndicesSum", "IndicesSS", "MaxSeries")
 
       ## Really read file
-      dat <- read.fwf(con, c(yearStart, digits.year, rep(c(4, 3), 10)),
+      dat <- utils::read.fwf(con, c(yearStart, digits.year, rep(c(4, 3), 10)),
                       skip=skip.lines, n=nlines-skip.lines-1,
                       strip.white=TRUE, colClasses="character", stringsAsFactors=F)
     } else {
       ## Really read file
-      dat <- read.fwf(con, c(yearStart, digits.year, rep(c(4, 3), 10)),
+      dat <- utils::read.fwf(con, c(yearStart, digits.year, rep(c(4, 3), 10)),
                       skip=skip.lines, n=nlines-skip.lines,
                       strip.white=TRUE, colClasses="character", stringsAsFactors=F)
     }
