@@ -17,7 +17,7 @@ A data.table containing all of the ITRDB data.
 }
 \description{
 Downloads and parses the latest zipped (numbered) version of the ITRDB.
-This function includes improvements to the \code{\link{read.crn}} function from the
+This function includes improvements to the \code{\link{read_crn}} function from the
 \pkg{dplR} library. The principle changes are better parsing of metadata, and support
 for the Schweingruber-type Tucson format. Chronologies that are unable to be read
 are reported to the user.

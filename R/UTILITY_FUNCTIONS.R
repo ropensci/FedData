@@ -77,8 +77,6 @@ sequential_duplicated <- function(x, rows=F){
 #' Use RCurl to download a file.
 #'
 #' This function makes it easy to implement timestamping and no-clobber of files.
-#' Unlike \link{wgetDownload}, it doesn't require an external command-line tool to 
-#' be installed.
 #'
 #' If both \code{timestamping} and \code{nc} are TRUE, nc behavior trumps timestamping.
 #'
@@ -99,8 +97,8 @@ curl_download <- function(url, destdir=getwd(), timestamping=T, nc=F, verbose=F,
   if(timestamping & file.exists(destfile)){
     message("Downloading file (if necessary): ",url)
     temp.file <- paste0(tempdir(),"/",basename(url))
-    f <- CFILE(temp.file, "wb")
-    status <- curlPerform(url = url, 
+    f <- RCurl::CFILE(temp.file, "wb")
+    status <- RCurl::curlPerform(url = url, 
                           writedata = f@ref,
                           verbose=verbose,
                           noprogress=!progress,
@@ -109,7 +107,7 @@ curl_download <- function(url, destdir=getwd(), timestamping=T, nc=F, verbose=F,
                           forbid.reuse=T, 
                           timecondition=T, 
                           timevalue=base::file.info(destfile)$mtime)
-    close(f)
+    RCurl::close(f)
     if(file.info(temp.file)$size > 0){
       file.copy(temp.file,destfile, overwrite=T)
     }
@@ -118,15 +116,15 @@ curl_download <- function(url, destdir=getwd(), timestamping=T, nc=F, verbose=F,
   }else{
     message("Downloading file: ",url)
     temp.file <- paste0(tempdir(),"/",basename(url))
-    f <- CFILE(temp.file, "wb")
-    status <- curlPerform(url = url, 
+    f <- RCurl::CFILE(temp.file, "wb")
+    status <- RCurl::curlPerform(url = url, 
                           writedata = f@ref,
                           verbose=verbose,
                           noprogress=!progress,
                           fresh.connect=T, 
                           ftp.use.epsv=F, 
                           forbid.reuse=T)
-    close(f)
+    RCurl::close(f)
     file.copy(temp.file,destfile, overwrite=T)
     
     

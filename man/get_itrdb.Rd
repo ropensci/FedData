@@ -11,7 +11,8 @@ get_itrdb(template = NULL, label = NULL, recon.years = NULL,
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve
-as a template for selecting chronologies.}
+as a template for selecting chronologies. If missing,
+all available global chronologies are returned.}
 
 \item{label}{A character string naming the study area.}
 

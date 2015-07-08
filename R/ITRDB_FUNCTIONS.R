@@ -134,7 +134,7 @@ get_itrdb <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=N
 #' Download the latest version of the ITRDB.
 #' 
 #' Downloads and parses the latest zipped (numbered) version of the ITRDB.
-#' This function includes improvements to the \code{\link{read.crn}} function from the 
+#' This function includes improvements to the \code{\link{read_crn}} function from the 
 #' \pkg{dplR} library. The principle changes are better parsing of metadata, and support
 #' for the Schweingruber-type Tucson format. Chronologies that are unable to be read
 #' are reported to the user.
@@ -226,7 +226,7 @@ download_itrdb <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
 
 #' Read a Tucson-format chronology file.
 #' 
-#' This function includes improvements to the \code{\link{read.crn}} function from the 
+#' This function includes improvements to the \code{read.crn} function from the 
 #' \pkg{dplR} library. The principle changes are better parsing of metadata, and support
 #' for the Schweingruber-type Tucson format. Chronologies that are unable to be read
 #' are reported to the user. This function automatically recognizes Schweingruber-type files.
@@ -310,7 +310,7 @@ read_crn <- function(file){
 
 #' Read metadata from a Tucson-format chronology file.
 #' 
-#' This function includes improvements to the \code{\link{read.crn}} function from the 
+#' This function includes improvements to the \code{\link{read_crn}} function from the 
 #' \pkg{dplR} library. The principle changes are better parsing of metadata, and support
 #' for the Schweingruber-type Tucson format. Chronologies that are unable to be read
 #' are reported to the user. The user (or \code{\link{read_crn}}) must tell the function whether
@@ -487,10 +487,10 @@ read_crn_metadata <- function(file,SCHWEINGRUBER){
 
 #' Read chronology data from a Tucson-format chronology file.
 #' 
-#' This function includes improvements to the \code{\link{read.crn}} function from the 
+#' This function includes improvements to the \code{\link{read_crn}} function from the 
 #' \pkg{dplR} library. The principle changes are better parsing of metadata, and support
 #' for the Schweingruber-type Tucson format. Chronologies that are unable to be read
-#' are reported to the user. The user (or \code{\link{read.crn}}) must tell the function whether
+#' are reported to the user. The user (or \code{\link{read_crn}}) must tell the function whether
 #' the file is a Schweingruber-type chronology.
 #' 
 #' @param file A character string path pointing to a \code{*.crn} file to be read.

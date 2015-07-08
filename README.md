@@ -1,4 +1,4 @@
-# FedData (v1.1.0)
+# FedData (v2.0.0)
 An *R* package implementing functions to automate downloading geospatial data available from several federated data sources (mainly sources maintained by the US Federal government). Currently, the package allows for retrieval of five datasets: 
 
 * The [National Elevation Dataset (NED)](http://ned.usgs.gov) digital elevation models (1 and 1/3 arc-second; USGS)
@@ -11,15 +11,15 @@ Additional data sources are in the works, including global DEM resources ([ETOPO
 
 This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the [**sp**](http://cran.r-project.org/package=sp), [**raster**](http://cran.r-project.org/package=raster), and [**rgdal**](http://cran.r-project.org/package=rgdal) packages.
 
-**NOTE:** As of May 5, 2015, version 0.9-2 of the *rgdal* package for *R* does not work well with GDAL 1.11.2. This breaks the `getNHD()` function for retrieving the National Hydrography Dataset. Please install GDAL 1.11.1 and *rgdal* from source, or wait for an update to *rgdal*.
-
 I recommend [Homebrew](http://brew.sh) for installing *R* and GDAL:
 
-`brew install gdal --complete --enable-mdb --enable-opencl --enable-unsupported --with-libkml --with-python`
+`brew install gdal --with-complete --with-opencll --with-unsupported --with-libkml --with-python`
+
+(adding the `--HEAD` tag will install the latest development version.)
 
 `brew install r --with-openblas`
 
-Remember, if installing *R* with Homebrew, you must **completely** remove old *R* installations, including the *R* framework, typically installed at `/Library/Frameworks`. This package has been built and tested on a source (Homebrew) install of *R* on Mac OS 10.10 (Yosemite), and has been successfully run on a source install on an Ubuntu Linux cluster, and binary installs of *R* on Mac OS 10.10 (Yosemite) and Windows 7.
+Remember, if installing *R* with Homebrew, you must **completely** remove old *R* installations, including the *R* framework, typically installed at `/Library/Frameworks`. This package has been built and tested on a source (Homebrew) install of *R* on Mac OS 10.10 (Yosemite), and has been successfully run on an Ubuntu Linux cluster, and binary installs of *R* on Mac OS 10.10 (Yosemite) and Windows 7.
 
 
 ### Installation
@@ -27,7 +27,7 @@ To install, use the following command in *R*:
 
 `devtools::install_github("bocinsky/FedData")`
 
-Some OS X systems have trouble installing the `rgdal` package from source. If your install fails, try the following command:
+Some OS X systems have trouble installing the `rgdal` package from source. If your install fails, and you've installed the [Homebrew](http://brew.sh) version of GDAL and *R*, try the following command (from within *R*:
 
 `install.packages("rgdal", configure.args="--with-proj-include=/usr/local/include --with-proj-lib=/usr/local/lib")`
 

@@ -15,10 +15,10 @@ read_crn_data(file, SCHWEINGRUBER)
 A data.frame containing the data, or if \code{SCHWEINGRUBER==T}, a list containing four types of data.
 }
 \description{
-This function includes improvements to the \code{\link{read.crn}} function from the
+This function includes improvements to the \code{\link{read_crn}} function from the
 \pkg{dplR} library. The principle changes are better parsing of metadata, and support
 for the Schweingruber-type Tucson format. Chronologies that are unable to be read
-are reported to the user. The user (or \code{\link{read.crn}}) must tell the function whether
+are reported to the user. The user (or \code{\link{read_crn}}) must tell the function whether
 the file is a Schweingruber-type chronology.
 }
 

@@ -54,7 +54,7 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
     if(!requireNamespace(package="SSOAP", quietly=T) | !requireNamespace(package="XMLSchema", quietly=T)){
       stop("'SSOAP' and 'XMLSchema' must be installed in order to load SSURGO by area name.", call. = FALSE)
     }
-    q <- paste0("SELECT areasymbol, saverest FROM sacatalog WHERE areasymbol IN (",paste(paste0("'",areas,"'"),collapse=','),");")
+    q <- paste0("SELECT areasymbol, saverest FROM sacatalog WHERE areasymbol IN (",paste(paste0("'",template,"'"),collapse=','),");")
     SSURGOAreas <- soilDB::SDA_query(q)
     
   }else{
@@ -84,7 +84,7 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
   SSURGOPolys <- do.call("rbind", SSURGOPolys)
   
   # Crop to area of template
-  if(!is.null(template)){
+  if(!is.null(template) & !is.character(template)){
     message("Cropping all SSURGO Map Unit polygons to area of template")
     SSURGOPolys <- raster::crop(SSURGOPolys,sp::spTransform(template,sp::CRS(raster::projection(SSURGOPolys))))
   }
@@ -167,11 +167,11 @@ get_ssurgo_inventory <- function(template=NULL, raw.dir){
     url <- paste("http://sdmdataaccess.nrcs.usda.gov/Spatial/SDMNAD83Geographic.wfs?Service=WFS&Version=1.0.0&Request=GetFeature&Typename=SurveyAreaPoly&BBOX=", bbox.text, sep = "")
     
     temp.file <- paste0(tempdir(),"/soils.gml")
-    f <- CFILE(temp.file, "wb")
-    status <- curlPerform(url = url, writedata = f@ref, fresh.connect=T, ftp.use.epsv=T, forbid.reuse=T)
-    close(f)
+    f <- RCurl::CFILE(temp.file, "wb")
+    status <- RCurl::curlPerform(url = url, writedata = f@ref, fresh.connect=T, ftp.use.epsv=T, forbid.reuse=T)
+    RCurl::close(f)
     
-    SSURGOAreas <- rgdal::readOGR(dsn = temp.file, layer = "SurveyAreaPoly", disambiguateFIDs = TRUE, stringsAsFactors = FALSE, verbose=FALSE)
+    SSURGOAreas <- rgdal::readOGR(dsn = temp.file, layer = "surveyareapoly", disambiguateFIDs = TRUE, stringsAsFactors = FALSE, verbose=FALSE)
     projection(SSURGOAreas) <- projection(template)
     
     # Get a list of SSURGO study areas within the project study area
@@ -184,7 +184,7 @@ get_ssurgo_inventory <- function(template=NULL, raw.dir){
     if (!dir.create(tmpdir))
       stop("failed to create my temporary directory")
     
-    file <- downloadSSURGOInventory(raw.dir=raw.dir)
+    file <- download_ssurgo_inventory(raw.dir=raw.dir)
     
     unzip(file,exdir=tmpdir)
     
@@ -257,7 +257,7 @@ get_ssurgo_study_area <- function(template=NULL, area, date, raw.dir){
   mapunits <- rgdal::readOGR(paste(tmpdir,'/',area,'/spatial',sep=''), layer=paste("soilmu_a_",tolower(area),sep=''), verbose=F)
   
   # Crop to study area
-  if(!is.null(template)){
+  if(!is.null(template) & !is.character(template)){
     if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){
       template <- spdf_from_polygon(sp::spTransform(polygon_from_extent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
     }
@@ -276,7 +276,7 @@ get_ssurgo_study_area <- function(template=NULL, area, date, raw.dir){
   names(tablesData) <- files
   tablesData <- tablesData[!sapply(tablesData,is.null)]
   
-  #   tablesHeaders <- FedData::tablesHeaders
+    # tablesHeaders <- FedData::tablesHeaders
   
   SSURGOTableMapping <- tablesData[["mstab.txt"]][,c(1,5)]
   names(SSURGOTableMapping) <- c("TABLE","FILE")

@@ -25,8 +25,6 @@ A logical vector of the same length as x.
 }
 \description{
 This function makes it easy to implement timestamping and no-clobber of files.
-Unlike \link{wgetDownload}, it doesn't require an external command-line tool to
-be installed.
 }
 \details{
 If both \code{timestamping} and \code{nc} are TRUE, nc behavior trumps timestamping.

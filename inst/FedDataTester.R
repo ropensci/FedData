@@ -1,5 +1,5 @@
 # FedData Tester
-# library(FedData)
+library(FedData)
 pkg_test("png")
 pkg_test("RColorBrewer")
 
@@ -61,7 +61,7 @@ plot(SSURGO.VEPIIN$spatial, lwd=0.1)
 # Or, download by Soil Survey Area names
 SSURGO.areas <- get_ssurgo(template=c("CO670","CO075"), 
                      label="CO_TEST")
-# Plot the SSURGO mapunit polygons, but only for CO670
+# Plot the SSURGO mapunit polygons, but only for CO675
 plot(SSURGO.areas$spatial[SSURGO.areas$spatial$AREASYMBOL=="CO075",], lwd=0.1)
 
 
