@@ -3,6 +3,9 @@
 #'This is a convenience function that checks whether a package is installed, and if not, installs it.
 #'
 #' @param x A character string representing the name of a package.
+#' @import data.table
+#' @import sp
+#' @export
 pkg_test <- function(x){
   if(grepl("/",x)){
     pkgName <- basename(x)
@@ -25,6 +28,7 @@ pkg_test <- function(x){
 #' @param x A character string.
 #' @param n The number of characters to retrieve.
 #' @return A character string.
+#' @export
 substr_right <- function(x, n){
   substr(x, nchar(x)-n+1, nchar(x))
 }
@@ -35,6 +39,7 @@ substr_right <- function(x, n){
 #' @param proj4string A PROJ.4 formatted string defining the required projection. If NULL, 
 #' the function will attempt to get the projection from x using \code{\link{projection}}
 #' @return A SpatialPolygons object.
+#' @export
 polygon_from_extent <- function(x, proj4string=NULL){
   if(is.null(proj4string)){
     proj4string <- raster::projection(x)
@@ -53,6 +58,7 @@ polygon_from_extent <- function(x, proj4string=NULL){
 #'
 #' @param x An SpatialPolygons object.
 #' @return A SpatialPolygonsDataFrame object.
+#' @export
 spdf_from_polygon <- function(x){
   IDs <- sapply((methods::slot(x, "polygons")), function(x){methods::slot(x, "ID")})
   df <- data.frame(rep(0, length(IDs)), row.names=IDs)
@@ -65,6 +71,7 @@ spdf_from_polygon <- function(x){
 #' @param x An vector of any type, or, if \code{rows}, a matrix.
 #' @param rows Is x a matrix?
 #' @return A logical vector of the same length as x.
+#' @export
 sequential_duplicated <- function(x, rows=F){
   if(!rows){
     duplicates <- c(FALSE,unlist(lapply(1:(length(x)-1), function(i){duplicated(x[i:(i+1)])[2]})))
@@ -87,6 +94,7 @@ sequential_duplicated <- function(x, rows=F){
 #' @param verbose Should cURL output be shown?
 #' @param progress Should a progress bar be shown with cURL output?
 #' @return A logical vector of the same length as x.
+#' @export
 curl_download <- function(url, destdir=getwd(), timestamping=T, nc=F, verbose=F, progress=F){
   
   destdir <- normalizePath(destdir)

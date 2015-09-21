@@ -21,6 +21,7 @@
 #' @param standardize Select only common year/month/day? Defaults to FALSE.
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created? Defaults to FALSE.
 #' @return A named list containing the "spatial" and "tabular" data.
+#' @export
 get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./RAW/GHCN/", extraction.dir="./EXTRACTIONS/GHCN/", standardize=F, force.redo=F){
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   
@@ -107,6 +108,7 @@ get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' @param force.redo If this weather station has been downloaded before, should it be updated? Defaults to FALSE.
 #' @return A character string representing the full local path of the GHCN station data.
+#' @export
 download_ghcn_daily_station <- function(ID, raw.dir, force.redo=F){
   
   dir.create(raw.dir, recursive=T, showWarnings=F)
@@ -135,6 +137,7 @@ download_ghcn_daily_station <- function(ID, raw.dir, force.redo=F){
 #' @param standardize Select only common year/month/day? Defaults to FALSE.
 #' @param force.redo If this weather station has been downloaded before, should it be updated? Defaults to FALSE.
 #' @return A named list of \code{\link{data.frame}s}, one for each \code{elements}.
+#' @export
 get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, force.redo=F){
   
   file <- download_ghcn_daily_station(ID=ID, raw.dir=paste(raw.dir,"/DAILY/",sep=''), force.redo=force.redo)
@@ -193,6 +196,7 @@ get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, fo
 #' The directory will be created if missing.
 #' @return A \code{SpatialPolygonsDataFrame} of the GHCN stations within
 #' the specified \code{template}
+#' @export
 get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
   if(!is.null(template) & (!(methods::is(template,"SpatialPolygonsDataFrame")) & !(methods::is(template,"SpatialPolygons")))){
     template <- polygon_from_extent(template)

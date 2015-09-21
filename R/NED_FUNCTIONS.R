@@ -14,6 +14,7 @@
 #' The directory will be created if missing. Defaults to "./EXTRACTIONS/NED/".
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created?
 #' @return A \code{RasterLayer} DEM cropped to the extent of the template.
+#' @export
 get_ned <- function(template, label, res="1", raw.dir="./RAW/NED/", extraction.dir="./EXTRACTIONS/NED/", force.redo=F){  
   
   rasters.dir <- paste(extraction.dir,"/",label,"/rasters",sep='')
@@ -22,7 +23,7 @@ get_ned <- function(template, label, res="1", raw.dir="./RAW/NED/", extraction.d
   dir.create(rasters.dir, showWarnings = FALSE, recursive = TRUE)
   
   template <- sp::spTransform(polygon_from_extent(template),sp::CRS("+proj=longlat +ellps=WGS84"))
-  extent.latlon <- extent(template)
+  extent.latlon <- raster::extent(template)
   
   if(file.exists(paste(rasters.dir,"/NED_",res,".tif", sep='')) & !force.redo){
     extracted.DEM <- raster::raster(paste(rasters.dir,"/NED_",res,".tif", sep=''))
@@ -78,6 +79,7 @@ get_ned <- function(template, label, res="1", raw.dir="./RAW/NED/", extraction.d
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing. Defaults to "./RAW/NED/".
 #' @return A character string representing the full local path of the downloaded directory.
+#' @export
 download_ned_tile <- function(res="1", tileNorthing, tileWesting, raw.dir){
   
   destdir <- paste(raw.dir,'/',res, sep='')
@@ -110,6 +112,7 @@ download_ned_tile <- function(res="1", tileNorthing, tileWesting, raw.dir){
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing. Defaults to "./RAW/NED/".
 #' @return A \code{RasterLayer} cropped within the specified \code{template}.
+#' @export
 get_ned_tile <- function(template=NULL, res="1", tileNorthing, tileWesting, raw.dir){
   tmpdir <- tempfile()
   if (!dir.create(tmpdir))

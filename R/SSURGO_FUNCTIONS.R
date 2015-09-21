@@ -19,6 +19,7 @@
 #' The directory will be created if missing. Defaults to "./EXTRACTIONS/SSURGO/".
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created? Defaults to FALSE.
 #' @return A named list containing the "spatial" and "tabular" data.
+#' @export
 get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir="./EXTRACTIONS/SSURGO/", force.redo=FALSE){  
 
   vectors.dir <- paste(extraction.dir,"/",label,"/spatial",sep='')
@@ -130,6 +131,7 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
 #'
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' @return A character string representing the full local path of the SSURGO study areas zipped directory.
+#' @export
 download_ssurgo_inventory <- function(raw.dir){
   # Import the shapefile of SSURGO study areas.
   # This is available at
@@ -151,6 +153,7 @@ download_ssurgo_inventory <- function(raw.dir){
 #' The directory will be created if missing.
 #' @return A \code{SpatialPolygonsDataFrame} of the SSURGO study areas within
 #' the specified \code{template}.
+#' @export
 get_ssurgo_inventory <- function(template=NULL, raw.dir){
   # If there is a template, only download the areas in the template
   # Thanks to Dylan Beaudette for this method!
@@ -172,7 +175,7 @@ get_ssurgo_inventory <- function(template=NULL, raw.dir){
     RCurl::close(f)
     
     SSURGOAreas <- rgdal::readOGR(dsn = temp.file, layer = "surveyareapoly", disambiguateFIDs = TRUE, stringsAsFactors = FALSE, verbose=FALSE)
-    projection(SSURGOAreas) <- projection(template)
+    raster::projection(SSURGOAreas) <- raster::projection(template)
     
     # Get a list of SSURGO study areas within the project study area
     SSURGOAreas <- raster::crop(SSURGOAreas,sp::spTransform(template,sp::CRS(raster::projection(SSURGOAreas))))
@@ -216,6 +219,7 @@ get_ssurgo_inventory <- function(template=NULL, raw.dir){
 #' area for these data. This information may be gleaned from the SSURGO Inventory (\code{\link{get_ssurgo_inventory}}).
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' @return A character string representing the full local path of the SSURGO study areas zipped directory.
+#' @export
 download_ssurgo_study_area <- function(area, date, raw.dir){
   
   # Try to download with the state database, otherwise grab the US
@@ -244,6 +248,7 @@ download_ssurgo_study_area <- function(area, date, raw.dir){
 #' The directory will be created if missing.
 #' @return A \code{SpatialPolygonsDataFrame} of the SSURGO study areas within
 #' the specified \code{template}.
+#' @export
 get_ssurgo_study_area <- function(template=NULL, area, date, raw.dir){
   tmpdir <- tempfile()
   if (!dir.create(tmpdir))
@@ -312,6 +317,7 @@ get_ssurgo_study_area <- function(template=NULL, area, date, raw.dir){
 #' @param mapunits A \code{SpatialPolygonsDataFrame} of mapunits (likely dropped from SSURGO spatial data)
 #' defining which mapunits to retain.
 #' @return A list of extracted SSURGO tabular data.
+#' @export
 extract_ssurgo_data <- function(tables,mapunits){
   mapunits <- as.character(unique(mapunits$MUKEY))
   

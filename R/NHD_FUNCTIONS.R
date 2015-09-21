@@ -14,6 +14,7 @@
 #' The directory will be created if missing. Defaults to "./EXTRACTIONS/NHD/".
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created?
 #' @return A list of Spatial* objects extracted from the National Hydrography Dataset.
+#' @export
 get_nhd <- function(template, label, res='medium', raw.dir="./RAW/NHD/", extraction.dir="./EXTRACTIONS/NHD/", force.redo=FALSE){
   
   vectors.dir <- paste(extraction.dir,"/",label,"/spatial",sep='')
@@ -79,6 +80,7 @@ get_nhd <- function(template, label, res='medium', raw.dir="./RAW/NHD/", extract
 #'
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' @return A character string representing the full local path of the HUC4 zipped directory.
+#' @export
 download_huc4 <- function(raw.dir){
 #   url <- "ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/WBD/FileGDB101/WBD_National.zip"
   url <- 'ftp://ftp.igsb.uiowa.edu/gis_library/USA/huc_04.zip'
@@ -100,6 +102,7 @@ download_huc4 <- function(raw.dir){
 #' The directory will be created if missing.
 #' @return A \code{SpatialPolygonsDataFrame} of the HUC4 regions within
 #' the specified \code{template}.
+#' @export
 get_huc4 <- function(template=NULL, raw.dir){
   tmpdir <- tempfile()
   if (!dir.create(tmpdir))
@@ -140,6 +143,7 @@ get_huc4 <- function(template=NULL, raw.dir){
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing.
 #' @return A character string representing the full local path of the downloaded zip file.
+#' @export
 download_nhd_subregion <- function(area, res, raw.dir){
   if(res=="medium"){
     url <- paste('ftp://nhdftp.usgs.gov/DataSets/Staged/SubRegions/FileGDB/MediumResolution/NHDM',area,'_931v220.zip',sep='')
@@ -168,6 +172,7 @@ download_nhd_subregion <- function(area, res, raw.dir){
 #' The directory will be created if missing.
 #' @return A \code{SpatialPolygonsDataFrame} of the HUC4 regions within
 #' the specified \code{template}.
+#' @export
 get_nhd_subregion <- function(template=NULL, area, res, raw.dir){
   tmpdir <- tempfile()
   if (!dir.create(tmpdir))
