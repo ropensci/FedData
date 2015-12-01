@@ -188,9 +188,10 @@ download_itrdb <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
       unlink(tmpdir, recursive = TRUE)
       
       if(sum(sapply(records, is.null))>0){
-        message(sum(sapply(records, is.null))," files couldn't be extracted:")
+        message(sum(sapply(records, is.null))," file(s) couldn't be extracted:")
         for(file in basename(crns)[sapply(records, is.null)])
           message(file)
+        message("File(s) likely malformed!")
       }
       
       records <- unlist(records,recursive=F)
@@ -647,7 +648,7 @@ read_crn_data <- function(file,SCHWEINGRUBER){
     widths <- c(6, digits.year, rep(c(4, 3), 10))
     starts <- c(1,cumsum(widths)+1)
     stops <- cumsum(widths)
-    starts <- head(starts,n=length(stops))
+    starts <- utils::head(starts,n=length(stops))
     dat <- lapply(raw.data,function(this.raw.data){
       dat <- as.data.frame(
         matrix(

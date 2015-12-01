@@ -11,7 +11,7 @@ setwd(testDir)
 
 # Extract data for the Village Ecodynamics Project "VEPIIN" study area:
 # http://village.anth.wsu.edu
-vepPolygon <- polygon_from_extent(extent(672800,740000,4102000,4170000),
+vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000),
                                   proj4string="+proj=utm +datum=NAD83 +zone=12")
 
 # Get the NED (USA ONLY)

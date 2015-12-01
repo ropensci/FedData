@@ -202,8 +202,6 @@ get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
     template <- polygon_from_extent(template)
   }
   
-  template <- methods::as(template,"SpatialPolygons")
-  
   url <- "ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt"
   destdir <- raw.dir
   curl_download(url=url, destdir=destdir)
@@ -219,6 +217,7 @@ get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
   }
 
   if(!is.null(template)){
+    template <- methods::as(template,"SpatialPolygons")
     stations.sp <- stations.sp[!is.na(sp::over(stations.sp,sp::spTransform(template,sp::CRS(raster::projection(stations.sp))))),]
   }
   
