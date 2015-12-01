@@ -164,8 +164,11 @@ get_ssurgo_inventory <- function(template=NULL, raw.dir){
     }else{
       template <- sp::spTransform(template,sp::CRS("+proj=longlat +datum=WGS84"))
     }
-    
-    bbox.text <- paste(bbox(template), collapse = ",")
+
+    bounds <- bbox(template)
+    if(identical(bounds[1,1],bounds[1,2])) bounds[1,2] <- bounds[1,2] + .0001
+    if(identical(bounds[2,1],bounds[2,2])) bounds[2,2] <- bounds[2,2] + .0001
+    bbox.text <- paste(bounds, collapse = ",")
     
     url <- paste("http://sdmdataaccess.nrcs.usda.gov/Spatial/SDMNAD83Geographic.wfs?Service=WFS&Version=1.0.0&Request=GetFeature&Typename=SurveyAreaPoly&BBOX=", bbox.text, sep = "")
     
