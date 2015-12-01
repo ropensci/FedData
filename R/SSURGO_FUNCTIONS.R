@@ -64,6 +64,14 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
       template <- spdf_from_polygon(sp::spTransform(polygon_from_extent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
     }
     
+    if(class(template) == "SpatialPointsDataFrame" & length(template) == 1){
+      bounds <- bbox(template)
+      if(identical(bounds[1,1],bounds[1,2])) bounds[1,2] <- bounds[1,2] + .0001
+      if(identical(bounds[2,1],bounds[2,2])) bounds[2,2] <- bounds[2,2] + .0001
+      bbox.text <- paste(bounds, collapse = ",")
+      template <- polygon_from_extent(bounds,proj4string = raster::projection(template))
+    }
+    
     # Get shapefile of SSURGO study areas in the template
     SSURGOAreas <- get_ssurgo_inventory(template=template, raw.dir=raw.dir)
     # Remove SSURGO study areas that are not available
