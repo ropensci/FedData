@@ -21,7 +21,7 @@
 #' @return A named list containing the "spatial" and "tabular" data.
 #' @export
 get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir="./EXTRACTIONS/SSURGO/", force.redo=FALSE){  
-
+  
   vectors.dir <- paste(extraction.dir,"/",label,"/spatial",sep='')
   tables.dir <- paste(extraction.dir,"/",label,"/tabular",sep='')
   
@@ -89,7 +89,7 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
     message("Cropping all SSURGO Map Unit polygons to area of template")
     SSURGOPolys <- raster::crop(SSURGOPolys,sp::spTransform(template,sp::CRS(raster::projection(SSURGOPolys))))
   }
-
+  
   
   # Combine study area data
   SSURGOTables <- lapply(SSURGOData,"[[","tabular")
@@ -164,7 +164,7 @@ get_ssurgo_inventory <- function(template=NULL, raw.dir){
     }else{
       template <- sp::spTransform(template,sp::CRS("+proj=longlat +datum=WGS84"))
     }
-
+    
     bounds <- bbox(template)
     if(identical(bounds[1,1],bounds[1,2])) bounds[1,2] <- bounds[1,2] + .0001
     if(identical(bounds[2,1],bounds[2,2])) bounds[2,2] <- bounds[2,2] + .0001
@@ -181,7 +181,11 @@ get_ssurgo_inventory <- function(template=NULL, raw.dir){
     raster::projection(SSURGOAreas) <- raster::projection(template)
     
     # Get a list of SSURGO study areas within the project study area
+    if(class(template) == SpatialPointsDataFrame & length(template == 1)){
+      template <- polygon_from_extent(bounds,proj4string = raster::projection(template))
+    }
     SSURGOAreas <- raster::crop(SSURGOAreas,sp::spTransform(template,sp::CRS(raster::projection(SSURGOAreas))))
+    
     SSURGOAreas$saverest <- as.Date(SSURGOAreas$saverest, format = "%b %d %Y")
     
   }else{
@@ -284,7 +288,7 @@ get_ssurgo_study_area <- function(template=NULL, area, date, raw.dir){
   names(tablesData) <- files
   tablesData <- tablesData[!sapply(tablesData,is.null)]
   
-    # tablesHeaders <- FedData::tablesHeaders
+  # tablesHeaders <- FedData::tablesHeaders
   
   SSURGOTableMapping <- tablesData[["mstab.txt"]][,c(1,5)]
   names(SSURGOTableMapping) <- c("TABLE","FILE")
