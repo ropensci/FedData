@@ -64,7 +64,7 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
       template <- spdf_from_polygon(sp::spTransform(polygon_from_extent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
     }
     
-    if(class(template) == "SpatialPointsDataFrame" & length(template) == 1){
+    if(class(template) %in% c("SpatialPoints","SpatialPointsDataFrame") & length(template) <= 2){
       bounds <- bbox(template)
       if(identical(bounds[1,1],bounds[1,2])) bounds[1,2] <- bounds[1,2] + .0001
       if(identical(bounds[2,1],bounds[2,2])) bounds[2,2] <- bounds[2,2] + .0001
@@ -95,15 +95,7 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
   # Crop to area of template
   if(!is.null(template) & !is.character(template)){
     message("Cropping all SSURGO Map Unit polygons to area of template")
-    if(class(template) == "SpatialPointsDataFrame" & length(template) == 1){
-      bounds <- bbox(template)
-      if(identical(bounds[1,1],bounds[1,2])) bounds[1,2] <- bounds[1,2] + .0001
-      if(identical(bounds[2,1],bounds[2,2])) bounds[2,2] <- bounds[2,2] + .0001
-      bbox.text <- paste(bounds, collapse = ",")
-      SSURGOPolys <- raster::crop(SSURGOPolys,sp::spTransform(polygon_from_extent(bounds,proj4string = raster::projection(template)),sp::CRS(raster::projection(SSURGOPolys))))
-    }else{
-      SSURGOPolys <- raster::crop(SSURGOPolys,sp::spTransform(template,sp::CRS(raster::projection(SSURGOPolys))))
-    }
+    SSURGOPolys <- raster::crop(SSURGOPolys,sp::spTransform(template,sp::CRS(raster::projection(SSURGOPolys))))
     
   }
   
