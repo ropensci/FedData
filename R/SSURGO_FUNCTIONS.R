@@ -181,7 +181,7 @@ get_ssurgo_inventory <- function(template=NULL, raw.dir){
     raster::projection(SSURGOAreas) <- raster::projection(template)
     
     # Get a list of SSURGO study areas within the project study area
-    if(class(template) == "SpatialPointsDataFrame" & length(template == 1)){
+    if(class(template) == "SpatialPointsDataFrame" & length(template) == 1){
       template <- polygon_from_extent(bounds,proj4string = raster::projection(template))
     }
     SSURGOAreas <- raster::crop(SSURGOAreas,sp::spTransform(template,sp::CRS(raster::projection(SSURGOAreas))))
