@@ -280,9 +280,19 @@ get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, fo
   daily <- utils::read.fwf(file,c(11,4,2,4,rep(c(5,1,1,1),31)), stringsAsFactors=F)
   names(daily)[1:4] <- c("STATION","YEAR","MONTH","ELEMENT")
   
-  if(is.null(elements)){
-    elements <- unique(daily$ELEMENT)
+  
+  
+#   if(is.null(elements)){
+#     elements <- unique(daily$ELEMENT)
+#   }
+  
+  
+  # If the user didn't specify target elements, get them all.
+  if(!is.null(elements)){
+    daily <- daily[daily$ELEMENT %in% toupper(elements),]
   }
+  elements <- unique(daily$ELEMENT)
+  
   
   daily <- daily[daily$ELEMENT %in% toupper(elements),c(2:4,seq(5,125,4))]
   daily[daily==-9999] <- NA
