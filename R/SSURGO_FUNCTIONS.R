@@ -93,7 +93,7 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
     message("Cropping all SSURGO Map Unit polygons to template")
     if(class(template) %in% c("SpatialPoints","SpatialPointsDataFrame")){
       SSURGOPolys <- sp::spTransform(template,sp::CRS(raster::projection(SSURGOPolys))) %over% SSURGOPolys
-      SSURGOPolys <- SpatialPointsDataFrame(template@coords, data = SSURGOPolys)
+      SSURGOPolys <- SpatialPointsDataFrame(template@coords, data = SSURGOPolys, proj4string = sp::CRS(raster::projection(template)))
     }else{
       SSURGOPolys <- raster::crop(SSURGOPolys,sp::spTransform(template.poly,sp::CRS(raster::projection(SSURGOPolys))))
     }
