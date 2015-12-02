@@ -188,6 +188,8 @@ get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./
   # If the user didn't specify target elements, get them all.
   if(!is.null(elements)){
     stations.sp <- stations.sp[stations.sp@data[,"ELEMENT"] %in% toupper(elements),]
+    missing.elements <- setdiff(elements,unique(stations.sp$ELEMENT))
+    if(length(missing.elements)>0) warning("Elements not available: ",paste(missing.elements,collapse = ", "))
   }
   elements <- unique(stations.sp$ELEMENT)
   
@@ -416,16 +418,11 @@ get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, fo
   daily <- utils::read.fwf(file,c(11,4,2,4,rep(c(5,1,1,1),31)), stringsAsFactors=F)
   names(daily)[1:4] <- c("STATION","YEAR","MONTH","ELEMENT")
   
-  
-  
-#   if(is.null(elements)){
-#     elements <- unique(daily$ELEMENT)
-#   }
-  
-  
   # If the user didn't specify target elements, get them all.
   if(!is.null(elements)){
     daily <- daily[daily$ELEMENT %in% toupper(elements),]
+    missing.elements <- setdiff(elements,unique(daily$ELEMENT))
+    if(length(missing.elements)>0) warning("Elements not available: ",paste(missing.elements,collapse = ", "))
   }
   elements <- unique(daily$ELEMENT)
   
