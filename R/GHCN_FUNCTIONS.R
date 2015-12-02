@@ -188,7 +188,7 @@ get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./
   # If the user didn't specify target elements, get them all.
   if(!is.null(elements)){
     stations.sp <- stations.sp[stations.sp@data[,"ELEMENT"] %in% toupper(elements),]
-    missing.elements <- setdiff(elements,unique(stations.sp$ELEMENT))
+    missing.elements <- setdiff(toupper(elements),unique(stations.sp$ELEMENT))
     if(length(missing.elements)>0) warning("Elements not available: ",paste(missing.elements,collapse = ", "))
   }
   elements <- unique(stations.sp$ELEMENT)
@@ -421,7 +421,7 @@ get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, fo
   # If the user didn't specify target elements, get them all.
   if(!is.null(elements)){
     daily <- daily[daily$ELEMENT %in% toupper(elements),]
-    missing.elements <- setdiff(elements,unique(daily$ELEMENT))
+    missing.elements <- setdiff(toupper(elements),unique(daily$ELEMENT))
     if(length(missing.elements)>0) warning("Elements not available: ",paste(missing.elements,collapse = ", "))
   }
   elements <- unique(daily$ELEMENT)
