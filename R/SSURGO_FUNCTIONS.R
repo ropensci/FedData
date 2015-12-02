@@ -120,7 +120,6 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
   
   names(SSURGOTables) <- tableNames
   
-  
   # Extract only the mapunits in the study area, and iterate through the data structure
   SSURGOTables <- extract_ssurgo_data(tables=SSURGOTables, mapunits=as.character(unique(SSURGOPolys$MUKEY)))
   
