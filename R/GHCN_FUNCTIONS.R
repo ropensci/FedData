@@ -266,8 +266,144 @@ download_ghcn_daily_station <- function(ID, raw.dir, force.redo=F){
 #' tables for the station
 #' 
 #' @param ID A character string giving the station ID.
-#' @param elements A character vector of elemets to extract.
-#' Common elements include "tmin", "tmax", and "prcp".
+#' @param elements A character vector of elemets to extract.\cr
+#' The five core elements are:\cr
+#' PRCP = Precipitation (tenths of mm)\cr
+#' SNOW = Snowfall (mm)\cr
+#' SNWD = Snow depth (mm)\cr
+#' TMAX = Maximum temperature (tenths of degrees C)\cr
+#' TMIN = Minimum temperature (tenths of degrees C)\cr
+#' \cr
+#' The other elements are:\cr
+#'   
+#' ACMC = Average cloudiness midnight to midnight from 30-second 
+#' ceilometer data (percent)\cr
+#' ACMH = Average cloudiness midnight to midnight from 
+#' manual observations (percent)\cr
+#' ACSC = Average cloudiness sunrise to sunset from 30-second 
+#' ceilometer data (percent)\cr
+#' ACSH = Average cloudiness sunrise to sunset from manual 
+#' observations (percent)\cr
+#' AWDR = Average daily wind direction (degrees)\cr
+#' AWND = Average daily wind speed (tenths of meters per second)\cr
+#' DAEV = Number of days included in the multiday evaporation
+#' total (MDEV)\cr
+#' DAPR = Number of days included in the multiday precipiation 
+#' total (MDPR)\cr
+#' DASF = Number of days included in the multiday snowfall 
+#' total (MDSF)\cr
+#' DATN = Number of days included in the multiday minimum temperature 
+#' (MDTN)\cr
+#' DATX = Number of days included in the multiday maximum temperature 
+#' (MDTX)\cr
+#' DAWM = Number of days included in the multiday wind movement
+#' (MDWM)\cr
+#' DWPR = Number of days with non-zero precipitation included in 
+#' multiday precipitation total (MDPR)\cr
+#' EVAP = Evaporation of water from evaporation pan (tenths of mm)\cr
+#' FMTM = Time of fastest mile or fastest 1-minute wind 
+#' (hours and minutes, i.e., HHMM)\cr
+#' FRGB = Base of frozen ground layer (cm)\cr
+#' FRGT = Top of frozen ground layer (cm)\cr
+#' FRTH = Thickness of frozen ground layer (cm)\cr
+#' GAHT = Difference between river and gauge height (cm)\cr
+#' MDEV = Multiday evaporation total (tenths of mm; use with DAEV)\cr
+#' MDPR = Multiday precipitation total (tenths of mm; use with DAPR and 
+#'                                      DWPR, if available)\cr
+#' MDSF = Multiday snowfall total \cr
+#' MDTN = Multiday minimum temperature (tenths of degrees C; use with DATN)\cr
+#' MDTX = Multiday maximum temperature (tenths of degress C; use with DATX)\cr
+#' MDWM = Multiday wind movement (km)\cr
+#' MNPN = Daily minimum temperature of water in an evaporation pan 
+#' (tenths of degrees C)\cr
+#' MXPN = Daily maximum temperature of water in an evaporation pan 
+#' (tenths of degrees C)\cr
+#' PGTM = Peak gust time (hours and minutes, i.e., HHMM)\cr
+#' PSUN = Daily percent of possible sunshine (percent)\cr
+#' SN*# = Minimum soil temperature (tenths of degrees C)
+#'   where * corresponds to a code
+#' for ground cover and # corresponds to a code for soil 
+#' depth.\cr
+#' \cr
+#' Ground cover codes include the following:\cr
+#' 0 = unknown\cr
+#' 1 = grass\cr
+#' 2 = fallow\cr
+#' 3 = bare ground\cr
+#' 4 = brome grass\cr
+#' 5 = sod\cr
+#' 6 = straw multch\cr
+#' 7 = grass muck\cr
+#' 8 = bare muck\cr
+#' \cr
+#' Depth codes include the following:\cr
+#' 1 = 5 cm\cr
+#' 2 = 10 cm\cr
+#' 3 = 20 cm\cr
+#' 4 = 50 cm\cr
+#' 5 = 100 cm\cr
+#' 6 = 150 cm\cr
+#' 7 = 180 cm\cr
+#' \cr
+#' SX*# = Maximum soil temperature (tenths of degrees C) 
+#'   where * corresponds to a code for ground cover 
+#' and # corresponds to a code for soil depth.\cr 
+#' See SN*# for ground cover and depth codes. \cr
+#' TAVG = Average temperature (tenths of degrees C)
+#' [Note that TAVG from source 'S' corresponds
+#' to an average for the period ending at
+#' 2400 UTC rather than local midnight]\cr
+#' THIC = Thickness of ice on water (tenths of mm)	\cr
+#' TOBS = Temperature at the time of observation (tenths of degrees C)\cr
+#' TSUN = Daily total sunshine (minutes)\cr
+#' WDF1 = Direction of fastest 1-minute wind (degrees)\cr
+#' WDF2 = Direction of fastest 2-minute wind (degrees)\cr
+#' WDF5 = Direction of fastest 5-second wind (degrees)\cr
+#' WDFG = Direction of peak wind gust (degrees)\cr
+#' WDFI = Direction of highest instantaneous wind (degrees)\cr
+#' WDFM = Fastest mile wind direction (degrees)\cr
+#' WDMV = 24-hour wind movement (km)	   \cr
+#' WESD = Water equivalent of snow on the ground (tenths of mm)\cr
+#' WESF = Water equivalent of snowfall (tenths of mm)\cr
+#' WSF1 = Fastest 1-minute wind speed (tenths of meters per second)\cr
+#' WSF2 = Fastest 2-minute wind speed (tenths of meters per second)\cr
+#' WSF5 = Fastest 5-second wind speed (tenths of meters per second)\cr
+#' WSFG = Peak gust wind speed (tenths of meters per second)\cr
+#' WSFI = Highest instantaneous wind speed (tenths of meters per second)\cr
+#' WSFM = Fastest mile wind speed (tenths of meters per second)\cr
+#' WT** = Weather Type where ** has one of the following values:\cr
+#'   \cr
+#' 01 = Fog, ice fog, or freezing fog (may include heavy fog)\cr
+#' 02 = Heavy fog or heaving freezing fog (not always 
+#'                                         distinquished from fog)\cr
+#' 03 = Thunder\cr
+#' 04 = Ice pellets, sleet, snow pellets, or small hail \cr
+#' 05 = Hail (may include small hail)\cr
+#' 06 = Glaze or rime \cr
+#' 07 = Dust, volcanic ash, blowing dust, blowing sand, or 
+#' blowing obstruction\cr
+#' 08 = Smoke or haze \cr
+#' 09 = Blowing or drifting snow\cr
+#' 10 = Tornado, waterspout, or funnel cloud \cr
+#' 11 = High or damaging winds\cr
+#' 12 = Blowing spray\cr
+#' 13 = Mist\cr
+#' 14 = Drizzle\cr
+#' 15 = Freezing drizzle \cr
+#' 16 = Rain (may include freezing rain, drizzle, and freezing drizzle) \cr
+#' 17 = Freezing rain \cr
+#' 18 = Snow, snow pellets, snow grains, or ice crystals\cr
+#' 19 = Unknown source of precipitation \cr
+#' 21 = Ground fog \cr
+#' 22 = Ice fog or freezing fog\cr
+#' \cr
+#' WV** = Weather in the Vicinity where ** has one of the following 
+#' values:\cr
+#' 01 = Fog, ice fog, or freezing fog (may include heavy fog)\cr
+#' 03 = Thunder\cr
+#' 07 = Ash, dust, sand, or other blowing obstruction\cr
+#' 18 = Snow or ice crystals\cr
+#' 20 = Rain or snow shower
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' @param standardize Select only common year/month/day? Defaults to FALSE.
 #' @param force.redo If this weather station has been downloaded before, should it be updated? Defaults to FALSE.
