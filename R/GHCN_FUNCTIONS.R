@@ -186,13 +186,12 @@ get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./
   }
   
   # If the user didn't specify target elements, get them all.
-  if(is.null(elements)){
-    elements <- unique(stations.sp$ELEMENT)
+  if(!is.null(elements)){
+    stations.sp <- stations.sp[stations.sp@data[,"ELEMENT"] %in% toupper(elements),]
   }
+  elements <- unique(stations.sp$ELEMENT)
   
-  stations.sp <- stations.sp[stations.sp@data[,"ELEMENT"] %in% toupper(elements),]
-  
-  if(standardize & !is.null(elements)){
+  if(standardize){
     stations.sp.splits <- split(as.character(stations.sp$ELEMENT),f=stations.sp$ID, drop=T)
     stations.sp.splits.all <- sapply(stations.sp.splits,function(x){all(sapply(toupper(elements),function(y){y %in% x}))})
     stations.sp <- stations.sp[stations.sp$ID %in% names(stations.sp.splits.all)[stations.sp.splits.all],]
