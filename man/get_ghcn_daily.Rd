@@ -10,7 +10,7 @@ get_ghcn_daily(template = NULL, label = NULL, elements = NULL,
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve 
-as a template for cropping. If missing, all stations
+as a template for cropping. Alternatively, a character vector providing GHCN station IDs. If missing, all stations
 will be downloaded!}
 
 \item{label}{A character string naming the study area.}

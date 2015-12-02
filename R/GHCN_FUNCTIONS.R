@@ -9,7 +9,7 @@
 #' }
 #' 
 #' @param template A Raster* or Spatial* object to serve 
-#' as a template for cropping. If missing, all stations
+#' as a template for cropping. Alternatively, a character vector providing GHCN station IDs. If missing, all stations
 #' will be downloaded!
 #' @param label A character string naming the study area.
 #' @param elements A character vector of elemets to extract.\cr
@@ -495,8 +495,14 @@ get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
   }
 
   if(!is.null(template)){
-    template <- methods::as(template,"SpatialPolygons")
-    stations.sp <- stations.sp[!is.na(sp::over(stations.sp,sp::spTransform(template,sp::CRS(raster::projection(stations.sp))))),]
+    if(class(template) == "character"){
+      missing.stations <- setdiff(template,unique(stations.sp$ID))
+      if(length(missing.stations)>0) warning("Stations not available: ",paste(missing.stations,collapse = ", "))
+      stations.sp <- stations.sp[stations.sp$ID %in% template,]
+    }else{
+      template <- methods::as(template,"SpatialPolygons")
+      stations.sp <- stations.sp[!is.na(sp::over(stations.sp,sp::spTransform(template,sp::CRS(raster::projection(stations.sp))))),]
+    }
   }
   
   return(stations.sp)
