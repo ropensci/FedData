@@ -61,11 +61,15 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
   }else{
     
     if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){
-      template <- spdf_from_polygon(sp::spTransform(polygon_from_extent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
+      template.poly <- spdf_from_polygon(sp::spTransform(polygon_from_extent(template),sp::CRS("+proj=longlat +ellps=GRS80")))
+    }else if(class(template) %in% c("SpatialPoints","SpatialPointsDataFrame")){
+      suppressWarnings(template.poly <- raster::buffer(polygon_from_extent(template),width=.000001))
+    }else{
+      template.poly <- template
     }
     
     # Get shapefile of SSURGO study areas in the template
-    SSURGOAreas <- get_ssurgo_inventory(template=template, raw.dir=raw.dir)
+    SSURGOAreas <- get_ssurgo_inventory(template=template.poly, raw.dir=raw.dir)
     # Remove SSURGO study areas that are not available
     SSURGOAreas <- SSURGOAreas[SSURGOAreas@data$iscomplete != 0,]
     
@@ -74,7 +78,7 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
   # Get data for each study area
   SSURGOData <- lapply(1:nrow(SSURGOAreas), function(i){
     message("(Down)Loading SSURGO data for survey area ",i," of ",nrow(SSURGOAreas),": ",as.character(SSURGOAreas$areasymbol[i]))
-    get_ssurgo_study_area(template=template, area=as.character(SSURGOAreas$areasymbol[i]), date=as.Date(SSURGOAreas$saverest[i],format="%m/%d/%Y"), raw.dir=raw.dir)
+    get_ssurgo_study_area(template=template.poly, area=as.character(SSURGOAreas$areasymbol[i]), date=as.Date(SSURGOAreas$saverest[i],format="%m/%d/%Y"), raw.dir=raw.dir)
   })
   
   # Combine mapunits
@@ -88,9 +92,10 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
   if(!is.null(template) & !is.character(template)){
     message("Cropping all SSURGO Map Unit polygons to template")
     if(class(template) %in% c("SpatialPoints","SpatialPointsDataFrame")){
-      
+      SSURGOPolys <- sp::spTransform(template,sp::CRS(raster::projection(SSURGOPolys))) %over% SSURGOPolys
+      SSURGOPolys <- SpatialPointsDataFrame(template@coords, data = SSURGOPolys)
     }else{
-      SSURGOPolys <- raster::crop(SSURGOPolys,sp::spTransform(template,sp::CRS(raster::projection(SSURGOPolys))))
+      SSURGOPolys <- raster::crop(SSURGOPolys,sp::spTransform(template.poly,sp::CRS(raster::projection(SSURGOPolys))))
     }
   }
   
