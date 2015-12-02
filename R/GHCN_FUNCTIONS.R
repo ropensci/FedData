@@ -489,11 +489,11 @@ get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
   
   # Convert to SPDF
   stations.sp <- sp::SpatialPointsDataFrame(coords=station.inventory[,c("LONGITUDE","LATITUDE")],station.inventory,proj4string=sp::CRS("+proj=longlat +datum=WGS84"))
-
+  
   if(!is.null(elements)){
     stations.sp <- stations.sp[stations.sp$ELEMENT %in% toupper(elements),]
   }
-
+  
   if(!is.null(template)){
     if(class(template) == "character"){
       missing.stations <- setdiff(template,unique(stations.sp$ID))
@@ -508,3 +508,37 @@ get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
   return(stations.sp)
 }
 
+#' Convert a list of station data to a single data frame.
+#'
+#' \code{station_to_data_frame} returns a \code{data.frame} of the GHCN station data list.
+#' 
+#' This function unwraps the station data and merges all data into a single data frame, 
+#' with the first column being in the \code{Date} class.
+#' 
+#' @param station.data A named list containing station data
+#' @return A \code{data.frame} of the containing the unwrapped station data
+#' @export
+station_to_data_frame <- function(station.data){
+  data.list <- lapply(1:length(station.data),function(i){
+    X <- station.data[[i]]
+    
+    # Get just the climate info
+    annual.records <- as.matrix(X[,3:33])
+    
+    # Get the number of days per month in the records
+    n.days <- Hmisc::monthDays(as.Date(paste(X$YEAR,X$MONTH,'01',sep='-')))
+    
+    ## Unnwrap each row, accounting for number of days in the month
+    annual.records.unwrapped <- unwrap_rows(annual.records,n.days)
+    
+    dates <- as.Date(unlist(mapply(FUN = function(days,dates){paste(dates,days,sep="-")}, sapply(n.days,function(x){1:x}), paste(X$YEAR,X$MONTH,sep='-'))))
+
+    annual.records.unwrapped <- data.table::data.table(dates,annual.records.unwrapped)
+    names(annual.records.unwrapped) <- c("DATE",names(station.data)[i])
+    data.table::setkey(annual.records.unwrapped,"DATE")
+    
+    return(annual.records.unwrapped)
+  })
+  
+  return(Reduce(function(x,y) merge(x,y,all=TRUE),data.list))
+}
