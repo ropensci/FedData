@@ -3,7 +3,7 @@ Type: Package
 Title: Functions to Automate Downloading Geospatial Data Available from Several
     Federated Data Sources
 Version: 2.0.1
-Date: 2015-09-22
+Date: 2015-12-01
 Author: R. Kyle Bocinsky <bocinsky@gmail.com>
     Dylan Beaudette <Dylan.Beaudette@ca.usda.gov>
 Maintainer: R. Kyle Bocinsky <bocinsky@gmail.com>
@@ -30,7 +30,7 @@ Imports:
     igraph,
     RCurl,
     methods,
-    rgdal(>= 1.0),
+    rgdal,
     raster
 Suggests:
     SSOAP,
