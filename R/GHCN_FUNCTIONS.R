@@ -476,7 +476,7 @@ get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, fo
 #' the specified \code{template}
 #' @export
 get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
-  if(!is.null(template) & (!(methods::is(template,"SpatialPolygonsDataFrame")) & !(methods::is(template,"SpatialPolygons")))){
+  if(!is.null(template) & !(class(template) %in% c("SpatialPolygonsDataFrame","SpatialPolygons","character"))){
     template <- polygon_from_extent(template)
   }
   
