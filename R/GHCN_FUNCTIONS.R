@@ -199,8 +199,8 @@ get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./
     stations.sp <- stations.sp[stations.sp$ID %in% names(stations.sp.splits.all)[stations.sp.splits.all],]
   }
   
-  stations.sp <- stations.sp[,c("ID","ELEMENT","YEAR_START","YEAR_END")]
-  stations.sp <- stations.sp[!duplicated(stations.sp@data[,c("ID","LATITUDE","LONGITUDE")]),c("ID","LATITUDE","LONGITUDE")]
+  # stations.sp <- stations.sp[,c("ID","ELEMENT","YEAR_START","YEAR_END")]
+  stations.sp <- stations.sp[!duplicated(stations.sp@data[,c("ID","LATITUDE","LONGITUDE")]),c("ID")]
   
   if(!force.redo){
     daily <- tryCatch(lapply(elements,function(element){readRDS(paste(tables.dir,"/",element,".Rds",sep=''))}), warning = function(w){return(NULL)})
