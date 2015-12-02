@@ -315,7 +315,7 @@ get_ssurgo_study_area <- function(template=NULL, area, date, raw.dir){
   
   names(tables) <- names(tablesHeads)
   
-  tables <- extract_ssurgo_data(tables=tables, mapunits=mapunits)
+  tables <- extract_ssurgo_data(tables=tables, mapunits=as.character(unique(mapunits$MUKEY)))
   
   unlink(tmpdir, recursive = TRUE)
   
