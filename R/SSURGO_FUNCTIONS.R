@@ -40,7 +40,7 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
     tables <- lapply(files,function(file){
       utils::read.csv(paste(normalizePath(tables.dir),'/',file,sep=''), stringsAsFactors=F)
     })
-    names(tables) <- files
+    names(tables) <- gsub(".csv","",files)
     
     return(list(spatial=SSURGOMapunits,tabular=tables))
   }
