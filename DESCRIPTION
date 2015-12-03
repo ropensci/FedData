@@ -2,7 +2,7 @@ Package: FedData
 Type: Package
 Title: Functions to Automate Downloading Geospatial Data Available from Several
     Federated Data Sources
-Version: 2.0.1
+Version: 2.0.2
 Date: 2015-12-01
 Author: R. Kyle Bocinsky <bocinsky@gmail.com>
     Dylan Beaudette <Dylan.Beaudette@ca.usda.gov>
@@ -31,7 +31,8 @@ Imports:
     RCurl,
     methods,
     rgdal,
-    raster
+    raster,
+    Hmisc
 Suggests:
     SSOAP,
     XMLSchema

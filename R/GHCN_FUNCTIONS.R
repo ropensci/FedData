@@ -216,7 +216,7 @@ get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./
       daily <- daily[!sapply(daily,is.null)]
       # Make sure station names and elements are the same
       if(setequal(names(daily),stations.sp$ID) & all(sapply(daily,function(dat){setequal(names(dat),elements)}))){
-        return(list(spatial=stations.out,tabular=daily))
+        return(list(spatial=stations.sp,tabular=daily))
       }
     }
   }
