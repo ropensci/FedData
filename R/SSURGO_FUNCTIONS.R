@@ -58,6 +58,8 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
     q <- paste0("SELECT areasymbol, saverest FROM sacatalog WHERE areasymbol IN (",paste(paste0("'",template,"'"),collapse=','),");")
     SSURGOAreas <- soilDB::SDA_query(q)
     
+    template.poly <- template
+    
   }else{
     
     if(class(template) %in% c("RasterLayer","RasterStack","RasterBrick")){

@@ -227,11 +227,11 @@ get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./
   })
   names(daily) <- stations.sp$ID
   
-  daily.split <- lapply(elements,function(element){
+  daily.split <- lapply(as.character(elements),function(element){
     lapply(daily,'[[',element)
   })
   names(daily.split) <- elements
-  junk <- lapply(elements,function(element){
+  junk <- lapply(as.character(elements),function(element){
     saveRDS(daily.split[[element]],paste(tables.dir,"/",element,".Rds",sep=''),compress='xz')
   })
   
