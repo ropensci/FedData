@@ -348,12 +348,11 @@ extract_ssurgo_data <- function(tables,mapunits){
   mapEdges <- mapEdges[match(mapHierarchy,mapEdges[,2]),]
   
   tables[['mapunit']] <- tables[['mapunit']][tables[['mapunit']][,'mukey'] %in% mapunits,]
-  newTables <- apply(mapEdges,1,function(X){
-    return(tables[[X[2]]][tables[[X[2]]][,X[3]] %in% tables[[X[1]]][,X[3]],])
-  })
-  names(newTables) <- mapEdges[,2]
   
-  tables[names(newTables)] <- newTables
+  for(i in 1:nrow(mapEdges)){
+    X <- mapEdges[i,]
+    tables[[X[2]]] <- tables[[X[2]]][tables[[X[2]]][,X[3]] %in% tables[[X[1]]][,X[3]],]
+  }
   
   tables <- tables[!sapply(tables,is.null)]
   
