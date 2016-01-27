@@ -2,10 +2,12 @@ Package: FedData
 Type: Package
 Title: Functions to Automate Downloading Geospatial Data Available from Several
     Federated Data Sources
-Version: 2.0.3
-Date: 2016-01-19
-Author: R. Kyle Bocinsky <bocinsky@gmail.com>
-    Dylan Beaudette <Dylan.Beaudette@ca.usda.gov>
+Version: 2.0.4
+Date: 2016-01-27
+Author: R. Kyle Bocinsky [aut, cre], Dylan Beaudette [ctb]
+Authors@R: c(person(given = c("R.", "Kyle"), family = "Bocinsky",
+    role = c("aut", "cre"), email = "bocinsky@gmail.com"),
+    person(given = c("Dylan"), family = "Beaudette", role = "ctb"))
 Maintainer: R. Kyle Bocinsky <bocinsky@gmail.com>
 Description: Functions to automate downloading geospatial data available from
     several federated data sources (mainly sources maintained by the US Federal
@@ -19,7 +21,7 @@ Description: Functions to automate downloading geospatial data available from
     data sources are in the works, including global DEM resources (ETOPO1, ETOPO5,
     ETOPO30, SRTM), global soils (HWSD), MODIS satellite data products, the National
     Atlas (US), Natural Earth, PRISM, and WorldClim.
-License: GPL-3
+License: MIT + file LICENSE
 Depends:
     R (>= 3.2.0),
     sp

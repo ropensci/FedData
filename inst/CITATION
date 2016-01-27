@@ -1,0 +1,8 @@
+citHeader("To cite FedData in publications use:")
+citEntry(entry="Manual",
+         title = "{FedData}: Functions to Automate Downloading Geospatial Data Available from Several Federated Data Sources",
+         author= personList(as.person("R. Kyle Bocinsky")),
+        note = "R package version 2.0.4",
+        year = "2016",
+        url = "http://CRAN.R-project.org/package=FedData",
+        textVersion = "Bocinsky, R. Kyle. (2016). FedData: Functions to Automate Downloading Geospatial Data Available from Several Federated Data Sources. URL: http://CRAN.R-project.org/package=FedData. R package version 2.0.4")

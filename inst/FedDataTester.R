@@ -1,7 +1,5 @@
 # FedData Tester
 library(FedData)
-pkg_test("png")
-pkg_test("RColorBrewer")
 
 # Set a directory for testing
 testDir <- "~/FedData Test"
@@ -29,7 +27,8 @@ GHCN.prcp <- get_ghcn_daily(template=vepPolygon,
                             label="VEPIIN", 
                             elements=c('prcp'))
 # Plot the spatial locations
-plot(GHCN.prcp$spatial)
+plot(GHCN.prcp$spatial, pch=1, add=T)
+legend('bottomleft', pch=1, legend="GHCN Precipitation Records")
 
 # Elements for which you require the same data
 # (i.e., minimum and maximum temperature for the same days)
@@ -38,37 +37,59 @@ GHCN.temp <- get_ghcn_daily(template=vepPolygon,
                             label="VEPIIN", 
                             elements=c('tmin','tmax'), 
                             standardize=T)
+# Plot the NED again
+raster::plot(NED)
 # Plot the spatial locations
-plot(GHCN.temp$spatial)
+plot(GHCN.temp$spatial, add=T, pch=1)
+legend('bottomleft', pch=1, legend="GHCN Temperature Records")
 
 
 # Get the NHD (USA ONLY)
 NHD <- get_nhd(template=vepPolygon, 
                label="VEPIIN")
+# Plot the NED again
+raster::plot(NED)
 # Plot the NHD data
-plot(NHD$NHDFlowline)
+plot(NHD$NHDFlowline, add=T)
 plot(NHD$NHDLine, add=T)
 plot(NHD$NHDArea, col='black', add=T)
 plot(NHD$NHDWaterbody, col='black', add=T)
 
-
 # Get the NRCS SSURGO data (USA ONLY)
 SSURGO.VEPIIN <- get_ssurgo(template=vepPolygon, 
                      label="VEPIIN")
+# Plot the NED again
+raster::plot(NED)
 # Plot the SSURGO mapunit polygons
-plot(SSURGO.VEPIIN$spatial, lwd=0.1)
+plot(SSURGO.VEPIIN$spatial,
+     lwd=0.1,
+     add=T)
 
 # Or, download by Soil Survey Area names
 SSURGO.areas <- get_ssurgo(template=c("CO670","CO075"), 
                      label="CO_TEST")
+
+# Let's just look at spatial data for CO675
+SSURGO.areas.CO675 <- SSURGO.areas$spatial[SSURGO.areas$spatial$AREASYMBOL=="CO075",]
+
+# And get the NED data under them for pretty plotting
+NED.CO675 <- get_ned(template=SSURGO.areas.CO675,
+                     label="SSURGO_CO675")
+
 # Plot the SSURGO mapunit polygons, but only for CO675
-plot(SSURGO.areas$spatial[SSURGO.areas$spatial$AREASYMBOL=="CO075",], lwd=0.1)
+plot(NED.CO675)
+plot(SSURGO.areas.CO675,
+     lwd=0.1,
+     add=T)
 
 
 # Get the ITRDB records
 ITRDB <- get_itrdb(template=vepPolygon,
                         label="VEPIIN",
                         makeSpatial=T)
+# Plot the NED again
+raster::plot(NED)
 # Map the locations of the tree ring chronologies
-plot(ITRDB$metadata)
+plot(ITRDB$metadata, pch=1, add=T)
+legend('bottomleft', pch=1, legend="ITRDB chronologies")
 
