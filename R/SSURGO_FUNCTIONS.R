@@ -147,7 +147,7 @@ download_ssurgo_inventory <- function(raw.dir){
   # http://soildatamart.sc.egov.usda.gov/download/StatusMaps/soilsa_a_SSURGO.zip
   url <- 'http://websoilsurvey.sc.egov.usda.gov/DataAvailability/SoilDataAvailabilityShapefile.zip'
   destdir <- raw.dir
-  curl_download(url=url, destdir=destdir)
+  download_data(url=url, destdir=destdir)
   return(normalizePath(paste(destdir,'SoilDataAvailabilityShapefile.zip',sep='')))
 }
 
@@ -182,9 +182,14 @@ get_ssurgo_inventory <- function(template=NULL, raw.dir){
     url <- paste("http://sdmdataaccess.nrcs.usda.gov/Spatial/SDMNAD83Geographic.wfs?Service=WFS&Version=1.0.0&Request=GetFeature&Typename=SurveyAreaPoly&BBOX=", bbox.text, sep = "")
     
     temp.file <- paste0(tempdir(),"/soils.gml")
-    f <- RCurl::CFILE(temp.file, "wb")
-    status <- RCurl::curlPerform(url = url, writedata = f@ref, fresh.connect=T, ftp.use.epsv=T, forbid.reuse=T)
-    RCurl::close(f)
+    
+    opts <- list(
+      verbose = F, 
+      noprogress = T,
+      fresh_connect = TRUE)
+    hand <- curl::new_handle()
+    curl::handle_setopt(hand, .list = opts)
+    tryCatch(status <- curl::curl_download(url, destfile = temp.file, handle = hand), error=function(e) stop("Download of ",url," failed!"))
     
     SSURGOAreas <- rgdal::readOGR(dsn = temp.file, layer = "surveyareapoly", disambiguateFIDs = TRUE, stringsAsFactors = FALSE, verbose=FALSE)
     raster::projection(SSURGOAreas) <- raster::projection(template)
@@ -241,7 +246,7 @@ download_ssurgo_study_area <- function(area, date, raw.dir){
   # Try to download with the state database, otherwise grab the US
   url <- paste("http://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/wss_SSA_",area,"_[",date,"].zip",sep='')
   destdir <- raw.dir
-  curl_download(url=url, destdir=destdir, nc=T)
+  download_data(url=url, destdir=destdir, nc=T)
   
   return(normalizePath(paste(destdir,"wss_SSA_",area,"_[",date,"].zip",sep='')))
 }

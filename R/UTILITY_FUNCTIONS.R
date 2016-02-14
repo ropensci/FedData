@@ -99,7 +99,7 @@ unwrap_rows <- function(mat,n){
 }
 
 
-#' Use RCurl to download a file.
+#' Use curl to download a file.
 #'
 #' This function makes it easy to implement timestamping and no-clobber of files.
 #'
@@ -113,51 +113,40 @@ unwrap_rows <- function(mat,n){
 #' @param progress Should a progress bar be shown with cURL output?
 #' @return A logical vector of the same length as x.
 #' @export
-curl_download <- function(url, destdir=getwd(), timestamping=T, nc=F, verbose=F, progress=F){
+download_data <- function(url, destdir=getwd(), timestamping=T, nc=F, verbose=F, progress=F){
   
   destdir <- normalizePath(destdir)
   destfile <- paste0(destdir,'/',basename(url))
+  temp.file <- paste0(tempdir(),"/",basename(url))
   
   if(nc & file.exists(destfile)) return()
   
   if(timestamping & file.exists(destfile)){
     message("Downloading file (if necessary): ",url)
-    temp.file <- paste0(tempdir(),"/",basename(url))
-    f <- RCurl::CFILE(temp.file, "wb")
-    status <- RCurl::curlPerform(url = url, 
-                          writedata = f@ref,
-                          verbose=verbose,
-                          noprogress=!progress,
-                          fresh.connect=T, 
-                          ftp.use.epsv=F, 
-                          forbid.reuse=T, 
-                          timecondition=T, 
-                          timevalue=base::file.info(destfile)$mtime)
-    RCurl::close(f)
+    opts <- list(
+      verbose = verbose, 
+      noprogress = !progress,
+      fresh_connect = TRUE, 
+      ftp_use_epsv = FALSE, 
+      forbid_reuse = TRUE, 
+      timecondition = TRUE, 
+      timevalue = base::file.info(destfile)$mtime)
+    hand <- curl::new_handle()
+    curl::handle_setopt(hand, .list = opts)
+    tryCatch(status <- curl::curl_download(url, destfile = temp.file, handle = hand), error=function(e) stop("Download of ",url," failed!"))
     if(file.info(temp.file)$size > 0){
       file.copy(temp.file,destfile, overwrite=T)
     }
-    
-    #     status <- system(paste0("curl -R --globoff --create-dirs -z ",destfile," --url ",url," --output ",destfile))
   }else{
     message("Downloading file: ",url)
-    temp.file <- paste0(tempdir(),"/",basename(url))
-    f <- RCurl::CFILE(temp.file, "wb")
-    status <- RCurl::curlPerform(url = url, 
-                          writedata = f@ref,
-                          verbose=verbose,
-                          noprogress=!progress,
-                          fresh.connect=T, 
-                          ftp.use.epsv=F, 
-                          forbid.reuse=T)
-    RCurl::close(f)
-    file.copy(temp.file,destfile, overwrite=T)
-    
-    
-    #     status <- system(paste0("curl -Rs --globoff --create-dirs --url ",url," --output ",destfile))
+    opts <- list(
+      verbose = verbose, 
+      noprogress = !progress,
+      fresh_connect = TRUE, 
+      ftp_use_epsv = FALSE, 
+      forbid_reuse = TRUE)
+    hand <- curl::new_handle()
+    curl::handle_setopt(hand, .list = opts)
+    tryCatch(status <- curl::curl_download(url, destfile = destfile, handle = hand), error=function(e) stop("Download of ",url," failed!"))
   }
-  
-  # If status is still not zero, report a warning
-  if (!(status %in% c(0,3)))
-    warning("Download of ",url," had nonzero exit status")
 }

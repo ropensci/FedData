@@ -2,12 +2,13 @@ Package: FedData
 Type: Package
 Title: Functions to Automate Downloading Geospatial Data Available from Several
     Federated Data Sources
-Version: 2.0.4
-Date: 2016-01-27
-Author: R. Kyle Bocinsky [aut, cre], Dylan Beaudette [ctb]
+Version: 2.0.5
+Date: 2016-02-14
+Author: R. Kyle Bocinsky [aut, cre], Dylan Beaudette [ctb], Scott Chamberlain [ctb]
 Authors@R: c(person(given = c("R.", "Kyle"), family = "Bocinsky",
     role = c("aut", "cre"), email = "bocinsky@gmail.com"),
-    person(given = c("Dylan"), family = "Beaudette", role = "ctb"))
+    person(given = c("Dylan"), family = "Beaudette", role = "ctb"),
+    person(given = c("Scott"), family = "Chamberlain", role = "ctb"))
 Maintainer: R. Kyle Bocinsky <bocinsky@gmail.com>
 Description: Functions to automate downloading geospatial data available from
     several federated data sources (mainly sources maintained by the US Federal
@@ -30,7 +31,7 @@ Imports:
     devtools,
     soilDB,
     igraph,
-    RCurl,
+    curl,
     methods,
     rgdal,
     raster,

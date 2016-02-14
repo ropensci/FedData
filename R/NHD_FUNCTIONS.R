@@ -84,7 +84,7 @@ get_nhd <- function(template, label, res='medium', raw.dir="./RAW/NHD/", extract
 download_huc4 <- function(raw.dir){
 #   url <- "ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/WBD/FileGDB101/WBD_National.zip"
   url <- 'ftp://ftp.igsb.uiowa.edu/gis_library/USA/huc_04.zip'
-  curl_download(url=url, destdir=raw.dir)
+  download_data(url=url, destdir=raw.dir)
   return(normalizePath(paste(raw.dir,'huc_04.zip',sep='')))
 #   return(normalizePath(paste(raw.dir,'WBD_National.zip',sep='')))
 }
@@ -152,7 +152,7 @@ download_nhd_subregion <- function(area, res, raw.dir){
   }
   
   destdir <- raw.dir
-  curl_download(url=url, destdir=destdir)
+  download_data(url=url, destdir=destdir)
   
   return(normalizePath(paste0(destdir,'/',basename(url))))
 }

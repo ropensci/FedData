@@ -252,9 +252,9 @@ download_ghcn_daily_station <- function(ID, raw.dir, force.redo=F){
   
   url <- paste("ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/all/",ID,".dly",sep='')
   if(!force.redo){
-    curl_download(url=url, destdir=raw.dir, timestamping=T)
+    download_data(url=url, destdir=raw.dir, timestamping=T)
   }else{
-    curl_download(url=url, destdir=raw.dir, timestamping=F)
+    download_data(url=url, destdir=raw.dir, timestamping=F)
   }
   
   return(normalizePath(paste(raw.dir,ID,".dly",sep='')))
@@ -482,7 +482,7 @@ get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
   
   url <- "ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt"
   destdir <- raw.dir
-  curl_download(url=url, destdir=destdir)
+  download_data(url=url, destdir=destdir)
   
   station.inventory <- utils::read.fwf(paste(raw.dir,"ghcnd-inventory.txt",sep=''),c(11,1,8,1,9,1,4,1,4,1,4), stringsAsFactors=F)[,seq(1,11,2)]
   names(station.inventory) <- c("ID","LATITUDE","LONGITUDE","ELEMENT","YEAR_START","YEAR_END")
