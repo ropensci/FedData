@@ -415,6 +415,7 @@ get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, fo
   
   file <- download_ghcn_daily_station(ID=ID, raw.dir=paste(raw.dir,"/DAILY/",sep=''), force.redo=force.redo)
   
+  # GHCN files are fixed-width. The numbers here refer to those column widths.
   daily <- utils::read.fwf(file,c(11,4,2,4,rep(c(5,1,1,1),31)), stringsAsFactors=F)
   names(daily)[1:4] <- c("STATION","YEAR","MONTH","ELEMENT")
   
@@ -484,6 +485,7 @@ get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
   destdir <- raw.dir
   download_data(url=url, destdir=destdir)
   
+  # GHCN files are fixed-width. The numbers here refer to those column widths.
   station.inventory <- utils::read.fwf(paste(raw.dir,"ghcnd-inventory.txt",sep=''),c(11,1,8,1,9,1,4,1,4,1,4), stringsAsFactors=F)[,seq(1,11,2)]
   names(station.inventory) <- c("ID","LATITUDE","LONGITUDE","ELEMENT","YEAR_START","YEAR_END")
   

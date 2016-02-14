@@ -32,6 +32,7 @@ Remember, if installing *R* with Homebrew, you must **completely** remove old *R
 
 ### Contributors
 + [Dylan Beaudette](http://casoilresource.lawr.ucdavis.edu/people/dylan-e-beaudette/) - USDA-NRCS Soil Survey Office, Sonora, CA
++ [Scott Chamberlain](http://scottchamberlain.info) - ROpenSci and Museum of Paleontology at UC Berkeley
 
 ### Install `FedData`
 + CRAN:
