@@ -2,6 +2,8 @@
 
 language: r
 
+sudo: required
+
 #before_install:
 #- sudo apt-get install aptitude
 #- sudo aptitude install libgdal-dev libproj-dev --assume-yes
