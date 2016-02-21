@@ -2,6 +2,9 @@
 
 language: r
 
+global:
+- _R_CHECK_FORCE_SUGGESTS_=FALSE
+
 before_install:
 - sudo apt-get install aptitude
 - sudo aptitude install libgdal1-dev libproj-dev --assume-yes
