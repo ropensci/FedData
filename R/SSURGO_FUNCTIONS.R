@@ -46,15 +46,6 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
   }
   
   if(class(template)=="character"){
-    if (!requireNamespace(package="SSOAP", quietly=T)){
-      utils::install.packages("SSOAP", repos = "http://www.omegahat.org/R", type="source")
-    }
-    if (!requireNamespace(package="XMLSchema", quietly=T)){
-      utils::install.packages("XMLSchema", repos = "http://www.omegahat.org/R", type="source")
-    }
-    if(!requireNamespace(package="SSOAP", quietly=T) | !requireNamespace(package="XMLSchema", quietly=T)){
-      stop("'SSOAP' and 'XMLSchema' must be installed in order to load SSURGO by area name.", call. = FALSE)
-    }
     q <- paste0("SELECT areasymbol, saverest FROM sacatalog WHERE areasymbol IN (",paste(paste0("'",template,"'"),collapse=','),");")
     SSURGOAreas <- soilDB::SDA_query(q)
     
