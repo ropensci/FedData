@@ -5,8 +5,6 @@ language: r
 before_install:
 - sudo apt-get install aptitude
 - sudo aptitude install libgdal1-dev libproj-dev --assume-yes
-- Rscript -e 'install.packages("SSOAP", repos="http://www.omegahat.org/R", type="source")'
-- Rscript -e 'install.packages("XMLSchema", repos="http://www.omegahat.org/R", type="source")'
 
 global:
 - _R_CHECK_FORCE_SUGGESTS_=FALSE
