@@ -11,10 +11,8 @@ global:
 
 r_binary_packages:
 - rgdal
-# - soilDB
-# - sp
-# - raster
-# - RCurl
+- sp
+- raster
 
 r_github_packages:
 - bocinsky/FedData
