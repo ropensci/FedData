@@ -133,7 +133,7 @@ download_data <- function(url, destdir=getwd(), timestamping=T, nc=F, verbose=F,
       timevalue = base::file.info(destfile)$mtime)
     hand <- curl::new_handle()
     curl::handle_setopt(hand, .list = opts)
-    tryCatch(status <- curl::curl_download(url, destfile = temp.file, handle = hand), error=function(e) stop("Download of ",url," failed!"))
+    tryCatch(status <- curl::curl_fetch_disk(url, path = temp.file, handle = hand), error=function(e) stop("Download of ",url," failed!"))
     if(file.info(temp.file)$size > 0){
       file.copy(temp.file,destfile, overwrite=T)
     }
@@ -147,6 +147,6 @@ download_data <- function(url, destdir=getwd(), timestamping=T, nc=F, verbose=F,
       forbid_reuse = TRUE)
     hand <- curl::new_handle()
     curl::handle_setopt(hand, .list = opts)
-    tryCatch(status <- curl::curl_download(url, destfile = destfile, handle = hand), error=function(e) stop("Download of ",url," failed!"))
+    tryCatch(status <- curl::curl_fetch_disk(url, path = destfile, handle = hand), error=function(e) stop("Download of ",url," failed!"))
   }
 }

@@ -33,6 +33,7 @@
 #' if missing, all available chronologies are given.
 #' @param chronology.type A character vector of chronology type identifiers. Options include:
 #' \itemize{
+#' \item "ARSTND"
 #' \item "Low Pass Filter"
 #' \item "Residual"
 #' \item "Standard"
