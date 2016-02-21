@@ -17,15 +17,7 @@ Additional data sources are in the works, including global DEM resources ([ETOPO
 
 This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the [**sp**](http://cran.r-project.org/package=sp), [**raster**](http://cran.r-project.org/package=raster), and [**rgdal**](http://cran.r-project.org/package=rgdal) packages.
 
-I recommend [Homebrew](http://brew.sh) for installing *R* and GDAL:
-
-`brew install gdal --with-complete --with-opencll --with-unsupported --with-libkml --with-python`
-
-(adding the `--HEAD` tag will install the latest development version.)
-
-`brew install r --with-openblas`
-
-Remember, if installing *R* with Homebrew, you must **completely** remove old *R* installations, including the *R* framework, typically installed at `/Library/Frameworks`. This package has been built and tested on a source (Homebrew) install of *R* on Mac OS 10.10 (Yosemite), and has been successfully run on an Ubuntu Linux cluster, and binary installs of *R* on Mac OS 10.10 (Yosemite) and Windows 7.
+This package has been built and tested on a source (Homebrew) install of *R* on Mac OS 10.11 (Yosemite), and has been successfully run on an Ubuntu Linux cluster, and binary installs of *R* on Mac OS 10.11 (Yosemite) and Windows 7.
 
 ### Development
 + [Kyle Bocinsky](http://bocinsky.io) - Crow Canyon Archaeological Center, Cortez, CO
