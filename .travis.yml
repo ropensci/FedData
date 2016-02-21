@@ -2,19 +2,19 @@
 
 language: r
 
-before_install:
-- sudo apt-get install aptitude
-- sudo aptitude install libgdal-dev libproj-dev --assume-yes
+sudo: required
+
+#before_install:
+#- sudo apt-get install aptitude
+#- sudo aptitude install libgdal-dev libproj-dev --assume-yes
 
 global:
 - _R_CHECK_FORCE_SUGGESTS_=FALSE
 
-# r_binary_packages:
-# - rgdal
-# - soilDB
-# - sp
-# - raster
-# - RCurl
+r_binary_packages:
+- rgdal
+- sp
+- raster
 
 r_github_packages:
 - bocinsky/FedData
