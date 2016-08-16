@@ -14,6 +14,7 @@
 #' The directory will be created if missing. Defaults to "./EXTRACTIONS/NHD/".
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created?
 #' @return A list of Spatial* objects extracted from the National Hydrography Dataset.
+#' @import rgeos
 #' @export
 #' @examples
 #' \dontrun{
