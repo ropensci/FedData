@@ -158,6 +158,40 @@
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created? Defaults to FALSE.
 #' @return A named list containing the "spatial" and "tabular" data.
 #' @export
+#' @examples
+#' \dontrun{
+#' # Extract data for the Village Ecodynamics Project "VEPIIN" study area:
+#' # http://village.anth.wsu.edu
+#' vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), 
+#'      proj4string="+proj=utm +datum=NAD83 +zone=12")
+#' 
+#' # Get the daily GHCN data (GLOBAL)
+#' # Returns a list: the first element is the spatial locations of stations,
+#' # and the second is a list of the stations and their daily data
+#' GHCN.prcp <- get_ghcn_daily(template=vepPolygon, label="VEPIIN", elements=c('prcp'))
+#' 
+#' # Plot the VEP polygon
+#' plot(vepPolygon)
+#' 
+#' # Plot the spatial locations
+#' plot(GHCN.prcp$spatial, pch=1, add=T)
+#' legend('bottomleft', pch=1, legend="GHCN Precipitation Records")
+#' 
+#' # Elements for which you require the same data
+#' # (i.e., minimum and maximum temperature for the same days)
+#' # can be standardized using standardize==T
+#' GHCN.temp <- get_ghcn_daily(template=vepPolygon, 
+#'      label="VEPIIN", 
+#'      elements=c('tmin','tmax'), 
+#'      standardize=T)
+#' 
+#' # Plot the VEP polygon
+#' plot(vepPolygon)
+#' 
+#' # Plot the spatial locations
+#' plot(GHCN.temp$spatial, pch=1, add=T)
+#' legend('bottomleft', pch=1, legend="GHCN Temperature Records")
+#' }
 get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./RAW/GHCN/", extraction.dir="./EXTRACTIONS/GHCN/", standardize=F, force.redo=F){
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   
@@ -246,6 +280,7 @@ get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./
 #' @param force.redo If this weather station has been downloaded before, should it be updated? Defaults to FALSE.
 #' @return A character string representing the full local path of the GHCN station data.
 #' @export
+#' @keywords internal
 download_ghcn_daily_station <- function(ID, raw.dir, force.redo=F){
   
   dir.create(raw.dir, recursive=T, showWarnings=F)
@@ -411,6 +446,7 @@ download_ghcn_daily_station <- function(ID, raw.dir, force.redo=F){
 #' @param force.redo If this weather station has been downloaded before, should it be updated? Defaults to FALSE.
 #' @return A named list of \code{\link{data.frame}s}, one for each \code{elements}.
 #' @export
+#' @keywords internal
 get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, force.redo=F){
   
   file <- download_ghcn_daily_station(ID=ID, raw.dir=paste(raw.dir,"/DAILY/",sep=''), force.redo=force.redo)
@@ -476,6 +512,7 @@ get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, fo
 #' @return A \code{SpatialPolygonsDataFrame} of the GHCN stations within
 #' the specified \code{template}
 #' @export
+#' @keywords internal
 get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
   if(!is.null(template) & !(class(template) %in% c("SpatialPolygonsDataFrame","SpatialPolygons","character"))){
     template <- polygon_from_extent(template)
@@ -520,6 +557,7 @@ get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
 #' @param station.data A named list containing station data
 #' @return A \code{data.frame} of the containing the unwrapped station data
 #' @export
+#' @keywords internal
 station_to_data_frame <- function(station.data){
   data.list <- lapply(1:length(station.data),function(i){
     X <- station.data[[i]]

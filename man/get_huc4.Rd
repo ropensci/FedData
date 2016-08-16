@@ -22,4 +22,5 @@ the specified \code{template}.
 \code{get_huc4} returns a \code{SpatialPolygonsDataFrame} of the HUC4 regions within
 the specified \code{template}. If template is not provided, returns the entire HUC4 dataset.
 }
+\keyword{internal}
 

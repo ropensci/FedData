@@ -6,6 +6,7 @@
 #' @import data.table
 #' @import sp
 #' @export
+#' @keywords internal
 pkg_test <- function(x){
   if(grepl("/",x)){
     pkgName <- basename(x)
@@ -29,6 +30,7 @@ pkg_test <- function(x){
 #' @param n The number of characters to retrieve.
 #' @return A character string.
 #' @export
+#' @keywords internal
 substr_right <- function(x, n){
   substr(x, nchar(x)-n+1, nchar(x))
 }
@@ -40,6 +42,7 @@ substr_right <- function(x, n){
 #' the function will attempt to get the projection from x using \code{\link{projection}}
 #' @return A SpatialPolygons object.
 #' @export
+#' @keywords internal
 polygon_from_extent <- function(x, proj4string=NULL){
   if(is.null(proj4string)){
     proj4string <- raster::projection(x)
@@ -54,11 +57,12 @@ polygon_from_extent <- function(x, proj4string=NULL){
   return(extent.SP)
 }
 
-#'Turn an SpatialPolygons object into a SpatialPolygonsDataFrame.
+#'Turn a SpatialPolygons object into a SpatialPolygonsDataFrame.
 #'
 #' @param x An SpatialPolygons object.
 #' @return A SpatialPolygonsDataFrame object.
 #' @export
+#' @keywords internal
 spdf_from_polygon <- function(x){
   IDs <- sapply((methods::slot(x, "polygons")), function(x){methods::slot(x, "ID")})
   df <- data.frame(rep(0, length(IDs)), row.names=IDs)
@@ -72,6 +76,7 @@ spdf_from_polygon <- function(x){
 #' @param rows Is x a matrix?
 #' @return A logical vector of the same length as x.
 #' @export
+#' @keywords internal
 sequential_duplicated <- function(x, rows=F){
   if(!rows){
     duplicates <- c(FALSE,unlist(lapply(1:(length(x)-1), function(i){duplicated(x[i:(i+1)])[2]})))
@@ -89,6 +94,7 @@ sequential_duplicated <- function(x, rows=F){
 #' @param n A numeric vector
 #' @return A logical vector of the same length as x
 #' @export
+#' @keywords internal
 unwrap_rows <- function(mat,n){
   n <- rep_len(n,nrow(mat))
   i <- 0
@@ -113,6 +119,7 @@ unwrap_rows <- function(mat,n){
 #' @param progress Should a progress bar be shown with cURL output?
 #' @return A logical vector of the same length as x.
 #' @export
+#' @keywords internal
 download_data <- function(url, destdir=getwd(), timestamping=T, nc=F, verbose=F, progress=F){
   
   destdir <- normalizePath(destdir)

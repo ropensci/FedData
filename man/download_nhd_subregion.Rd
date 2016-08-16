@@ -22,4 +22,5 @@ A character string representing the full local path of the downloaded zip file.
 HUC4 subregion are specified by a unique character string, best obtained using the \code{\link{get_huc4}} function.
 \code{download_nhd_subregion} returns the path to the downloaded zip file.
 }
+\keyword{internal}
 

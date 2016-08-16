@@ -19,4 +19,5 @@ A \code{data.frame} of the containing the unwrapped station data
 This function unwraps the station data and merges all data into a single data frame, 
 with the first column being in the \code{Date} class.
 }
+\keyword{internal}
 

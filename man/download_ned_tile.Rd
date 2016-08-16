@@ -27,4 +27,5 @@ Tiles are specified by a resolution, northing, and westing; northing and westing
 northwest corner of each NED tile, in degrees; tiles are 1x1 degree.
 Tiles are downloaded in zipped ESRI ArcGrid format. \code{downloadNED} returns the path to the downloaded zip file.
 }
+\keyword{internal}
 

@@ -21,4 +21,5 @@ are reported to the user. This function automatically recognizes Schweingruber-t
 \details{
 This wraps two other functions: \code{\link{read_crn_metadata}} \code{\link{read_crn_data}}.
 }
+\keyword{internal}
 

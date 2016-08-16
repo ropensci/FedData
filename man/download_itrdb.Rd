@@ -22,4 +22,5 @@ This function includes improvements to the \code{\link{read_crn}} function from 
 for the Schweingruber-type Tucson format. Chronologies that are unable to be read
 are reported to the user.
 }
+\keyword{internal}
 

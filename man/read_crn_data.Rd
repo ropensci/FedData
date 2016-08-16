@@ -21,4 +21,5 @@ for the Schweingruber-type Tucson format. Chronologies that are unable to be rea
 are reported to the user. The user (or \code{\link{read_crn}}) must tell the function whether
 the file is a Schweingruber-type chronology.
 }
+\keyword{internal}
 

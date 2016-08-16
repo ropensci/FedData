@@ -18,4 +18,5 @@ A logical vector of the same length as x
 A function that unwraps a matrix and only keeps the first n elements
 n can be either a constant (in which case it will be repeated), or a vector
 }
+\keyword{internal}
 

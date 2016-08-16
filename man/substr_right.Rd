@@ -17,4 +17,5 @@ A character string.
 \description{
 Get the rightmost "n" characters of a character string.
 }
+\keyword{internal}
 

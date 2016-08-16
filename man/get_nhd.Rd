@@ -31,4 +31,24 @@ A list of Spatial* objects extracted from the National Hydrography Dataset.
 \code{get_nhd} returns a list of Spatial* objects extracted 
 from the National Hydrography Dataset.
 }
+\examples{
+\dontrun{
+# Extract data for the Village Ecodynamics Project "VEPIIN" study area:
+# http://village.anth.wsu.edu
+vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), 
+     proj4string="+proj=utm +datum=NAD83 +zone=12")
+
+# Get the NHD (USA ONLY)
+NHD <- get_nhd(template=vepPolygon, label="VEPIIN")
+
+# Plot the VEP polygon
+plot(vepPolygon)
+
+# Plot the NHD data
+plot(NHD$NHDFlowline, add=T)
+plot(NHD$NHDLine, add=T)
+plot(NHD$NHDArea, col='black', add=T)
+plot(NHD$NHDWaterbody, col='black', add=T)
+}
+}
 

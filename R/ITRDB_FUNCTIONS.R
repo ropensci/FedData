@@ -49,6 +49,23 @@
 #' @param force.redo If an extraction already exists, should a new one be created? Defaults to FALSE.
 #' @return A named list containing the "metadata", "widths", and "depths" data. 
 #' @export
+#' @examples
+#' \dontrun{
+#' # Extract data for the Village Ecodynamics Project "VEPIIN" study area:
+#' # http://village.anth.wsu.edu
+#' vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), 
+#'      proj4string="+proj=utm +datum=NAD83 +zone=12")
+#' 
+#' # Get the ITRDB records
+#' ITRDB <- get_itrdb(template=vepPolygon, label="VEPIIN", makeSpatial=T)
+#' 
+#' # Plot the VEP polygon
+#' plot(vepPolygon)
+#' 
+#' # Map the locations of the tree ring chronologies
+#' plot(ITRDB$metadata, pch=1, add=T)
+#' legend('bottomleft', pch=1, legend="ITRDB chronologies")
+#' }
 get_itrdb <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=NULL, species=NULL, measurement.type=NULL, chronology.type=NULL, makeSpatial=F, raw.dir="./RAW/ITRDB/", extraction.dir="./EXTRACTIONS/ITRDB/", force.redo=FALSE){  
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   
@@ -146,6 +163,7 @@ get_itrdb <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=N
 #' @param force.redo If a download already exists, should a new one be created? Defaults to FALSE.
 #' @return A data.table containing all of the ITRDB data. 
 #' @export
+#' @keywords internal
 download_itrdb <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   
@@ -250,6 +268,7 @@ download_itrdb <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
 #' @param file A character string path pointing to a \code{*.crn} file to be read.
 #' @return A list containing the metadata and chronology.
 #' @export
+#' @keywords internal
 read_crn <- function(file){
   id <- toupper(gsub(".crn","",basename(file)))
   
@@ -337,6 +356,7 @@ read_crn <- function(file){
 #' @param SCHWEINGRUBER Is the file in the Schweingruber-type Tucson format?
 #' @return A data.frame containing the metadata.
 #' @export
+#' @keywords internal
 read_crn_metadata <- function(file,SCHWEINGRUBER){
   id <- toupper(gsub("\\.crn","",basename(file)))
   id <- gsub("_CRNS","",id)
@@ -513,6 +533,7 @@ read_crn_metadata <- function(file,SCHWEINGRUBER){
 #' @param SCHWEINGRUBER Is the file in the Schweingruber-type Tucson format?
 #' @return A data.frame containing the data, or if \code{SCHWEINGRUBER==T}, a list containing four types of data.
 #' @export
+#' @keywords internal
 read_crn_data <- function(file,SCHWEINGRUBER){  
   if(!SCHWEINGRUBER){
     years <- as.character(utils::read.fwf(file,c(6,3,13,18,6,5,6,9,6,5),skip=1,n=1,colClasses = "character", strip.white=T, stringsAsFactors=F))[9:10]

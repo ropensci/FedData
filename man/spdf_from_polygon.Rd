@@ -2,7 +2,7 @@
 % Please edit documentation in R/UTILITY_FUNCTIONS.R
 \name{spdf_from_polygon}
 \alias{spdf_from_polygon}
-\title{Turn an SpatialPolygons object into a SpatialPolygonsDataFrame.}
+\title{Turn a SpatialPolygons object into a SpatialPolygonsDataFrame.}
 \usage{
 spdf_from_polygon(x)
 }
@@ -13,6 +13,7 @@ spdf_from_polygon(x)
 A SpatialPolygonsDataFrame object.
 }
 \description{
-Turn an SpatialPolygons object into a SpatialPolygonsDataFrame.
+Turn a SpatialPolygons object into a SpatialPolygonsDataFrame.
 }
+\keyword{internal}
 

@@ -17,4 +17,5 @@ A logical vector of the same length as x.
 \description{
 Get a logical vector of which elements in a vector are sequentially duplicated.
 }
+\keyword{internal}
 

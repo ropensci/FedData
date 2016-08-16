@@ -19,4 +19,5 @@ A character string representing the full local path of the GHCN station data.
 \description{
 Download the daily data for a GHCN weather station.
 }
+\keyword{internal}
 

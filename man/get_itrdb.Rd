@@ -72,4 +72,22 @@ and names of extracted ITRDB chrononlogies,
 \item "depths": A matrix of tree-ring sample depths.
 }
 }
+\examples{
+\dontrun{
+# Extract data for the Village Ecodynamics Project "VEPIIN" study area:
+# http://village.anth.wsu.edu
+vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), 
+     proj4string="+proj=utm +datum=NAD83 +zone=12")
+
+# Get the ITRDB records
+ITRDB <- get_itrdb(template=vepPolygon, label="VEPIIN", makeSpatial=T)
+
+# Plot the VEP polygon
+plot(vepPolygon)
+
+# Map the locations of the tree ring chronologies
+plot(ITRDB$metadata, pch=1, add=T)
+legend('bottomleft', pch=1, legend="ITRDB chronologies")
+}
+}
 

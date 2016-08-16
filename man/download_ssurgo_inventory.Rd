@@ -15,4 +15,5 @@ A character string representing the full local path of the SSURGO study areas zi
 \description{
 Download a zipped directory containing a shapefile of the SSURGO study areas.
 }
+\keyword{internal}
 

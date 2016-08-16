@@ -12,4 +12,5 @@ pkg_test(x)
 \description{
 This is a convenience function that checks whether a package is installed, and if not, installs it.
 }
+\keyword{internal}
 

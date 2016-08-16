@@ -30,4 +30,5 @@ in the template, and
 \item "tabular": A named list of \code{\link{data.frame}s} with the SSURGO tabular data.
 }
 }
+\keyword{internal}
 

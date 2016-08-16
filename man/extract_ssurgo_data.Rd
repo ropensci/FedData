@@ -19,4 +19,5 @@ A list of extracted SSURGO tabular data.
 \code{extract_ssurgo_data} creates a directed graph of the joins in a SSURGO tabular dataset,
 and then iterates through the tables, only retaining data pertinant to a set of mapunits.
 }
+\keyword{internal}
 

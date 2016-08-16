@@ -15,4 +15,5 @@ A character string representing the full local path of the HUC4 zipped directory
 \description{
 Download a zipped directory containing a shapefile of the HUC4 subregions of the NHD.
 }
+\keyword{internal}
 

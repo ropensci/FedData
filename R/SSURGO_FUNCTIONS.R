@@ -20,6 +20,35 @@
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created? Defaults to FALSE.
 #' @return A named list containing the "spatial" and "tabular" data.
 #' @export
+#' @examples
+#' \dontrun{
+#' # Extract data for the Village Ecodynamics Project "VEPIIN" study area:
+#' # http://village.anth.wsu.edu
+#' vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), 
+#'      proj4string="+proj=utm +datum=NAD83 +zone=12")
+#' 
+#' # Get the NRCS SSURGO data (USA ONLY)
+#' SSURGO.VEPIIN <- get_ssurgo(template=vepPolygon, label="VEPIIN")
+#' 
+#' # Plot the VEP polygon
+#' plot(vepPolygon)
+#' 
+#' # Plot the SSURGO mapunit polygons
+#' plot(SSURGO.VEPIIN$spatial, lwd=0.1, add=T)
+#' 
+#' # Or, download by Soil Survey Area names
+#' SSURGO.areas <- get_ssurgo(template=c("CO670","CO075"), label="CO_TEST")
+#' 
+#' # Let's just look at spatial data for CO675
+#' SSURGO.areas.CO675 <- SSURGO.areas$spatial[SSURGO.areas$spatial$AREASYMBOL=="CO075",]
+#' 
+#' # And get the NED data under them for pretty plotting
+#' NED.CO675 <- get_ned(template=SSURGO.areas.CO675, label="SSURGO_CO675")
+#' 
+#' # Plot the SSURGO mapunit polygons, but only for CO675
+#' plot(NED.CO675)
+#' plot(SSURGO.areas.CO675, lwd=0.1, add=T)
+#' }
 get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir="./EXTRACTIONS/SSURGO/", force.redo=FALSE){  
   
   vectors.dir <- paste(extraction.dir,"/",label,"/spatial",sep='')
@@ -132,6 +161,7 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' @return A character string representing the full local path of the SSURGO study areas zipped directory.
 #' @export
+#' @keywords internal
 download_ssurgo_inventory <- function(raw.dir){
   # Import the shapefile of SSURGO study areas.
   # This is available at
@@ -154,6 +184,7 @@ download_ssurgo_inventory <- function(raw.dir){
 #' @return A \code{SpatialPolygonsDataFrame} of the SSURGO study areas within
 #' the specified \code{template}.
 #' @export
+#' @keywords internal
 get_ssurgo_inventory <- function(template=NULL, raw.dir){
   # If there is a template, only download the areas in the template
   # Thanks to Dylan Beaudette for this method!
@@ -232,6 +263,7 @@ get_ssurgo_inventory <- function(template=NULL, raw.dir){
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' @return A character string representing the full local path of the SSURGO study areas zipped directory.
 #' @export
+#' @keywords internal
 download_ssurgo_study_area <- function(area, date, raw.dir){
   
   # Try to download with the state database, otherwise grab the US
@@ -261,6 +293,7 @@ download_ssurgo_study_area <- function(area, date, raw.dir){
 #' @return A \code{SpatialPolygonsDataFrame} of the SSURGO study areas within
 #' the specified \code{template}.
 #' @export
+#' @keywords internal
 get_ssurgo_study_area <- function(template=NULL, area, date, raw.dir){
   tmpdir <- tempfile()
   if (!dir.create(tmpdir))
@@ -330,6 +363,7 @@ get_ssurgo_study_area <- function(template=NULL, area, date, raw.dir){
 #' defining which mapunits to retain.
 #' @return A list of extracted SSURGO tabular data.
 #' @export
+#' @keywords internal
 extract_ssurgo_data <- function(tables,mapunits){
   
   mapping <- tables[['mdstatrshipdet']]

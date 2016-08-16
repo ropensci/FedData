@@ -21,4 +21,5 @@ A character string representing the full local path of the SSURGO study areas zi
 \code{download_ssurgo_study_area} first tries to download data including a state-specific Access
 template, then the general US template.
 }
+\keyword{internal}
 

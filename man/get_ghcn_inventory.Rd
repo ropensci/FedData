@@ -28,4 +28,5 @@ the specified \code{template}. If template is not provided, returns the entire G
 Stations with multiple elements will have multiple points. This allows for easy mapping of stations
 by element availability.
 }
+\keyword{internal}
 

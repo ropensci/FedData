@@ -36,4 +36,34 @@ in the template, and
 \item "tabular": A named list of \code{\link{data.frame}s} with the SSURGO tabular data.
 }
 }
+\examples{
+\dontrun{
+# Extract data for the Village Ecodynamics Project "VEPIIN" study area:
+# http://village.anth.wsu.edu
+vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), 
+     proj4string="+proj=utm +datum=NAD83 +zone=12")
+
+# Get the NRCS SSURGO data (USA ONLY)
+SSURGO.VEPIIN <- get_ssurgo(template=vepPolygon, label="VEPIIN")
+
+# Plot the VEP polygon
+plot(vepPolygon)
+
+# Plot the SSURGO mapunit polygons
+plot(SSURGO.VEPIIN$spatial, lwd=0.1, add=T)
+
+# Or, download by Soil Survey Area names
+SSURGO.areas <- get_ssurgo(template=c("CO670","CO075"), label="CO_TEST")
+
+# Let's just look at spatial data for CO675
+SSURGO.areas.CO675 <- SSURGO.areas$spatial[SSURGO.areas$spatial$AREASYMBOL=="CO075",]
+
+# And get the NED data under them for pretty plotting
+NED.CO675 <- get_ned(template=SSURGO.areas.CO675, label="SSURGO_CO675")
+
+# Plot the SSURGO mapunit polygons, but only for CO675
+plot(NED.CO675)
+plot(SSURGO.areas.CO675, lwd=0.1, add=T)
+}
+}
 

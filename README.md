@@ -17,7 +17,7 @@ Additional data sources are in the works, including global DEM resources ([ETOPO
 
 This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the [**sp**](http://cran.r-project.org/package=sp), [**raster**](http://cran.r-project.org/package=raster), and [**rgdal**](http://cran.r-project.org/package=rgdal) packages.
 
-This package has been built and tested on a source (Homebrew) install of *R* on Mac OS 10.11 (El Capitan), and has been successfully run on an Ubuntu Linux cluster, and binary installs of *R* on Mac OS 10.11 and Windows 7.
+This package has been built and tested on a source (Homebrew) install of *R* on Mac OS 10.11 (El Capitan), and has been successfully run on Ubuntu 16.04.1 LTS and binary installs of *R* on Mac OS 10.11 and Windows 10.
 
 ### Development
 + [Kyle Bocinsky](http://bocinsky.io) - Crow Canyon Archaeological Center, Cortez, CO

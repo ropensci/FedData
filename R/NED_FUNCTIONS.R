@@ -15,6 +15,20 @@
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created?
 #' @return A \code{RasterLayer} DEM cropped to the extent of the template.
 #' @export
+#' @examples
+#' \dontrun{
+#' # Extract data for the Village Ecodynamics Project "VEPIIN" study area:
+#' # http://village.anth.wsu.edu
+#' vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), 
+#'      proj4string="+proj=utm +datum=NAD83 +zone=12")
+#' 
+#' # Get the NED (USA ONLY)
+#' # Returns a raster
+#' NED <- get_ned(template=vepPolygon, label="VEPIIN")
+#' 
+#' # Plot with raster::plot
+#' plot(NED)
+#' }
 get_ned <- function(template, label, res="1", raw.dir="./RAW/NED/", extraction.dir="./EXTRACTIONS/NED/", force.redo=F){  
   
   rasters.dir <- paste(extraction.dir,"/",label,"/rasters",sep='')
@@ -80,6 +94,7 @@ get_ned <- function(template, label, res="1", raw.dir="./RAW/NED/", extraction.d
 #' The directory will be created if missing. Defaults to "./RAW/NED/".
 #' @return A character string representing the full local path of the downloaded directory.
 #' @export
+#' @keywords internal
 download_ned_tile <- function(res="1", tileNorthing, tileWesting, raw.dir){
   
   destdir <- paste(raw.dir,'/',res, sep='')
@@ -113,6 +128,7 @@ download_ned_tile <- function(res="1", tileNorthing, tileWesting, raw.dir){
 #' The directory will be created if missing. Defaults to "./RAW/NED/".
 #' @return A \code{RasterLayer} cropped within the specified \code{template}.
 #' @export
+#' @keywords internal
 get_ned_tile <- function(template=NULL, res="1", tileNorthing, tileWesting, raw.dir){
   tmpdir <- tempfile()
   if (!dir.create(tmpdir))

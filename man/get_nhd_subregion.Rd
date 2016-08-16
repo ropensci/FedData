@@ -27,4 +27,5 @@ the specified \code{template}.
 \code{get_nhd_subregion} returns a list of \code{SpatialPolygonsDataFrame}s of the layers of the HUC4 subregion,
  within the specified \code{template}. If template is not provided, returns the entire HUC4 subregion.
 }
+\keyword{internal}
 

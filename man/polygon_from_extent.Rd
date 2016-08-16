@@ -18,4 +18,5 @@ A SpatialPolygons object.
 \description{
 Turn an extent object into a polygon
 }
+\keyword{internal}
 

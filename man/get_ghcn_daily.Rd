@@ -176,4 +176,39 @@ in the template, and
 The name of each list item is the station ID.
 }
 }
+\examples{
+\dontrun{
+# Extract data for the Village Ecodynamics Project "VEPIIN" study area:
+# http://village.anth.wsu.edu
+vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), 
+     proj4string="+proj=utm +datum=NAD83 +zone=12")
+
+# Get the daily GHCN data (GLOBAL)
+# Returns a list: the first element is the spatial locations of stations,
+# and the second is a list of the stations and their daily data
+GHCN.prcp <- get_ghcn_daily(template=vepPolygon, label="VEPIIN", elements=c('prcp'))
+
+# Plot the VEP polygon
+plot(vepPolygon)
+
+# Plot the spatial locations
+plot(GHCN.prcp$spatial, pch=1, add=T)
+legend('bottomleft', pch=1, legend="GHCN Precipitation Records")
+
+# Elements for which you require the same data
+# (i.e., minimum and maximum temperature for the same days)
+# can be standardized using standardize==T
+GHCN.temp <- get_ghcn_daily(template=vepPolygon, 
+     label="VEPIIN", 
+     elements=c('tmin','tmax'), 
+     standardize=T)
+
+# Plot the VEP polygon
+plot(vepPolygon)
+
+# Plot the spatial locations
+plot(GHCN.temp$spatial, pch=1, add=T)
+legend('bottomleft', pch=1, legend="GHCN Temperature Records")
+}
+}
 

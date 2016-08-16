@@ -21,4 +21,5 @@ the specified \code{template}.
 \code{get_ssurgo_inventory} returns a \code{SpatialPolygonsDataFrame} of the SSURGO study areas within
 the specified \code{template}. If template is not provided, returns the entire SSURGO inventory of study areas.
 }
+\keyword{internal}
 

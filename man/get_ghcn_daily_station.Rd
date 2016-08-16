@@ -163,4 +163,5 @@ A named list of \code{\link{data.frame}s}, one for each \code{elements}.
 each \code{elements}. If \code{elements} is undefined, it returns all available weather
 tables for the station
 }
+\keyword{internal}
 
