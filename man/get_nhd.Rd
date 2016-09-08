@@ -4,7 +4,7 @@
 \alias{get_nhd}
 \title{Download and crop the National Hydrography Dataset.}
 \usage{
-get_nhd(template, label, res = "medium", raw.dir = "./RAW/NHD/",
+get_nhd(template, label, raw.dir = "./RAW/NHD/",
   extraction.dir = "./EXTRACTIONS/NHD/", force.redo = FALSE)
 }
 \arguments{
@@ -12,9 +12,6 @@ get_nhd(template, label, res = "medium", raw.dir = "./RAW/NHD/",
 as a template for cropping.}
 
 \item{label}{A character string naming the study area.}
-
-\item{res}{A character string defining the resolution of the NHD to download.
-Either "medium" (the default), or "high".}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
 The directory will be created if missing. Defaults to "./RAW/NHD/".}

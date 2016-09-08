@@ -5,16 +5,13 @@
 \title{Download and crop data from a zipped HUC4 subregion
 of the National Hydrography Dataset.}
 \usage{
-get_nhd_subregion(template = NULL, area, res, raw.dir)
+get_nhd_subregion(template = NULL, area, raw.dir)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve 
 as a template for cropping.}
 
 \item{area}{A 4-character string indicating the HUC4 NHD subregion to download and crop.}
-
-\item{res}{A character string defining the resolution of the NHD to download.
-Either "medium" (the default), or "high".}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
 The directory will be created if missing.}

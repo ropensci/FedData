@@ -4,13 +4,10 @@
 \alias{download_nhd_subregion}
 \title{Download a zipped NHD HUC4 subregion.}
 \usage{
-download_nhd_subregion(area, res, raw.dir)
+download_nhd_subregion(area, raw.dir)
 }
 \arguments{
 \item{area}{A 4-character string indicating the HUC4 NHD subregion to download.}
-
-\item{res}{A character string defining the resolution of the NHD to download.
-Either "medium" (the default), or "high".}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
 The directory will be created if missing.}
