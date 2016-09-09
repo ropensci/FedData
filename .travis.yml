@@ -9,14 +9,10 @@ r:
   - release
   - devel
 
-addons:
-  apt:
-    packages:
-      - libhdf5-7
-      - libhdf5-dev
-      - libhdf5-serial-dev
-      - libgdal-dev
-      - libproj-dev
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y aptitude
+  - sudo aptitude install libgdal-dev libproj-dev --assume-yes
 
 r_binary_packages:
   - rgdal
