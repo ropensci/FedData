@@ -1,15 +1,33 @@
-# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-os: osx
-osx_image: xcode8
-
 before_install:
-  - brew update
-  - brew upgrade
-  - brew install gdal
-  
+  - export CURWD=`pwd`
+  - sudo apt-get install libproj-dev libgeos++-dev
+  - cd
+  - wget http://download.osgeo.org/gdal/2.1.0/gdal-2.1.0.tar.gz
+  - tar zxf gdal-2.1.0.tar.gz
+  - cd gdal-2.1.0
+  - ./configure
+  - make
+  - sudo make install
+  - sudo ldconfig
+  - cd $CURWD
+
 language: r
+
+sudo: required
+
+warnings_are_errors: false
+
+r_packages: roxygen2
+
 cache: packages
 r:
   - oldrel
   - release
   - devel
+  
+r_github_packages: 
+  - bocinsky/FedData
+  - jimhester/covr
+
+after_success:
+  - Rscript -e 'covr::codecov()'
