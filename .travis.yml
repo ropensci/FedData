@@ -10,6 +10,7 @@ apt-packages:
   - libgdal1h
   - libhdf5-dev
   - libhdf5-serial-dev
+  - libhdf5-7
   - libgdal-dev
   - libgdal1-dev
 
