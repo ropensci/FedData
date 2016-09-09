@@ -1,18 +1,25 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: r
-sudo: required
-cache: packages
+before_install:
+  - export CURWD=`pwd`
+  - sudo apt-get install libproj-dev libgeos-dev
+  - wget http://download.osgeo.org/gdal/2.1.0/gdal-2.1.0.tar.gz
+  - tar zxf gdal-2.1.0.tar.gz
+  - cd gdal-2.1.0
+  - ./configure
+  - make
+  - sudo make install
+  - sudo ldconfig
+  - cd $CURWD
 
+language: r
+cache: packages
 r:
   - oldrel
   - release
   - devel
 
-before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y aptitude
-  - sudo aptitude install libgdal1-dev libproj-dev --assume-yes
+sudo: required
 
 r_binary_packages:
   - rgdal
