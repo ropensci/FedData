@@ -1,6 +1,7 @@
-# Sample .travis.yml for R projects from https://github.com/craigcitro/r-travis
+# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 language: r
+sudo: required
 cache: packages
 
 r:
@@ -8,30 +9,5 @@ r:
   - release
   - devel
 
-sudo: required
-
-addons:
-  apt:
-    packages:
-      - libgdal-dev
-      - libproj-dev
-
-#before_install:
-#- sudo apt-get install aptitude
-#- sudo aptitude install libgdal-dev libproj-dev --assume-yes
-
-#r_binary_packages:
-#- rgdal
-#- sp
-#- raster
-
-#r_github_packages:
-#- bocinsky/FedData
-
-# after_success:
-
-
-notifications:
-email:
-on_success: change
-on_failure: change
+r_binary_packages:
+  - rgdal
