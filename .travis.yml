@@ -1,10 +1,11 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-sudo: false
+os: osx
+osx_image: xcode8
 
 before_install:
-  - apt-get update -qq
-  - apt-get install -y aptitude
-  - aptitude install -y libproj-dev libgdal-dev
+  - brew update
+  - brew upgrade
+  - brew install gdal
   
 language: r
 cache: packages
