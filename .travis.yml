@@ -9,11 +9,5 @@ r:
   - release
   - devel
 
-before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get autoremove libgdal1 libcurl-dev libhdf5-1.8
-  - sudo apt-get install -y aptitude
-  - sudo aptitude install libgdal-dev libproj-dev --assume-yes
-
 r_binary_packages:
   - rgdal
