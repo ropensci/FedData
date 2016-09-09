@@ -1,4 +1,8 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+
+r_binary_packages:
+  - rgdal
+
 language: r
 cache: packages
 r:
@@ -7,3 +11,4 @@ r:
   - devel
 
 sudo: required
+
