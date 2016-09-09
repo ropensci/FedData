@@ -1,9 +1,10 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
-sudo: required
-dist: trusty
+sudo: false
 
 before_install:
-  - sudo apt-get install -y libproj-dev libcurl4-gnutls-dev libdap-dev libgdal-dev libgdal1h libhdf5-dev libhdf5-serial-dev libgdal-dev libgdal1-dev
+  - apt-get update -qq
+  - apt-get install -y aptitude
+  - aptitude install -y libproj-dev libgdal-dev
   
 language: r
 cache: packages
