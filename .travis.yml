@@ -1,7 +1,8 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
 before_install:
-  - sudo apt-get install libproj-dev libgeos-dev libgdal-dev
+  - sudo apt-get install aptitude
+  - sudo aptitude install libproj-dev libgdal-dev
 
 language: r
 cache: packages
