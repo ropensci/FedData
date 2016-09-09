@@ -11,6 +11,7 @@ r:
 
 before_install:
   - sudo apt-get -qq update
+  - sudo apt-get remove libgdal1 libcurl-dev libhdf5-1.8
   - sudo apt-get install -y aptitude
   - sudo aptitude install libgdal-dev libproj-dev --assume-yes
 
