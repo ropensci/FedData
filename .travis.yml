@@ -1,7 +1,18 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+sudo: required
+dist: trusty
 
-r_binary_packages:
-  - rgdal
+apt-packages:
+  - libproj-dev
+  - libcurl4-gnutls-dev
+  - libdap-dev
+  - libgdal-dev
+  - libgdal1h
+  - libhdf5-dev
+  - libhdf5-serial-dev
+  - libgdal-dev
+  - libgdal1-dev
+
 
 language: r
 cache: packages
@@ -10,5 +21,5 @@ r:
   - release
   - devel
 
-sudo: required
+
 
