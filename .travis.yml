@@ -2,25 +2,21 @@
 sudo: required
 dist: trusty
 
-apt-packages:
-  - libproj-dev
-  - libcurl4-gnutls-dev
-  - libdap-dev
-  - libgdal-dev
-  - libgdal1h
-  - libhdf5-dev
-  - libhdf5-serial-dev
-  - libhdf5-7
-  - libgdal-dev
-  - libgdal1-dev
-
-
+before_install:
+  - sudo apt-get install 
+  libproj-dev
+  libcurl4-gnutls-dev
+  libdap-dev
+  libgdal-dev
+  libgdal1h
+  libhdf5-dev
+  libhdf5-serial-dev
+  libgdal-dev
+  libgdal1-dev
+  
 language: r
 cache: packages
 r:
   - oldrel
   - release
   - devel
-
-
-
