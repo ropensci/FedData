@@ -4,9 +4,9 @@ language: r
 
 sudo: required
 
-#before_install:
-#- sudo apt-get install aptitude
-#- sudo aptitude install libgdal-dev libproj-dev --assume-yes
+before_install:
+- sudo apt-get install aptitude
+- sudo aptitude install libgdal-dev libproj-dev --assume-yes
 
 global:
 - _R_CHECK_FORCE_SUGGESTS_=FALSE
