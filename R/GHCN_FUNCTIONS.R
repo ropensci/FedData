@@ -257,7 +257,8 @@ get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./
   
   daily <- lapply(stations.sp$ID,function(station){
     message("(Down)Loading GHCN station data for station ",as.character(station))
-    return(get_ghcn_daily_station(ID=station, elements=elements, raw.dir=raw.dir, standardize=standardize, force.redo=force.redo))
+    tryCatch(station <- get_ghcn_daily_station(ID=station, elements=elements, raw.dir=raw.dir, standardize=standardize, force.redo=force.redo), error = function(e){message("Error (down)Loading GHCN station data for station ",as.character(station)); return(NULL)})
+    return(station)
   })
   names(daily) <- stations.sp$ID
   

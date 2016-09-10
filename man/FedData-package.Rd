@@ -21,8 +21,8 @@ Additional data sources are in the works, including global DEM resources (ETOPO1
 \tabular{ll}{
 Package: \tab FedData\cr
 Type: \tab FedData\cr
-Version: \tab 2.1.0\cr
-Date: \tab 2016-09-09\cr
+Version: \tab 2.1.1\cr
+Date: \tab 2016-09-10\cr
 License: \tab MIT\cr
 }
 
