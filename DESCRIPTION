@@ -36,7 +36,8 @@ Imports:
     rgdal,
     raster,
     Hmisc,
-    rgeos
+    rgeos,
+    readr
 Repository: CRAN
 NeedsCompilation: no
 RoxygenNote: 5.0.1
