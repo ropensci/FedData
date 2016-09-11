@@ -25,7 +25,8 @@ Description: Functions to automate downloading geospatial data available from
 License: MIT + file LICENSE
 Depends:
     R (>= 3.2.0),
-    sp
+    sp,
+    magrittr
 Imports:
     data.table,
     devtools,
@@ -37,7 +38,8 @@ Imports:
     raster,
     Hmisc,
     rgeos,
-    readr
+    readr,
+    dplyr
 Repository: CRAN
 NeedsCompilation: no
 RoxygenNote: 5.0.1
