@@ -269,6 +269,8 @@ get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, years = NUL
   })
   names(daily) <- stations.sp$ID
   
+  daily <- daily[!(lapply(daily,names) %>% sapply(length) < 2)]
+  
   daily.split <- lapply(as.character(elements),function(element){
     lapply(daily,'[[',element)
   })
