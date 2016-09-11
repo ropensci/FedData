@@ -152,6 +152,7 @@
 #' 07 = Ash, dust, sand, or other blowing obstruction\cr
 #' 18 = Snow or ice crystals\cr
 #' 20 = Rain or snow shower
+#' @param years A character string indicating which years to get.
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing. Defaults to "./RAW/GHCN/".
 #' @param extraction.dir A character string indicating where the extracted and cropped GHCN shapefiles should be put.
@@ -194,7 +195,7 @@
 #' plot(GHCN.temp$spatial, pch=1, add=T)
 #' legend('bottomleft', pch=1, legend="GHCN Temperature Records")
 #' }
-get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./RAW/GHCN/", extraction.dir="./EXTRACTIONS/GHCN/", standardize=F, force.redo=F){
+get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, years = NULL, raw.dir="./RAW/GHCN/", extraction.dir="./EXTRACTIONS/GHCN/", standardize=F, force.redo=F){
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   
   if(is.null(template) & is.null(label)){
@@ -228,6 +229,10 @@ get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, raw.dir="./
     if(length(missing.elements)>0) warning("Elements not available: ",paste(missing.elements,collapse = ", "))
   }
   elements <- unique(stations.sp$ELEMENT)
+  
+  if(!is.null(years)){
+    stations.sp <- stations.sp[stations.sp@data[,"YEAR_START"] <= min(years) & stations.sp@data[,"YEAR_END"] >= max(years),]
+  }
   
   if(standardize){
     stations.sp.splits <- split(as.character(stations.sp$ELEMENT),f=stations.sp$ID, drop=T)
