@@ -1,3 +1,5 @@
+# globalVariables(c(".", "ELEMENT","YEAR","MONTH","LONGITUDE","LATITUDE"))
+
 #' Download and crop the Global Historical Climate Network-Daily data.
 #'
 #' \code{get_ghcn_daily} returns a named list of length 2: 
@@ -446,6 +448,7 @@ download_ghcn_daily_station <- function(ID, raw.dir, force.redo=F){
 #' @param standardize Select only common year/month/day? Defaults to FALSE.
 #' @param force.redo If this weather station has been downloaded before, should it be updated? Defaults to FALSE.
 #' @return A named list of \code{\link{data.frame}s}, one for each \code{elements}.
+#' @import magrittr
 #' @export
 #' @keywords internal
 get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, force.redo=F){
@@ -467,19 +470,19 @@ get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, fo
   if(is.null(elements)){
     elements <- unique(daily$ELEMENT)
   }
-  
-  daily %<>% dplyr::filter(ELEMENT %in% toupper(elements))
+  elements <- toupper(elements)
+  daily %<>% dplyr::filter_(~ELEMENT %in% elements)
   missing.elements <- setdiff(toupper(elements),unique(daily$ELEMENT))
   if(length(missing.elements)>0) warning("Elements not available: ",paste(missing.elements,collapse = ", "))
   
-  daily %<>% dplyr::mutate_all(dplyr::funs(ifelse(. == -9999,NA,.)))
+  daily %<>% dplyr::mutate_all(dplyr::funs_(quote(ifelse(. == -9999,NA,.))))
   
   ## Separate by element
   out.list <- lapply(elements, function(element){
     return(
       daily %>%
-        dplyr::filter(ELEMENT == toupper(element)) %>%
-        dplyr::select(-ELEMENT)
+        dplyr::filter_(~ELEMENT == element) %>%
+        dplyr::select_(quote(-ELEMENT))
     )
   })
   
@@ -487,7 +490,7 @@ get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, fo
   if(standardize){
     yearMonths <- lapply(out.list, function(element){
       element %<>%
-        dplyr::arrange(YEAR,MONTH)
+        dplyr::arrange_(~YEAR,~MONTH)
       return(paste("Y",element[["YEAR"]],"M",element[["MONTH"]],sep=''))
     })
     
@@ -523,6 +526,7 @@ get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, fo
 #' The directory will be created if missing.
 #' @return A \code{SpatialPolygonsDataFrame} of the GHCN stations within
 #' the specified \code{template}
+#' @import magrittr
 #' @export
 #' @keywords internal
 get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
@@ -543,7 +547,7 @@ get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
   
   # Convert to SPDF
   stations.sp <- sp::SpatialPointsDataFrame(coords = station.inventory %>% 
-                                              dplyr::select(LONGITUDE,LATITUDE),
+                                              dplyr::select_(~LONGITUDE,~LATITUDE),
                                             data = station.inventory 
                                             %>% as.data.frame(),
                                             proj4string = sp::CRS("+proj=longlat +datum=WGS84"))
