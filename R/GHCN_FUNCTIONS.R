@@ -453,7 +453,138 @@ get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, fo
   file <- download_ghcn_daily_station(ID=ID, raw.dir=paste(raw.dir,"/DAILY/",sep=''), force.redo=force.redo)
   
   # GHCN files are fixed-width. The numbers here refer to those column widths.
-  daily <- readr::read_fwf(file,readr::fwf_widths(c(11,4,2,4,rep(c(5,1,1,1),31))))
+  daily <- readr::read_fwf(file,
+                           col_positions = readr::fwf_widths(c(11,4,2,4,rep(c(5,1,1,1),31))),
+                           col_types = readr::cols(
+                             X1 = readr::col_character(),
+                             X2 = readr::col_integer(),
+                             X3 = readr::col_character(),
+                             X4 = readr::col_character(),
+                             X5 = readr::col_integer(),
+                             X6 = readr::col_logical(),
+                             X7 = readr::col_character(),
+                             X8 = readr::col_character(),
+                             X9 = readr::col_integer(),
+                             X10 = readr::col_logical(),
+                             X11 = readr::col_character(),
+                             X12 = readr::col_character(),
+                             X13 = readr::col_integer(),
+                             X14 = readr::col_logical(),
+                             X15 = readr::col_character(),
+                             X16 = readr::col_character(),
+                             X17 = readr::col_integer(),
+                             X18 = readr::col_logical(),
+                             X19 = readr::col_character(),
+                             X20 = readr::col_character(),
+                             X21 = readr::col_integer(),
+                             X22 = readr::col_logical(),
+                             X23 = readr::col_character(),
+                             X24 = readr::col_character(),
+                             X25 = readr::col_integer(),
+                             X26 = readr::col_logical(),
+                             X27 = readr::col_character(),
+                             X28 = readr::col_character(),
+                             X29 = readr::col_integer(),
+                             X30 = readr::col_logical(),
+                             X31 = readr::col_character(),
+                             X32 = readr::col_character(),
+                             X33 = readr::col_integer(),
+                             X34 = readr::col_logical(),
+                             X35 = readr::col_character(),
+                             X36 = readr::col_character(),
+                             X37 = readr::col_integer(),
+                             X38 = readr::col_logical(),
+                             X39 = readr::col_character(),
+                             X40 = readr::col_character(),
+                             X41 = readr::col_integer(),
+                             X42 = readr::col_logical(),
+                             X43 = readr::col_character(),
+                             X44 = readr::col_character(),
+                             X45 = readr::col_integer(),
+                             X46 = readr::col_logical(),
+                             X47 = readr::col_character(),
+                             X48 = readr::col_character(),
+                             X49 = readr::col_integer(),
+                             X50 = readr::col_logical(),
+                             X51 = readr::col_character(),
+                             X52 = readr::col_character(),
+                             X53 = readr::col_integer(),
+                             X54 = readr::col_logical(),
+                             X55 = readr::col_character(),
+                             X56 = readr::col_character(),
+                             X57 = readr::col_integer(),
+                             X58 = readr::col_logical(),
+                             X59 = readr::col_character(),
+                             X60 = readr::col_character(),
+                             X61 = readr::col_integer(),
+                             X62 = readr::col_logical(),
+                             X63 = readr::col_character(),
+                             X64 = readr::col_character(),
+                             X65 = readr::col_integer(),
+                             X66 = readr::col_logical(),
+                             X67 = readr::col_character(),
+                             X68 = readr::col_character(),
+                             X69 = readr::col_integer(),
+                             X70 = readr::col_logical(),
+                             X71 = readr::col_character(),
+                             X72 = readr::col_character(),
+                             X73 = readr::col_integer(),
+                             X74 = readr::col_logical(),
+                             X75 = readr::col_character(),
+                             X76 = readr::col_character(),
+                             X77 = readr::col_integer(),
+                             X78 = readr::col_logical(),
+                             X79 = readr::col_character(),
+                             X80 = readr::col_character(),
+                             X81 = readr::col_integer(),
+                             X82 = readr::col_logical(),
+                             X83 = readr::col_character(),
+                             X84 = readr::col_character(),
+                             X85 = readr::col_integer(),
+                             X86 = readr::col_logical(),
+                             X87 = readr::col_character(),
+                             X88 = readr::col_character(),
+                             X89 = readr::col_integer(),
+                             X90 = readr::col_logical(),
+                             X91 = readr::col_character(),
+                             X92 = readr::col_character(),
+                             X93 = readr::col_integer(),
+                             X94 = readr::col_logical(),
+                             X95 = readr::col_character(),
+                             X96 = readr::col_character(),
+                             X97 = readr::col_integer(),
+                             X98 = readr::col_logical(),
+                             X99 = readr::col_character(),
+                             X100 = readr::col_character(),
+                             X101 = readr::col_integer(),
+                             X102 = readr::col_logical(),
+                             X103 = readr::col_character(),
+                             X104 = readr::col_character(),
+                             X105 = readr::col_integer(),
+                             X106 = readr::col_logical(),
+                             X107 = readr::col_character(),
+                             X108 = readr::col_character(),
+                             X109 = readr::col_integer(),
+                             X110 = readr::col_logical(),
+                             X111 = readr::col_character(),
+                             X112 = readr::col_character(),
+                             X113 = readr::col_integer(),
+                             X114 = readr::col_logical(),
+                             X115 = readr::col_character(),
+                             X116 = readr::col_character(),
+                             X117 = readr::col_integer(),
+                             X118 = readr::col_logical(),
+                             X119 = readr::col_character(),
+                             X120 = readr::col_character(),
+                             X121 = readr::col_integer(),
+                             X122 = readr::col_logical(),
+                             X123 = readr::col_character(),
+                             X124 = readr::col_character(),
+                             X125 = readr::col_integer(),
+                             X126 = readr::col_logical(),
+                             X127 = readr::col_character(),
+                             X128 = readr::col_character()
+                           ))
   names(daily)[1:4] <- c("STATION","YEAR","MONTH","ELEMENT")
   
   # If the user didn't specify target elements, get them all.
@@ -524,11 +655,23 @@ get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
   download_data(url=url, destdir=destdir)
   
   # GHCN files are fixed-width. The numbers here refer to those column widths.
-  station.inventory <- readr::read_fwf(paste(raw.dir,"ghcnd-inventory.txt",sep=''),readr::fwf_widths(c(11,1,8,1,9,1,4,1,4,1,4)))[,seq(1,11,2)]
+  station.inventory <- readr::read_fwf(paste(raw.dir,"ghcnd-inventory.txt",sep=''),readr::fwf_widths(c(11,1,8,1,9,1,4,1,4,1,4)), col_types = readr::cols(
+    X1 = readr::col_character(),
+    X2 = readr::col_character(),
+    X3 = readr::col_double(),
+    X4 = readr::col_character(),
+    X5 = readr::col_double(),
+    X6 = readr::col_character(),
+    X7 = readr::col_character(),
+    X8 = readr::col_character(),
+    X9 = readr::col_integer(),
+    X10 = readr::col_character(),
+    X11 = readr::col_integer()
+  ))[,seq(1,11,2)]
   names(station.inventory) <- c("ID","LATITUDE","LONGITUDE","ELEMENT","YEAR_START","YEAR_END")
   
   # Convert to SPDF
-  stations.sp <- sp::SpatialPointsDataFrame(coords=station.inventory[,c("LONGITUDE","LATITUDE")],station.inventory,proj4string=sp::CRS("+proj=longlat +datum=WGS84"))
+  stations.sp <- sp::SpatialPointsDataFrame(coords=station.inventory[,c("LONGITUDE","LATITUDE")],as.data.frame(station.inventory),proj4string=sp::CRS("+proj=longlat +datum=WGS84"))
   
   if(!is.null(elements)){
     stations.sp <- stations.sp[stations.sp$ELEMENT %in% toupper(elements),]
@@ -573,7 +716,7 @@ station_to_data_frame <- function(station.data){
     annual.records.unwrapped <- unwrap_rows(annual.records,n.days)
     
     dates <- as.Date(unlist(mapply(FUN = function(days,dates){paste(dates,days,sep="-")}, sapply(n.days,function(x){1:x}), paste(X$YEAR,X$MONTH,sep='-'))))
-
+    
     annual.records.unwrapped <- data.table::data.table(dates,annual.records.unwrapped)
     names(annual.records.unwrapped) <- c("DATE",names(station.data)[i])
     data.table::setkey(annual.records.unwrapped,"DATE")
