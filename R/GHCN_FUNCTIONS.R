@@ -609,13 +609,13 @@ get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, fo
   if(standardize){
     yearMonths <- lapply(out.list, function(element){
       element <- element[order(element$YEAR,element$MONTH),]
-      return(paste("Y",element[,c("YEAR")],"M",element[,c("MONTH")],sep=''))
+      return(paste("Y",element[["YEAR"]],"M",element[["MONTH"]],sep=''))
     })
     
     all.yearMonths <- Reduce(intersect,yearMonths)
     
     out.list <- lapply(out.list, function(element){
-      element.yearMonths <- paste("Y",element[,c("YEAR")],"M",element[,c("MONTH")],sep='')
+      element.yearMonths <- paste("Y",element[["YEAR"]],"M",element[["MONTH"]],sep='')
       return(element[match(all.yearMonths,element.yearMonths),])
     })
     
