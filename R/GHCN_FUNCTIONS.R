@@ -565,8 +565,9 @@ get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
   # Convert to SPDF
   stations.sp <- sp::SpatialPointsDataFrame(coords = station.inventory %>% 
                                               dplyr::select_(~LONGITUDE,~LATITUDE),
-                                            data = station.inventory 
-                                            %>% as.data.frame(),
+                                            data = station.inventory %>% 
+                                              dplyr::left_join(stations, by="ID") %>%
+                                              as.data.frame(),
                                             proj4string = sp::CRS("+proj=longlat +datum=WGS84"))
   
   if(!is.null(elements)){
