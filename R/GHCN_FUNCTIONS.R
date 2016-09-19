@@ -566,7 +566,8 @@ get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
   stations.sp <- sp::SpatialPointsDataFrame(coords = station.inventory %>% 
                                               dplyr::select_(~LONGITUDE,~LATITUDE),
                                             data = station.inventory %>% 
-                                              dplyr::left_join(stations, by="ID") %>%
+                                              dplyr::left_join(stations %>% dplyr::select_("ID","NAME"), by="ID") %>%
+                                              dplyr::select_("ID","NAME","LATITUDE","LONGITUDE","ELEMENT","YEAR_START","YEAR_END") %>%
                                               as.data.frame(),
                                             proj4string = sp::CRS("+proj=longlat +datum=WGS84"))
   
