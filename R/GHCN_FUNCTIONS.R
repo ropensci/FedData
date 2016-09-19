@@ -241,7 +241,7 @@ get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, years = NUL
   }
   
   # stations.sp <- stations.sp[,c("ID","ELEMENT","YEAR_START","YEAR_END")]
-  stations.sp <- stations.sp[!duplicated(stations.sp@data[,c("ID","LATITUDE","LONGITUDE")]),c("ID")]
+  stations.sp <- stations.sp[!duplicated(stations.sp@data[,c("ID","LATITUDE","LONGITUDE")]),c("ID", "NAME")]
   
   if(!force.redo){
     daily <- tryCatch(lapply(elements,function(element){readRDS(paste(tables.dir,"/",element,".Rds",sep=''))}), warning = function(w){return(NULL)})
