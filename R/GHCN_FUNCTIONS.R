@@ -545,12 +545,22 @@ get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){
   destdir <- raw.dir
   download_data(url=url, destdir=destdir)
   
+  url <- "ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt"
+  destdir <- raw.dir
+  download_data(url=url, destdir=destdir)
+  
   # GHCN files are fixed-width. The numbers here refer to those column widths.
   station.inventory <- readr::read_fwf(paste(raw.dir,"ghcnd-inventory.txt",sep=''),
                                        readr::fwf_positions(start = c(1,13,22,32,37,42),
                                                             end = c(11,20,30,35,40,45),
                                                             col_names = c("ID","LATITUDE","LONGITUDE","ELEMENT","YEAR_START","YEAR_END")),
                                        col_types = "cddcii")
+  
+  stations <- readr::read_fwf(paste(raw.dir,"ghcnd-stations.txt",sep=''),
+                              readr::fwf_positions(start = c(1,13,22,32,42),
+                                                   end = c(11,20,30,38,72),
+                                                   col_names = c("ID","LATITUDE","LONGITUDE","ELEVATION","NAME")),
+                              col_types = "cdddc")
   
   # Convert to SPDF
   stations.sp <- sp::SpatialPointsDataFrame(coords = station.inventory %>% 
