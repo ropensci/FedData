@@ -605,7 +605,7 @@ station_to_data_frame <- function(station.data){
     X <- station.data[[i]]
     
     # Get just the climate info
-    annual.records <- as.matrix(X[,3:33])
+    annual.records <- as.matrix(X[,4:34])
     
     # Get the number of days per month in the records
     n.days <- Hmisc::monthDays(as.Date(paste(X$YEAR,X$MONTH,'01',sep='-')))
