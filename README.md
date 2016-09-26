@@ -13,7 +13,7 @@ FedData
 * The [Global Historical Climatology Network (GHCN)](http://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn), coordinated by National Climatic Data Center at NOAA, and
 * The [International Tree Ring Data Bank (ITRDB)](http://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/tree-ring), coordinated by National Climatic Data Center at NOAA.
 
-Additional data sources are in the works, including global DEM resources ([ETOPO1](https://www.ngdc.noaa.gov/mgg/global/global.html), [STRM](http://www2.jpl.nasa.gov/srtm/)), global soils ([HWSD](http://webarchive.iiasa.ac.at/Research/LUC/External-World-soil-database/HTML/)), [MODIS](http://modis.gsfc.nasa.gov) satellite data products, the [National Atlas](http://nationalmap.gov/small_scale/) (US only), [Natural Earth](http://www.naturalearthdata.com), [PRISM](http://www.prism.oregonstate.edu), and [WorldClim](http://www.worldclim.org).
+Additional data sources are in the works, including global DEM resources ([ETOPO1](https://www.ngdc.noaa.gov/mgg/global/global.html), [STRM](http://www2.jpl.nasa.gov/srtm/)), global soils ([HWSD](http://webarchive.iiasa.ac.at/Research/LUC/External-World-soil-database/HTML/)), [MODIS](https://modis.gsfc.nasa.gov/) satellite data products, the [National Atlas](http://nationalmap.gov/small_scale/) (US only), [Natural Earth](http://www.naturalearthdata.com/), [PRISM](http://www.prism.oregonstate.edu/), and [WorldClim](http://www.worldclim.org/).
 
 This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the [**sp**](https://cran.r-project.org/package=sp), [**raster**](https://cran.r-project.org/package=raster), and [**rgdal**](https://cran.r-project.org/package=rgdal) packages.
 
@@ -24,7 +24,7 @@ This package has been built and tested on a source (Homebrew) install of *R* on 
 
 ### Contributors
 + [Dylan Beaudette](http://casoilresource.lawr.ucdavis.edu/people/dylan-e-beaudette/) - USDA-NRCS Soil Survey Office, Sonora, CA
-+ [Scott Chamberlain](http://scottchamberlain.info) - ROpenSci and Museum of Paleontology at UC Berkeley
++ [Scott Chamberlain](http://scottchamberlain.info/) - ROpenSci and Museum of Paleontology at UC Berkeley
 
 ### Install `FedData`
 + CRAN:
