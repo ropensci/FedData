@@ -12,17 +12,18 @@ This package contains scripts to automate downloading geospatial data available 
 \item The \href{http://nhd.usgs.gov}{National Hydrography Dataset} (USGS)
 \item The \href{http://websoilsurvey.sc.egov.usda.gov/}{Soil Survey Geographic} (SSURGO) database from the National Cooperative Soil Survey (NCSS), which is led by the Natural Resources Conservation Service (NRCS) under the USDA, and
 \item The \href{http://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn}{Global Historical Climatology Network} (GHCN), coordinated by National Climatic Data Center at NOAA.
+\item The \href{https://daymet.ornl.gov/}{Daymet} (GHCN), gridded estimates of daily weather parameters for North America, version 3, available from the Oak Ridge National Laboratory's Distributed Active Archive Center (DAAC).
 \item The \href{http://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/tree-ring}{International Tree Ring Data Bank} (ITRDB), coordinated by National Climatic Data Center at NOAA.
 }
 
-Additional data sources are in the works, including global DEM resources (ETOPO1, ETOPO5, ETOPO30, SRTM), global soils (HWSD), MODIS satellite data products, the National Atlas (US), Natural Earth, PRISM, and WorldClim.
+Additional data sources are in the works, including global soils (HWSD), MODIS satellite data products, the National Atlas (US), Natural Earth, and WorldClim.
 }
 \details{
 \tabular{ll}{
 Package: \tab FedData\cr
 Type: \tab FedData\cr
-Version: \tab 2.2.0\cr
-Date: \tab 2016-09-26\cr
+Version: \tab 2.3.0\cr
+Date: \tab 2016-09-29\cr
 License: \tab MIT\cr
 }
 
@@ -86,6 +87,14 @@ NED <- get_ned(template=vepPolygon,
 # Plot with raster::plot
 plot(NED)
 
+# Get the DAYMET (North America only)
+# Returns a raster
+DAYMET <- get_daymet(template=vepPolygon,
+               label="VEPIIN",
+               elements = c("prcp","tmin","tmax"),
+               years = 1980:1985)
+# Plot with raster::plot
+raster::plot(DAYMET$tmin$X1985.10.23)
 
 # Get the daily GHCN data (GLOBAL)
 # Returns a list: the first element is the spatial locations of stations,

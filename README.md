@@ -10,14 +10,15 @@ FedData
 * The [National Elevation Dataset (NED)](http://ned.usgs.gov) digital elevation models (1 and 1/3 arc-second; USGS)
 * The [National Hydrography Dataset (NHD)](http://nhd.usgs.gov) (USGS)
 * The [Soil Survey Geographic (SSURGO) database](http://websoilsurvey.sc.egov.usda.gov/) from the National Cooperative Soil Survey (NCSS), which is led by the Natural Resources Conservation Service (NRCS) under the USDA,
-* The [Global Historical Climatology Network (GHCN)](http://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn), coordinated by National Climatic Data Center at NOAA, and
+* The [Global Historical Climatology Network (GHCN)](http://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn), coordinated by National Climatic Data Center at NOAA,
+* The [Daymet](https://daymet.ornl.gov/) gridded estimates of daily weather parameters for North America, version 3, available from the Oak Ridge National Laboratory's Distributed Active Archive Center (DAAC), and
 * The [International Tree Ring Data Bank (ITRDB)](http://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/tree-ring), coordinated by National Climatic Data Center at NOAA.
 
-Additional data sources are in the works, including global DEM resources ([ETOPO1](https://www.ngdc.noaa.gov/mgg/global/global.html), [STRM](http://www2.jpl.nasa.gov/srtm/)), global soils ([HWSD](http://webarchive.iiasa.ac.at/Research/LUC/External-World-soil-database/HTML/)), [MODIS](https://modis.gsfc.nasa.gov/) satellite data products, the [National Atlas](http://nationalmap.gov/small_scale/) (US only), [Natural Earth](http://www.naturalearthdata.com/), [PRISM](http://www.prism.oregonstate.edu/), and [WorldClim](http://www.worldclim.org/).
+Additional data sources are in the works, including global DEM resources ([ETOPO1](https://www.ngdc.noaa.gov/mgg/global/global.html), [STRM](http://www2.jpl.nasa.gov/srtm/)), global soils ([HWSD](http://webarchive.iiasa.ac.at/Research/LUC/External-World-soil-database/HTML/)), [MODIS](https://modis.gsfc.nasa.gov/) satellite data products, the [National Atlas](http://nationalmap.gov/small_scale/) (US only), [Natural Earth](http://www.naturalearthdata.com/), and [WorldClim](http://www.worldclim.org/).
 
 This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the [**sp**](https://cran.r-project.org/package=sp), [**raster**](https://cran.r-project.org/package=raster), and [**rgdal**](https://cran.r-project.org/package=rgdal) packages.
 
-This package has been built and tested on a source (Homebrew) install of *R* on Mac OS 10.11 (El Capitan), and has been successfully run on Ubuntu 16.04.1 LTS and binary installs of *R* on Mac OS 10.11 and Windows 10.
+This package has been built and tested on a source (Homebrew) install of *R* on Mac OS 10.12 (Sierra), and has been successfully run on Ubuntu 16.04.1 LTS and binary installs of *R* on Mac OS 10.12 and Windows 10.
 
 ### Development
 + [Kyle Bocinsky](http://bocinsky.io) - Crow Canyon Archaeological Center, Cortez, CO
@@ -40,21 +41,14 @@ install_github("bocinsky/FedData")
 library(FedData)
 ```
 
-Some OS X systems have trouble installing the `rgdal` package from source. If your install fails, and you've installed the [Homebrew](http://brew.sh) version of GDAL and *R*, try the following command (from within *R*):
-```r
-install.packages("rgdal", configure.args="--with-proj-include=/usr/local/include --with-proj-lib=/usr/local/lib")
-
-# Then try the FedData install again
-install.packages('FedData')
-```
-
 ### Demonstration
 This demo script is available in the `/inst` folder at the location of the installed package.
 
 #### Load `FedData` and define a study area
 ```r
-# Load FedData
+# FedData Tester
 library(FedData)
+library(magrittr)
 
 # Set a directory for testing
 testDir <- "~/FedData Test"
@@ -71,14 +65,26 @@ vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000),
 #### Get and plot the National Elevation Dataset for the study area
 ```r
 # Get the NED (USA ONLY)
-# Returns a raster object
+# Returns a raster
 NED <- get_ned(template=vepPolygon,
                label="VEPIIN")
-
 # Plot with raster::plot
 raster::plot(NED)
 ```
 ![thing](inst/img/NED.png)
+
+#### Get and plot the Daymet dataset for the study area
+```r
+# Get the DAYMET (North America only)
+# Returns a raster
+DAYMET <- get_daymet(template=vepPolygon,
+               label="VEPIIN",
+               elements = c("prcp","tmax"),
+               years = 1980:1985)
+# Plot with raster::plot
+raster::plot(DAYMET$tmax$X1985.10.23)
+```
+![thing](inst/img/DAYMET.png)
 
 #### Get and plot the daily GHCN precipitation data for the study area
 ```r
@@ -86,10 +92,12 @@ raster::plot(NED)
 # Returns a list: the first element is the spatial locations of stations,
 # and the second is a list of the stations and their daily data
 GHCN.prcp <- get_ghcn_daily(template=vepPolygon, 
-                            label="VEPIIN",
+                            label="VEPIIN", 
                             elements=c('prcp'))
-# Plot the spatial locations of stations with precipitation data
-plot(GHCN.prcp$spatial, pch=1, add=T)
+# Plot the NED again
+raster::plot(NED)
+# Plot the spatial locations
+sp::plot(GHCN.prcp$spatial, pch=1, add=T)
 legend('bottomleft', pch=1, legend="GHCN Precipitation Records")
 ```
 ![thing](inst/img/GHCN_prcp.png)
@@ -99,15 +107,15 @@ legend('bottomleft', pch=1, legend="GHCN Precipitation Records")
 # Elements for which you require the same data
 # (i.e., minimum and maximum temperature for the same days)
 # can be standardized using standardize==T
-# which ensures that stations have both tmin and tmax data
-GHCN.temp <- get_ghcn_daily(template=vepPolygon, 
-                            label="VEPIIN", 
-                            elements=c('tmin','tmax'), 
-                            standardize=T)
+GHCN.temp <- get_ghcn_daily(template = vepPolygon, 
+                            label = "VEPIIN", 
+                            elements = c('tmin','tmax'), 
+                            years = 1980:1985,
+                            standardize = T)
 # Plot the NED again
 raster::plot(NED)
 # Plot the spatial locations
-plot(GHCN.temp$spatial, add=T, pch=1)
+sp::plot(GHCN.temp$spatial, add=T, pch=1)
 legend('bottomleft', pch=1, legend="GHCN Temperature Records")
 ```
 ![thing](inst/img/GHCN_temp.png)
@@ -120,10 +128,8 @@ NHD <- get_nhd(template=vepPolygon,
 # Plot the NED again
 raster::plot(NED)
 # Plot the NHD data
-plot(NHD$NHDFlowline, add=T)
-plot(NHD$NHDLine, add=T)
-plot(NHD$NHDArea, col='black', add=T)
-plot(NHD$NHDWaterbody, col='black', add=T)
+NHD %>%
+  lapply(sp::plot, col='black', add=T)
 ```
 ![thing](inst/img/NHD.png)
 
@@ -132,7 +138,7 @@ plot(NHD$NHDWaterbody, col='black', add=T)
 ```r
 # Get the NRCS SSURGO data (USA ONLY)
 SSURGO.VEPIIN <- get_ssurgo(template=vepPolygon, 
-                            label="VEPIIN")
+                     label="VEPIIN")
 # Plot the NED again
 raster::plot(NED)
 # Plot the SSURGO mapunit polygons
@@ -167,9 +173,8 @@ plot(SSURGO.areas.CO675,
 ```r
 # Get the ITRDB records
 ITRDB <- get_itrdb(template=vepPolygon,
-                   label="VEPIIN",
-                   makeSpatial=T)
-                   
+                        label="VEPIIN",
+                        makeSpatial=T)
 # Plot the NED again
 raster::plot(NED)
 # Map the locations of the tree ring chronologies

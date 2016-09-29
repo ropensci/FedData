@@ -1,10 +1,11 @@
+# Make CRAN check not complain about .
+if(getRversion() >= "2.15.1")  utils::globalVariables(c(".","element"))
+
 #' Install and load a package.
 #'
 #'This is a convenience function that checks whether a package is installed, and if not, installs it.
 #'
 #' @param x A character string representing the name of a package.
-#' @import data.table
-#' @import sp
 #' @export
 #' @keywords internal
 pkg_test <- function(x){

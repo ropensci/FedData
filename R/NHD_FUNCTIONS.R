@@ -12,7 +12,6 @@
 #' The directory will be created if missing. Defaults to "./EXTRACTIONS/NHD/".
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created?
 #' @return A list of Spatial* objects extracted from the National Hydrography Dataset.
-#' @import rgeos
 #' @export
 #' @examples
 #' \dontrun{
@@ -33,25 +32,23 @@
 #' plot(NHD$NHDArea, col='black', add=T)
 #' plot(NHD$NHDWaterbody, col='black', add=T)
 #' }
-get_nhd <- function(template, label, raw.dir="./RAW/NHD/", extraction.dir="./EXTRACTIONS/NHD/", force.redo=FALSE){
-  
-  vectors.dir <- paste(extraction.dir,"/",label,"/spatial",sep='')
+get_nhd <- function(template, label, raw.dir="./RAW/NHD/", extraction.dir=paste0("./EXTRACTIONS/",label,"/NHD/"), force.redo=FALSE){
   
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
-  dir.create(vectors.dir, showWarnings = FALSE, recursive = TRUE)
-  
-  if(!force.redo & length(list.files(vectors.dir))>0){
-    files <- list.files(vectors.dir)
+
+  if(!force.redo & length(list.files(extraction.dir))>0){
+    files <- list.files(extraction.dir)
     files <- files[grepl("shp",files)]
     files <- files[!grepl("template",files)]
+    files <- files[grepl(label,files)]
     files <- gsub(".shp","",files)
     files <- files[order(files)]
     
     shapes <- lapply(files,function(file){
-      rgdal::readOGR(normalizePath(vectors.dir),file, verbose=F)
+      rgdal::readOGR(normalizePath(extraction.dir),file, verbose=F)
     })
-    names(shapes) <- files
+    names(shapes) <- gsub(paste0(label,"_NHD"),"",files)
     return(shapes)
   }
   
@@ -83,10 +80,11 @@ get_nhd <- function(template, label, raw.dir="./RAW/NHD/", extraction.dir="./EXT
     shapes <- raster::crop(shapes,sp::spTransform(template,sp::CRS(raster::projection(shapes))))
     if(is.null(shapes)) return(shapes)
     #     shapes <- spTransform(shapes,CRS(projection(template)))
-    suppressWarnings(rgdal::writeOGR(shapes,vectors.dir,layer,"ESRI Shapefile", overwrite_layer=TRUE))
+    layer <- gsub("NHD","",layer)
+    suppressWarnings(rgdal::writeOGR(shapes,extraction.dir,paste0(label,"_NHD_",layer),"ESRI Shapefile", overwrite_layer=TRUE))
     return(shapes)
   })
-  names(allShapes) <- layers
+  names(allShapes) <- gsub("NHD","",layers)
   
   # Remove null layers
   allShapes <- allShapes[!sapply(allShapes,is.null)]
@@ -164,8 +162,7 @@ get_huc4 <- function(template=NULL, raw.dir){
 #' @export
 #' @keywords internal
 download_nhd_subregion <- function(area, raw.dir){
-
-  url <- paste('ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/Hydrography/NHD/HU4/HighResolution/GDB/NHD_H_',area,'_GDB.zip',sep='')
+  url <- paste0("http://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/NHD/HU4/HighResolution/GDB/NHD_H_",area,"_GDB.zip")
   
   destdir <- raw.dir
   download_data(url=url, destdir=destdir)

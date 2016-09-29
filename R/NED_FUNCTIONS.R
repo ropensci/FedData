@@ -4,7 +4,7 @@
 #' template study area.
 #'
 #' @param template A Raster* or Spatial* object to serve 
-#' as a template for cropping, and perhaps resolution.
+#' as a template for cropping.
 #' @param label A character string naming the study area.
 #' @param res A character string representing the desired resolution of the NED. "1"
 #' indicates the 1 arc-second NED (the default), while "13" indicates the 1/3 arc-second dataset.
@@ -29,18 +29,16 @@
 #' # Plot with raster::plot
 #' plot(NED)
 #' }
-get_ned <- function(template, label, res="1", raw.dir="./RAW/NED/", extraction.dir="./EXTRACTIONS/NED/", force.redo=F){  
-  
-  rasters.dir <- paste(extraction.dir,"/",label,"/rasters",sep='')
-  
+get_ned <- function(template, label, res="1", raw.dir="./RAW/NED/", extraction.dir=paste0("./EXTRACTIONS/",label,"/NED/"), force.redo=F){  
+
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
-  dir.create(rasters.dir, showWarnings = FALSE, recursive = TRUE)
+  dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
   
   template <- sp::spTransform(polygon_from_extent(template),sp::CRS("+proj=longlat +ellps=WGS84"))
   extent.latlon <- raster::extent(template)
   
-  if(file.exists(paste(rasters.dir,"/NED_",res,".tif", sep='')) & !force.redo){
-    extracted.DEM <- raster::raster(paste(rasters.dir,"/NED_",res,".tif", sep=''))
+  if(file.exists(paste(extraction.dir,"/",label,"_NED_",res,".tif", sep='')) & !force.redo){
+    extracted.DEM <- raster::raster(paste(extraction.dir,"/",label,"_NED_",res,".tif", sep=''))
     return(extracted.DEM)
   }
   
@@ -73,7 +71,7 @@ get_ned <- function(template, label, res="1", raw.dir="./RAW/NED/", extraction.d
   
   tiles <- raster::crop(tiles,sp::spTransform(template,sp::CRS(raster::projection(tiles))), snap="out")
   
-  raster::writeRaster(tiles, paste(rasters.dir,"/NED_",res,".tif", sep=''), datatype="FLT4S", options=c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"), overwrite=T, setStatistics=FALSE)
+  raster::writeRaster(tiles, paste(extraction.dir,"/",label,"_NED_",res,".tif", sep=''), datatype="FLT4S", options=c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"), overwrite=T, setStatistics=FALSE)
   
   return(tiles)
 }
@@ -103,12 +101,11 @@ download_ned_tile <- function(res="1", tileNorthing, tileWesting, raw.dir){
   
   tileWesting <- formatC(tileWesting, width = 3, format = "d", flag = "0") 
   tileNorthing <- formatC(tileNorthing, width = 2, format = "d", flag = "0") 
-  
-  url <- paste('ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/NED/',res,'/ArcGrid/n',tileNorthing,'w',tileWesting,'.zip',sep='')
+  url <- paste0("http://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/",res,"/ArcGrid/n",tileNorthing,"w",tileWesting,".zip")
   destdir <- paste(raw.dir,'/',res,'/',sep='')
   download_data(url=url, destdir=destdir)
   
-  return(normalizePath(paste(destdir,'n',tileNorthing,'w',tileWesting,'.zip',sep='')))
+  return(normalizePath(paste0(destdir,basename(url))))
 }
 
 #' Download and crop tile from the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.

@@ -152,7 +152,7 @@
 #' 07 = Ash, dust, sand, or other blowing obstruction\cr
 #' 18 = Snow or ice crystals\cr
 #' 20 = Rain or snow shower
-#' @param years A character string indicating which years to get.
+#' @param years A numeric vector indicating which years to get.
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing. Defaults to "./RAW/GHCN/".
 #' @param extraction.dir A character string indicating where the extracted and cropped GHCN shapefiles should be put.
@@ -161,6 +161,8 @@
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created? Defaults to FALSE.
 #' @return A named list containing the "spatial" and "tabular" data.
 #' @export
+#' @importFrom readr read_fwf
+#' @importFrom magrittr %>%
 #' @examples
 #' \dontrun{
 #' # Extract data for the Village Ecodynamics Project "VEPIIN" study area:
@@ -195,8 +197,9 @@
 #' plot(GHCN.temp$spatial, pch=1, add=T)
 #' legend('bottomleft', pch=1, legend="GHCN Temperature Records")
 #' }
-get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, years = NULL, raw.dir="./RAW/GHCN/", extraction.dir="./EXTRACTIONS/GHCN/", standardize=F, force.redo=F){
+get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, years = NULL, raw.dir="./RAW/GHCN/", extraction.dir=paste0("./EXTRACTIONS/",label,"/GHCN/"), standardize=F, force.redo=F){
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
+  dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
   
   if(is.null(template) & is.null(label)){
     label <- "allStations"
@@ -206,33 +209,29 @@ get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, years = NUL
     stop("Template provided but no label given.")
   }
   
-  vectors.dir <- paste(extraction.dir,"/",label,"/spatial",sep='')
-  tables.dir <- paste(extraction.dir,"/",label,"/tabular",sep='')
-  
-  dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
-  dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
-  dir.create(vectors.dir, showWarnings = FALSE, recursive = TRUE)
-  dir.create(tables.dir, showWarnings = FALSE, recursive = TRUE)
-  
   message("(Down)Loading GHCN station inventory.")
-  if(!force.redo & file.exists(paste(vectors.dir,"/stations.shp",sep=''))){
-    stations.sp <- rgdal::readOGR(dsn=vectors.dir,layer="stations",verbose=F)
+  if(!force.redo & file.exists(paste0(extraction.dir,"/",label,"_GHCN_stations.shp"))){
+    stations.sp <- rgdal::readOGR(dsn = extraction.dir,
+                                  layer = paste0(label,"_GHCN_stations"),
+                                  verbose = F)
   }else{
-    stations.sp <- get_ghcn_inventory(template=template, raw.dir=raw.dir)
-    suppressWarnings(rgdal::writeOGR(stations.sp, vectors.dir, "stations","ESRI Shapefile", overwrite_layer=TRUE))
+    stations.sp <- get_ghcn_inventory(template = template, raw.dir = raw.dir)
+    suppressWarnings(rgdal::writeOGR(stations.sp,
+                                     dsn = extraction.dir,
+                                     layer = paste0(label,"_GHCN_stations"),
+                                     driver = "ESRI Shapefile",
+                                     overwrite_layer = TRUE)
+    )
   }
   
   # If the user didn't specify target elements, get them all.
   if(!is.null(elements)){
     stations.sp <- stations.sp[stations.sp@data[,"ELEMENT"] %in% toupper(elements),]
     missing.elements <- setdiff(toupper(elements),unique(stations.sp$ELEMENT))
+    if(length(missing.elements)==length(elements)) stop("No elements available from included stations during given years.")
     if(length(missing.elements)>0) warning("Elements not available: ",paste(missing.elements,collapse = ", "))
   }
   elements <- unique(stations.sp$ELEMENT)
-  
-  if(!is.null(years)){
-    stations.sp <- stations.sp[stations.sp@data[,"YEAR_START"] <= min(years) & stations.sp@data[,"YEAR_END"] >= max(years),]
-  }
   
   if(standardize){
     stations.sp.splits <- split(as.character(stations.sp$ELEMENT),f=stations.sp$ID, drop=T)
@@ -240,11 +239,20 @@ get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, years = NUL
     stations.sp <- stations.sp[stations.sp$ID %in% names(stations.sp.splits.all)[stations.sp.splits.all],]
   }
   
-  # stations.sp <- stations.sp[,c("ID","ELEMENT","YEAR_START","YEAR_END")]
+  if(!is.null(years)){
+    stations.sp <- stations.sp[stations.sp$YEAR_START <= min(years) & stations.sp$YEAR_END >= max(years),]
+  }
+  
   stations.sp <- stations.sp[!duplicated(stations.sp@data[,c("ID","LATITUDE","LONGITUDE")]),c("ID", "NAME")]
   
   if(!force.redo){
-    daily <- tryCatch(lapply(elements,function(element){readRDS(paste(tables.dir,"/",element,".Rds",sep=''))}), warning = function(w){return(NULL)})
+    daily <- tryCatch(lapply(elements,function(element){
+      ifelse(!is.null(years),
+             paste0(extraction.dir,"/",label,"_GHCN_",element,"_",min(years),"-",max(years),".Rds"),
+             paste0(extraction.dir,"/",label,"_GHCN_",element,"_all_years.Rds")) %>%
+        readr::read_rds()
+    }), warning = function(w){return(NULL)})
+    
     if(!is.null(daily)){
       names(daily) <- elements
       
@@ -255,16 +263,15 @@ get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, years = NUL
       })
       names(daily) <- as.character(stations.sp$ID)
       daily <- daily[!sapply(daily,is.null)]
-      # Make sure station names and elements are the same
-      # if(setequal(names(daily),stations.sp$ID) & all(sapply(daily,function(dat){setequal(names(dat),elements)}))){
-        return(list(spatial=stations.sp,tabular=daily))
-      # }
+      
+      return(list(spatial=stations.sp,tabular=daily))
+      
     }
   }
   
   daily <- lapply(stations.sp$ID,function(station){
     message("(Down)Loading GHCN station data for station ",as.character(station))
-    tryCatch(station <- get_ghcn_daily_station(ID=station, elements=elements, raw.dir=raw.dir, standardize=standardize, force.redo=force.redo), error = function(e){message("Error (down)Loading GHCN station data for station ",as.character(station)); return(NULL)})
+    tryCatch(station <- get_ghcn_daily_station(ID=station, elements=elements, years = years, raw.dir=raw.dir, standardize=standardize, force.redo=force.redo), error = function(e){message("Error (down)Loading GHCN station data for station ",as.character(station)); return(NULL)})
     return(station)
   })
   names(daily) <- stations.sp$ID
@@ -276,7 +283,10 @@ get_ghcn_daily <- function(template=NULL, label=NULL, elements=NULL, years = NUL
   })
   names(daily.split) <- elements
   junk <- lapply(as.character(elements),function(element){
-    saveRDS(daily.split[[element]],paste(tables.dir,"/",element,".Rds",sep=''),compress='xz')
+    
+    saveRDS(daily.split[[element]],ifelse(!is.null(years),
+                                          paste0(extraction.dir,"/",label,"_GHCN_",element,"_",min(years),"-",max(years),".Rds"),
+                                          paste0(extraction.dir,"/",label,"_GHCN_",element,"_all_years.Rds")),compress='xz')
   })
   
   
@@ -451,14 +461,14 @@ download_ghcn_daily_station <- function(ID, raw.dir, force.redo=F){
 #' 07 = Ash, dust, sand, or other blowing obstruction\cr
 #' 18 = Snow or ice crystals\cr
 #' 20 = Rain or snow shower
+#' @param years A numeric vector indicating which years to get.
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' @param standardize Select only common year/month/day? Defaults to FALSE.
 #' @param force.redo If this weather station has been downloaded before, should it be updated? Defaults to FALSE.
 #' @return A named list of \code{\link{data.frame}s}, one for each \code{elements}.
-#' @import magrittr
 #' @export
 #' @keywords internal
-get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, force.redo=F){
+get_ghcn_daily_station <- function(ID, elements=NULL, years = NULL, raw.dir, standardize=F, force.redo=F){
   
   file <- download_ghcn_daily_station(ID = ID, 
                                       raw.dir = paste(raw.dir,"/DAILY/",sep=''), 
@@ -481,6 +491,11 @@ get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, fo
   daily %<>% dplyr::filter_(~ELEMENT %in% elements)
   missing.elements <- setdiff(toupper(elements),unique(daily$ELEMENT))
   if(length(missing.elements)>0) warning("Elements not available: ",paste(missing.elements,collapse = ", "))
+  
+  # If the user didn't specify target elements, get them all.
+  if(!is.null(years)){
+    daily %<>% dplyr::filter_(~YEAR %in% years)
+  }
   
   daily %<>% dplyr::mutate_all(dplyr::funs_(quote(ifelse(. == -9999,NA,.))))
   
@@ -533,7 +548,6 @@ get_ghcn_daily_station <- function(ID, elements=NULL, raw.dir, standardize=F, fo
 #' The directory will be created if missing.
 #' @return A \code{SpatialPolygonsDataFrame} of the GHCN stations within
 #' the specified \code{template}
-#' @import magrittr
 #' @export
 #' @keywords internal
 get_ghcn_inventory <- function(template=NULL, elements=NULL, raw.dir){

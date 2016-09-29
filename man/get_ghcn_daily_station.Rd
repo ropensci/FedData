@@ -4,8 +4,8 @@
 \alias{get_ghcn_daily_station}
 \title{Download and extract the daily data for a GHCN weather station.}
 \usage{
-get_ghcn_daily_station(ID, elements = NULL, raw.dir, standardize = F,
-  force.redo = F)
+get_ghcn_daily_station(ID, elements = NULL, years = NULL, raw.dir,
+  standardize = F, force.redo = F)
 }
 \arguments{
 \item{ID}{A character string giving the station ID.}
@@ -148,6 +148,8 @@ values:\cr
 07 = Ash, dust, sand, or other blowing obstruction\cr
 18 = Snow or ice crystals\cr
 20 = Rain or snow shower}
+
+\item{years}{A numeric vector indicating which years to get.}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.}
 

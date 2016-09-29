@@ -2,8 +2,8 @@ Package: FedData
 Type: Package
 Title: Functions to Automate Downloading Geospatial Data Available from Several
     Federated Data Sources
-Version: 2.2.0
-Date: 2016-09-26
+Version: 2.3.0
+Date: 2016-09-29
 Author: R. Kyle Bocinsky [aut, cre], Dylan Beaudette [ctb], Scott Chamberlain [ctb]
 Authors@R: c(person(given = c("R.", "Kyle"), family = "Bocinsky",
     role = c("aut", "cre"), email = "bocinsky@gmail.com"),
@@ -18,15 +18,15 @@ Description: Functions to automate downloading geospatial data available from
     (SSURGO) database from the National Cooperative Soil Survey (NCSS), which is
     led by the Natural Resources Conservation Service (NRCS) under the USDA; the
     Global Historical Climatology Network (GHCN), coordinated by National Climatic
-    Data Center at NOAA; and the International Tree Ring Data Bank. Additional
-    data sources are in the works, including global DEM resources (ETOPO1, ETOPO5,
-    ETOPO30, SRTM), global soils (HWSD), MODIS satellite data products, the National
-    Atlas (US), Natural Earth, PRISM, and WorldClim.
+    Data Center at NOAA; the Daymet gridded estimates of daily weather parameters 
+    for North America, version 3, available from the Oak Ridge National Laboratory's
+    Distributed Active Archive Center (DAAC); and the International Tree Ring Data Bank.
+    Additional data sources are in the works, global soils (HWSD), 
+    MODIS satellite data products, the National Atlas (US), Natural Earth, and WorldClim.
 License: MIT + file LICENSE
 Depends:
     R (>= 3.2.0),
-    sp,
-    magrittr
+    sp
 Imports:
     data.table,
     devtools,
@@ -39,7 +39,11 @@ Imports:
     Hmisc,
     rgeos,
     readr,
-    dplyr
+    lubridate,
+    dplyr,
+    magrittr,
+    foreach,
+    doParallel
 Repository: CRAN
 NeedsCompilation: no
 RoxygenNote: 5.0.1

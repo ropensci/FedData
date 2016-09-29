@@ -49,6 +49,7 @@
 #' @param force.redo If an extraction already exists, should a new one be created? Defaults to FALSE.
 #' @return A named list containing the "metadata", "widths", and "depths" data. 
 #' @export
+#' @importFrom data.table :=
 #' @examples
 #' \dontrun{
 #' # Extract data for the Village Ecodynamics Project "VEPIIN" study area:
@@ -66,8 +67,9 @@
 #' plot(ITRDB$metadata, pch=1, add=T)
 #' legend('bottomleft', pch=1, legend="ITRDB chronologies")
 #' }
-get_itrdb <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=NULL, species=NULL, measurement.type=NULL, chronology.type=NULL, makeSpatial=F, raw.dir="./RAW/ITRDB/", extraction.dir="./EXTRACTIONS/ITRDB/", force.redo=FALSE){  
+get_itrdb <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=NULL, species=NULL, measurement.type=NULL, chronology.type=NULL, makeSpatial=F, raw.dir="./RAW/ITRDB/", extraction.dir=ifelse(!is.null(label),paste0("./EXTRACTIONS/",label,"/ITRDB/"),"./EXTRACTIONS/ITRDB/"), force.redo=FALSE){  
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
+  dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
   
   if(is.null(template) & is.null(label)){
     label <- "allChronologies"
@@ -77,10 +79,8 @@ get_itrdb <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=N
     stop("Template provided but no label given.")
   }
   
-  dir.create(paste(extraction.dir,'/',label,'/',sep=''), showWarnings = FALSE, recursive = TRUE)
-  
-  if(!force.redo && !is.null(label) && file.exists(paste(extraction.dir,'/',label,'/',label,'.Rds',sep=''))){
-    out <- readRDS(paste(extraction.dir,'/',label,'/',label,'.Rds',sep=''))
+  if(!force.redo && !is.null(label) && file.exists(paste0(extraction.dir,'/',label,'_ITRDB.Rds'))){
+    out <- readr::read_rds(paste0(extraction.dir,'/',label,'_ITRDB.Rds',sep=''))
     return(out)
   }
   
@@ -122,8 +122,8 @@ get_itrdb <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=N
   all.data <- lapply(data[,data],function(df){
     df <- df[rownames(df) %in% recon.years,]
     df.years <- as.numeric(rownames(df))
-    missing.years <- setdiff(recon.years,df.years)
-    missing.mat <- matrix(nrow=length(missing.years),ncol=2)
+    missing.years <- setdiff(recon.years, df.years)
+    missing.mat <- matrix(nrow = length(missing.years), ncol = 2)
     colnames(missing.mat) <- c("WIDTH","DEPTH")
     rownames(missing.mat) <- missing.years
     df.all <- rbind(df,missing.mat)
@@ -131,20 +131,22 @@ get_itrdb <- function(template=NULL, label=NULL, recon.years=NULL, calib.years=N
   })
   names(all.data) <- data$SERIES
   
-  widths <- sapply(all.data,function(df){data.matrix(df[,"WIDTH",drop=F])})
-  depths <- sapply(all.data,function(df){data.matrix(df[,"DEPTH",drop=F])})
+  widths <- sapply(all.data,function(df){data.matrix(df[, "WIDTH", drop=F])})
+  depths <- sapply(all.data,function(df){data.matrix(df[, "DEPTH", drop=F])})
   
   colnames(widths) <- colnames(depths) <- names(all.data)
   rownames(widths) <- rownames(depths) <- recon.years
   
   data <- data[,data:=NULL]
   if(makeSpatial){
-    data <- sp::SpatialPointsDataFrame(as.matrix(data[,c("LON","LAT"),with=F]),data=data, proj4string=sp::CRS("+proj=longlat +datum=WGS84"))
+    data <- sp::SpatialPointsDataFrame(as.matrix(data[, c("LON","LAT"), with=F]),
+                                       data = data,
+                                       proj4string = sp::CRS("+proj=longlat +datum=WGS84"))
   }
   
-  out <- list(metadata=data,widths=widths,depths=depths)
+  out <- list(metadata = data, widths = widths, depths = depths)
   if(!is.null(label)){
-    saveRDS(out,file=paste(extraction.dir,'/',label,'/',label,'.Rds',sep=''), compress='xz')
+    readr::write_rds(out,path = paste0(extraction.dir,'/',label,'_ITRDB.Rds'))
   }
   
   return(out)
@@ -195,8 +197,8 @@ download_itrdb <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
   message("Extracting chronology data from ITRDB version ",version," dated ",as.character(as.Date(base::file.info(zips[[1]])$mtime)))
   
   if(!force.redo && 
-       file.exists(paste(raw.dir,"ITRDB",version,".Rds",sep=''))){
-    itrdb.metadata <- readRDS(paste(raw.dir,"/ITRDB",version,".Rds",sep=''))
+       file.exists(paste(raw.dir,"ITRDB_",version,".Rds",sep=''))){
+    itrdb.metadata <- readr::read_rds(paste(raw.dir,"/ITRDB_",version,".Rds",sep=''))
   }else{
     all.data <- lapply(zips,function(file){
       
@@ -250,7 +252,7 @@ download_itrdb <- function(raw.dir="./RAW/ITRDB/", force.redo=FALSE){
     # or nonsense years (There are ~50 weird ones)
     itrdb.metadata <- itrdb.metadata[START <= as.numeric(format(Sys.time(), "%Y")) & END <= as.numeric(format(Sys.time(), "%Y"))]
     
-    saveRDS(itrdb.metadata,paste(raw.dir,"/ITRDB",version,".Rds",sep=''), compress="xz")
+    readr::write_rds(itrdb.metadata,paste(raw.dir,"/ITRDB_",version,".Rds",sep=''))
   }
   
   return(itrdb.metadata)

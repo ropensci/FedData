@@ -6,7 +6,8 @@
 \usage{
 get_ghcn_daily(template = NULL, label = NULL, elements = NULL,
   years = NULL, raw.dir = "./RAW/GHCN/",
-  extraction.dir = "./EXTRACTIONS/GHCN/", standardize = F, force.redo = F)
+  extraction.dir = paste0("./EXTRACTIONS/", label, "/GHCN/"),
+  standardize = F, force.redo = F)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve 
@@ -154,7 +155,7 @@ values:\cr
 18 = Snow or ice crystals\cr
 20 = Rain or snow shower}
 
-\item{years}{A character string indicating which years to get.}
+\item{years}{A numeric vector indicating which years to get.}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
 The directory will be created if missing. Defaults to "./RAW/GHCN/".}

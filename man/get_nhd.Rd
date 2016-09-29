@@ -5,7 +5,8 @@
 \title{Download and crop the National Hydrography Dataset.}
 \usage{
 get_nhd(template, label, raw.dir = "./RAW/NHD/",
-  extraction.dir = "./EXTRACTIONS/NHD/", force.redo = FALSE)
+  extraction.dir = paste0("./EXTRACTIONS/", label, "/NHD/"),
+  force.redo = FALSE)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve 

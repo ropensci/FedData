@@ -20,6 +20,8 @@
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created? Defaults to FALSE.
 #' @return A named list containing the "spatial" and "tabular" data.
 #' @export
+#' @importFrom sp SpatialPointsDataFrame
+#' @importFrom readr read_csv write_csv
 #' @examples
 #' \dontrun{
 #' # Extract data for the Village Ecodynamics Project "VEPIIN" study area:
@@ -49,25 +51,23 @@
 #' plot(NED.CO675)
 #' plot(SSURGO.areas.CO675, lwd=0.1, add=T)
 #' }
-get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir="./EXTRACTIONS/SSURGO/", force.redo=FALSE){  
-  
-  vectors.dir <- paste(extraction.dir,"/",label,"/spatial",sep='')
-  tables.dir <- paste(extraction.dir,"/",label,"/tabular",sep='')
+get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=paste0("./EXTRACTIONS/",label,"/SSURGO/"), force.redo=FALSE){  
   
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
-  dir.create(vectors.dir, showWarnings = FALSE, recursive = TRUE)
-  dir.create(tables.dir, showWarnings = FALSE, recursive = TRUE)
   
-  if(!force.redo & length(list.files(vectors.dir))>0 & length(list.files(tables.dir))>0 & file.exists(paste(vectors.dir,"/SSURGOMapunits.shp",sep=''))){
-    SSURGOMapunits <- rgdal::readOGR(normalizePath(vectors.dir),"SSURGOMapunits", verbose=F)
-    
-    files <- list.files(tables.dir)
-    files <- files[grepl("csv",files)]
-    files <- files[order(files)]
+  files <- list.files(extraction.dir)
+  files <- files[grepl("csv",files)]
+  files <- files[order(files)]
+  files <- files[grepl(label,files)]
+  
+  if(!force.redo & 
+     length(files) > 0 & 
+     file.exists(paste(extraction.dir,"/",label,"_SSURGO_","Mapunits.shp",sep=''))){
+    SSURGOMapunits <- rgdal::readOGR(dsn = normalizePath(extraction.dir),layer = paste0(label,"_SSURGO_","Mapunits"), verbose = F)
     
     tables <- lapply(files,function(file){
-      utils::read.csv(paste(normalizePath(tables.dir),'/',file,sep=''), stringsAsFactors=F)
+      suppressMessages(readr::read_csv(paste(normalizePath(extraction.dir),'/',file,sep='')))
     })
     names(tables) <- gsub(".csv","",files)
     
@@ -146,11 +146,11 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
   SSURGOTables <- extract_ssurgo_data(tables=SSURGOTables, mapunits=as.character(unique(SSURGOPolys$MUKEY)))
   
   # Save the mapunit polygons
-  suppressWarnings(rgdal::writeOGR(SSURGOPolys,vectors.dir,"SSURGOMapunits","ESRI Shapefile", overwrite_layer=TRUE))
+  suppressWarnings(rgdal::writeOGR(SSURGOPolys,extraction.dir,paste0(label,"_SSURGO_Mapunits"),"ESRI Shapefile", overwrite_layer=TRUE))
   
   # Save the each data table as a csv
   junk <- lapply(names(SSURGOTables), function(tab){
-    utils::write.csv(SSURGOTables[[tab]],file=paste(tables.dir,'/',tab,'.csv',sep=''),row.names=F)
+    readr::write_csv(SSURGOTables[[tab]],path = paste(extraction.dir,'/',label,"_SSURGO_",tab,'.csv',sep=''))
   })
   
   return(list(spatial=SSURGOPolys,tabular=SSURGOTables))
@@ -196,7 +196,7 @@ get_ssurgo_inventory <- function(template=NULL, raw.dir){
       template <- sp::spTransform(template,sp::CRS("+proj=longlat +datum=WGS84"))
     }
     
-    bounds <- bbox(template)
+    bounds <- sp::bbox(template)
     if(identical(bounds[1,1],bounds[1,2])) bounds[1,2] <- bounds[1,2] + .0001
     if(identical(bounds[2,1],bounds[2,2])) bounds[2,2] <- bounds[2,2] + .0001
     bbox.text <- paste(bounds, collapse = ",")
