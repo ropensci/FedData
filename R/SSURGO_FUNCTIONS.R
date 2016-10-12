@@ -70,6 +70,7 @@ get_ssurgo <- function(template, label, raw.dir="./RAW/SSURGO/", extraction.dir=
       suppressMessages(readr::read_csv(paste(normalizePath(extraction.dir),'/',file,sep='')))
     })
     names(tables) <- gsub(".csv","",files)
+    names(tables) <- gsub(paste0(label,"_SSURGO_"),"",files)
     
     return(list(spatial=SSURGOMapunits,tabular=tables))
   }
