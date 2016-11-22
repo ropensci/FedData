@@ -2,8 +2,8 @@ Package: FedData
 Type: Package
 Title: Functions to Automate Downloading Geospatial Data Available from Several
     Federated Data Sources
-Version: 2.3.1
-Date: 2016-10-11
+Version: 2.3.3
+Date: 2016-11-22
 Author: R. Kyle Bocinsky [aut, cre], Dylan Beaudette [ctb], Scott Chamberlain [ctb]
 Authors@R: c(person(given = c("R.", "Kyle"), family = "Bocinsky",
     role = c("aut", "cre"), email = "bocinsky@gmail.com"),
@@ -43,7 +43,8 @@ Imports:
     dplyr,
     magrittr,
     foreach,
-    doParallel
+    doParallel,
+    ncdf4
 Repository: CRAN
 NeedsCompilation: no
 RoxygenNote: 5.0.1

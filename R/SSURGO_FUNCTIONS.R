@@ -305,7 +305,7 @@ get_ssurgo_study_area <- function(template=NULL, area, date, raw.dir){
   utils::unzip(file,exdir=tmpdir)
   
   # Get spatial data
-  mapunits <- rgdal::readOGR(paste(tmpdir,'/',area,'/spatial',sep=''), layer=paste("soilmu_a_",tolower(area),sep=''), verbose=F)
+  suppressWarnings(mapunits <- rgdal::readOGR(tmpdir, layer=paste0("soilmu_a_",tolower(area)), verbose=F))
   
   # Crop to study area
   if(!is.null(template) & !is.character(template)){
@@ -320,11 +320,11 @@ get_ssurgo_study_area <- function(template=NULL, area, date, raw.dir){
   mapunits <- sp::spChFIDs(mapunits, as.character(paste(area,'_',row.names(mapunits@data),sep='')))
   
   # Read in all tables
-  files <- list.files(paste(tmpdir,'/',area,'/tabular/',sep=''))
+  files <- list.files(tmpdir, full.names = T, pattern = "tabular")
   tablesData <- lapply(files, function(file){
-    tryCatch(return(utils::read.delim(paste(tmpdir,'/',area,'/tabular/',file,sep=''), header=F,sep="|", stringsAsFactors=F)), error = function(e){return(NULL)})
+    tryCatch(return(utils::read.delim(file, header=F,sep="|", stringsAsFactors=F)), error = function(e){return(NULL)})
   })
-  names(tablesData) <- files
+  names(tablesData) <- gsub(paste0(area,"\\\\tabular\\\\"),"",basename(files))
   tablesData <- tablesData[!sapply(tablesData,is.null)]
   
   # tablesHeaders <- FedData::tablesHeaders

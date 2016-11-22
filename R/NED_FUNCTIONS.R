@@ -100,8 +100,8 @@ download_ned_tile <- function(res="1", tileNorthing, tileWesting, raw.dir){
   dir.create(destdir, showWarnings = FALSE, recursive = TRUE)
   
   tileWesting <- formatC(tileWesting, width = 3, format = "d", flag = "0") 
-  tileNorthing <- formatC(tileNorthing, width = 2, format = "d", flag = "0") 
-  url <- paste0("http://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/",res,"/ArcGrid/n",tileNorthing,"w",tileWesting,".zip")
+  tileNorthing <- formatC(tileNorthing, width = 2, format = "d", flag = "0")
+  url <- paste0("https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/",res,"/ArcGrid/n",tileNorthing,"w",tileWesting,".zip")
   destdir <- paste(raw.dir,'/',res,'/',sep='')
   download_data(url=url, destdir=destdir)
   
