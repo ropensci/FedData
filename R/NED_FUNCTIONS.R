@@ -52,9 +52,11 @@ get_ned <- function(template, label, res="1", raw.dir="./RAW/NED/", extraction.d
   message("Area of interest includes ",nrow(tilesLocations)," NED tiles.")
   
   # Download and crop tiles
-  tiles <- apply(tilesLocations,1,function(loc){
-    return(get_ned_tile(template=template, res=res, tileNorthing=loc[1], tileWesting=loc[2], raw.dir=raw.dir))
+  tiles <- apply(tilesLocations, 1, function(loc) {
+    return(tryCatch(get_ned_tile(template = template, res = res, tileNorthing = loc[1], 
+                                 tileWesting = loc[2], raw.dir = raw.dir), error=function(e) NULL))
   })
+  tiles <- tiles[which(!unlist(lapply(tiles, is.null)))]
   
   # Mosaic all tiles
   if(length(tiles)>1){
@@ -71,7 +73,11 @@ get_ned <- function(template, label, res="1", raw.dir="./RAW/NED/", extraction.d
   
   tiles <- raster::crop(tiles,sp::spTransform(template,sp::CRS(raster::projection(tiles))), snap="out")
   
-  raster::writeRaster(tiles, paste(extraction.dir,"/",label,"_NED_",res,".tif", sep=''), datatype="FLT4S", options=c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"), overwrite=T, setStatistics=FALSE)
+  raster::writeRaster(tiles,
+                      paste(extraction.dir,"/",label,"_NED_",res,".tif", sep=''),
+                      datatype="FLT4S", options=c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"),
+                      overwrite=T,
+                      setStatistics=FALSE)
   
   return(tiles)
 }

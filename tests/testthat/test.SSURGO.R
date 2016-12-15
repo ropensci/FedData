@@ -28,7 +28,7 @@ test_that("The SSURGO datasets are available at the correct URL", {
   q <- soilDB::SDA_query(q)
   q$saverest <- as.Date(q$saverest,format="%m/%d/%Y")
   
-  url <- paste("http://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/wss_SSA_",q$areasymbol,"_[",q$saverest,"].zip",sep='')
+  url <- paste("https://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/wss_SSA_",q$areasymbol,"_[",q$saverest,"].zip",sep='')
   expect_error(suppressWarnings(curl::curl(url) %>% readLines(n = 1)),NA)
 
   url <- "http://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/blah.zip"

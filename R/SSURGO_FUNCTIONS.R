@@ -202,7 +202,7 @@ get_ssurgo_inventory <- function(template=NULL, raw.dir){
     if(identical(bounds[2,1],bounds[2,2])) bounds[2,2] <- bounds[2,2] + .0001
     bbox.text <- paste(bounds, collapse = ",")
     
-    url <- paste("http://sdmdataaccess.nrcs.usda.gov/Spatial/SDMNAD83Geographic.wfs?Service=WFS&Version=1.0.0&Request=GetFeature&Typename=SurveyAreaPoly&BBOX=", bbox.text, sep = "")
+    url <- paste("https://sdmdataaccess.nrcs.usda.gov/Spatial/SDMNAD83Geographic.wfs?Service=WFS&Version=1.0.0&Request=GetFeature&Typename=SurveyAreaPoly&BBOX=", bbox.text, sep = "")
     
     temp.file <- paste0(tempdir(),"/soils.gml")
     
