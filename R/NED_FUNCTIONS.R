@@ -15,6 +15,7 @@
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created?
 #' @return A \code{RasterLayer} DEM cropped to the extent of the template.
 #' @export
+#' @importFrom magrittr %>%
 #' @examples
 #' \dontrun{
 #' # Extract data for the Village Ecodynamics Project "VEPIIN" study area:
@@ -71,8 +72,22 @@ get_ned <- function(template, label, res="1", raw.dir="./RAW/NED/", extraction.d
     tiles <- tiles[[1]]
   }
   
-  tiles <- raster::crop(tiles,sp::spTransform(template,sp::CRS(raster::projection(tiles))), snap="out")
-  
+  tiles <- tryCatch(tiles %>%
+                      raster::crop(y = template %>%
+                                     sp::spTransform(CRSobj = tiles %>%
+                                                       raster::projection()
+                                                     )
+                                   ,
+                                   snap = "out"),
+                    error = function(e){
+                      tiles %>%
+                        raster::crop(y = template %>%
+                                       sp::spTransform(CRSobj = tiles %>%
+                                                         raster::projection()
+                                       )
+                                     )
+                    })
+
   raster::writeRaster(tiles,
                       paste(extraction.dir,"/",label,"_NED_",res,".tif", sep=''),
                       datatype="FLT4S", options=c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"),
@@ -131,6 +146,7 @@ download_ned_tile <- function(res="1", tileNorthing, tileWesting, raw.dir){
 #' The directory will be created if missing. Defaults to "./RAW/NED/".
 #' @return A \code{RasterLayer} cropped within the specified \code{template}.
 #' @export
+#' @importFrom magrittr %>%
 #' @keywords internal
 get_ned_tile <- function(template=NULL, res="1", tileNorthing, tileWesting, raw.dir){
   tmpdir <- tempfile()
@@ -149,7 +165,21 @@ get_ned_tile <- function(template=NULL, res="1", tileNorthing, tileWesting, raw.
   tile <- raster::raster(dirs)
   
   if(!is.null(template)){
-    tile <- tryCatch(raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))), snap="out"), error=function(e){raster::crop(tile,sp::spTransform(template,sp::CRS(raster::projection(tile))))})
+    tile <- tryCatch(tile %>%
+                        raster::crop(y = template %>%
+                                       sp::spTransform(CRSobj = tile %>%
+                                                         raster::projection()
+                                       )
+                                     ,
+                                     snap = "out"),
+                      error = function(e){
+                        tile %>%
+                          raster::crop(y = template %>%
+                                         sp::spTransform(CRSobj = tile %>%
+                                                           raster::projection()
+                                         )
+                          )
+                      })
   }
   
   tile <- tile*1
