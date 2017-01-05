@@ -18,7 +18,7 @@ Additional data sources are in the works, including global DEM resources ([ETOPO
 
 This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the [**sp**](https://cran.r-project.org/package=sp), [**raster**](https://cran.r-project.org/package=raster), and [**rgdal**](https://cran.r-project.org/package=rgdal) packages.
 
-This package has been built and tested on a source (Homebrew) install of *R* on Mac OS 10.12 (Sierra), and has been successfully run on Ubuntu 16.04.1 LTS and binary installs of *R* on Mac OS 10.12 and Windows 10.
+This package has been built and tested on a source (Homebrew) install of *R* on macOS 10.12 (Sierra), and has been successfully run on Ubuntu 14.04.5 LTS (Trusty), Ubuntu 16.04.1 LTS (Xenial) and binary installs of *R* on Mac OS 10.12 and Windows 10.
 
 ### Development
 + [Kyle Bocinsky](http://bocinsky.io) - Crow Canyon Archaeological Center, Cortez, CO
@@ -39,12 +39,12 @@ This package has been built and tested on a source (Homebrew) install of *R* on 
     devtools::install_github("bocinsky/FedData")
     library(FedData)
     ```
-+ Linux:
++ Linux (Ubuntu 14.04.5 or 16.04.1):
 
     First, in terminal:
     ```r
-    sudo add-apt-repository ppa:ubuntugis/ppa
-    sudo apt-get update
+    sudo add-apt-repository ppa:ubuntugis/ppa -y
+    sudo apt-get update -q
     sudo apt-get install libssl-dev libcurl4-openssl-dev netcdf-bin libnetcdf-dev gdal-bin libgdal-dev
     ```
     Then, in R:
