@@ -29,23 +29,23 @@ This package has been built and tested on a source (Homebrew) install of *R* on 
 
 ### Install `FedData`
 + From CRAN:
-```r
-install.packages('FedData')
-```
+    ```r
+    install.packages('FedData')
+    ```
 
 + Development version from GitHub:
-```r
-install.packages("devtools")
-devtools::install_github("bocinsky/FedData")
-library(FedData)
-```
+    ```r
+    install.packages("devtools")
+    devtools::install_github("bocinsky/FedData")
+    library(FedData)
+    ```
 + Linux:
 
     First, in terminal:
     ```r
     sudo add-apt-repository ppa:ubuntugis/ppa
     sudo apt-get update
-    sudo apt-get install libssl-dev libcurl4-openssl-dev netcdf-bin libnetcdf-dev gdal-bin
+    sudo apt-get install libssl-dev libcurl4-openssl-dev netcdf-bin libnetcdf-dev gdal-bin libgdal-dev
     ```
     Then, in R:
     ```r
