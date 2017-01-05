@@ -28,7 +28,7 @@ This package has been built and tested on a source (Homebrew) install of *R* on 
 + [Scott Chamberlain](http://scottchamberlain.info/) - ROpenSci and Museum of Paleontology at UC Berkeley
 
 ### Install `FedData`
-+ CRAN:
++ From CRAN:
 ```r
 install.packages('FedData')
 ```
@@ -36,10 +36,23 @@ install.packages('FedData')
 + Development version from GitHub:
 ```r
 install.packages("devtools")
-library(devtools)
-install_github("bocinsky/FedData")
+devtools::install_github("bocinsky/FedData")
 library(FedData)
 ```
++ Linux:
+
+    First, in terminal:
+    ```r
+    sudo apt-get install libssl-dev libcurl4-openssl-dev
+    ```
+    Then, in R:
+    ```r
+    update.packages("survival")
+    install.packages("devtools")
+    devtools::install_github("bocinsky/FedData")
+    library(FedData)
+    ```
+
 
 ### Demonstration
 This demo script is available in the `/inst` folder at the location of the installed package.

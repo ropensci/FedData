@@ -1,42 +1,14 @@
-before_install:
-  - export CURWD=`pwd`
-  - sudo apt-get install libproj-dev libgeos++-dev netcdf-bin libnetcdf-dev
-  - cd
-  - wget http://download.osgeo.org/gdal/2.1.0/gdal-2.1.0.tar.gz
-  - tar zxf gdal-2.1.0.tar.gz
-  - cd gdal-2.1.0
-  - ./configure
-  - make
-  - sudo make install
-  - cd
-  - wget http://download.osgeo.org/proj/proj-4.8.0.tar.gz
-  - tar zxvf proj-4.8.0.tar.gz
-  - cd proj-4.8.0
-  - ./configure
-  - make
-  - sudo make install
-  - sudo ldconfig
-  - sudo ldconfig
-  - cd $CURWD
-
 language: r
 sudo: required
-
-warnings_are_errors: false
-
-r_packages:
-  - roxygen2
-  - survival
-
 cache: packages
+
+#warnings_are_errors: false
+
+apt_packages:
+  - r-cran-rgdal
+  - libproj-dev
+
 r:
   - oldrel
   - release
   - devel
-  
-r_github_packages: 
-  - bocinsky/FedData
-  - jimhester/covr
-
-after_success:
-  - Rscript -e 'covr::codecov()'
