@@ -43,7 +43,9 @@ library(FedData)
 
     First, in terminal:
     ```r
-    sudo apt-get install libssl-dev libcurl4-openssl-dev
+    sudo add-apt-repository ppa:ubuntugis/ppa
+    sudo apt-get update
+    sudo apt-get install libssl-dev libcurl4-openssl-dev netcdf-bin libnetcdf-dev gdal-bin
     ```
     Then, in R:
     ```r

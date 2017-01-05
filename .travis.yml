@@ -2,13 +2,24 @@ language: r
 sudo: required
 cache: packages
 
-#warnings_are_errors: false
-
-apt_packages:
-  - r-cran-rgdal
-  - libproj-dev
-
 r:
   - oldrel
   - release
   - devel
+
+#warnings_are_errors: false
+
+apt_packages:
+  - libproj-dev
+  - netcdf-bin
+  - libnetcdf-dev
+  - gdal-bin
+  
+r_packages:
+  - roxygen2
+  - survival
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
