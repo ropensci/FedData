@@ -77,22 +77,22 @@ plot(SSURGO.VEPIIN$spatial,
      lwd=0.1,
      add=T)
 
-# # Or, download by Soil Survey Area names
-# SSURGO.areas <- get_ssurgo(template=c("CO670","CO075"), 
-#                      label="CO_TEST")
+# Or, download by Soil Survey Area names
+SSURGO.areas <- get_ssurgo(template=c("CO670","CO075"),
+                     label="CO_TEST")
 
-# # Let's just look at spatial data for CO675
-# SSURGO.areas.CO675 <- SSURGO.areas$spatial[SSURGO.areas$spatial$AREASYMBOL=="CO075",]
-# 
-# # And get the NED data under them for pretty plotting
-# NED.CO675 <- get_ned(template=SSURGO.areas.CO675,
-#                      label="SSURGO_CO675")
-# 
-# # Plot the SSURGO mapunit polygons, but only for CO675
-# plot(NED.CO675)
-# plot(SSURGO.areas.CO675,
-#      lwd=0.1,
-#      add=T)
+# Let's just look at spatial data for CO675
+SSURGO.areas.CO675 <- SSURGO.areas$spatial[SSURGO.areas$spatial$AREASYMBOL=="CO075",]
+
+# And get the NED data under them for pretty plotting
+NED.CO675 <- get_ned(template=SSURGO.areas.CO675,
+                     label="SSURGO_CO675")
+
+# Plot the SSURGO mapunit polygons, but only for CO675
+plot(NED.CO675)
+plot(SSURGO.areas.CO675,
+     lwd=0.1,
+     add=T)
 
 
 # Get the ITRDB records
