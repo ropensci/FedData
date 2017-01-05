@@ -305,7 +305,11 @@ get_ssurgo_study_area <- function(template=NULL, area, date, raw.dir){
   utils::unzip(file,exdir=tmpdir)
   
   # Get spatial data
-  suppressWarnings(mapunits <- rgdal::readOGR(tmpdir, layer=paste0("soilmu_a_",tolower(area)), verbose=F))
+  if(.Platform$OS.type == "windows") {
+    suppressWarnings(mapunits <- rgdal::readOGR(paste0(tmpdir,"/",area,"/spatial"), layer=paste0("soilmu_a_",tolower(area)), verbose=F))
+  } else {
+    suppressWarnings(mapunits <- rgdal::readOGR(tmpdir, layer=paste0("soilmu_a_",tolower(area)), verbose=F))
+  }
   
   # Crop to study area
   if(!is.null(template) & !is.character(template)){
@@ -320,12 +324,21 @@ get_ssurgo_study_area <- function(template=NULL, area, date, raw.dir){
   mapunits <- sp::spChFIDs(mapunits, as.character(paste(area,'_',row.names(mapunits@data),sep='')))
   
   # Read in all tables
-  files <- list.files(tmpdir, full.names = T, pattern = "tabular")
-  tablesData <- lapply(files, function(file){
-    tryCatch(return(utils::read.delim(file, header=F,sep="|", stringsAsFactors=F)), error = function(e){return(NULL)})
-  })
-  names(tablesData) <- gsub(paste0(area,"\\\\tabular\\\\"),"",basename(files))
-  tablesData <- tablesData[!sapply(tablesData,is.null)]
+  if(.Platform$OS.type == "windows") {
+    files <- list.files(paste0(tmpdir,"/",area,"/tabular"), full.names = T)
+    tablesData <- lapply(files, function(file){
+      tryCatch(return(utils::read.delim(file, header=F,sep="|", stringsAsFactors=F)), error = function(e){return(NULL)})
+    })
+    names(tablesData) <- basename(files)
+    tablesData <- tablesData[!sapply(tablesData,is.null)]
+  } else {
+    files <- list.files(tmpdir, full.names = T, pattern = "tabular")
+    tablesData <- lapply(files, function(file){
+      tryCatch(return(utils::read.delim(file, header=F,sep="|", stringsAsFactors=F)), error = function(e){return(NULL)})
+    })
+    names(tablesData) <- gsub(paste0(area,"\\\\tabular\\\\"),"",basename(files))
+    tablesData <- tablesData[!sapply(tablesData,is.null)]
+  }
   
   # tablesHeaders <- FedData::tablesHeaders
   
