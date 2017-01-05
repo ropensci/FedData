@@ -14,6 +14,7 @@ apt_packages:
   - netcdf-bin
   - libnetcdf-dev
   - gdal-bin
+  - libgdal-dev
   
 r_packages:
   - roxygen2
