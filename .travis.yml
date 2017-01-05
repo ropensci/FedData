@@ -9,12 +9,8 @@ r:
 
 #warnings_are_errors: false
 before_install:
-  - export CURWD=`pwd`
-  - sudo add-apt-repository ppa:ubuntugis/ppa
-  - sudo apt-get update
-  - sudo ldconfig
-  - sudo ldconfig
-  - cd $CURWD
+  - sudo add-apt-repository ppa:ubuntugis/ppa -y
+  - sudo apt-get update -q
 
 apt_packages:
   - libssl-dev
