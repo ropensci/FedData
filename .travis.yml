@@ -8,9 +8,17 @@ r:
   - devel
 
 #warnings_are_errors: false
+before_install:
+  - export CURWD=`pwd`
+  - sudo add-apt-repository ppa:ubuntugis/ppa
+  - sudo apt-get update
+  - sudo ldconfig
+  - sudo ldconfig
+  - cd $CURWD
 
 apt_packages:
-  - libproj-dev
+  - libssl-dev
+  - libcurl4-openssl-dev
   - netcdf-bin
   - libnetcdf-dev
   - gdal-bin
