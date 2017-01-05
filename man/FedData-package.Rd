@@ -22,8 +22,8 @@ Additional data sources are in the works, including global soils (HWSD), MODIS s
 \tabular{ll}{
 Package: \tab FedData\cr
 Type: \tab FedData\cr
-Version: \tab 2.3.4\cr
-Date: \tab 2016-12-15\cr
+Version: \tab 2.3.5\cr
+Date: \tab 2017-1-5\cr
 License: \tab MIT\cr
 }
 
