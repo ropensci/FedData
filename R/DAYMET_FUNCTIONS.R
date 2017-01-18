@@ -47,7 +47,13 @@
 #' # Plot with raster::plot
 #' plot(DAYMET$tmin$X1985.10.23)
 #' }
-get_daymet <- function(template, label, elements=NULL, years = NULL, raw.dir="./RAW/DAYMET/", extraction.dir=paste0("./EXTRACTIONS/",label,"/DAYMET/"), force.redo=F){
+get_daymet <- function(template,
+                       label,
+                       elements=NULL,
+                       years = NULL,
+                       raw.dir="./RAW/DAYMET/",
+                       extraction.dir=paste0("./EXTRACTIONS/",label,"/DAYMET/"),
+                       force.redo=F){
   
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
@@ -92,7 +98,7 @@ get_daymet <- function(template, label, elements=NULL, years = NULL, raw.dir="./
   template.latlon <- template %>%
     sp::spTransform(raster::projection(tiles))
 
-  tile.ids <- (template.latlon %over% tiles)$TileID
+  tile.ids <- tiles$TileID[!is.na(tiles %over% template.latlon)]
 
   message("Area of interest includes ",length(tile.ids)," DAYMET tile(s).")
 
@@ -105,17 +111,20 @@ get_daymet <- function(template, label, elements=NULL, years = NULL, raw.dir="./
   # Mosaic all tiles
   if(length(tiles)>1){
     message('Mosaicking DAYMET tiles.')
-    foreach::foreach(element=elements) %do% {
+    tiles <- foreach::foreach(element=elements) %do% {
       utils::flush.console()
 
       these.tiles <- lapply(tiles,"[[",element)
       these.tiles$fun <- mean
-      these.tiles <- do.call(raster::mosaic, these.tiles)
-      gc()
+      names(these.tiles)[1:2] <- c('x', 'y')
+      out.tiles <- do.call(raster::mosaic, these.tiles)
+      names(out.tiles) <- names(these.tiles$x)
+      out.tiles
     }
   }else{
     tiles <- tiles[[1]]
   }
+  names(tiles) <- elements
 
   tiles %>%
     mapply(x = ., y = names(tiles), FUN = function(x,y){

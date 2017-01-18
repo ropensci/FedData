@@ -16,7 +16,7 @@ This package contains scripts to automate downloading geospatial data available 
 \item The \href{http://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/tree-ring}{International Tree Ring Data Bank} (ITRDB), coordinated by National Climatic Data Center at NOAA.
 }
 
-Additional data sources are in the works, including global soils (HWSD), MODIS satellite data products, the National Atlas (US), Natural Earth, and WorldClim.
+Additional data sources are in the works.
 }
 \details{
 \tabular{ll}{

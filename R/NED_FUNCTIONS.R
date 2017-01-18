@@ -65,6 +65,7 @@ get_ned <- function(template, label, res="1", raw.dir="./RAW/NED/", extraction.d
     utils::flush.console()
     
     tiles$fun <- mean
+    names(tiles)[1:2] <- c('x', 'y')
     tiles <- do.call(raster::mosaic, tiles)
     
     gc()
