@@ -43,42 +43,47 @@
 #'                      label='VEPIIN',
 #'                      elements = c('prcp','tmin','tmax'),
 #'                      years = 1980:1985)
-#' 
+#'
 #' # Plot with raster::plot
 #' plot(DAYMET$tmin$X1985.10.23)
 #' }
-get_daymet <- function(template, label, elements = NULL, years = NULL, raw.dir = "./RAW/DAYMET/", extraction.dir = paste0("./EXTRACTIONS/", 
-    label, "/DAYMET/"), force.redo = F) {
-    
+get_daymet <- function(template,
+                       label,
+                       elements = NULL,
+                       years = NULL,
+                       raw.dir = "./RAW/DAYMET/",
+                       extraction.dir = paste0("./EXTRACTIONS/", label, "/DAYMET/"),
+                       force.redo = F) {
+
     dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
     dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
-    
+
     all.elements <- c("dayl", "prcp", "srad", "swe", "tmax", "tmin", "vp")
-    
-    if (is.null(elements)) 
+
+    if (is.null(elements))
         elements <- all.elements
-    
+
     elements <- tolower(elements)
-    
+
     missing.elements <- setdiff(elements, all.elements)
-    if (length(missing.elements) > 0) 
+    if (length(missing.elements) > 0)
         warning("Elements not available: ", paste(missing.elements, collapse = ", "))
     elements <- setdiff(elements, missing.elements)
-    if (length(elements) == 0) 
+    if (length(elements) == 0)
         stop("No elements available")
-    
+
     all.years <- 1980:(lubridate::year(Sys.time()) - 1)
-    if (is.null(years)) 
+    if (is.null(years))
         years <- all.years
-    
+
     missing.years <- setdiff(years, all.years)
-    if (length(missing.years) > 0) 
+    if (length(missing.years) > 0)
         warning("Years not available: ", paste(missing.years, collapse = ", "))
     years <- setdiff(years, missing.years)
-    if (length(years) == 0) 
+    if (length(years) == 0)
         stop("No years available")
-    
-    
+
+
     out.files <- paste0(extraction.dir, "/", label, "_DAYMET_", elements, "_", min(years), "-", max(years), ".tif")
     if (!force.redo & all(file.exists(out.files)) & file.exists(paste0(extraction.dir, "/", label, "_DAYMET_layer_names.Rds"))) {
         extracted.DAYMET <- out.files %>% lapply(FUN = function(x) {
@@ -89,27 +94,30 @@ get_daymet <- function(template, label, elements = NULL, years = NULL, raw.dir =
         names(extracted.DAYMET) <- elements
         return(extracted.DAYMET)
     }
-    
+
     data(tiles, envir = environment())
-    
+
     template.latlon <- template %>% sp::spTransform(raster::projection(tiles))
-    
+
     tile.ids <- tiles$TileID[!is.na(tiles %over% template.latlon)]
-    
+
+    tile.ids <- tile.ids[!is.na(tile.ids)]
+    tile.ids <- unique(tile.ids)
+
     message("Area of interest includes ", length(tile.ids), " DAYMET tile(s).")
-    
+
     # Download and crop tiles
     tiles <- lapply(tile.ids, function(tile) {
         return(FedData::get_daymet_tile(template = template, elements = elements, years = years, tileID = tile, raw.dir = raw.dir))
     })
     names(tiles) <- tile.ids
-    
+
     # Mosaic all tiles
     if (length(tiles) > 1) {
         message("Mosaicking DAYMET tiles.")
         tiles <- foreach::foreach(element = elements) %do% {
             utils::flush.console()
-            
+
             these.tiles <- lapply(tiles, "[[", element)
             these.tiles$fun <- mean
             names(these.tiles)[1:2] <- c("x", "y")
@@ -121,15 +129,15 @@ get_daymet <- function(template, label, elements = NULL, years = NULL, raw.dir =
         tiles <- tiles[[1]]
     }
     names(tiles) <- elements
-    
+
     tiles %>% mapply(x = ., y = names(tiles), FUN = function(x, y) {
-        raster::writeRaster(x, paste0(extraction.dir, "/", label, "_DAYMET_", y, "_", min(years), "-", max(years), ".tif"), datatype = "FLT4S", 
+        raster::writeRaster(x, paste0(extraction.dir, "/", label, "_DAYMET_", y, "_", min(years), "-", max(years), ".tif"), datatype = "FLT4S",
             options = c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"), overwrite = T, setStatistics = FALSE)
     })
-    
+
     tiles[[1]] %>% names() %>% readr::write_rds(paste0(extraction.dir, "/", label, "_DAYMET_layer_names.Rds"))
-    
-    
+
+
     return(tiles)
 }
 
@@ -157,12 +165,12 @@ get_daymet <- function(template, label, elements = NULL, years = NULL, raw.dir =
 #' @importFrom doParallel registerDoParallel stopImplicitCluster
 #' @importFrom foreach foreach %dopar% %do% %:%
 download_daymet_tile <- function(tileID, elements, years, raw.dir) {
-    
+
     doParallel::registerDoParallel()
     out <- foreach::foreach(element = elements) %:% foreach::foreach(year = sort(years), .combine = "c") %dopar% {
         destdir <- paste0(raw.dir, "/", tileID, "/", year)
         dir.create(destdir, recursive = TRUE, showWarnings = FALSE)
-        url <- paste0("http://thredds.daac.ornl.gov/thredds/fileServer/ornldaac/1328/tiles/", year, "/", tileID, "_", year, "/", 
+        url <- paste0("http://thredds.daac.ornl.gov/thredds/fileServer/ornldaac/1328/tiles/", year, "/", tileID, "_", year, "/",
             element, ".nc")
         download_data(url = url, destdir = destdir, timestamping = FALSE, nc = TRUE)
         paste0(destdir, "/", basename(url)) %>% normalizePath(mustWork = T)
@@ -203,43 +211,43 @@ download_daymet_tile <- function(tileID, elements, years, raw.dir) {
 #' @importFrom magrittr %<>% %>%
 get_daymet_tile <- function(template, tileID, elements = NULL, years = NULL, raw.dir) {
     tmpdir <- tempfile()
-    if (!dir.create(tmpdir)) 
+    if (!dir.create(tmpdir))
         stop("failed to create my temporary directory")
-    
+
     message("(Down)Loading DAYMET tile ", tileID)
-    
+
     all.elements <- c("dayl", "prcp", "srad", "swe", "tmax", "tmin", "vp")
     elements <- tolower(elements)
-    
-    if (is.null(elements)) 
+
+    if (is.null(elements))
         elements <- all.elements
-    
+
     missing.elements <- setdiff(elements, all.elements)
-    if (length(missing.elements) > 0) 
+    if (length(missing.elements) > 0)
         warning("Elements not available: ", paste(missing.elements, collapse = ", "))
     elements <- setdiff(elements, missing.elements)
-    if (length(elements) == 0) 
+    if (length(elements) == 0)
         stop("No elements available")
-    
+
     all.years <- 1980:(lubridate::year(Sys.time()) - 1)
-    if (is.null(years)) 
+    if (is.null(years))
         years <- all.years
-    
+
     missing.years <- setdiff(years, all.years)
-    if (length(missing.years) > 0) 
+    if (length(missing.years) > 0)
         warning("Years not available: ", paste(missing.years, collapse = ", "))
     years <- setdiff(years, missing.years)
-    if (length(years) == 0) 
+    if (length(years) == 0)
         stop("No years available")
-    
+
     files <- download_daymet_tile(tileID = tileID, elements = elements, years = years, raw.dir = raw.dir)
-    
+
     doParallel::registerDoParallel()
     tiles <- foreach::foreach(element = files) %dopar% {
         tile <- foreach::foreach(file = element) %do% raster::brick(file)
         tile %<>% raster::stack(quick = TRUE)
         if (!is.null(template)) {
-            tile <- tryCatch(tile %>% raster::crop(template %>% sp::spTransform(tile %>% raster::projection() %>% sp::CRS()), snap = "out"), 
+            tile <- tryCatch(tile %>% raster::crop(template %>% sp::spTransform(tile %>% raster::projection() %>% sp::CRS()), snap = "out"),
                 error = function(e) {
                   tile %>% raster::crop(template %>% sp::spTransform(tile %>% raster::projection() %>% sp::CRS()))
                 })
@@ -247,9 +255,9 @@ get_daymet_tile <- function(template, tileID, elements = NULL, years = NULL, raw
     }
     doParallel::stopImplicitCluster()
     names(tiles) <- elements
-    
+
     unlink(tmpdir, recursive = TRUE)
-    
+
     return(tiles)
 }
 
