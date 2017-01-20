@@ -10,8 +10,8 @@ get_ned_tile(template = NULL, res = "1", tileNorthing, tileWesting, raw.dir)
 \item{template}{A Raster* or Spatial* object to serve 
 as a template for cropping. If missing, entire tile is returned.}
 
-\item{res}{A character string representing the desired resolution of the NED. "1"
-indicates the 1 arc-second NED (the default), while "13" indicates the 1/3 arc-second dataset.}
+\item{res}{A character string representing the desired resolution of the NED. '1'
+indicates the 1 arc-second NED (the default), while '13' indicates the 1/3 arc-second dataset.}
 
 \item{tileNorthing}{An integer representing the northing (latitude, in degrees north of the equator) of the northwest corner of the tile to 
 be downloaded.}
@@ -20,7 +20,7 @@ be downloaded.}
 be downloaded.}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to "./RAW/NED/".}
+The directory will be created if missing. Defaults to './RAW/NED/'.}
 }
 \value{
 A \code{RasterLayer} cropped within the specified \code{template}.

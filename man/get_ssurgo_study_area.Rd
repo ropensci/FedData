@@ -25,9 +25,9 @@ the specified \code{template}.
 \description{
 \code{get_ssurgo_study_area} returns a named list of length 2:
 \enumerate{
-\item "spatial": A \code{SpatialPolygonsDataFrame} of soil mapunits 
+\item 'spatial': A \code{SpatialPolygonsDataFrame} of soil mapunits 
 in the template, and 
-\item "tabular": A named list of \code{\link{data.frame}s} with the SSURGO tabular data.
+\item 'tabular': A named list of \code{\link{data.frame}s} with the SSURGO tabular data.
 }
 }
 \keyword{internal}

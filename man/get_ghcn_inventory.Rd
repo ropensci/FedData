@@ -11,7 +11,7 @@ get_ghcn_inventory(template = NULL, elements = NULL, raw.dir)
 as a template for cropping.}
 
 \item{elements}{A character vector of elemets to extract.
-Common elements include "tmin", "tmax", and "prcp".}
+Common elements include 'tmin', 'tmax', and 'prcp'.}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
 The directory will be created if missing.}

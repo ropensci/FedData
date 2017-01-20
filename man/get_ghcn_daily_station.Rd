@@ -97,7 +97,7 @@ TAVG = Average temperature (tenths of degrees C)
 [Note that TAVG from source 'S' corresponds
 to an average for the period ending at
 2400 UTC rather than local midnight]\cr
-THIC = Thickness of ice on water (tenths of mm)    \cr
+THIC = Thickness of ice on water (tenths of mm)\cr
 TOBS = Temperature at the time of observation (tenths of degrees C)\cr
 TSUN = Daily total sunshine (minutes)\cr
 WDF1 = Direction of fastest 1-minute wind (degrees)\cr
@@ -106,7 +106,7 @@ WDF5 = Direction of fastest 5-second wind (degrees)\cr
 WDFG = Direction of peak wind gust (degrees)\cr
 WDFI = Direction of highest instantaneous wind (degrees)\cr
 WDFM = Fastest mile wind direction (degrees)\cr
-WDMV = 24-hour wind movement (km)       \cr
+WDMV = 24-hour wind movement (km)\cr
 WESD = Water equivalent of snow on the ground (tenths of mm)\cr
 WESF = Water equivalent of snowfall (tenths of mm)\cr
 WSF1 = Fastest 1-minute wind speed (tenths of meters per second)\cr

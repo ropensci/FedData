@@ -15,10 +15,10 @@ as a template for cropping.}
 \item{label}{A character string naming the study area.}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to "./RAW/NHD/".}
+The directory will be created if missing. Defaults to './RAW/NHD/'.}
 
 \item{extraction.dir}{A character string indicating where the extracted and cropped NHD shapefiles should be put.
-The directory will be created if missing. Defaults to "./EXTRACTIONS/NHD/".}
+The directory will be created if missing. Defaults to './EXTRACTIONS/NHD/'.}
 
 \item{force.redo}{If an extraction for this template and label already exists, should a new one be created?}
 }
@@ -31,13 +31,13 @@ from the National Hydrography Dataset.
 }
 \examples{
 \dontrun{
-# Extract data for the Village Ecodynamics Project "VEPIIN" study area:
+# Extract data for the Village Ecodynamics Project 'VEPIIN' study area:
 # http://village.anth.wsu.edu
 vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), 
-     proj4string="+proj=utm +datum=NAD83 +zone=12")
+     proj4string='+proj=utm +datum=NAD83 +zone=12')
 
 # Get the NHD (USA ONLY)
-NHD <- get_nhd(template=vepPolygon, label="VEPIIN")
+NHD <- get_nhd(template=vepPolygon, label='VEPIIN')
 
 # Plot the VEP polygon
 plot(vepPolygon)

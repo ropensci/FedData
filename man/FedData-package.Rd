@@ -22,8 +22,8 @@ Additional data sources are in the works.
 \tabular{ll}{
 Package: \tab FedData\cr
 Type: \tab FedData\cr
-Version: \tab 2.3.5\cr
-Date: \tab 2017-1-5\cr
+Version: \tab 2.4.0\cr
+Date: \tab 2017-1-20\cr
 License: \tab MIT\cr
 }
 

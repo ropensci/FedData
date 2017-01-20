@@ -8,7 +8,7 @@ download_itrdb(raw.dir = "./RAW/ITRDB/", force.redo = FALSE)
 }
 \arguments{
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to "./RAW/ITRDB/".}
+The directory will be created if missing. Defaults to './RAW/ITRDB/'.}
 
 \item{force.redo}{If a download already exists, should a new one be created? Defaults to FALSE.}
 }

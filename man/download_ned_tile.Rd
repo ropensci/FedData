@@ -7,8 +7,8 @@
 download_ned_tile(res = "1", tileNorthing, tileWesting, raw.dir)
 }
 \arguments{
-\item{res}{A character string representing the desired resolution of the NED. "1"
-indicates the 1 arc-second NED (the default), while "13" indicates the 1/3 arc-second dataset.}
+\item{res}{A character string representing the desired resolution of the NED. '1'
+indicates the 1 arc-second NED (the default), while '13' indicates the 1/3 arc-second dataset.}
 
 \item{tileNorthing}{An integer representing the northing (latitude, in degrees north of the equator) of the northwest corner of the tile to 
 be downloaded.}
@@ -17,7 +17,7 @@ be downloaded.}
 be downloaded.}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to "./RAW/NED/".}
+The directory will be created if missing. Defaults to './RAW/NED/'.}
 }
 \value{
 A character string representing the full local path of the downloaded directory.

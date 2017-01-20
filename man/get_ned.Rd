@@ -13,14 +13,14 @@ as a template for cropping.}
 
 \item{label}{A character string naming the study area.}
 
-\item{res}{A character string representing the desired resolution of the NED. "1"
-indicates the 1 arc-second NED (the default), while "13" indicates the 1/3 arc-second dataset.}
+\item{res}{A character string representing the desired resolution of the NED. '1'
+indicates the 1 arc-second NED (the default), while '13' indicates the 1/3 arc-second dataset.}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to "./RAW/NED/".}
+The directory will be created if missing. Defaults to './RAW/NED/'.}
 
 \item{extraction.dir}{A character string indicating where the extracted and cropped DEM should be put.
-The directory will be created if missing. Defaults to "./EXTRACTIONS/NED/".}
+The directory will be created if missing. Defaults to './EXTRACTIONS/NED/'.}
 
 \item{force.redo}{If an extraction for this template and label already exists, should a new one be created?}
 }
@@ -33,14 +33,14 @@ template study area.
 }
 \examples{
 \dontrun{
-# Extract data for the Village Ecodynamics Project "VEPIIN" study area:
+# Extract data for the Village Ecodynamics Project 'VEPIIN' study area:
 # http://village.anth.wsu.edu
 vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), 
-     proj4string="+proj=utm +datum=NAD83 +zone=12")
+     proj4string='+proj=utm +datum=NAD83 +zone=12')
 
 # Get the NED (USA ONLY)
 # Returns a raster
-NED <- get_ned(template=vepPolygon, label="VEPIIN")
+NED <- get_ned(template=vepPolygon, label='VEPIIN')
 
 # Plot with raster::plot
 plot(NED)

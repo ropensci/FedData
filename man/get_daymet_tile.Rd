@@ -25,7 +25,7 @@ vp = Water vapor pressure in pascals. Daily average partial pressure of water va
 \item{years}{A numeric vector of years to extract.}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to "./RAW/NED/".}
+The directory will be created if missing. Defaults to './RAW/NED/'.}
 }
 \value{
 A a list of \code{RasterBrick}s---one for each element---cropped within the specified \code{template}.

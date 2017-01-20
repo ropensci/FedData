@@ -200,4 +200,4 @@ legend('bottomleft', pch=1, legend="ITRDB chronologies")
 ========
 
 ### Acknowledgements
-This package is a product of SKOPE ([Synthesizing Knowledge of Past Environments](http://www.envirecon.org)) and the Village Ecodynamics Project. This software is licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This package is a product of SKOPE ([Synthesizing Knowledge of Past Environments](http://www.openskope.org)) and the Village Ecodynamics Project. This software is licensed under the [MIT license](https://opensource.org/licenses/MIT).

@@ -28,67 +28,67 @@ if missing, all available chronologies are given.}
 
 \item{measurement.type}{A character vector of measurement type identifiers. Options include:
 \itemize{
-\item "Total Ring Density"
-\item "Earlywood Width"
-\item "Earlywood Density"
-\item "Latewood Width"
-\item "Minimum Density"
-\item "Ring Width"
-\item "Latewood Density"
-\item "Maximum Density"
-\item "Latewood Percent"
+\item 'Total Ring Density'
+\item 'Earlywood Width'
+\item 'Earlywood Density'
+\item 'Latewood Width'
+\item 'Minimum Density'
+\item 'Ring Width'
+\item 'Latewood Density'
+\item 'Maximum Density'
+\item 'Latewood Percent'
 }
 if missing, all available chronologies are given.}
 
 \item{chronology.type}{A character vector of chronology type identifiers. Options include:
 \itemize{
-\item "ARSTND"
-\item "Low Pass Filter"
-\item "Residual"
-\item "Standard"
-\item "Re-Whitened Residual"
-\item "Measurements Only"
+\item 'ARSTND'
+\item 'Low Pass Filter'
+\item 'Residual'
+\item 'Standard'
+\item 'Re-Whitened Residual'
+\item 'Measurements Only'
 }
 if missing, all available chronologies are given.}
 
 \item{makeSpatial}{Should the metadata be presented as a SpatialPointsDataFrame? Defaults to FALSE.}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to "./RAW/ITRDB/".}
+The directory will be created if missing. Defaults to './RAW/ITRDB/'.}
 
 \item{extraction.dir}{A character string indicating where the extracted and cropped ITRDB dataset should be put.
-The directory will be created if missing. Defaults to "./EXTRACTIONS/ITRDB/".}
+The directory will be created if missing. Defaults to './EXTRACTIONS/ITRDB/'.}
 
 \item{force.redo}{If an extraction already exists, should a new one be created? Defaults to FALSE.}
 }
 \value{
-A named list containing the "metadata", "widths", and "depths" data.
+A named list containing the 'metadata', 'widths', and 'depths' data.
 }
 \description{
 \code{get_itrdb} returns a named list of length 3: 
 \enumerate{
-\item "metadata": A data.table or \code{SpatialPointsDataFrame} (if \code{makeSpatial==TRUE}) of the locations 
+\item 'metadata': A data.table or \code{SpatialPointsDataFrame} (if \code{makeSpatial==TRUE}) of the locations 
 and names of extracted ITRDB chrononlogies,
-\item "widths": A matrix of tree-ring widths/densities given user selection, and
-\item "depths": A matrix of tree-ring sample depths.
+\item 'widths': A matrix of tree-ring widths/densities given user selection, and
+\item 'depths': A matrix of tree-ring sample depths.
 }
 }
 \examples{
 \dontrun{
-# Extract data for the Village Ecodynamics Project "VEPIIN" study area:
+# Extract data for the Village Ecodynamics Project 'VEPIIN' study area:
 # http://village.anth.wsu.edu
 vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), 
-     proj4string="+proj=utm +datum=NAD83 +zone=12")
+     proj4string='+proj=utm +datum=NAD83 +zone=12')
 
 # Get the ITRDB records
-ITRDB <- get_itrdb(template=vepPolygon, label="VEPIIN", makeSpatial=T)
+ITRDB <- get_itrdb(template=vepPolygon, label='VEPIIN', makeSpatial=T)
 
 # Plot the VEP polygon
 plot(vepPolygon)
 
 # Map the locations of the tree ring chronologies
 plot(ITRDB$metadata, pch=1, add=T)
-legend('bottomleft', pch=1, legend="ITRDB chronologies")
+legend('bottomleft', pch=1, legend='ITRDB chronologies')
 }
 }
 

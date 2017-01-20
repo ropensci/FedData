@@ -103,7 +103,7 @@ TAVG = Average temperature (tenths of degrees C)
 [Note that TAVG from source 'S' corresponds
 to an average for the period ending at
 2400 UTC rather than local midnight]\cr
-THIC = Thickness of ice on water (tenths of mm)    \cr
+THIC = Thickness of ice on water (tenths of mm)\cr
 TOBS = Temperature at the time of observation (tenths of degrees C)\cr
 TSUN = Daily total sunshine (minutes)\cr
 WDF1 = Direction of fastest 1-minute wind (degrees)\cr
@@ -112,7 +112,7 @@ WDF5 = Direction of fastest 5-second wind (degrees)\cr
 WDFG = Direction of peak wind gust (degrees)\cr
 WDFI = Direction of highest instantaneous wind (degrees)\cr
 WDFM = Fastest mile wind direction (degrees)\cr
-WDMV = 24-hour wind movement (km)       \cr
+WDMV = 24-hour wind movement (km)\cr
 WESD = Water equivalent of snow on the ground (tenths of mm)\cr
 WESF = Water equivalent of snowfall (tenths of mm)\cr
 WSF1 = Fastest 1-minute wind speed (tenths of meters per second)\cr
@@ -158,51 +158,51 @@ values:\cr
 \item{years}{A numeric vector indicating which years to get.}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to "./RAW/GHCN/".}
+The directory will be created if missing. Defaults to './RAW/GHCN/'.}
 
 \item{extraction.dir}{A character string indicating where the extracted and cropped GHCN shapefiles should be put.
-The directory will be created if missing. Defaults to "./EXTRACTIONS/GHCN/".}
+The directory will be created if missing. Defaults to './EXTRACTIONS/GHCN/'.}
 
 \item{standardize}{Select only common year/month/day? Defaults to FALSE.}
 
 \item{force.redo}{If an extraction for this template and label already exists, should a new one be created? Defaults to FALSE.}
 }
 \value{
-A named list containing the "spatial" and "tabular" data.
+A named list containing the 'spatial' and 'tabular' data.
 }
 \description{
 \code{get_ghcn_daily} returns a named list of length 2: 
 \enumerate{
-\item "spatial": A \code{SpatialPointsDataFrame} of the locations of GHCN weather stations 
+\item 'spatial': A \code{SpatialPointsDataFrame} of the locations of GHCN weather stations 
 in the template, and 
-\item "tabular": A named list of \code{\link{data.frame}s} with the daily weather data for each station.
+\item 'tabular': A named list of \code{\link{data.frame}s} with the daily weather data for each station.
 The name of each list item is the station ID.
 }
 }
 \examples{
 \dontrun{
-# Extract data for the Village Ecodynamics Project "VEPIIN" study area:
+# Extract data for the Village Ecodynamics Project 'VEPIIN' study area:
 # http://village.anth.wsu.edu
 vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), 
-     proj4string="+proj=utm +datum=NAD83 +zone=12")
+     proj4string='+proj=utm +datum=NAD83 +zone=12')
 
 # Get the daily GHCN data (GLOBAL)
 # Returns a list: the first element is the spatial locations of stations,
 # and the second is a list of the stations and their daily data
-GHCN.prcp <- get_ghcn_daily(template=vepPolygon, label="VEPIIN", elements=c('prcp'))
+GHCN.prcp <- get_ghcn_daily(template=vepPolygon, label='VEPIIN', elements=c('prcp'))
 
 # Plot the VEP polygon
 plot(vepPolygon)
 
 # Plot the spatial locations
 plot(GHCN.prcp$spatial, pch=1, add=T)
-legend('bottomleft', pch=1, legend="GHCN Precipitation Records")
+legend('bottomleft', pch=1, legend='GHCN Precipitation Records')
 
 # Elements for which you require the same data
 # (i.e., minimum and maximum temperature for the same days)
 # can be standardized using standardize==T
 GHCN.temp <- get_ghcn_daily(template=vepPolygon, 
-     label="VEPIIN", 
+     label='VEPIIN', 
      elements=c('tmin','tmax'), 
      standardize=T)
 
@@ -211,7 +211,7 @@ plot(vepPolygon)
 
 # Plot the spatial locations
 plot(GHCN.temp$spatial, pch=1, add=T)
-legend('bottomleft', pch=1, legend="GHCN Temperature Records")
+legend('bottomleft', pch=1, legend='GHCN Temperature Records')
 }
 }
 

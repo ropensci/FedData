@@ -2,7 +2,7 @@
 % Please edit documentation in R/UTILITY_FUNCTIONS.R
 \name{substr_right}
 \alias{substr_right}
-\title{Get the rightmost "n" characters of a character string.}
+\title{Get the rightmost 'n' characters of a character string.}
 \usage{
 substr_right(x, n)
 }
@@ -15,7 +15,7 @@ substr_right(x, n)
 A character string.
 }
 \description{
-Get the rightmost "n" characters of a character string.
+Get the rightmost 'n' characters of a character string.
 }
 \keyword{internal}
 

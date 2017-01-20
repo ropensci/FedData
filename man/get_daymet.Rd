@@ -27,10 +27,10 @@ vp = Water vapor pressure in pascals. Daily average partial pressure of water va
 \item{years}{A numeric vector of years to extract.}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to "./RAW/DAYMET/".}
+The directory will be created if missing. Defaults to './RAW/DAYMET/'.}
 
 \item{extraction.dir}{A character string indicating where the extracted and cropped DEM should be put.
-The directory will be created if missing. Defaults to "./EXTRACTIONS/DAYMET/".}
+The directory will be created if missing. Defaults to './EXTRACTIONS/DAYMET/'.}
 
 \item{force.redo}{If an extraction for this template and label already exists, should a new one be created?}
 }
@@ -43,16 +43,16 @@ template study area.
 }
 \examples{
 \dontrun{
-# Extract data for the Village Ecodynamics Project "VEPIIN" study area:
+# Extract data for the Village Ecodynamics Project 'VEPIIN' study area:
 # http://village.anth.wsu.edu
 vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000),
-     proj4string="+proj=utm +datum=NAD83 +zone=12")
+     proj4string='+proj=utm +datum=NAD83 +zone=12')
 
 # Get the DAYMET (North America only)
 # Returns a list of raster bricks
 DAYMET <- get_daymet(template=vepPolygon,
-                     label="VEPIIN",
-                     elements = c("prcp","tmin","tmax"),
+                     label='VEPIIN',
+                     elements = c('prcp','tmin','tmax'),
                      years = 1980:1985)
 
 # Plot with raster::plot

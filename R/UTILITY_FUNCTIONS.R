@@ -1,5 +1,5 @@
 # Make CRAN check not complain about .
-if(getRversion() >= "2.15.1")  utils::globalVariables(c(".","element"))
+if (getRversion() >= "2.15.1") utils::globalVariables(c(".", "element"))
 
 #' Install and load a package.
 #'
@@ -8,32 +8,32 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c(".","element"))
 #' @param x A character string representing the name of a package.
 #' @export
 #' @keywords internal
-pkg_test <- function(x){
-  if(grepl("/",x)){
-    pkgName <- basename(x)
-  }else{
-    pkgName <- x
-  }
-  if (!suppressWarnings(require(pkgName,character.only = TRUE)))
-  {
-    if(grepl("/",x)){
-      suppressWarnings(devtools::install_github(x))
-    }else{
-      utils::install.packages(x,dependencies=TRUE, repos="http://cran.rstudio.com")
+pkg_test <- function(x) {
+    if (grepl("/", x)) {
+        pkgName <- basename(x)
+    } else {
+        pkgName <- x
     }
-  }
-  if(!suppressWarnings(require(pkgName,character.only = TRUE))) stop("Package not found")
+    if (!suppressWarnings(require(pkgName, character.only = TRUE))) {
+        if (grepl("/", x)) {
+            suppressWarnings(devtools::install_github(x))
+        } else {
+            utils::install.packages(x, dependencies = TRUE, repos = "http://cran.rstudio.com")
+        }
+    }
+    if (!suppressWarnings(require(pkgName, character.only = TRUE))) 
+        stop("Package not found")
 }
 
-#'Get the rightmost "n" characters of a character string.
+#'Get the rightmost 'n' characters of a character string.
 #'
 #' @param x A character string.
 #' @param n The number of characters to retrieve.
 #' @return A character string.
 #' @export
 #' @keywords internal
-substr_right <- function(x, n){
-  substr(x, nchar(x)-n+1, nchar(x))
+substr_right <- function(x, n) {
+    substr(x, nchar(x) - n + 1, nchar(x))
 }
 
 #'Turn an extent object into a polygon
@@ -44,18 +44,18 @@ substr_right <- function(x, n){
 #' @return A SpatialPolygons object.
 #' @export
 #' @keywords internal
-polygon_from_extent <- function(x, proj4string=NULL){
-  if(is.null(proj4string)){
-    proj4string <- raster::projection(x)
-  }
-  
-  if(class(x)!="extent"){
-    x <- raster::extent(x)
-  }
-  
-  extent.matrix <- rbind( c(x@xmin,x@ymin), c(x@xmin,x@ymax), c(x@xmax,x@ymax), c(x@xmax,x@ymin), c(x@xmin,x@ymin) ) # clockwise, 5 points to close it
-  extent.SP <- sp::SpatialPolygons( list(sp::Polygons(list(sp::Polygon(extent.matrix)),"extent")), proj4string=sp::CRS(proj4string) )
-  return(extent.SP)
+polygon_from_extent <- function(x, proj4string = NULL) {
+    if (is.null(proj4string)) {
+        proj4string <- raster::projection(x)
+    }
+    
+    if (class(x) != "extent") {
+        x <- raster::extent(x)
+    }
+    
+    extent.matrix <- rbind(c(x@xmin, x@ymin), c(x@xmin, x@ymax), c(x@xmax, x@ymax), c(x@xmax, x@ymin), c(x@xmin, x@ymin))  # clockwise, 5 points to close it
+    extent.SP <- sp::SpatialPolygons(list(sp::Polygons(list(sp::Polygon(extent.matrix)), "extent")), proj4string = sp::CRS(proj4string))
+    return(extent.SP)
 }
 
 #'Turn a SpatialPolygons object into a SpatialPolygonsDataFrame.
@@ -64,11 +64,13 @@ polygon_from_extent <- function(x, proj4string=NULL){
 #' @return A SpatialPolygonsDataFrame object.
 #' @export
 #' @keywords internal
-spdf_from_polygon <- function(x){
-  IDs <- sapply((methods::slot(x, "polygons")), function(x){methods::slot(x, "ID")})
-  df <- data.frame(rep(0, length(IDs)), row.names=IDs)
-  x <- sp::SpatialPolygonsDataFrame(x,df)
-  return(x)
+spdf_from_polygon <- function(x) {
+    IDs <- sapply((methods::slot(x, "polygons")), function(x) {
+        methods::slot(x, "ID")
+    })
+    df <- data.frame(rep(0, length(IDs)), row.names = IDs)
+    x <- sp::SpatialPolygonsDataFrame(x, df)
+    return(x)
 }
 
 #'Get a logical vector of which elements in a vector are sequentially duplicated.
@@ -78,13 +80,17 @@ spdf_from_polygon <- function(x){
 #' @return A logical vector of the same length as x.
 #' @export
 #' @keywords internal
-sequential_duplicated <- function(x, rows=F){
-  if(!rows){
-    duplicates <- c(FALSE,unlist(lapply(1:(length(x)-1), function(i){duplicated(x[i:(i+1)])[2]})))
-  }else{
-    duplicates <- c(FALSE,unlist(lapply(1:(nrow(x)-1), function(i){duplicated(x[i:(i+1),])[2]})))
-  }
-  return(duplicates)
+sequential_duplicated <- function(x, rows = F) {
+    if (!rows) {
+        duplicates <- c(FALSE, unlist(lapply(1:(length(x) - 1), function(i) {
+            duplicated(x[i:(i + 1)])[2]
+        })))
+    } else {
+        duplicates <- c(FALSE, unlist(lapply(1:(nrow(x) - 1), function(i) {
+            duplicated(x[i:(i + 1), ])[2]
+        })))
+    }
+    return(duplicates)
 }
 
 #'Unwraps a matrix and only keep the first n elements.
@@ -96,13 +102,13 @@ sequential_duplicated <- function(x, rows=F){
 #' @return A logical vector of the same length as x
 #' @export
 #' @keywords internal
-unwrap_rows <- function(mat,n){
-  n <- rep_len(n,nrow(mat))
-  i <- 0
-  out <- lapply(1:nrow(mat),function(i){
-    return(mat[i,1:n[i]])
-  })
-  return(as.numeric(do.call(c,out)))
+unwrap_rows <- function(mat, n) {
+    n <- rep_len(n, nrow(mat))
+    i <- 0
+    out <- lapply(1:nrow(mat), function(i) {
+        return(mat[i, 1:n[i]])
+    })
+    return(as.numeric(do.call(c, out)))
 }
 
 
@@ -121,40 +127,32 @@ unwrap_rows <- function(mat,n){
 #' @return A logical vector of the same length as x.
 #' @export
 #' @keywords internal
-download_data <- function(url, destdir=getwd(), timestamping=T, nc=F, verbose=F, progress=F){
-  
-  destdir <- normalizePath(destdir)
-  destfile <- paste0(destdir,'/',basename(url))
-  temp.file <- paste0(tempdir(),"/",basename(url))
-  
-  if(nc & file.exists(destfile)) return()
-  
-  if(timestamping & file.exists(destfile)){
-    message("Downloading file (if necessary): ",url)
-    opts <- list(
-      verbose = verbose, 
-      noprogress = !progress,
-      fresh_connect = TRUE, 
-      ftp_use_epsv = FALSE, 
-      forbid_reuse = TRUE, 
-      timecondition = TRUE, 
-      timevalue = base::file.info(destfile)$mtime)
-    hand <- curl::new_handle()
-    curl::handle_setopt(hand, .list = opts)
-    tryCatch(status <- curl::curl_fetch_disk(url, path = temp.file, handle = hand), error=function(e) stop("Download of ",url," failed!"))
-    if(file.info(temp.file)$size > 0){
-      file.copy(temp.file,destfile, overwrite=T)
+download_data <- function(url, destdir = getwd(), timestamping = T, nc = F, verbose = F, progress = F) {
+    
+    destdir <- normalizePath(destdir)
+    destfile <- paste0(destdir, "/", basename(url))
+    temp.file <- paste0(tempdir(), "/", basename(url))
+    
+    if (nc & file.exists(destfile)) 
+        return()
+    
+    if (timestamping & file.exists(destfile)) {
+        message("Downloading file (if necessary): ", url)
+        opts <- list(verbose = verbose, noprogress = !progress, fresh_connect = TRUE, ftp_use_epsv = FALSE, forbid_reuse = TRUE, 
+            timecondition = TRUE, timevalue = base::file.info(destfile)$mtime)
+        hand <- curl::new_handle()
+        curl::handle_setopt(hand, .list = opts)
+        tryCatch(status <- curl::curl_fetch_disk(url, path = temp.file, handle = hand), error = function(e) stop("Download of ", 
+            url, " failed!"))
+        if (file.info(temp.file)$size > 0) {
+            file.copy(temp.file, destfile, overwrite = T)
+        }
+    } else {
+        message("Downloading file: ", url)
+        opts <- list(verbose = verbose, noprogress = !progress, fresh_connect = TRUE, ftp_use_epsv = FALSE, forbid_reuse = TRUE)
+        hand <- curl::new_handle()
+        curl::handle_setopt(hand, .list = opts)
+        tryCatch(status <- curl::curl_fetch_disk(url, path = destfile, handle = hand), error = function(e) stop("Download of ", 
+            url, " failed!"))
     }
-  }else{
-    message("Downloading file: ",url)
-    opts <- list(
-      verbose = verbose, 
-      noprogress = !progress,
-      fresh_connect = TRUE, 
-      ftp_use_epsv = FALSE, 
-      forbid_reuse = TRUE)
-    hand <- curl::new_handle()
-    curl::handle_setopt(hand, .list = opts)
-    tryCatch(status <- curl::curl_fetch_disk(url, path = destfile, handle = hand), error=function(e) stop("Download of ",url," failed!"))
-  }
 }
