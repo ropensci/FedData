@@ -27,6 +27,10 @@ r_packages:
   - roxygen2
   - survival
 
+after_success:
+  - Rscript -e 'covr::codecov()'
+  
+  
 notifications:
   email:
     on_success: change
