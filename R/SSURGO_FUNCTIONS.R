@@ -197,7 +197,7 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
         bounds <- polygon_from_extent(template)
         
         # Only download 1 square degree at a time to avoid oversized AOI error
-        if((bounds@xmax - bounds@xmin) > 1 | (bounds@ymax - bounds@ymin) > 1){
+        if((raster::xmax(bounds) - raster::xmin(bounds)) > 1 | (raster::ymax(bounds) - raster::ymin(bounds)) > 1){
           grid <- GridTopology(cellcentre.offset=c(-179.5,-89.5),
                                cellsize=c(1,1),cells.dim=c(360,180)) %>%
             SpatialGrid(proj4string=CRS("+proj=longlat +datum=WGS84")) %>%
