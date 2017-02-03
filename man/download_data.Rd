@@ -30,4 +30,3 @@ This function makes it easy to implement timestamping and no-clobber of files.
 If both \code{timestamping} and \code{nc} are TRUE, nc behavior trumps timestamping.
 }
 \keyword{internal}
-

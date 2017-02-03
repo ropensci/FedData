@@ -22,4 +22,3 @@ the specified \code{template}.
 the specified \code{template}. If template is not provided, returns the entire SSURGO inventory of study areas.
 }
 \keyword{internal}
-

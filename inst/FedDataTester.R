@@ -8,25 +8,25 @@ testDir <- "~/FedData Test"
 dir.create(testDir, showWarnings=F, recursive=T)
 setwd(testDir)
 
-# Extract data for the Village Ecodynamics Project "VEPIIN" study area:
-# http://village.anth.wsu.edu
-vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000),
-                                  proj4string="+proj=utm +datum=NAD83 +zone=12")
+# Extract data for the test study area:
+# http://testarchaeology.org/
+testPolygon <- polygon_from_extent(raster::extent(-110,-108,36.5,37.5),
+                                   proj4string="+proj=longlat")
 
 # Get the NED (USA ONLY)
 # Returns a raster
-NED <- get_ned(template=vepPolygon,
-               label="VEPIIN")
+NED <- get_ned(template=testPolygon,
+               label="test")
 # Plot with raster::plot
 raster::plot(NED)
 
 
 # Get the DAYMET (North America only)
 # Returns a raster
-DAYMET <- get_daymet(template=vepPolygon,
-               label="VEPIIN",
-               elements = c("prcp","tmax"),
-               years = 1980:1985)
+DAYMET <- get_daymet(template=testPolygon,
+                     label="test",
+                     elements = c("prcp","tmax"),
+                     years = 1980:1985)
 # Plot with raster::plot
 raster::plot(DAYMET$tmax$X1985.10.23)
 
@@ -34,8 +34,8 @@ raster::plot(DAYMET$tmax$X1985.10.23)
 # Get the daily GHCN data (GLOBAL)
 # Returns a list: the first element is the spatial locations of stations,
 # and the second is a list of the stations and their daily data
-GHCN.prcp <- get_ghcn_daily(template=vepPolygon, 
-                            label="VEPIIN", 
+GHCN.prcp <- get_ghcn_daily(template=testPolygon, 
+                            label="test", 
                             elements=c('prcp'))
 # Plot the NED again
 raster::plot(NED)
@@ -46,8 +46,8 @@ legend('bottomleft', pch=1, legend="GHCN Precipitation Records")
 # Elements for which you require the same data
 # (i.e., minimum and maximum temperature for the same days)
 # can be standardized using standardize==T
-GHCN.temp <- get_ghcn_daily(template = vepPolygon, 
-                            label = "VEPIIN", 
+GHCN.temp <- get_ghcn_daily(template = testPolygon, 
+                            label = "test", 
                             elements = c('tmin','tmax'), 
                             years = 1980:1985,
                             standardize = T)
@@ -59,8 +59,8 @@ legend('bottomleft', pch=1, legend="GHCN Temperature Records")
 
 
 # Get the NHD (USA ONLY)
-NHD <- get_nhd(template=vepPolygon, 
-               label="VEPIIN")
+NHD <- get_nhd(template=testPolygon, 
+               label="test")
 # Plot the NED again
 raster::plot(NED)
 # Plot the NHD data
@@ -68,18 +68,18 @@ NHD %>%
   lapply(sp::plot, col='black', add=T)
 
 # Get the NRCS SSURGO data (USA ONLY)
-SSURGO.VEPIIN <- get_ssurgo(template=vepPolygon, 
-                     label="VEPIIN")
+SSURGO.test <- get_ssurgo(template=testPolygon, 
+                          label="test")
 # Plot the NED again
 raster::plot(NED)
 # Plot the SSURGO mapunit polygons
-plot(SSURGO.VEPIIN$spatial,
+plot(SSURGO.test$spatial,
      lwd=0.1,
      add=T)
 
 # Or, download by Soil Survey Area names
 SSURGO.areas <- get_ssurgo(template=c("CO670","CO075"),
-                     label="CO_TEST")
+                           label="CO_TEST")
 
 # Let's just look at spatial data for CO675
 SSURGO.areas.CO675 <- SSURGO.areas$spatial[SSURGO.areas$spatial$AREASYMBOL=="CO075",]
@@ -96,9 +96,9 @@ plot(SSURGO.areas.CO675,
 
 
 # Get the ITRDB records
-ITRDB <- get_itrdb(template=vepPolygon,
-                        label="VEPIIN",
-                        makeSpatial=T)
+ITRDB <- get_itrdb(template=testPolygon,
+                   label="test",
+                   makeSpatial=T)
 # Plot the NED again
 raster::plot(NED)
 # Map the locations of the tree ring chronologies

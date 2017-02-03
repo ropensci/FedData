@@ -30,4 +30,3 @@ A \code{RasterLayer} cropped within the specified \code{template}.
 If template is not provided, returns the entire NED tile.
 }
 \keyword{internal}
-

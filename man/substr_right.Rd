@@ -18,4 +18,3 @@ A character string.
 Get the rightmost 'n' characters of a character string.
 }
 \keyword{internal}
-

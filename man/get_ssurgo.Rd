@@ -67,4 +67,3 @@ plot(NED.CO675)
 plot(SSURGO.areas.CO675, lwd=0.1, add=T)
 }
 }
-

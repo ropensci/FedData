@@ -20,4 +20,3 @@ A list of extracted SSURGO tabular data.
 and then iterates through the tables, only retaining data pertinant to a set of mapunits.
 }
 \keyword{internal}
-

@@ -25,4 +25,3 @@ the file is a Schweingruber-type chronology.
 Location information is converted to decimal degrees.
 }
 \keyword{internal}
-

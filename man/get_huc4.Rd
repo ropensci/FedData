@@ -23,4 +23,3 @@ the specified \code{template}.
 the specified \code{template}. If template is not provided, returns the entire HUC4 dataset.
 }
 \keyword{internal}
-

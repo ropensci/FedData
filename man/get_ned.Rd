@@ -46,4 +46,3 @@ NED <- get_ned(template=vepPolygon, label='VEPIIN')
 plot(NED)
 }
 }
-

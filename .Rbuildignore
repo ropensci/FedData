@@ -6,3 +6,4 @@
 ^\./revdep/checks\.rds$
 ^\./revdep/$
 ^codecov\.yml$
+^docs$

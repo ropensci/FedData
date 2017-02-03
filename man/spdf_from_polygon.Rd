@@ -16,4 +16,3 @@ A SpatialPolygonsDataFrame object.
 Turn a SpatialPolygons object into a SpatialPolygonsDataFrame.
 }
 \keyword{internal}
-

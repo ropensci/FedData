@@ -94,7 +94,7 @@ get_ssurgo <- function(template, label, raw.dir = "./RAW/SSURGO/", extraction.di
         # Get shapefile of SSURGO study areas in the template
         SSURGOAreas <- get_ssurgo_inventory(template = template.poly, raw.dir = raw.dir)
         # Remove SSURGO study areas that are not available
-        SSURGOAreas <- SSURGOAreas[SSURGOAreas@data$iscomplete != 0, ]
+        SSURGOAreas <- SSURGOAreas[SSURGOAreas$iscomplete != 0, ]
         
     }
     
@@ -194,36 +194,61 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
             template <- sp::spTransform(template, sp::CRS("+proj=longlat +datum=WGS84"))
         }
         
-        bounds <- sp::bbox(template)
-        if (identical(bounds[1, 1], bounds[1, 2])) 
-            bounds[1, 2] <- bounds[1, 2] + 1e-04
-        if (identical(bounds[2, 1], bounds[2, 2])) 
-            bounds[2, 2] <- bounds[2, 2] + 1e-04
-        bbox.text <- paste(bounds, collapse = ",")
+        bounds <- polygon_from_extent(template)
         
-        url <- paste("https://sdmdataaccess.nrcs.usda.gov/Spatial/SDMNAD83Geographic.wfs?Service=WFS&Version=1.0.0&Request=GetFeature&Typename=SurveyAreaPoly&BBOX=", 
-            bbox.text, sep = "")
-        
-        temp.file <- paste0(tempdir(), "/soils.gml")
-        
-        opts <- list(verbose = F, noprogress = T, fresh_connect = TRUE)
-        hand <- curl::new_handle()
-        curl::handle_setopt(hand, .list = opts)
-        tryCatch(status <- curl::curl_download(url, destfile = temp.file, handle = hand), error = function(e) stop("Download of ", 
-            url, " failed!"))
-        
-        SSURGOAreas <- rgdal::readOGR(dsn = temp.file, layer = "surveyareapoly", disambiguateFIDs = TRUE, stringsAsFactors = FALSE, 
-            verbose = FALSE)
-        raster::projection(SSURGOAreas) <- raster::projection(template)
-        
-        # Get a list of SSURGO study areas within the project study area
-        if (class(template) == "SpatialPointsDataFrame" & length(template) == 1) {
-            template <- polygon_from_extent(bounds, proj4string = raster::projection(template))
+        # Only download 1 square degree at a time to avoid oversized AOI error
+        if((bounds@xmax - bounds@xmin) > 1 | (bounds@ymax - bounds@ymin) > 1){
+          grid <- GridTopology(cellcentre.offset=c(-179.5,-89.5),
+                               cellsize=c(1,1),cells.dim=c(360,180)) %>%
+            SpatialGrid(proj4string=CRS("+proj=longlat +datum=WGS84")) %>%
+            as("SpatialPolygons")
+          
+          bounds <- (rgeos::gIntersection( grid, bounds, byid = T )@polyobj)
+
         }
-        SSURGOAreas <- raster::crop(SSURGOAreas, sp::spTransform(template, sp::CRS(raster::projection(SSURGOAreas))))
         
-        SSURGOAreas$saverest <- as.Date(SSURGOAreas$saverest, format = "%b %d %Y")
+        SSURGOAreas <- foreach::foreach(n = 1:length(bounds), .combine = rbind) %do% {
+          
+          bound <- sp::bbox(bounds[n])
+          if (identical(bound[1, 1], bound[1, 2])) 
+            bound[1, 2] <- bound[1, 2] + 1e-04
+          if (identical(bound[2, 1], bound[2, 2])) 
+            bound[2, 2] <- bound[2, 2] + 1e-04
+          
+          bbox.text <- paste(bound, collapse = ",")
+          
+          url <- paste("https://sdmdataaccess.nrcs.usda.gov/Spatial/SDMNAD83Geographic.wfs?Service=WFS&Version=1.0.0&Request=GetFeature&Typename=SurveyAreaPoly&BBOX=", 
+                       bbox.text, sep = "")
+          
+          temp.file <- paste0(tempdir(), "/soils.gml")
+          
+          opts <- list(verbose = F, noprogress = T, fresh_connect = TRUE)
+          hand <- curl::new_handle()
+          curl::handle_setopt(hand, .list = opts)
+          tryCatch(status <- curl::curl_download(url, destfile = temp.file, handle = hand), error = function(e) stop("Download of ", 
+                                                                                                                     url, " failed!"))
+          
+          SSURGOAreas <- rgdal::readOGR(dsn = temp.file, 
+                                        layer = "surveyareapoly", 
+                                        disambiguateFIDs = TRUE, 
+                                        stringsAsFactors = FALSE, 
+                                        verbose = FALSE)
+          raster::projection(SSURGOAreas) <- raster::projection(template)
+          
+          # Get a list of SSURGO study areas within the project study area
+          if (class(template) == "SpatialPointsDataFrame" & length(template) == 1) {
+            template <- polygon_from_extent(bounds, proj4string = raster::projection(template))
+          }
+          SSURGOAreas <- raster::crop(SSURGOAreas, sp::spTransform(template, sp::CRS(raster::projection(SSURGOAreas))))
+          
+          SSURGOAreas <- SSURGOAreas@data
+          SSURGOAreas$saverest <- as.Date(SSURGOAreas$saverest, format = "%b %d %Y")
+          
+          return(SSURGOAreas)
+        }
         
+        SSURGOAreas <- unique(SSURGOAreas)
+       
     } else {
         
         tmpdir <- tempfile()
@@ -234,7 +259,7 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
         
         utils::unzip(file, exdir = tmpdir)
         
-        SSURGOAreas <- rgdal::readOGR(normalizePath(tmpdir), layer = "soilsa_a_nrcs", verbose = FALSE)
+        SSURGOAreas <- rgdal::readOGR(normalizePath(tmpdir), layer = "soilsa_a_nrcs", verbose = FALSE)@data
         
         unlink(tmpdir, recursive = TRUE)
     }
@@ -244,7 +269,7 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
         warning("Some of the soil surveys in your area are unavailable.\n
             Soils and productivity data will have holes.\n
             Missing areas:\n", 
-            as.vector(SSURGOAreas@data[SSURGOAreas@data$iscomplete == 0, ]$areasymbol), "\n\n
+            as.vector(SSURGOAreas[SSURGOAreas$iscomplete == 0, ]$areasymbol), "\n\n
             Continuing with processing available soils.\n\n")
     }
     

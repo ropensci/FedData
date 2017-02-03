@@ -20,4 +20,3 @@ This function unwraps the station data and merges all data into a single data fr
 with the first column being in the \code{Date} class.
 }
 \keyword{internal}
-

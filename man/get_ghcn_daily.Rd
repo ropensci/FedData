@@ -214,4 +214,3 @@ plot(GHCN.temp$spatial, pch=1, add=T)
 legend('bottomleft', pch=1, legend='GHCN Temperature Records')
 }
 }
-

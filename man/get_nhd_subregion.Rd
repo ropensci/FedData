@@ -25,4 +25,3 @@ the specified \code{template}.
  within the specified \code{template}. If template is not provided, returns the entire HUC4 subregion.
 }
 \keyword{internal}
-

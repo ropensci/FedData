@@ -35,4 +35,3 @@ A a list of \code{RasterBrick}s---one for each element---cropped within the spec
 If template is not provided, returns the entire DAYMET tile.
 }
 \keyword{internal}
-

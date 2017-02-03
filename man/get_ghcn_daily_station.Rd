@@ -166,4 +166,3 @@ each \code{elements}. If \code{elements} is undefined, it returns all available 
 tables for the station
 }
 \keyword{internal}
-

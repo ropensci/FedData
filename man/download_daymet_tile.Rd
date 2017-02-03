@@ -32,4 +32,3 @@ Tiles are specified by a tile ID, year, and element;
 Tiles are downloaded in the NetCDF format. \code{download_daymet_tile} returns the path to the downloaded NetCDF tile files.
 }
 \keyword{internal}
-

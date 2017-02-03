@@ -22,4 +22,3 @@ tiles
 A dataset containing the DAYMET tiles.
 }
 \keyword{datasets}
-

@@ -19,4 +19,3 @@ A SpatialPolygons object.
 Turn an extent object into a polygon
 }
 \keyword{internal}
-

@@ -59,4 +59,3 @@ DAYMET <- get_daymet(template=vepPolygon,
 plot(DAYMET$tmin$X1985.10.23)
 }
 }
-

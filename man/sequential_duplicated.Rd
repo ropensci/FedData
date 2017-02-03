@@ -18,4 +18,3 @@ A logical vector of the same length as x.
 Get a logical vector of which elements in a vector are sequentially duplicated.
 }
 \keyword{internal}
-

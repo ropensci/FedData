@@ -91,4 +91,3 @@ plot(ITRDB$metadata, pch=1, add=T)
 legend('bottomleft', pch=1, legend='ITRDB chronologies')
 }
 }
-

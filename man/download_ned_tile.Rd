@@ -28,4 +28,3 @@ northwest corner of each NED tile, in degrees; tiles are 1x1 degree.
 Tiles are downloaded in zipped ESRI ArcGrid format. \code{downloadNED} returns the path to the downloaded zip file.
 }
 \keyword{internal}
-

@@ -20,4 +20,3 @@ HUC4 subregion are specified by a unique character string, best obtained using t
 \code{download_nhd_subregion} returns the path to the downloaded zip file.
 }
 \keyword{internal}
-
