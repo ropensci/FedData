@@ -241,7 +241,9 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
           }
           SSURGOAreas <- raster::crop(SSURGOAreas, sp::spTransform(template, sp::CRS(raster::projection(SSURGOAreas))))
 
-          SSURGOAreas$saverest <- as.Date(SSURGOAreas@data$saverest, format = "%b %d %Y")
+          SSURGOAreas <- SSURGOAreas@data
+          
+          SSURGOAreas$saverest <- as.Date(SSURGOAreas$saverest, format = "%b %d %Y")
           
           return(SSURGOAreas)
         }
@@ -258,17 +260,17 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
         
         utils::unzip(file, exdir = tmpdir)
         
-        SSURGOAreas <- rgdal::readOGR(normalizePath(tmpdir), layer = "soilsa_a_nrcs", verbose = FALSE)
+        SSURGOAreas <- rgdal::readOGR(normalizePath(tmpdir), layer = "soilsa_a_nrcs", verbose = FALSE)@data
         
         unlink(tmpdir, recursive = TRUE)
     }
     
     # Check to see if all survey areas are available
-    if (0 %in% SSURGOAreas@data$iscomplete) {
+    if (0 %in% SSURGOAreas$iscomplete) {
         warning("Some of the soil surveys in your area are unavailable.\n
             Soils and productivity data will have holes.\n
             Missing areas:\n", 
-            as.vector(SSURGOAreasSSURGOAreas@data[SSURGOAreasSSURGOAreas@data$iscomplete == 0, ]$areasymbol), "\n\n
+            as.vector(SSURGOAreas[SSURGOAreas$iscomplete == 0, ]$areasymbol), "\n\n
             Continuing with processing available soils.\n\n")
     }
     
