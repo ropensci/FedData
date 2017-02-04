@@ -51,7 +51,10 @@
 #' plot(NED.CO675)
 #' plot(SSURGO.areas.CO675, lwd=0.1, add=T)
 #' }
-get_ssurgo <- function(template, label, raw.dir = "./RAW/SSURGO/", extraction.dir = paste0("./EXTRACTIONS/", label, "/SSURGO/"), 
+get_ssurgo <- function(template,
+                       label,
+                       raw.dir = "./RAW/SSURGO/",
+                       extraction.dir = paste0("./EXTRACTIONS/", label, "/SSURGO/"), 
                        force.redo = FALSE) {
   
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
@@ -204,7 +207,7 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
         sp::SpatialGrid(proj4string=CRS("+proj=longlat +datum=WGS84")) %>%
         as("SpatialPolygons")
       
-      bounds <- (rgeos::gIntersection( grid, bounds, byid = T )@polyobj)
+      bounds <- rgeos::gIntersection( grid, bounds, byid = T )
       
     }
     
