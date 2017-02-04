@@ -69,7 +69,7 @@ get_ssurgo <- function(template,
     SSURGOMapunits <- rgdal::readOGR(dsn = normalizePath(extraction.dir), layer = paste0(label, "_SSURGO_", "Mapunits"), verbose = F)
     
     tables <- lapply(files, function(file) {
-      suppressMessages(readr::read_csv(paste(normalizePath(extraction.dir), "/", file, sep = "")))
+      suppressMessages(readr::read_csv(paste(normalizePath(extraction.dir), "/", file, sep = ""), progress = F))
     })
     names(tables) <- gsub(".csv", "", files)
     names(tables) <- gsub(paste0(label, "_SSURGO_"), "", names(tables))

@@ -30,7 +30,11 @@
 #' # Plot with raster::plot
 #' plot(NED)
 #' }
-get_ned <- function(template, label, res = "1", raw.dir = "./RAW/NED/", extraction.dir = paste0("./EXTRACTIONS/", label, "/NED/"), 
+get_ned <- function(template,
+                    label,
+                    res = "1",
+                    raw.dir = "./RAW/NED/",
+                    extraction.dir = paste0("./EXTRACTIONS/", label, "/NED/"), 
     force.redo = F) {
     
     dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
