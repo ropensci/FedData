@@ -3,7 +3,7 @@ library(FedData)
 library(magrittr)
 
 # Set a directory for testing
-testDir <- "~/FedData Test"
+testDir <- "./FedData Test"
 
 dir.create(testDir, showWarnings=F, recursive=T)
 setwd(testDir)

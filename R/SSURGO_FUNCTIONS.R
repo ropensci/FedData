@@ -185,6 +185,7 @@ download_ssurgo_inventory <- function(raw.dir) {
 #' The directory will be created if missing.
 #' @return A \code{SpatialPolygonsDataFrame} of the SSURGO study areas within
 #' the specified \code{template}.
+#' @importFrom methods as
 #' @export
 #' @keywords internal
 get_ssurgo_inventory <- function(template = NULL, raw.dir) {
@@ -211,6 +212,7 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
       
     }
     
+    n = NULL
     SSURGOAreas <- foreach::foreach(n = 1:length(bounds),
                                     .combine = rbind) %do% {
       

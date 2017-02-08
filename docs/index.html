@@ -94,19 +94,19 @@
 <li>
 <p>Development version from GitHub:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
-devtools::<span class="kw">install_github</span>(<span class="st">"bocinsky/FedData"</span>)
+devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"bocinsky/FedData"</span>)
 <span class="kw">library</span>(FedData)</code></pre></div>
 </li>
 <li>
 <p>Linux (Ubuntu 14.04.5 or 16.04.1):</p>
 <p>First, in terminal:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sudo add-apt-repository ppa:ubuntugis/ppa -y
-sudo apt-get update -q
-sudo apt-get install libssl-dev libcurl4-openssl-dev netcdf-bin libnetcdf-dev gdal-bin libgdal-dev</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sudo add<span class="op">-</span>apt<span class="op">-</span>repository ppa<span class="op">:</span>ubuntugis<span class="op">/</span>ppa <span class="op">-</span>y
+sudo apt<span class="op">-</span>get update <span class="op">-</span>q
+sudo apt<span class="op">-</span>get install libssl<span class="op">-</span>dev libcurl4<span class="op">-</span>openssl<span class="op">-</span>dev netcdf<span class="op">-</span>bin libnetcdf<span class="op">-</span>dev gdal<span class="op">-</span>bin libgdal<span class="op">-</span>dev</code></pre></div>
 <p>Then, in R:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">update.packages</span>(<span class="st">"survival"</span>)
 <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
-devtools::<span class="kw">install_github</span>(<span class="st">"bocinsky/FedData"</span>)
+devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"bocinsky/FedData"</span>)
 <span class="kw">library</span>(FedData)</code></pre></div>
 </li>
 </ul>
@@ -129,8 +129,8 @@ testDir &lt;-<span class="st"> "~/FedData Test"</span>
 <span class="kw">setwd</span>(testDir)
 
 <span class="co"># Extract data for the Village Ecodynamics Project "VEPIIN" study area:</span>
-<span class="co"># http://village.anth.wsu.edu</span>
-vepPolygon &lt;-<span class="st"> </span><span class="kw"><a href="reference/polygon_from_extent.html">polygon_from_extent</a></span>(raster::<span class="kw">extent</span>(<span class="dv">672800</span>,<span class="dv">740000</span>,<span class="dv">4102000</span>,<span class="dv">4170000</span>),
+<span class="co"># http://veparchaeology.org</span>
+vepPolygon &lt;-<span class="st"> </span><span class="kw"><a href="reference/polygon_from_extent.html">polygon_from_extent</a></span>(raster<span class="op">::</span><span class="kw">extent</span>(<span class="dv">672800</span>,<span class="dv">740000</span>,<span class="dv">4102000</span>,<span class="dv">4170000</span>),
                                   <span class="dt">proj4string=</span><span class="st">"+proj=utm +datum=NAD83 +zone=12"</span>)</code></pre></div>
 </div>
 <div id="get-and-plot-the-national-elevation-dataset-for-the-study-area" class="section level4">
@@ -141,7 +141,7 @@ vepPolygon &lt;-<span class="st"> </span><span class="kw"><a href="reference/pol
 NED &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ned.html">get_ned</a></span>(<span class="dt">template=</span>vepPolygon,
                <span class="dt">label=</span><span class="st">"VEPIIN"</span>)
 <span class="co"># Plot with raster::plot</span>
-raster::<span class="kw">plot</span>(NED)</code></pre></div>
+raster<span class="op">::</span><span class="kw">plot</span>(NED)</code></pre></div>
 <p><img src="inst/img/NED.png" alt="thing"></p>
 </div>
 <div id="get-and-plot-the-daymet-dataset-for-the-study-area" class="section level4">
@@ -152,9 +152,9 @@ raster::<span class="kw">plot</span>(NED)</code></pre></div>
 DAYMET &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_daymet.html">get_daymet</a></span>(<span class="dt">template=</span>vepPolygon,
                <span class="dt">label=</span><span class="st">"VEPIIN"</span>,
                <span class="dt">elements =</span> <span class="kw">c</span>(<span class="st">"prcp"</span>,<span class="st">"tmax"</span>),
-               <span class="dt">years =</span> <span class="dv">1980</span>:<span class="dv">1985</span>)
+               <span class="dt">years =</span> <span class="dv">1980</span><span class="op">:</span><span class="dv">1985</span>)
 <span class="co"># Plot with raster::plot</span>
-raster::<span class="kw">plot</span>(DAYMET$tmax$X1985<span class="fl">.10.23</span>)</code></pre></div>
+raster<span class="op">::</span><span class="kw">plot</span>(DAYMET<span class="op">$</span>tmax<span class="op">$</span>X1985.<span class="fl">10.23</span>)</code></pre></div>
 <p><img src="inst/img/DAYMET.png" alt="thing"></p>
 </div>
 <div id="get-and-plot-the-daily-ghcn-precipitation-data-for-the-study-area" class="section level4">
@@ -167,9 +167,9 @@ GHCN.prcp &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_
                             <span class="dt">label=</span><span class="st">"VEPIIN"</span>, 
                             <span class="dt">elements=</span><span class="kw">c</span>(<span class="st">'prcp'</span>))
 <span class="co"># Plot the NED again</span>
-raster::<span class="kw">plot</span>(NED)
+raster<span class="op">::</span><span class="kw">plot</span>(NED)
 <span class="co"># Plot the spatial locations</span>
-sp::<span class="kw">plot</span>(GHCN.prcp$spatial, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">add=</span>T)
+sp<span class="op">::</span><span class="kw">plot</span>(GHCN.prcp<span class="op">$</span>spatial, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">add=</span>T)
 <span class="kw">legend</span>(<span class="st">'bottomleft'</span>, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">legend=</span><span class="st">"GHCN Precipitation Records"</span>)</code></pre></div>
 <p><img src="inst/img/GHCN_prcp.png" alt="thing"></p>
 </div>
@@ -182,12 +182,12 @@ sp::<span class="kw">plot</span>(GHCN.prcp$spatial, <span class="dt">pch=</span>
 GHCN.temp &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ghcn_daily.html">get_ghcn_daily</a></span>(<span class="dt">template =</span> vepPolygon, 
                             <span class="dt">label =</span> <span class="st">"VEPIIN"</span>, 
                             <span class="dt">elements =</span> <span class="kw">c</span>(<span class="st">'tmin'</span>,<span class="st">'tmax'</span>), 
-                            <span class="dt">years =</span> <span class="dv">1980</span>:<span class="dv">1985</span>,
+                            <span class="dt">years =</span> <span class="dv">1980</span><span class="op">:</span><span class="dv">1985</span>,
                             <span class="dt">standardize =</span> T)
 <span class="co"># Plot the NED again</span>
-raster::<span class="kw">plot</span>(NED)
+raster<span class="op">::</span><span class="kw">plot</span>(NED)
 <span class="co"># Plot the spatial locations</span>
-sp::<span class="kw">plot</span>(GHCN.temp$spatial, <span class="dt">add=</span>T, <span class="dt">pch=</span><span class="dv">1</span>)
+sp<span class="op">::</span><span class="kw">plot</span>(GHCN.temp<span class="op">$</span>spatial, <span class="dt">add=</span>T, <span class="dt">pch=</span><span class="dv">1</span>)
 <span class="kw">legend</span>(<span class="st">'bottomleft'</span>, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">legend=</span><span class="st">"GHCN Temperature Records"</span>)</code></pre></div>
 <p><img src="inst/img/GHCN_temp.png" alt="thing"></p>
 </div>
@@ -198,10 +198,10 @@ sp::<span class="kw">plot</span>(GHCN.temp$spatial, <span class="dt">add=</span>
 NHD &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nhd.html">get_nhd</a></span>(<span class="dt">template=</span>vepPolygon, 
                <span class="dt">label=</span><span class="st">"VEPIIN"</span>)
 <span class="co"># Plot the NED again</span>
-raster::<span class="kw">plot</span>(NED)
+raster<span class="op">::</span><span class="kw">plot</span>(NED)
 <span class="co"># Plot the NHD data</span>
-NHD %&gt;%
-<span class="st">  </span><span class="kw">lapply</span>(sp::plot, <span class="dt">col=</span><span class="st">'black'</span>, <span class="dt">add=</span>T)</code></pre></div>
+NHD <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">lapply</span>(sp<span class="op">::</span>plot, <span class="dt">col=</span><span class="st">'black'</span>, <span class="dt">add=</span>T)</code></pre></div>
 <p><img src="inst/img/NHD.png" alt="thing"></p>
 </div>
 <div id="get-and-plot-the-nrcs-ssurgo-data-for-the-study-area" class="section level4">
@@ -211,9 +211,9 @@ NHD %&gt;%
 SSURGO.VEPIIN &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ssurgo.html">get_ssurgo</a></span>(<span class="dt">template=</span>vepPolygon, 
                      <span class="dt">label=</span><span class="st">"VEPIIN"</span>)
 <span class="co"># Plot the NED again</span>
-raster::<span class="kw">plot</span>(NED)
+raster<span class="op">::</span><span class="kw">plot</span>(NED)
 <span class="co"># Plot the SSURGO mapunit polygons</span>
-<span class="kw">plot</span>(SSURGO.VEPIIN$spatial,
+<span class="kw">plot</span>(SSURGO.VEPIIN<span class="op">$</span>spatial,
      <span class="dt">lwd=</span><span class="fl">0.1</span>,
      <span class="dt">add=</span>T)</code></pre></div>
 <p><img src="inst/img/SSURGO_VEP.png" alt="thing"></p>
@@ -226,7 +226,7 @@ SSURGO.areas &lt;-<span class="st"> </span><span class="kw"><a href="reference/g
                            <span class="dt">label=</span><span class="st">"CO_TEST"</span>)
 
 <span class="co"># Let's just look at spatial data for CO675</span>
-SSURGO.areas.CO675 &lt;-<span class="st"> </span>SSURGO.areas$spatial[SSURGO.areas$spatial$AREASYMBOL==<span class="st">"CO075"</span>,]
+SSURGO.areas.CO675 &lt;-<span class="st"> </span>SSURGO.areas<span class="op">$</span>spatial[SSURGO.areas<span class="op">$</span>spatial<span class="op">$</span>AREASYMBOL<span class="op">==</span><span class="st">"CO075"</span>,]
 
 <span class="co"># And get the NED data under them for pretty plotting</span>
 NED.CO675 &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ned.html">get_ned</a></span>(<span class="dt">template=</span>SSURGO.areas.CO675,
@@ -247,9 +247,9 @@ ITRDB &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_itrd
                         <span class="dt">label=</span><span class="st">"VEPIIN"</span>,
                         <span class="dt">makeSpatial=</span>T)
 <span class="co"># Plot the NED again</span>
-raster::<span class="kw">plot</span>(NED)
+raster<span class="op">::</span><span class="kw">plot</span>(NED)
 <span class="co"># Map the locations of the tree ring chronologies</span>
-<span class="kw">plot</span>(ITRDB$metadata, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">add=</span>T)
+<span class="kw">plot</span>(ITRDB<span class="op">$</span>metadata, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">add=</span>T)
 <span class="kw">legend</span>(<span class="st">'bottomleft'</span>, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">legend=</span><span class="st">"ITRDB chronologies"</span>)</code></pre></div>
 </div>
 </div>
