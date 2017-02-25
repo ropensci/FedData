@@ -16,7 +16,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-home">
+    <div class="container template-vignette">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -46,11 +46,12 @@
 
       
       </header><div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9">
     
-<div id="feddata" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#feddata" class="anchor"> </a>FedData</h1></div>
+
+    
+    
+<div class="contents">
 
 <p><code>FedData</code> is an <em>R</em> package implementing functions to automate downloading geospatial data available from several federated data sources (mainly sources maintained by the US Federal government). Currently, the package allows for retrieval of five datasets:</p>
 <ul>
@@ -94,20 +95,18 @@
 <li>
 <p>Development version from GitHub:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
-devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"bocinsky/FedData"</span>)
-<span class="kw">library</span>(FedData)</code></pre></div>
+devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"bocinsky/FedData"</span>)</code></pre></div>
 </li>
 <li>
 <p>Linux (Ubuntu 14.04.5 or 16.04.1):</p>
 <p>First, in terminal:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sudo add<span class="op">-</span>apt<span class="op">-</span>repository ppa<span class="op">:</span>ubuntugis<span class="op">/</span>ppa <span class="op">-</span>y
-sudo apt<span class="op">-</span>get update <span class="op">-</span>q
-sudo apt<span class="op">-</span>get install libssl<span class="op">-</span>dev libcurl4<span class="op">-</span>openssl<span class="op">-</span>dev netcdf<span class="op">-</span>bin libnetcdf<span class="op">-</span>dev gdal<span class="op">-</span>bin libgdal<span class="op">-</span>dev</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">sudo</span> add-apt-repository ppa:ubuntugis/ppa -y
+<span class="fu">sudo</span> apt-get update -q
+<span class="fu">sudo</span> apt-get install libssl-dev libcurl4-openssl-dev netcdf-bin libnetcdf-dev gdal-bin libgdal-dev</code></pre></div>
 <p>Then, in R:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">update.packages</span>(<span class="st">"survival"</span>)
 <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
-devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"bocinsky/FedData"</span>)
-<span class="kw">library</span>(FedData)</code></pre></div>
+devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"bocinsky/FedData"</span>)</code></pre></div>
 </li>
 </ul>
 </div>
@@ -121,12 +120,6 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># FedData Tester</span>
 <span class="kw">library</span>(FedData)
 <span class="kw">library</span>(magrittr)
-
-<span class="co"># Set a directory for testing</span>
-testDir &lt;-<span class="st"> "~/FedData Test"</span>
-<span class="co"># and create it if necessary</span>
-<span class="kw">dir.create</span>(testDir, <span class="dt">showWarnings=</span>F, <span class="dt">recursive=</span>T)
-<span class="kw">setwd</span>(testDir)
 
 <span class="co"># Extract data for the Village Ecodynamics Project "VEPIIN" study area:</span>
 <span class="co"># http://veparchaeology.org</span>
@@ -142,7 +135,7 @@ NED &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ned.ht
                <span class="dt">label=</span><span class="st">"VEPIIN"</span>)
 <span class="co"># Plot with raster::plot</span>
 raster<span class="op">::</span><span class="kw">plot</span>(NED)</code></pre></div>
-<p><img src="inst/img/NED.png" alt="thing"></p>
+<p><img src="README-unnamed-chunk-6-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-daymet-dataset-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -155,7 +148,7 @@ DAYMET &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_day
                <span class="dt">years =</span> <span class="dv">1980</span><span class="op">:</span><span class="dv">1985</span>)
 <span class="co"># Plot with raster::plot</span>
 raster<span class="op">::</span><span class="kw">plot</span>(DAYMET<span class="op">$</span>tmax<span class="op">$</span>X1985.<span class="fl">10.23</span>)</code></pre></div>
-<p><img src="inst/img/DAYMET.png" alt="thing"></p>
+<p><img src="README-unnamed-chunk-7-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-daily-ghcn-precipitation-data-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -171,7 +164,7 @@ raster<span class="op">::</span><span class="kw">plot</span>(NED)
 <span class="co"># Plot the spatial locations</span>
 sp<span class="op">::</span><span class="kw">plot</span>(GHCN.prcp<span class="op">$</span>spatial, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">add=</span>T)
 <span class="kw">legend</span>(<span class="st">'bottomleft'</span>, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">legend=</span><span class="st">"GHCN Precipitation Records"</span>)</code></pre></div>
-<p><img src="inst/img/GHCN_prcp.png" alt="thing"></p>
+<p><img src="README-unnamed-chunk-8-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-daily-ghcn-temperature-data-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -189,7 +182,7 @@ raster<span class="op">::</span><span class="kw">plot</span>(NED)
 <span class="co"># Plot the spatial locations</span>
 sp<span class="op">::</span><span class="kw">plot</span>(GHCN.temp<span class="op">$</span>spatial, <span class="dt">add=</span>T, <span class="dt">pch=</span><span class="dv">1</span>)
 <span class="kw">legend</span>(<span class="st">'bottomleft'</span>, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">legend=</span><span class="st">"GHCN Temperature Records"</span>)</code></pre></div>
-<p><img src="inst/img/GHCN_temp.png" alt="thing"></p>
+<p><img src="README-unnamed-chunk-9-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-national-hydrography-dataset-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -202,7 +195,7 @@ raster<span class="op">::</span><span class="kw">plot</span>(NED)
 <span class="co"># Plot the NHD data</span>
 NHD <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">lapply</span>(sp<span class="op">::</span>plot, <span class="dt">col=</span><span class="st">'black'</span>, <span class="dt">add=</span>T)</code></pre></div>
-<p><img src="inst/img/NHD.png" alt="thing"></p>
+<p><img src="README-unnamed-chunk-10-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-nrcs-ssurgo-data-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -216,7 +209,7 @@ raster<span class="op">::</span><span class="kw">plot</span>(NED)
 <span class="kw">plot</span>(SSURGO.VEPIIN<span class="op">$</span>spatial,
      <span class="dt">lwd=</span><span class="fl">0.1</span>,
      <span class="dt">add=</span>T)</code></pre></div>
-<p><img src="inst/img/SSURGO_VEP.png" alt="thing"></p>
+<p><img src="README-unnamed-chunk-11-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-nrcs-ssurgo-data-for-particular-soil-survey-areas" class="section level4">
 <h4 class="hasAnchor">
@@ -237,7 +230,7 @@ NED.CO675 &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_
 <span class="kw">plot</span>(SSURGO.areas.CO675,
      <span class="dt">lwd=</span><span class="fl">0.1</span>,
      <span class="dt">add=</span>T)</code></pre></div>
-<p><img src="inst/img/SSURGO_areas.png" alt="thing"></p>
+<p><img src="README-unnamed-chunk-12-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-itrdb-chronology-locations-in-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -246,29 +239,25 @@ NED.CO675 &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_
 ITRDB &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_itrdb.html">get_itrdb</a></span>(<span class="dt">template=</span>vepPolygon,
                         <span class="dt">label=</span><span class="st">"VEPIIN"</span>,
                         <span class="dt">makeSpatial=</span>T)
+<span class="co">#&gt; Warning: NAs introduced by coercion</span>
 <span class="co"># Plot the NED again</span>
 raster<span class="op">::</span><span class="kw">plot</span>(NED)
 <span class="co"># Map the locations of the tree ring chronologies</span>
 <span class="kw">plot</span>(ITRDB<span class="op">$</span>metadata, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">add=</span>T)
 <span class="kw">legend</span>(<span class="st">'bottomleft'</span>, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">legend=</span><span class="st">"ITRDB chronologies"</span>)</code></pre></div>
+<p><img src="README-unnamed-chunk-13-1.png" width="672"></p>
+<p>========</p>
 </div>
 </div>
-</div>
-<div id="thing" class="section level1">
-<h1 class="hasAnchor">
-<a href="#thing" class="anchor"> </a>
-<img src="inst/img/ITRDB.png" alt="thing">
-</h1>
 <div id="acknowledgements" class="section level3">
 <h3 class="hasAnchor">
 <a href="#acknowledgements" class="anchor"> </a>Acknowledgements</h3>
 <p>This package is a product of SKOPE (<a href="http://www.openskope.org">Synthesizing Knowledge of Past Environments</a>) and the Village Ecodynamics Project. This software is licensed under the <a href="https://opensource.org/licenses/MIT">MIT license</a>.</p>
 </div>
 </div>
-
   </div>
 
-  <div class="col-md-3" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cran.r-project.org/package=FedData">https://​cran.r-project.org/​package=FedData</a>
@@ -293,6 +282,7 @@ raster<span class="op">::</span><span class="kw">plot</span>(NED)
 </ul>
 </body></html>
 </div>
+
 </div>
 
 

@@ -1,6 +1,12 @@
 # Output
-/FedData Test
-/FedData Test/*
+/EXTRACTIONS
+/EXTRACTIONS/*
+/RAW
+/RAW/*
+/docs/EXTRACTIONS
+/docs/EXTRACTIONS/*
+/docs/RAW
+/docs/RAW/*
 
 # Mac trash files
 .DS_Store

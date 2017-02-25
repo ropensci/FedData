@@ -1,14 +1,29 @@
+---
+output: github_document
+---
 
-[![cran version](http://www.r-pkg.org/badges/version/FedData)](https://cran.r-project.org/package=FedData) [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/FedData)](https://github.com/metacran/cranlogs.app) [![Build Status](https://api.travis-ci.org/bocinsky/FedData.png)](https://travis-ci.org/bocinsky/FedData) [![Coverage Status](https://img.shields.io/codecov/c/github/bocinsky/FedData/master.svg)](https://codecov.io/github/bocinsky/FedData?branch=master)
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
 
-`FedData` is an *R* package implementing functions to automate downloading geospatial data available from several federated data sources (mainly sources maintained by the US Federal government). Currently, the package allows for retrieval of five datasets:
+```
 
--   The [National Elevation Dataset (NED)](http://ned.usgs.gov) digital elevation models (1 and 1/3 arc-second; USGS)
--   The [National Hydrography Dataset (NHD)](http://nhd.usgs.gov) (USGS)
--   The [Soil Survey Geographic (SSURGO) database](http://websoilsurvey.sc.egov.usda.gov/) from the National Cooperative Soil Survey (NCSS), which is led by the Natural Resources Conservation Service (NRCS) under the USDA,
--   The [Global Historical Climatology Network (GHCN)](http://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn), coordinated by National Climatic Data Center at NOAA,
--   The [Daymet](https://daymet.ornl.gov/) gridded estimates of daily weather parameters for North America, version 3, available from the Oak Ridge National Laboratory's Distributed Active Archive Center (DAAC), and
--   The [International Tree Ring Data Bank (ITRDB)](http://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/tree-ring), coordinated by National Climatic Data Center at NOAA.
+[![cran version](http://www.r-pkg.org/badges/version/FedData)](https://cran.r-project.org/package=FedData)
+[![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/FedData)](https://github.com/metacran/cranlogs.app)
+[![Build Status](https://api.travis-ci.org/bocinsky/FedData.png)](https://travis-ci.org/bocinsky/FedData)
+[![Coverage Status](https://img.shields.io/codecov/c/github/bocinsky/FedData/master.svg)](https://codecov.io/github/bocinsky/FedData?branch=master)
+
+`FedData` is an *R* package implementing functions to automate downloading geospatial data available from several federated data sources (mainly sources maintained by the US Federal government). Currently, the package allows for retrieval of five datasets: 
+
+* The [National Elevation Dataset (NED)](http://ned.usgs.gov) digital elevation models (1 and 1/3 arc-second; USGS)
+* The [National Hydrography Dataset (NHD)](http://nhd.usgs.gov) (USGS)
+* The [Soil Survey Geographic (SSURGO) database](http://websoilsurvey.sc.egov.usda.gov/) from the National Cooperative Soil Survey (NCSS), which is led by the Natural Resources Conservation Service (NRCS) under the USDA,
+* The [Global Historical Climatology Network (GHCN)](http://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn), coordinated by National Climatic Data Center at NOAA,
+* The [Daymet](https://daymet.ornl.gov/) gridded estimates of daily weather parameters for North America, version 3, available from the Oak Ridge National Laboratory's Distributed Active Archive Center (DAAC), and
+* The [International Tree Ring Data Bank (ITRDB)](http://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/tree-ring), coordinated by National Climatic Data Center at NOAA.
 
 Additional data sources are in the works.
 
@@ -17,54 +32,44 @@ This package is designed with the large-scale geographic information system (GIS
 This package has been built and tested on a source (Homebrew) install of *R* on macOS 10.12 (Sierra), and has been successfully run on Ubuntu 14.04.5 LTS (Trusty), Ubuntu 16.04.1 LTS (Xenial) and binary installs of *R* on Mac OS 10.12 and Windows 10.
 
 ### Development
-
--   [Kyle Bocinsky](http://bocinsky.io) - Crow Canyon Archaeological Center, Cortez, CO
++ [Kyle Bocinsky](http://bocinsky.io) - Crow Canyon Archaeological Center, Cortez, CO
 
 ### Contributors
-
--   [Dylan Beaudette](http://casoilresource.lawr.ucdavis.edu/people/dylan-e-beaudette/) - USDA-NRCS Soil Survey Office, Sonora, CA
--   [Scott Chamberlain](http://scottchamberlain.info/) - ROpenSci and Museum of Paleontology at UC Berkeley
++ [Dylan Beaudette](http://casoilresource.lawr.ucdavis.edu/people/dylan-e-beaudette/) - USDA-NRCS Soil Survey Office, Sonora, CA
++ [Scott Chamberlain](http://scottchamberlain.info/) - ROpenSci and Museum of Paleontology at UC Berkeley
 
 ### Install `FedData`
-
--   From CRAN:
-
-    ``` r
++ From CRAN:
+    ```{r eval = FALSE}
     install.packages('FedData')
     ```
 
--   Development version from GitHub:
-
-    ``` r
++ Development version from GitHub:
+    ```{r eval = FALSE}
     install.packages("devtools")
     devtools::install_github("bocinsky/FedData")
     ```
-
--   Linux (Ubuntu 14.04.5 or 16.04.1):
++ Linux (Ubuntu 14.04.5 or 16.04.1):
 
     First, in terminal:
-
-    ``` bash
+    ```bash
     sudo add-apt-repository ppa:ubuntugis/ppa -y
     sudo apt-get update -q
     sudo apt-get install libssl-dev libcurl4-openssl-dev netcdf-bin libnetcdf-dev gdal-bin libgdal-dev
     ```
-
     Then, in R:
-
-    ``` r
+    ```{r eval = FALSE}
     update.packages("survival")
     install.packages("devtools")
     devtools::install_github("bocinsky/FedData")
     ```
 
-### Demonstration
 
+### Demonstration
 This demo script is available in the `/inst` folder at the location of the installed package.
 
 #### Load `FedData` and define a study area
-
-``` r
+```{r results="hide", message=FALSE}
 # FedData Tester
 library(FedData)
 library(magrittr)
@@ -76,8 +81,7 @@ vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000),
 ```
 
 #### Get and plot the National Elevation Dataset for the study area
-
-``` r
+```{r results="hide", message=FALSE}
 # Get the NED (USA ONLY)
 # Returns a raster
 NED <- get_ned(template=vepPolygon,
@@ -86,11 +90,8 @@ NED <- get_ned(template=vepPolygon,
 raster::plot(NED)
 ```
 
-![](README-unnamed-chunk-6-1.png)
-
 #### Get and plot the Daymet dataset for the study area
-
-``` r
+```{r results="hide", message=FALSE}
 # Get the DAYMET (North America only)
 # Returns a raster
 DAYMET <- get_daymet(template=vepPolygon,
@@ -101,11 +102,8 @@ DAYMET <- get_daymet(template=vepPolygon,
 raster::plot(DAYMET$tmax$X1985.10.23)
 ```
 
-![](README-unnamed-chunk-7-1.png)
-
 #### Get and plot the daily GHCN precipitation data for the study area
-
-``` r
+```{r results="hide", message=FALSE}
 # Get the daily GHCN data (GLOBAL)
 # Returns a list: the first element is the spatial locations of stations,
 # and the second is a list of the stations and their daily data
@@ -119,11 +117,8 @@ sp::plot(GHCN.prcp$spatial, pch=1, add=T)
 legend('bottomleft', pch=1, legend="GHCN Precipitation Records")
 ```
 
-![](README-unnamed-chunk-8-1.png)
-
 #### Get and plot the daily GHCN temperature data for the study area
-
-``` r
+```{r results="hide", message=FALSE}
 # Elements for which you require the same data
 # (i.e., minimum and maximum temperature for the same days)
 # can be standardized using standardize==T
@@ -139,11 +134,8 @@ sp::plot(GHCN.temp$spatial, add=T, pch=1)
 legend('bottomleft', pch=1, legend="GHCN Temperature Records")
 ```
 
-![](README-unnamed-chunk-9-1.png)
-
 #### Get and plot the National Hydrography Dataset for the study area
-
-``` r
+```{r results="hide", message=FALSE}
 # Get the NHD (USA ONLY)
 NHD <- get_nhd(template=vepPolygon, 
                label="VEPIIN")
@@ -154,11 +146,8 @@ NHD %>%
   lapply(sp::plot, col='black', add=T)
 ```
 
-![](README-unnamed-chunk-10-1.png)
-
 #### Get and plot the NRCS SSURGO data for the study area
-
-``` r
+```{r results="hide", message=FALSE}
 # Get the NRCS SSURGO data (USA ONLY)
 SSURGO.VEPIIN <- get_ssurgo(template=vepPolygon, 
                      label="VEPIIN")
@@ -170,11 +159,8 @@ plot(SSURGO.VEPIIN$spatial,
      add=T)
 ```
 
-![](README-unnamed-chunk-11-1.png)
-
 #### Get and plot the NRCS SSURGO data for particular soil survey areas
-
-``` r
+```{r results="hide", message=FALSE}
 # Or, download by Soil Survey Area names
 SSURGO.areas <- get_ssurgo(template=c("CO670","CO075"), 
                            label="CO_TEST")
@@ -193,11 +179,8 @@ plot(SSURGO.areas.CO675,
      add=T)
 ```
 
-![](README-unnamed-chunk-12-1.png)
-
 #### Get and plot the ITRDB chronology locations in the study area
-
-``` r
+```{r results="hide", message=FALSE}
 # Get the ITRDB records
 ITRDB <- get_itrdb(template=vepPolygon,
                         label="VEPIIN",
@@ -209,10 +192,7 @@ plot(ITRDB$metadata, pch=1, add=T)
 legend('bottomleft', pch=1, legend="ITRDB chronologies")
 ```
 
-![](README-unnamed-chunk-13-1.png)
-
 ========
 
 ### Acknowledgements
-
 This package is a product of SKOPE ([Synthesizing Knowledge of Past Environments](http://www.openskope.org)) and the Village Ecodynamics Project. This software is licensed under the [MIT license](https://opensource.org/licenses/MIT).
