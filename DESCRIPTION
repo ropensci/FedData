@@ -50,5 +50,4 @@ NeedsCompilation: no
 RoxygenNote: 6.0.1
 Suggests: testthat,
     covr,
-    roxygen2,
-    pkgdown
+    roxygen2
