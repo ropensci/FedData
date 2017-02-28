@@ -13,6 +13,42 @@ setwd(testDir)
 testPolygon <- polygon_from_extent(raster::extent(-110,-108,36.5,37.5),
                                    proj4string="+proj=longlat")
 
+testPolygon %>%
+  as("SpatialPolygonsDataFrame") %>%
+writeOGR(dsn = "./FedData Test/",
+         layer = "testPolygon",
+         driver = "ESRI Shapefile",
+         overwrite = T)
+
+testPolygon %>%
+  as("SpatialPolygonsDataFrame") %>%
+  writeOGR(dsn = "./FedData Test/testPolygon.json",
+           layer = "testPolygon",
+           driver = "GeoJSON",
+           overwrite = T)
+
+unlink("./nc.shp")
+nc = st_read(system.file("shape/nc.shp", package="sf"))
+st_write(nc, "./nc.shp")
+st_read("./nc.shp")
+
+unlink("./test.geojson")
+testPolygon %>%
+  st_as_sf() %>%
+  mutate(test = 1) %>%
+  st_write("./test.geojson")
+
+ogrDrivers() %>%
+  dplyr::filter(write)
+
+testPolygon %>%
+  geojsonio::geojson_write(file = "./FedData Test/testPolygon")
+
+test <- geojsonio::geojson_read("./FedData Test/testPolygon.geojson", method = "local", parse = T, what = "sp") 
+
+test <- readOGR("./FedData Test/testPolygon.geojson")
+
+
 # Get the NED (USA ONLY)
 # Returns a raster
 NED <- get_ned(template=testPolygon,

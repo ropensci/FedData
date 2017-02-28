@@ -149,7 +149,11 @@ get_ssurgo <- function(template,
   SSURGOTables <- extract_ssurgo_data(tables = SSURGOTables, mapunits = as.character(unique(SSURGOPolys$MUKEY)))
   
   # Save the mapunit polygons
-  suppressWarnings(rgdal::writeOGR(SSURGOPolys, extraction.dir, paste0(label, "_SSURGO_Mapunits"), "ESRI Shapefile", overwrite_layer = TRUE))
+  suppressWarnings(rgdal::writeOGR(SSURGOPolys, 
+                                   dsn = normalizePath(paste0(extraction.dir,"/.")),
+                                   layer = paste0(label, "_SSURGO_Mapunits"),
+                                   driver = "ESRI Shapefile",
+                                   overwrite_layer = TRUE))
   
   # Save the each data table as a csv
   junk <- lapply(names(SSURGOTables), function(tab) {

@@ -83,7 +83,12 @@ get_nhd <- function(template, label, raw.dir = "./RAW/NHD/", extraction.dir = pa
             return(shapes)
         # shapes <- spTransform(shapes,CRS(projection(template)))
         layer <- gsub("NHD", "", layer)
-        suppressWarnings(rgdal::writeOGR(shapes, extraction.dir, paste0(label, "_NHD_", layer), "ESRI Shapefile", overwrite_layer = TRUE))
+        suppressWarnings(rgdal::writeOGR(shapes, 
+                                         dsn = normalizePath(paste0(extraction.dir,"/.")),
+                                         layer = paste0(label, "_NHD_", layer),
+                                         driver = "ESRI Shapefile",
+                                         overwrite_layer = TRUE))
+        
         return(shapes)
     })
     names(allShapes) <- gsub("NHD", "", layers)

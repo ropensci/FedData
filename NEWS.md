@@ -1,3 +1,6 @@
+# FedData 2.4.3
+* writeOGR for SSURGO and NHD were failing on Windows when the `extraction.dir` included a trailing slash. Paths are now normalized to remove the trailing slash.
+
 # FedData 2.4.2
 * Updated the `get_ned` function to provide more useful errors and warnings when downloads are unsuccessful.
 

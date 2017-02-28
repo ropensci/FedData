@@ -215,9 +215,12 @@ get_ghcn_daily <- function(template = NULL, label = NULL, elements = NULL, years
         stations.sp <- rgdal::readOGR(dsn = extraction.dir, layer = paste0(label, "_GHCN_stations"), verbose = F)
     } else {
         stations.sp <- get_ghcn_inventory(template = template, raw.dir = raw.dir)
-        suppressWarnings(rgdal::writeOGR(stations.sp, dsn = extraction.dir, layer = paste0(label, "_GHCN_stations"), driver = "ESRI Shapefile", 
-            overwrite_layer = TRUE))
-    }
+        suppressWarnings(rgdal::writeOGR(stations.sp, 
+                                         dsn = normalizePath(paste0(extraction.dir,"/.")),
+                                         layer = paste0(label, "_GHCN_stations"),
+                                         driver = "ESRI Shapefile",
+                                         overwrite_layer = TRUE))
+        }
     
     # If the user didn't specify target elements, get them all.
     if (!is.null(elements)) {
