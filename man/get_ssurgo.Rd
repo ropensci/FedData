@@ -4,8 +4,8 @@
 \alias{get_ssurgo}
 \title{Download and crop data from the NRCS SSURGO soils database.}
 \usage{
-get_ssurgo(template, label, raw.dir = "./RAW/SSURGO/",
-  extraction.dir = paste0("./EXTRACTIONS/", label, "/SSURGO/"),
+get_ssurgo(template, label, raw.dir = "./RAW/SSURGO",
+  extraction.dir = paste0("./EXTRACTIONS/", label, "/SSURGO"),
   force.redo = FALSE)
 }
 \arguments{

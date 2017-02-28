@@ -6,9 +6,9 @@
 \usage{
 get_itrdb(template = NULL, label = NULL, recon.years = NULL,
   calib.years = NULL, species = NULL, measurement.type = NULL,
-  chronology.type = NULL, makeSpatial = F, raw.dir = "./RAW/ITRDB/",
+  chronology.type = NULL, makeSpatial = F, raw.dir = "./RAW/ITRDB",
   extraction.dir = ifelse(!is.null(label), paste0("./EXTRACTIONS/", label,
-  "/ITRDB/"), "./EXTRACTIONS/ITRDB/"), force.redo = FALSE)
+  "/ITRDB"), "./EXTRACTIONS/ITRDB"), force.redo = FALSE)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve 

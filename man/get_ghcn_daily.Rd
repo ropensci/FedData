@@ -5,8 +5,8 @@
 \title{Download and crop the Global Historical Climate Network-Daily data.}
 \usage{
 get_ghcn_daily(template = NULL, label = NULL, elements = NULL,
-  years = NULL, raw.dir = "./RAW/GHCN/",
-  extraction.dir = paste0("./EXTRACTIONS/", label, "/GHCN/"),
+  years = NULL, raw.dir = "./RAW/GHCN",
+  extraction.dir = paste0("./EXTRACTIONS/", label, "/GHCN"),
   standardize = F, force.redo = F)
 }
 \arguments{

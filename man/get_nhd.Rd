@@ -4,8 +4,8 @@
 \alias{get_nhd}
 \title{Download and crop the National Hydrography Dataset.}
 \usage{
-get_nhd(template, label, raw.dir = "./RAW/NHD/",
-  extraction.dir = paste0("./EXTRACTIONS/", label, "/NHD/"),
+get_nhd(template, label, raw.dir = "./RAW/NHD",
+  extraction.dir = paste0("./EXTRACTIONS/", label, "/NHD"),
   force.redo = FALSE)
 }
 \arguments{

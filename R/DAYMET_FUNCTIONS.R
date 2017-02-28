@@ -277,4 +277,5 @@ get_daymet_tile <- function(template, tileID, elements = NULL, years = NULL, raw
 #'   \item{YMax}{the maximum latitude of the tile}
 #' }
 #' @source \url{https://github.com/khufkens/daymetr/blob/master/data/DAYMET_grid.RData}
+#' @keywords internal
 "tiles"

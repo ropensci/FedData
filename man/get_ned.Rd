@@ -4,8 +4,8 @@
 \alias{get_ned}
 \title{Download and crop the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.}
 \usage{
-get_ned(template, label, res = "1", raw.dir = "./RAW/NED/",
-  extraction.dir = paste0("./EXTRACTIONS/", label, "/NED/"), force.redo = F)
+get_ned(template, label, res = "1", raw.dir = "./RAW/NED",
+  extraction.dir = paste0("./EXTRACTIONS/", label, "/NED"), force.redo = F)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve 
