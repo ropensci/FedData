@@ -129,7 +129,7 @@ unwrap_rows <- function(mat, n) {
 #' @keywords internal
 download_data <- function(url, destdir = getwd(), timestamping = T, nc = F, verbose = F, progress = F) {
     
-    destdir <- normalizePath(destdir)
+    destdir <- normalizePath(paste0(destdir,"/."))
     destfile <- paste0(destdir, "/", basename(url))
     temp.file <- paste0(tempdir(), "/", basename(url))
     

@@ -47,8 +47,8 @@ get_ned <- function(template,
   template <- sp::spTransform(polygon_from_extent(template), sp::CRS("+proj=longlat +ellps=WGS84"))
   extent.latlon <- raster::extent(template)
   
-  if (file.exists(paste(extraction.dir, "/", label, "_NED_", res, ".tif", sep = "")) & !force.redo) {
-    extracted.DEM <- raster::raster(paste(extraction.dir, "/", label, "_NED_", res, ".tif", sep = ""))
+  if (file.exists(paste0(extraction.dir, "/", label, "_NED_", res, ".tif")) & !force.redo) {
+    extracted.DEM <- raster::raster(paste0(extraction.dir, "/", label, "_NED_", res, ".tif"))
     return(extracted.DEM)
   }
   
@@ -100,8 +100,14 @@ get_ned <- function(template,
                       tiles %>% raster::crop(y = template %>% sp::spTransform(CRSobj = tiles %>% raster::projection()))
                     })
   
-  raster::writeRaster(tiles, paste(extraction.dir, "/", label, "_NED_", res, ".tif", sep = ""), datatype = "FLT4S", options = c("COMPRESS=DEFLATE", 
-                                                                                                                                "ZLEVEL=9", "INTERLEAVE=BAND"), overwrite = T, setStatistics = FALSE)
+  raster::writeRaster(tiles,
+                      paste(extraction.dir, "/", label, "_NED_", res, ".tif", sep = ""),
+                      datatype = "FLT4S",
+                      options = c("COMPRESS=DEFLATE",
+                                  "ZLEVEL=9",
+                                  "INTERLEAVE=BAND"), 
+                      overwrite = T,
+                      setStatistics = FALSE)
   
   return(tiles)
 }
