@@ -51,10 +51,13 @@ get_daymet <- function(template,
                        label,
                        elements = NULL,
                        years = NULL,
-                       raw.dir = "./RAW/DAYMET/",
-                       extraction.dir = paste0("./EXTRACTIONS/", label, "/DAYMET/"),
+                       raw.dir = "./RAW/DAYMET",
+                       extraction.dir = paste0("./EXTRACTIONS/", label, "/DAYMET"),
                        force.redo = F) {
 
+  raw.dir <- normalizePath(paste0(raw.dir,"/."))  
+  extraction.dir <- normalizePath(paste0(extraction.dir,"/.")) 
+  
     dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
     dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
 

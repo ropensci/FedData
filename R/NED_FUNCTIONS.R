@@ -34,9 +34,12 @@
 get_ned <- function(template,
                     label,
                     res = "1",
-                    raw.dir = "./RAW/NED/",
-                    extraction.dir = paste0("./EXTRACTIONS/", label, "/NED/"), 
+                    raw.dir = "./RAW/NED",
+                    extraction.dir = paste0("./EXTRACTIONS/", label, "/NED"), 
                     force.redo = F) {
+  
+  raw.dir <- normalizePath(paste0(raw.dir,"/."))  
+  extraction.dir <- normalizePath(paste0(extraction.dir,"/."))  
   
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
@@ -71,13 +74,13 @@ get_ned <- function(template,
                       return(NULL)},
                     warning = function(w) NULL))
   }
-
+  
   if(all(sapply(tiles, is.null))){
     stop("No NED tiles are available for your study area. Please check your input data and internet connection.")
   }
   tiles <- tiles[which(!sapply(tiles, is.null))] 
   
-
+  
   # Mosaic all tiles
   if (length(tiles) > 1) {
     message("Mosaicking NED tiles.")

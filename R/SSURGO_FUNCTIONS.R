@@ -53,9 +53,12 @@
 #' }
 get_ssurgo <- function(template,
                        label,
-                       raw.dir = "./RAW/SSURGO/",
-                       extraction.dir = paste0("./EXTRACTIONS/", label, "/SSURGO/"), 
+                       raw.dir = "./RAW/SSURGO",
+                       extraction.dir = paste0("./EXTRACTIONS/", label, "/SSURGO"), 
                        force.redo = FALSE) {
+  
+  raw.dir <- normalizePath(paste0(raw.dir,"/."))  
+  extraction.dir <- normalizePath(paste0(extraction.dir,"/."))
   
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
