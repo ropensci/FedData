@@ -55,8 +55,8 @@ get_daymet <- function(template,
                        extraction.dir = paste0("./EXTRACTIONS/", label, "/DAYMET"),
                        force.redo = F) {
 
-  raw.dir <- normalizePath(paste0(raw.dir,"/."))  
-  extraction.dir <- normalizePath(paste0(extraction.dir,"/.")) 
+  raw.dir <- normalizePath(paste0(raw.dir,"/."), mustWork = FALSE)  
+  extraction.dir <- normalizePath(paste0(extraction.dir,"/."), mustWork = FALSE) 
   
     dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
     dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
@@ -170,7 +170,8 @@ get_daymet <- function(template,
 download_daymet_tile <- function(tileID, elements, years, raw.dir) {
 
     doParallel::registerDoParallel()
-    out <- foreach::foreach(element = elements) %:% foreach::foreach(year = sort(years), .combine = "c") %dopar% {
+    out <- foreach::foreach(element = elements) %:% 
+      foreach::foreach(year = sort(years), .combine = "c") %dopar% {
         destdir <- paste0(raw.dir, "/", tileID, "/", year)
         dir.create(destdir, recursive = TRUE, showWarnings = FALSE)
         url <- paste0("http://thredds.daac.ornl.gov/thredds/fileServer/ornldaac/1328/tiles/", year, "/", tileID, "_", year, "/",
