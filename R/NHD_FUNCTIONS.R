@@ -116,7 +116,7 @@ download_huc4 <- function(raw.dir) {
   # url <- 'ftp://rockyftp.cr.usgs.gov/vdelivery/Datasets/Staged/WBD/FileGDB101/WBD_National.zip'
   url <- "ftp://ftp.igsb.uiowa.edu/gis_library/USA/huc_04.zip"
   tryCatch(download_data(url = url, destdir = raw.dir), error = function(e){message("HUC4 download not available. Using local version.")})
-  return(normalizePath(paste(raw.dir, "huc_04.zip", sep = "")))
+  return(normalizePath(paste(raw.dir, "/huc_04.zip", sep = "")))
   # return(normalizePath(paste(raw.dir,'WBD_National.zip',sep='')))
 }
 
