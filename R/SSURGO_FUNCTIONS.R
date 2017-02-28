@@ -22,6 +22,7 @@
 #' @export
 #' @importFrom sp SpatialPointsDataFrame
 #' @importFrom readr read_csv write_csv
+#' @importFrom rgeos gIntersection
 #' @examples
 #' \dontrun{
 #' # Extract data for the Village Ecodynamics Project 'VEPIIN' study area:

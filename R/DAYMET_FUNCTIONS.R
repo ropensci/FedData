@@ -165,6 +165,7 @@ get_daymet <- function(template,
 #' @return A named list of character vectors, each representing the full local paths of the tile downloads.
 #' @export
 #' @keywords internal
+#' @import ncdf4
 #' @importFrom doParallel registerDoParallel stopImplicitCluster
 #' @importFrom foreach foreach %dopar% %do% %:%
 download_daymet_tile <- function(tileID, elements, years, raw.dir) {
