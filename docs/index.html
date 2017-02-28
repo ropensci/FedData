@@ -36,7 +36,14 @@
   <a href="news/index.html">News</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/bocinsky/FedData">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -53,7 +60,9 @@
     
 <div class="contents">
 
-<p><code>FedData</code> is an <em>R</em> package implementing functions to automate downloading geospatial data available from several federated data sources (mainly sources maintained by the US Federal government). Currently, the package allows for retrieval of five datasets:</p>
+<p><code>FedData</code> is an <em>R</em> package implementing functions to automate downloading geospatial data available from several federated data sources (mainly sources maintained by the US Federal government).</p>
+<p><strong>FedData version 2.4.5 will be the final CRAN release of FedData 2. FedData 3 will be released in the coming months, but some code built on FedData 2 will not be compatible with FedData 3.</strong></p>
+<p>Currently, the package enables extraction from six datasets:</p>
 <ul>
 <li>The <a href="http://ned.usgs.gov">National Elevation Dataset (NED)</a> digital elevation models (1 and 1/3 arc-second; USGS)</li>
 <li>The <a href="http://nhd.usgs.gov">National Hydrography Dataset (NHD)</a> (USGS)</li>
@@ -62,7 +71,6 @@
 <li>The <a href="https://daymet.ornl.gov/">Daymet</a> gridded estimates of daily weather parameters for North America, version 3, available from the Oak Ridge National Laboratory’s Distributed Active Archive Center (DAAC), and</li>
 <li>The <a href="http://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/tree-ring">International Tree Ring Data Bank (ITRDB)</a>, coordinated by National Climatic Data Center at NOAA.</li>
 </ul>
-<p>Additional data sources are in the works.</p>
 <p>This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the <a href="https://cran.r-project.org/package=sp"><strong>sp</strong></a>, <a href="https://cran.r-project.org/package=raster"><strong>raster</strong></a>, and <a href="https://cran.r-project.org/package=rgdal"><strong>rgdal</strong></a> packages.</p>
 <p>This package has been built and tested on a source (Homebrew) install of <em>R</em> on macOS 10.12 (Sierra), and has been successfully run on Ubuntu 14.04.5 LTS (Trusty), Ubuntu 16.04.1 LTS (Xenial) and binary installs of <em>R</em> on Mac OS 10.12 and Windows 10.</p>
 <div id="development" class="section level3">
@@ -77,10 +85,8 @@
 <h3 class="hasAnchor">
 <a href="#contributors" class="anchor"> </a>Contributors</h3>
 <ul>
-<li>
-<a href="http://casoilresource.lawr.ucdavis.edu/people/dylan-e-beaudette/">Dylan Beaudette</a> - USDA-NRCS Soil Survey Office, Sonora, CA</li>
-<li>
-<a href="http://scottchamberlain.info/">Scott Chamberlain</a> - ROpenSci and Museum of Paleontology at UC Berkeley</li>
+<li>Dylan Beaudette - USDA-NRCS Soil Survey Office, Sonora, CA</li>
+<li>Scott Chamberlain - ROpenSci and Museum of Paleontology at UC Berkeley</li>
 </ul>
 </div>
 <div id="install-feddata" class="section level3">
@@ -113,7 +119,7 @@ devtools<span class="op">::</span><span class="kw">install_github</span>(<span c
 <div id="demonstration" class="section level3">
 <h3 class="hasAnchor">
 <a href="#demonstration" class="anchor"> </a>Demonstration</h3>
-<p>This demo script is available in the <code>/inst</code> folder at the location of the installed package.</p>
+<p>This demonstration script is available as an R Markdown document in the GitHub repository: <a href="https://github.com/bocinsky/FedData" class="uri">https://github.com/bocinsky/FedData</a>.</p>
 <div id="load-feddata-and-define-a-study-area" class="section level4">
 <h4 class="hasAnchor">
 <a href="#load-feddata-and-define-a-study-area" class="anchor"> </a>Load <code>FedData</code> and define a study area</h4>
@@ -239,7 +245,6 @@ NED.CO675 &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_
 ITRDB &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_itrdb.html">get_itrdb</a></span>(<span class="dt">template=</span>vepPolygon,
                         <span class="dt">label=</span><span class="st">"VEPIIN"</span>,
                         <span class="dt">makeSpatial=</span>T)
-<span class="co">#&gt; Warning: NAs introduced by coercion</span>
 <span class="co"># Plot the NED again</span>
 raster<span class="op">::</span><span class="kw">plot</span>(NED)
 <span class="co"># Map the locations of the tree ring chronologies</span>
@@ -261,6 +266,8 @@ raster<span class="op">::</span><span class="kw">plot</span>(NED)
     <h2>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cran.r-project.org/package=FedData">https://​cran.r-project.org/​package=FedData</a>
+</li>
+<li>Browse source code at <br><a href="https://github.com/bocinsky/FedData">https://​github.com/​bocinsky/​FedData</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/bocinsky/FedData/issues">https://​github.com/​bocinsky/​FedData/​issues</a>
 </li>
