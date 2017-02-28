@@ -7,6 +7,8 @@
 /docs/EXTRACTIONS/*
 /docs/RAW
 /docs/RAW/*
+/FedData Test
+/FedData Test/*
 
 # Mac trash files
 .DS_Store
