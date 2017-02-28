@@ -178,7 +178,7 @@ download_ssurgo_inventory <- function(raw.dir) {
   url <- "http://websoilsurvey.sc.egov.usda.gov/DataAvailability/SoilDataAvailabilityShapefile.zip"
   destdir <- raw.dir
   download_data(url = url, destdir = destdir)
-  return(normalizePath(paste(destdir, "SoilDataAvailabilityShapefile.zip", sep = "")))
+  return(normalizePath(paste(destdir, "/SoilDataAvailabilityShapefile.zip", sep = "")))
 }
 
 #' Download and crop a shapefile of the SSURGO study areas.
@@ -310,7 +310,7 @@ download_ssurgo_study_area <- function(area, date, raw.dir) {
   destdir <- raw.dir
   download_data(url = url, destdir = destdir, nc = T)
   
-  return(normalizePath(paste(destdir, "wss_SSA_", area, "_[", date, "].zip", sep = "")))
+  return(normalizePath(paste(destdir, "/wss_SSA_", area, "_[", date, "].zip", sep = "")))
 }
 
 #' Download and crop the spatial and tabular data for a SSURGO study area.
