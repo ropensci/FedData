@@ -332,7 +332,7 @@ download_ghcn_daily_station <- function(ID, raw.dir, force.redo = F) {
     download_data(url = url, destdir = raw.dir, timestamping = F)
   }
   
-  return(normalizePath(paste(raw.dir, ID, ".dly", sep = "")))
+  return(normalizePath(paste0(raw.dir, "/", ID, ".dly")))
   
 }
 
@@ -576,11 +576,11 @@ get_ghcn_inventory <- function(template = NULL, elements = NULL, raw.dir) {
   download_data(url = url, destdir = destdir)
   
   # GHCN files are fixed-width. The numbers here refer to those column widths.
-  station.inventory <- readr::read_fwf(paste(raw.dir, "ghcnd-inventory.txt", sep = ""), readr::fwf_positions(start = c(1, 13, 
+  station.inventory <- readr::read_fwf(paste(raw.dir, "/ghcnd-inventory.txt", sep = ""), readr::fwf_positions(start = c(1, 13, 
                                                                                                                        22, 32, 37, 42), end = c(11, 20, 30, 35, 40, 45), col_names = c("ID", "LATITUDE", "LONGITUDE", "ELEMENT", "YEAR_START", 
                                                                                                                                                                                        "YEAR_END")), col_types = "cddcii")
   
-  stations <- readr::read_fwf(paste(raw.dir, "ghcnd-stations.txt", sep = ""), readr::fwf_positions(start = c(1, 13, 22, 32, 42), 
+  stations <- readr::read_fwf(paste(raw.dir, "/ghcnd-stations.txt", sep = ""), readr::fwf_positions(start = c(1, 13, 22, 32, 42), 
                                                                                                    end = c(11, 20, 30, 38, 72), col_names = c("ID", "LATITUDE", "LONGITUDE", "ELEVATION", "NAME")), col_types = "cdddc")
   
   # Convert to SPDF
