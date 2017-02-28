@@ -204,14 +204,14 @@ download_itrdb <- function(raw.dir = "./RAW/ITRDB/", force.redo = FALSE) {
   }
   
   ## A vector of the files in the output.dir
-  zips <- paste0(raw.dir, basename(filenames))
+  zips <- paste0(raw.dir, "/", basename(filenames))
   
   version <- max(as.numeric(gsub("[^0-9]", "", zips)))
   zips <- zips[grepl(version, zips)]
   
   message("Extracting chronology data from ITRDB version ", version, " dated ", as.character(as.Date(base::file.info(zips[[1]])$mtime)))
   
-  if (!force.redo && file.exists(paste(raw.dir, "ITRDB_", version, ".Rds", sep = ""))) {
+  if (!force.redo && file.exists(paste(raw.dir, "/ITRDB_", version, ".Rds", sep = ""))) {
     itrdb.metadata <- readr::read_rds(paste(raw.dir, "/ITRDB_", version, ".Rds", sep = ""))
   } else {
     all.data <- lapply(zips, function(file) {
