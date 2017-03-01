@@ -13,8 +13,8 @@ Description: Functions to automate downloading geospatial data available from
     Data Center at NOAA; the Daymet gridded estimates of daily weather parameters 
     for North America, version 3, available from the Oak Ridge National Laboratory's
     Distributed Active Archive Center (DAAC); and the International Tree Ring Data Bank.
-Version: 2.4.5.9000
-Date: 2017-2-28
+Version: 3.0.0.9000
+Date: 2017-3-1
 Author: R. Kyle Bocinsky [aut, cre], Dylan Beaudette [ctb], Scott Chamberlain [ctb]
 Authors@R: c(person(given = c("R.", "Kyle"), family = "Bocinsky",
     role = c("aut", "cre"), email = "bocinsky@gmail.com"),
