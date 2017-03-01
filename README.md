@@ -1,5 +1,5 @@
 
-[![cran version](http://www.r-pkg.org/badges/version/FedData)](https://cran.r-project.org/package=FedData) [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/FedData)](https://github.com/metacran/cranlogs.app) [![Build Status](https://api.travis-ci.org/bocinsky/FedData.png)](https://travis-ci.org/bocinsky/FedData) [![Coverage Status](https://img.shields.io/codecov/c/github/bocinsky/FedData/master.svg)](https://codecov.io/github/bocinsky/FedData?branch=master)
+[![cran version](http://www.r-pkg.org/badges/version/FedData)](https://cran.r-project.org/package=FedData) [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/FedData)](https://github.com/metacran/cranlogs.app) [![Build Status](https://api.travis-ci.org/bocinsky/FedData.png)](https://travis-ci.org/bocinsky/FedData) [![Coverage Status](https://img.shields.io/codecov/c/github/bocinsky/FedData/master.svg)](https://codecov.io/github/bocinsky/FedData?branch=master) [![Zenodo DOI](https://zenodo.org/badge/23774237.svg)](https://zenodo.org/badge/latestdoi/23774237)
 
 `FedData` is an *R* package implementing functions to automate downloading geospatial data available from several federated data sources (mainly sources maintained by the US Federal government).
 
@@ -88,7 +88,7 @@ NED <- get_ned(template=vepPolygon,
 raster::plot(NED)
 ```
 
-![](README-unnamed-chunk-16-1.png)
+![](README-unnamed-chunk-6-1.png)
 
 #### Get and plot the Daymet dataset for the study area
 
@@ -103,7 +103,7 @@ DAYMET <- get_daymet(template=vepPolygon,
 raster::plot(DAYMET$tmax$X1985.10.23)
 ```
 
-![](README-unnamed-chunk-17-1.png)
+![](README-unnamed-chunk-7-1.png)
 
 #### Get and plot the daily GHCN precipitation data for the study area
 
@@ -121,7 +121,7 @@ sp::plot(GHCN.prcp$spatial, pch=1, add=T)
 legend('bottomleft', pch=1, legend="GHCN Precipitation Records")
 ```
 
-![](README-unnamed-chunk-18-1.png)
+![](README-unnamed-chunk-8-1.png)
 
 #### Get and plot the daily GHCN temperature data for the study area
 
@@ -141,7 +141,7 @@ sp::plot(GHCN.temp$spatial, add=T, pch=1)
 legend('bottomleft', pch=1, legend="GHCN Temperature Records")
 ```
 
-![](README-unnamed-chunk-19-1.png)
+![](README-unnamed-chunk-9-1.png)
 
 #### Get and plot the National Hydrography Dataset for the study area
 
@@ -156,7 +156,7 @@ NHD %>%
   lapply(sp::plot, col='black', add=T)
 ```
 
-![](README-unnamed-chunk-20-1.png)
+![](README-unnamed-chunk-10-1.png)
 
 #### Get and plot the NRCS SSURGO data for the study area
 
@@ -172,7 +172,7 @@ plot(SSURGO.VEPIIN$spatial,
      add=T)
 ```
 
-![](README-unnamed-chunk-21-1.png)
+![](README-unnamed-chunk-11-1.png)
 
 #### Get and plot the NRCS SSURGO data for particular soil survey areas
 
@@ -195,7 +195,7 @@ plot(SSURGO.areas.CO675,
      add=T)
 ```
 
-![](README-unnamed-chunk-22-1.png)
+![](README-unnamed-chunk-12-1.png)
 
 #### Get and plot the ITRDB chronology locations in the study area
 
@@ -211,7 +211,7 @@ plot(ITRDB$metadata, pch=1, add=T)
 legend('bottomleft', pch=1, legend="ITRDB chronologies")
 ```
 
-![](README-unnamed-chunk-23-1.png)
+![](README-unnamed-chunk-13-1.png)
 
 ========
 
