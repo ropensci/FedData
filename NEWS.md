@@ -1,5 +1,3 @@
-# FedData 2.4.5.9000
-
 # FedData 2.4.3
 * writeOGR for SSURGO and NHD were failing on Windows when the `extraction.dir` included a trailing slash. Paths are now normalized to remove the trailing slash.
 
