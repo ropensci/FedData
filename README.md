@@ -88,7 +88,7 @@ NED <- get_ned(template=vepPolygon,
 raster::plot(NED)
 ```
 
-![](README-unnamed-chunk-6-1.png)
+![](inst/image/README-unnamed-chunk-6-1.png)
 
 #### Get and plot the Daymet dataset for the study area
 
@@ -103,7 +103,7 @@ DAYMET <- get_daymet(template = vepPolygon,
 raster::plot(DAYMET$tmax$X1985.10.23)
 ```
 
-![](README-unnamed-chunk-7-1.png)
+![](inst/image/README-unnamed-chunk-7-1.png)
 
 #### Get and plot the daily GHCN precipitation data for the study area
 
@@ -121,7 +121,7 @@ sp::plot(GHCN.prcp$spatial, pch=1, add=T)
 legend('bottomleft', pch=1, legend="GHCN Precipitation Records")
 ```
 
-![](README-unnamed-chunk-8-1.png)
+![](inst/image/README-unnamed-chunk-8-1.png)
 
 #### Get and plot the daily GHCN temperature data for the study area
 
@@ -141,7 +141,7 @@ sp::plot(GHCN.temp$spatial, add=T, pch=1)
 legend('bottomleft', pch=1, legend="GHCN Temperature Records")
 ```
 
-![](README-unnamed-chunk-9-1.png)
+![](inst/image/README-unnamed-chunk-9-1.png)
 
 #### Get and plot the National Hydrography Dataset for the study area
 
@@ -156,7 +156,7 @@ NHD %>%
   lapply(sp::plot, col='black', add=T)
 ```
 
-![](README-unnamed-chunk-10-1.png)
+![](inst/image/README-unnamed-chunk-10-1.png)
 
 #### Get and plot the NRCS SSURGO data for the study area
 
@@ -174,7 +174,7 @@ plot(SSURGO.VEPIIN$spatial,
      add=T)
 ```
 
-![](README-unnamed-chunk-11-1.png)
+![](inst/image/README-unnamed-chunk-11-1.png)
 
 #### Get and plot the NRCS SSURGO data for particular soil survey areas
 
@@ -197,7 +197,7 @@ plot(SSURGO.areas.CO675,
      add=T)
 ```
 
-![](README-unnamed-chunk-12-1.png)
+![](inst/image/README-unnamed-chunk-12-1.png)
 
 #### Get and plot the ITRDB chronology locations in the study area
 
@@ -213,7 +213,7 @@ plot(ITRDB$metadata, pch=1, add=T)
 legend('bottomleft', pch=1, legend="ITRDB chronologies")
 ```
 
-![](README-unnamed-chunk-13-1.png)
+![](inst/image/README-unnamed-chunk-13-1.png)
 
 ------------------------------------------------------------------------
 

@@ -147,7 +147,7 @@ NED &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ned.ht
                <span class="dt">label=</span><span class="st">"VEPIIN"</span>)
 <span class="co"># Plot with raster::plot</span>
 raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</code></pre></div>
-<p><img src="README-unnamed-chunk-6-1.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-6-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-daymet-dataset-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -160,7 +160,7 @@ DAYMET &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_day
                <span class="dt">years =</span> <span class="dv">1980</span><span class="op">:</span><span class="dv">1985</span>)
 <span class="co"># Plot with raster::plot</span>
 raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(DAYMET<span class="op">$</span>tmax<span class="op">$</span>X1985.<span class="fl">10.23</span>)</code></pre></div>
-<p><img src="README-unnamed-chunk-7-1.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-7-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-daily-ghcn-precipitation-data-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -176,7 +176,7 @@ raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentat
 <span class="co"># Plot the spatial locations</span>
 sp<span class="op">::</span><span class="kw">plot</span>(GHCN.prcp<span class="op">$</span>spatial, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">add=</span>T)
 <span class="kw">legend</span>(<span class="st">'bottomleft'</span>, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">legend=</span><span class="st">"GHCN Precipitation Records"</span>)</code></pre></div>
-<p><img src="README-unnamed-chunk-8-1.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-8-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-daily-ghcn-temperature-data-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -194,7 +194,7 @@ raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentat
 <span class="co"># Plot the spatial locations</span>
 sp<span class="op">::</span><span class="kw">plot</span>(GHCN.temp<span class="op">$</span>spatial, <span class="dt">add=</span>T, <span class="dt">pch=</span><span class="dv">1</span>)
 <span class="kw">legend</span>(<span class="st">'bottomleft'</span>, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">legend=</span><span class="st">"GHCN Temperature Records"</span>)</code></pre></div>
-<p><img src="README-unnamed-chunk-9-1.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-9-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-national-hydrography-dataset-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -207,7 +207,7 @@ raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentat
 <span class="co"># Plot the NHD data</span>
 NHD <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">lapply</span>(sp<span class="op">::</span>plot, <span class="dt">col=</span><span class="st">'black'</span>, <span class="dt">add=</span>T)</code></pre></div>
-<p><img src="README-unnamed-chunk-10-1.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-10-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-nrcs-ssurgo-data-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -223,7 +223,7 @@ raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentat
 <span class="kw">plot</span>(SSURGO.VEPIIN<span class="op">$</span>spatial,
      <span class="dt">lwd=</span><span class="fl">0.1</span>,
      <span class="dt">add=</span>T)</code></pre></div>
-<p><img src="README-unnamed-chunk-11-1.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-11-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-nrcs-ssurgo-data-for-particular-soil-survey-areas" class="section level4">
 <h4 class="hasAnchor">
@@ -244,7 +244,7 @@ NED.CO675 &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_
 <span class="kw">plot</span>(SSURGO.areas.CO675,
      <span class="dt">lwd=</span><span class="fl">0.1</span>,
      <span class="dt">add=</span>T)</code></pre></div>
-<p><img src="README-unnamed-chunk-12-1.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-12-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-itrdb-chronology-locations-in-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -258,7 +258,7 @@ raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentat
 <span class="co"># Map the locations of the tree ring chronologies</span>
 <span class="kw">plot</span>(ITRDB<span class="op">$</span>metadata, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">add=</span>T)
 <span class="kw">legend</span>(<span class="st">'bottomleft'</span>, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">legend=</span><span class="st">"ITRDB chronologies"</span>)</code></pre></div>
-<p><img src="README-unnamed-chunk-13-1.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-13-1.png" width="672"></p>
 <hr>
 </div>
 </div>
