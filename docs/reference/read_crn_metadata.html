@@ -23,14 +23,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -49,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -85,15 +94,20 @@ are reported to the user. The user (or <code><a href='read_crn.html'>read_crn</a
 the file is a Schweingruber-type chronology.</p>
     
 
-    <pre><span class='fu'>read_crn_metadata</span>(<span class='no'>file</span>, <span class='no'>SCHWEINGRUBER</span>)</pre>
+    <pre class="usage"><span class='fu'>read_crn_metadata</span>(<span class='no'>file</span>, <span class='no'>SCHWEINGRUBER</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>file</dt>
-      <dd>A character string path pointing to a <code>*.crn</code> file to be read.</dd>
-      <dt>SCHWEINGRUBER</dt>
-      <dd>Is the file in the Schweingruber-type Tucson format?</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>file</th>
+      <td><p>A character string path pointing to a <code>*.crn</code> file to be read.</p></td>
+    </tr>
+    <tr>
+      <th>SCHWEINGRUBER</th>
+      <td><p>Is the file in the Schweingruber-type Tucson format?</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 

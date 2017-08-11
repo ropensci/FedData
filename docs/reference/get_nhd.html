@@ -23,14 +23,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -49,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -82,26 +91,37 @@
 from the National Hydrography Dataset.</p>
     
 
-    <pre><span class='fu'>get_nhd</span>(<span class='no'>template</span>, <span class='no'>label</span>, <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='st'>"./RAW/NHD"</span>,
+    <pre class="usage"><span class='fu'>get_nhd</span>(<span class='no'>template</span>, <span class='no'>label</span>, <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='st'>"./RAW/NHD"</span>,
   <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='st'>"./EXTRACTIONS/"</span>, <span class='no'>label</span>, <span class='st'>"/NHD"</span>),
   <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>template</dt>
-      <dd>A Raster* or Spatial* object to serve 
-as a template for cropping.</dd>
-      <dt>label</dt>
-      <dd>A character string naming the study area.</dd>
-      <dt>raw.dir</dt>
-      <dd>A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to &#39;./RAW/NHD/&#39;.</dd>
-      <dt>extraction.dir</dt>
-      <dd>A character string indicating where the extracted and cropped NHD shapefiles should be put.
-The directory will be created if missing. Defaults to &#39;./EXTRACTIONS/NHD/&#39;.</dd>
-      <dt>force.redo</dt>
-      <dd>If an extraction for this template and label already exists, should a new one be created?</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>template</th>
+      <td><p>A Raster* or Spatial* object to serve 
+as a template for cropping.</p></td>
+    </tr>
+    <tr>
+      <th>label</th>
+      <td><p>A character string naming the study area.</p></td>
+    </tr>
+    <tr>
+      <th>raw.dir</th>
+      <td><p>A character string indicating where raw downloaded files should be put.
+The directory will be created if missing. Defaults to './RAW/NHD/'.</p></td>
+    </tr>
+    <tr>
+      <th>extraction.dir</th>
+      <td><p>A character string indicating where the extracted and cropped NHD shapefiles should be put.
+The directory will be created if missing. Defaults to './EXTRACTIONS/NHD/'.</p></td>
+    </tr>
+    <tr>
+      <th>force.redo</th>
+      <td><p>If an extraction for this template and label already exists, should a new one be created?</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -109,24 +129,24 @@ The directory will be created if missing. Defaults to &#39;./EXTRACTIONS/NHD/&#3
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># # Extract data for the Village Ecodynamics Project 'VEPIIN' study area:</span>
-<span class='co'># # http://village.anth.wsu.edu</span>
-<span class='co'># vepPolygon &lt;- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), </span>
-<span class='co'>#      proj4string='+proj=utm +datum=NAD83 +zone=12')</span>
-<span class='co'># </span>
-<span class='co'># # Get the NHD (USA ONLY)</span>
-<span class='co'># NHD &lt;- get_nhd(template=vepPolygon, label='VEPIIN')</span>
-<span class='co'># </span>
-<span class='co'># # Plot the VEP polygon</span>
-<span class='co'># plot(vepPolygon)</span>
-<span class='co'># </span>
-<span class='co'># # Plot the NHD data</span>
-<span class='co'># plot(NHD$NHDFlowline, add=T)</span>
-<span class='co'># plot(NHD$NHDLine, add=T)</span>
-<span class='co'># plot(NHD$NHDArea, col='black', add=T)</span>
-<span class='co'># plot(NHD$NHDWaterbody, col='black', add=T)</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># Extract data for the Village Ecodynamics Project 'VEPIIN' study area:</span>
+<span class='co'># http://village.anth.wsu.edu</span>
+<span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/raster/topics/extent'>extent</a></span>(<span class='fl'>672800</span>,<span class='fl'>740000</span>,<span class='fl'>4102000</span>,<span class='fl'>4170000</span>),
+     <span class='kw'>proj4string</span><span class='kw'>=</span><span class='st'>'+proj=utm +datum=NAD83 +zone=12'</span>)
+
+<span class='co'># Get the NHD (USA ONLY)</span>
+<span class='no'>NHD</span> <span class='kw'>&lt;-</span> <span class='fu'>get_nhd</span>(<span class='kw'>template</span><span class='kw'>=</span><span class='no'>vepPolygon</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'VEPIIN'</span>)
+
+<span class='co'># Plot the VEP polygon</span>
+<span class='fu'>plot</span>(<span class='no'>vepPolygon</span>)
+
+<span class='co'># Plot the NHD data</span>
+<span class='fu'>plot</span>(<span class='no'>NHD</span>$<span class='no'>NHDFlowline</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='no'>T</span>)
+<span class='fu'>plot</span>(<span class='no'>NHD</span>$<span class='no'>NHDLine</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='no'>T</span>)
+<span class='fu'>plot</span>(<span class='no'>NHD</span>$<span class='no'>NHDArea</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'black'</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='no'>T</span>)
+<span class='fu'>plot</span>(<span class='no'>NHD</span>$<span class='no'>NHDWaterbody</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'black'</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='no'>T</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -124,7 +124,7 @@ unwrap_rows <- function(mat, n) {
 #' @param nc Should files of the same type not be clobbered?
 #' @param verbose Should cURL output be shown?
 #' @param progress Should a progress bar be shown with cURL output?
-#' @return A logical vector of the same length as x.
+#' @return A character string of the file path to the downloaded file.
 #' @export
 #' @keywords internal
 download_data <- function(url, destdir = getwd(), timestamping = T, nc = F, verbose = F, progress = F) {
@@ -133,10 +133,10 @@ download_data <- function(url, destdir = getwd(), timestamping = T, nc = F, verb
     destfile <- paste0(destdir, "/", basename(url))
     temp.file <- paste0(tempdir(), "/", basename(url))
     
-    if (nc & file.exists(destfile)) 
-        return()
-    
-    if (timestamping & file.exists(destfile)) {
+    if (nc & file.exists(destfile)){
+      message("Local file exists. Returning.")
+      return(destfile)
+    } else if (timestamping & file.exists(destfile)) {
         message("Downloading file (if necessary): ", url)
         opts <- list(verbose = verbose, noprogress = !progress, fresh_connect = TRUE, ftp_use_epsv = FALSE, forbid_reuse = TRUE, 
             timecondition = TRUE, timevalue = base::file.info(destfile)$mtime)
@@ -145,17 +145,24 @@ download_data <- function(url, destdir = getwd(), timestamping = T, nc = F, verb
         tryCatch(status <- curl::curl_fetch_disk(url, path = temp.file, handle = hand), error = function(e) {
           message("Download of ", 
             url, " failed. Reverting to already cached file.")
-          return()
+          return(destfile)
           })
         if (file.info(temp.file)$size > 0) {
             file.copy(temp.file, destfile, overwrite = T)
         }
     } else {
         message("Downloading file: ", url)
-        opts <- list(verbose = verbose, noprogress = !progress, fresh_connect = TRUE, ftp_use_epsv = FALSE, forbid_reuse = TRUE)
+        opts <- list(verbose = verbose,
+                     noprogress = !progress,
+                     fresh_connect = TRUE,
+                     ftp_use_epsv = FALSE,
+                     forbid_reuse = TRUE)
         hand <- curl::new_handle()
         curl::handle_setopt(hand, .list = opts)
-        tryCatch(status <- curl::curl_fetch_disk(url, path = destfile, handle = hand), error = function(e) stop("Download of ", 
-            url, " failed!"))
+        tryCatch(status <- curl::curl_fetch_disk(url,
+                                                 path = destfile,
+                                                 handle = hand),
+                 error = function(e) stop("Download of ", url, " failed!"))
+        return(destfile)
     }
 }

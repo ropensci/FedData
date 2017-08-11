@@ -13,13 +13,14 @@ knitr::opts_chunk$set(
 
 [![cran version](http://www.r-pkg.org/badges/version/FedData)](https://cran.r-project.org/package=FedData)
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/grand-total/FedData)](https://github.com/metacran/cranlogs.app)
-[![Build Status](https://api.travis-ci.org/bocinsky/FedData.png)](https://travis-ci.org/bocinsky/FedData)
-[![Coverage Status](https://img.shields.io/codecov/c/github/bocinsky/FedData/master.svg)](https://codecov.io/github/bocinsky/FedData?branch=master)
+[![Build Status](https://api.travis-ci.org/ropensci/FedData.png)](https://travis-ci.org/ropensci/FedData)
+<!-- [![Coverage Status](https://img.shields.io/codecov/c/github/ropensci/FedData/master.svg)](https://codecov.io/github/ropensci/FedData?branch=master) -->
 [![Zenodo DOI](https://zenodo.org/badge/23774237.svg)](https://zenodo.org/badge/latestdoi/23774237)
+[![ROpenSci Status](https://ropensci.org/badges/13_status.svg)](https://github.com/ropensci/onboarding/issues/13)
 
 `FedData` is an *R* package implementing functions to automate downloading geospatial data available from several federated data sources (mainly sources maintained by the US Federal government).
 
-**FedData version 2.4.5 will be the final CRAN release of FedData 2. FedData 3 will be released in the coming months, but some code built on FedData 2 will not be compatible with FedData 3.**
+**FedData version 2.4.6 will be the final CRAN release of FedData 2. FedData 3 will be released in the coming months, but some code built on FedData 2 will not be compatible with FedData 3.**
 
 Currently, the package enables extraction from six datasets: 
 
@@ -67,7 +68,6 @@ This package has been built and tested on a source (Homebrew) install of *R* on 
     devtools::install_github("bocinsky/FedData")
     ```
 
-
 ### Demonstration
 This demonstration script is available as an R Markdown document in the GitHub repository: [https://github.com/bocinsky/FedData](https://github.com/bocinsky/FedData).
 
@@ -97,8 +97,8 @@ raster::plot(NED)
 ```{r results="hide", message=FALSE}
 # Get the DAYMET (North America only)
 # Returns a raster
-DAYMET <- get_daymet(template=vepPolygon,
-               label="VEPIIN",
+DAYMET <- get_daymet(template = vepPolygon,
+               label = "VEPIIN",
                elements = c("prcp","tmax"),
                years = 1980:1985)
 # Plot with raster::plot
@@ -195,7 +195,9 @@ plot(ITRDB$metadata, pch=1, add=T)
 legend('bottomleft', pch=1, legend="ITRDB chronologies")
 ```
 
-========
+-----------
 
 ### Acknowledgements
 This package is a product of SKOPE ([Synthesizing Knowledge of Past Environments](http://www.openskope.org)) and the Village Ecodynamics Project. This software is licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+[![ropensci_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)

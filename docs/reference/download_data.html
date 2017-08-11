@@ -23,14 +23,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -49,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -81,24 +90,37 @@
     <p>This function makes it easy to implement timestamping and no-clobber of files.</p>
     
 
-    <pre><span class='fu'>download_data</span>(<span class='no'>url</span>, <span class='kw'>destdir</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='kw'>timestamping</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>nc</span> <span class='kw'>=</span> <span class='no'>F</span>,
+    <pre class="usage"><span class='fu'>download_data</span>(<span class='no'>url</span>, <span class='kw'>destdir</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='kw'>timestamping</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>nc</span> <span class='kw'>=</span> <span class='no'>F</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>progress</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>url</dt>
-      <dd>The location of a file.</dd>
-      <dt>destdir</dt>
-      <dd>Where the file should be downloaded to.</dd>
-      <dt>timestamping</dt>
-      <dd>Should only newer files be downloaded?</dd>
-      <dt>nc</dt>
-      <dd>Should files of the same type not be clobbered?</dd>
-      <dt>verbose</dt>
-      <dd>Should cURL output be shown?</dd>
-      <dt>progress</dt>
-      <dd>Should a progress bar be shown with cURL output?</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>url</th>
+      <td><p>The location of a file.</p></td>
+    </tr>
+    <tr>
+      <th>destdir</th>
+      <td><p>Where the file should be downloaded to.</p></td>
+    </tr>
+    <tr>
+      <th>timestamping</th>
+      <td><p>Should only newer files be downloaded?</p></td>
+    </tr>
+    <tr>
+      <th>nc</th>
+      <td><p>Should files of the same type not be clobbered?</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Should cURL output be shown?</p></td>
+    </tr>
+    <tr>
+      <th>progress</th>
+      <td><p>Should a progress bar be shown with cURL output?</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 

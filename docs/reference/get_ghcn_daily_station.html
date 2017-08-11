@@ -23,14 +23,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -49,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -83,15 +92,19 @@ each <code>elements</code>. If <code>elements</code> is undefined, it returns al
 tables for the station</p>
     
 
-    <pre><span class='fu'>get_ghcn_daily_station</span>(<span class='no'>ID</span>, <span class='kw'>elements</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>raw.dir</span>,
+    <pre class="usage"><span class='fu'>get_ghcn_daily_station</span>(<span class='no'>ID</span>, <span class='kw'>elements</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>raw.dir</span>,
   <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>ID</dt>
-      <dd>A character string giving the station ID.</dd>
-      <dt>elements</dt>
-      <dd>A character vector of elemets to extract.
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>ID</th>
+      <td><p>A character string giving the station ID.</p></td>
+    </tr>
+    <tr>
+      <th>elements</th>
+      <td><p>A character vector of elemets to extract.
 The five core elements are:
 PRCP = Precipitation (tenths of mm)
 SNOW = Snowfall (mm)
@@ -99,9 +112,8 @@ SNWD = Snow depth (mm)
 TMAX = Maximum temperature (tenths of degrees C)
 TMIN = Minimum temperature (tenths of degrees C)
 
-The other elements are:
-  
-ACMC = Average cloudiness midnight to midnight from 30-second 
+The other elements are:</p>  
+<p>ACMC = Average cloudiness midnight to midnight from 30-second 
 ceilometer data (percent)
 ACMH = Average cloudiness midnight to midnight from 
 manual observations (percent)
@@ -175,7 +187,7 @@ SX*# = Maximum soil temperature (tenths of degrees C)
 and # corresponds to a code for soil depth. 
 See SN*# for ground cover and depth codes. 
 TAVG = Average temperature (tenths of degrees C)
-[Note that TAVG from source &#39;S&#39; corresponds
+[Note that TAVG from source 'S' corresponds
 to an average for the period ending at
 2400 UTC rather than local midnight]
 THIC = Thickness of ice on water (tenths of mm)
@@ -228,16 +240,25 @@ values:
 03 = Thunder
 07 = Ash, dust, sand, or other blowing obstruction
 18 = Snow or ice crystals
-20 = Rain or snow shower</dd>
-      <dt>years</dt>
-      <dd>A numeric vector indicating which years to get.</dd>
-      <dt>raw.dir</dt>
-      <dd>A character string indicating where raw downloaded files should be put.</dd>
-      <dt>standardize</dt>
-      <dd>Select only common year/month/day? Defaults to FALSE.</dd>
-      <dt>force.redo</dt>
-      <dd>If this weather station has been downloaded before, should it be updated? Defaults to FALSE.</dd>
-    </dl>
+20 = Rain or snow shower</p></td>
+    </tr>
+    <tr>
+      <th>years</th>
+      <td><p>A numeric vector indicating which years to get.</p></td>
+    </tr>
+    <tr>
+      <th>raw.dir</th>
+      <td><p>A character string indicating where raw downloaded files should be put.</p></td>
+    </tr>
+    <tr>
+      <th>standardize</th>
+      <td><p>Select only common year/month/day? Defaults to FALSE.</p></td>
+    </tr>
+    <tr>
+      <th>force.redo</th>
+      <td><p>If this weather station has been downloaded before, should it be updated? Defaults to FALSE.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 

@@ -23,14 +23,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -49,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -82,72 +91,80 @@
 as well as merging their tabular data.</p>
     
 
-    <pre><span class='fu'>get_ssurgo</span>(<span class='no'>template</span>, <span class='no'>label</span>, <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='st'>"./RAW/SSURGO"</span>,
+    <pre class="usage"><span class='fu'>get_ssurgo</span>(<span class='no'>template</span>, <span class='no'>label</span>, <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='st'>"./RAW/SSURGO"</span>,
   <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='st'>"./EXTRACTIONS/"</span>, <span class='no'>label</span>, <span class='st'>"/SSURGO"</span>),
   <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>template</dt>
-      <dd>A Raster* or Spatial* object to serve 
-as a template for cropping; optionally, a vector of area names [e.g., c(&#39;IN087&#39;,&#39;IN088&#39;)] may be provided.</dd>
-      <dt>label</dt>
-      <dd>A character string naming the study area.</dd>
-      <dt>raw.dir</dt>
-      <dd>A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to &#39;./RAW/SSURGO/&#39;.</dd>
-      <dt>extraction.dir</dt>
-      <dd>A character string indicating where the extracted and cropped SSURGO shapefiles should be put.
-The directory will be created if missing. Defaults to &#39;./EXTRACTIONS/SSURGO/&#39;.</dd>
-      <dt>force.redo</dt>
-      <dd>If an extraction for this template and label already exists, should a new one be created? Defaults to FALSE.</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>template</th>
+      <td><p>A Raster* or Spatial* object to serve 
+as a template for cropping; optionally, a vector of area names [e.g., c('IN087','IN088')] may be provided.</p></td>
+    </tr>
+    <tr>
+      <th>label</th>
+      <td><p>A character string naming the study area.</p></td>
+    </tr>
+    <tr>
+      <th>raw.dir</th>
+      <td><p>A character string indicating where raw downloaded files should be put.
+The directory will be created if missing. Defaults to './RAW/SSURGO/'.</p></td>
+    </tr>
+    <tr>
+      <th>extraction.dir</th>
+      <td><p>A character string indicating where the extracted and cropped SSURGO shapefiles should be put.
+The directory will be created if missing. Defaults to './EXTRACTIONS/SSURGO/'.</p></td>
+    </tr>
+    <tr>
+      <th>force.redo</th>
+      <td><p>If an extraction for this template and label already exists, should a new one be created? Defaults to FALSE.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A named list containing the &#39;spatial&#39; and &#39;tabular&#39; data.</p>
+    <p>A named list containing the 'spatial' and 'tabular' data.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>get_ssurgo</code> returns a named list of length 2:
-<ol>
-<li> &#39;spatial&#39;: A <code>SpatialPolygonsDataFrame</code> of soil mapunits 
-in the template, and 
-</li>
-<li> &#39;tabular&#39;: A named list of <code>data.frames</code> with the SSURGO tabular data.
-</li>
-</ol></p>
+    <p><code>get_ssurgo</code> returns a named list of length 2:</p><ol>
+<li><p>'spatial': A <code>SpatialPolygonsDataFrame</code> of soil mapunits 
+in the template, and</p></li>
+<li><p>'tabular': A named list of <code>data.frames</code> with the SSURGO tabular data.</p></li>
+</ol>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># # Extract data for the Village Ecodynamics Project 'VEPIIN' study area:</span>
-<span class='co'># # http://village.anth.wsu.edu</span>
-<span class='co'># vepPolygon &lt;- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), </span>
-<span class='co'>#      proj4string='+proj=utm +datum=NAD83 +zone=12')</span>
-<span class='co'># </span>
-<span class='co'># # Get the NRCS SSURGO data (USA ONLY)</span>
-<span class='co'># SSURGO.VEPIIN &lt;- get_ssurgo(template=vepPolygon, label='VEPIIN')</span>
-<span class='co'># </span>
-<span class='co'># # Plot the VEP polygon</span>
-<span class='co'># plot(vepPolygon)</span>
-<span class='co'># </span>
-<span class='co'># # Plot the SSURGO mapunit polygons</span>
-<span class='co'># plot(SSURGO.VEPIIN$spatial, lwd=0.1, add=T)</span>
-<span class='co'># </span>
-<span class='co'># # Or, download by Soil Survey Area names</span>
-<span class='co'># SSURGO.areas &lt;- get_ssurgo(template=c('CO670','CO075'), label='CO_TEST')</span>
-<span class='co'># </span>
-<span class='co'># # Let's just look at spatial data for CO675</span>
-<span class='co'># SSURGO.areas.CO675 &lt;- SSURGO.areas$spatial[SSURGO.areas$spatial$AREASYMBOL=='CO075',]</span>
-<span class='co'># </span>
-<span class='co'># # And get the NED data under them for pretty plotting</span>
-<span class='co'># NED.CO675 &lt;- get_ned(template=SSURGO.areas.CO675, label='SSURGO_CO675')</span>
-<span class='co'># </span>
-<span class='co'># # Plot the SSURGO mapunit polygons, but only for CO675</span>
-<span class='co'># plot(NED.CO675)</span>
-<span class='co'># plot(SSURGO.areas.CO675, lwd=0.1, add=T)</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># Extract data for the Village Ecodynamics Project 'VEPIIN' study area:</span>
+<span class='co'># http://village.anth.wsu.edu</span>
+<span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/raster/topics/extent'>extent</a></span>(<span class='fl'>672800</span>,<span class='fl'>740000</span>,<span class='fl'>4102000</span>,<span class='fl'>4170000</span>),
+     <span class='kw'>proj4string</span><span class='kw'>=</span><span class='st'>'+proj=utm +datum=NAD83 +zone=12'</span>)
+
+<span class='co'># Get the NRCS SSURGO data (USA ONLY)</span>
+<span class='no'>SSURGO.VEPIIN</span> <span class='kw'>&lt;-</span> <span class='fu'>get_ssurgo</span>(<span class='kw'>template</span><span class='kw'>=</span><span class='no'>vepPolygon</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'VEPIIN'</span>)
+
+<span class='co'># Plot the VEP polygon</span>
+<span class='fu'>plot</span>(<span class='no'>vepPolygon</span>)
+
+<span class='co'># Plot the SSURGO mapunit polygons</span>
+<span class='fu'>plot</span>(<span class='no'>SSURGO.VEPIIN</span>$<span class='no'>spatial</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>0.1</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='no'>T</span>)
+
+<span class='co'># Or, download by Soil Survey Area names</span>
+<span class='no'>SSURGO.areas</span> <span class='kw'>&lt;-</span> <span class='fu'>get_ssurgo</span>(<span class='kw'>template</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>'CO670'</span>,<span class='st'>'CO075'</span>), <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'CO_TEST'</span>)
+
+<span class='co'># Let's just look at spatial data for CO675</span>
+<span class='no'>SSURGO.areas.CO675</span> <span class='kw'>&lt;-</span> <span class='no'>SSURGO.areas</span>$<span class='no'>spatial</span>[<span class='no'>SSURGO.areas</span>$<span class='no'>spatial</span>$<span class='no'>AREASYMBOL</span><span class='kw'>==</span><span class='st'>'CO075'</span>,]
+
+<span class='co'># And get the NED data under them for pretty plotting</span>
+<span class='no'>NED.CO675</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_ned.html'>get_ned</a></span>(<span class='kw'>template</span><span class='kw'>=</span><span class='no'>SSURGO.areas.CO675</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'SSURGO_CO675'</span>)
+
+<span class='co'># Plot the SSURGO mapunit polygons, but only for CO675</span>
+<span class='fu'>plot</span>(<span class='no'>NED.CO675</span>)
+<span class='fu'>plot</span>(<span class='no'>SSURGO.areas.CO675</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>0.1</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='no'>T</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

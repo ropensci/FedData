@@ -23,14 +23,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -49,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -78,32 +87,35 @@
     </div>
 
     
-    <p><code>get_ghcn_daily</code> returns a named list of length 2: 
-<ol>
-<li> &#39;spatial&#39;: A <code>SpatialPointsDataFrame</code> of the locations of GHCN weather stations 
-in the template, and 
-</li>
-<li> &#39;tabular&#39;: A named list of <code>data.frames</code> with the daily weather data for each station.
-The name of each list item is the station ID.
-</li>
-</ol></p>
+    <p><code>get_ghcn_daily</code> returns a named list of length 2:</p><ol>
+<li><p>'spatial': A <code>SpatialPointsDataFrame</code> of the locations of GHCN weather stations 
+in the template, and</p></li>
+<li><p>'tabular': A named list of <code>data.frames</code> with the daily weather data for each station.
+The name of each list item is the station ID.</p></li>
+</ol>
     
 
-    <pre><span class='fu'>get_ghcn_daily</span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>elements</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>get_ghcn_daily</span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>elements</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='st'>"./RAW/GHCN"</span>,
   <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='st'>"./EXTRACTIONS/"</span>, <span class='no'>label</span>, <span class='st'>"/GHCN"</span>),
   <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>template</dt>
-      <dd>A Raster* or Spatial* object to serve 
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>template</th>
+      <td><p>A Raster* or Spatial* object to serve 
 as a template for cropping. Alternatively, a character vector providing GHCN station IDs. If missing, all stations
-will be downloaded!</dd>
-      <dt>label</dt>
-      <dd>A character string naming the study area.</dd>
-      <dt>elements</dt>
-      <dd>A character vector of elemets to extract.
+will be downloaded!</p></td>
+    </tr>
+    <tr>
+      <th>label</th>
+      <td><p>A character string naming the study area.</p></td>
+    </tr>
+    <tr>
+      <th>elements</th>
+      <td><p>A character vector of elemets to extract.
 The five core elements are:
 PRCP = Precipitation (tenths of mm)
 SNOW = Snowfall (mm)
@@ -111,9 +123,8 @@ SNWD = Snow depth (mm)
 TMAX = Maximum temperature (tenths of degrees C)
 TMIN = Minimum temperature (tenths of degrees C)
 
-The other elements are:
-  
-ACMC = Average cloudiness midnight to midnight from 30-second 
+The other elements are:</p>  
+<p>ACMC = Average cloudiness midnight to midnight from 30-second 
 ceilometer data (percent)
 ACMH = Average cloudiness midnight to midnight from 
 manual observations (percent)
@@ -187,7 +198,7 @@ SX*# = Maximum soil temperature (tenths of degrees C)
 and # corresponds to a code for soil depth. 
 See SN*# for ground cover and depth codes. 
 TAVG = Average temperature (tenths of degrees C)
-[Note that TAVG from source &#39;S&#39; corresponds
+[Note that TAVG from source 'S' corresponds
 to an average for the period ending at
 2400 UTC rather than local midnight]
 THIC = Thickness of ice on water (tenths of mm)
@@ -240,60 +251,71 @@ values:
 03 = Thunder
 07 = Ash, dust, sand, or other blowing obstruction
 18 = Snow or ice crystals
-20 = Rain or snow shower</dd>
-      <dt>years</dt>
-      <dd>A numeric vector indicating which years to get.</dd>
-      <dt>raw.dir</dt>
-      <dd>A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to &#39;./RAW/GHCN/&#39;.</dd>
-      <dt>extraction.dir</dt>
-      <dd>A character string indicating where the extracted and cropped GHCN shapefiles should be put.
-The directory will be created if missing. Defaults to &#39;./EXTRACTIONS/GHCN/&#39;.</dd>
-      <dt>standardize</dt>
-      <dd>Select only common year/month/day? Defaults to FALSE.</dd>
-      <dt>force.redo</dt>
-      <dd>If an extraction for this template and label already exists, should a new one be created? Defaults to FALSE.</dd>
-    </dl>
+20 = Rain or snow shower</p></td>
+    </tr>
+    <tr>
+      <th>years</th>
+      <td><p>A numeric vector indicating which years to get.</p></td>
+    </tr>
+    <tr>
+      <th>raw.dir</th>
+      <td><p>A character string indicating where raw downloaded files should be put.
+The directory will be created if missing. Defaults to './RAW/GHCN/'.</p></td>
+    </tr>
+    <tr>
+      <th>extraction.dir</th>
+      <td><p>A character string indicating where the extracted and cropped GHCN shapefiles should be put.
+The directory will be created if missing. Defaults to './EXTRACTIONS/GHCN/'.</p></td>
+    </tr>
+    <tr>
+      <th>standardize</th>
+      <td><p>Select only common year/month/day? Defaults to FALSE.</p></td>
+    </tr>
+    <tr>
+      <th>force.redo</th>
+      <td><p>If an extraction for this template and label already exists, should a new one be created? Defaults to FALSE.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A named list containing the &#39;spatial&#39; and &#39;tabular&#39; data.</p>
+    <p>A named list containing the 'spatial' and 'tabular' data.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># # Extract data for the Village Ecodynamics Project 'VEPIIN' study area:</span>
-<span class='co'># # http://village.anth.wsu.edu</span>
-<span class='co'># vepPolygon &lt;- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), </span>
-<span class='co'>#      proj4string='+proj=utm +datum=NAD83 +zone=12')</span>
-<span class='co'># </span>
-<span class='co'># # Get the daily GHCN data (GLOBAL)</span>
-<span class='co'># # Returns a list: the first element is the spatial locations of stations,</span>
-<span class='co'># # and the second is a list of the stations and their daily data</span>
-<span class='co'># GHCN.prcp &lt;- get_ghcn_daily(template=vepPolygon, label='VEPIIN', elements=c('prcp'))</span>
-<span class='co'># </span>
-<span class='co'># # Plot the VEP polygon</span>
-<span class='co'># plot(vepPolygon)</span>
-<span class='co'># </span>
-<span class='co'># # Plot the spatial locations</span>
-<span class='co'># plot(GHCN.prcp$spatial, pch=1, add=T)</span>
-<span class='co'># legend('bottomleft', pch=1, legend='GHCN Precipitation Records')</span>
-<span class='co'># </span>
-<span class='co'># # Elements for which you require the same data</span>
-<span class='co'># # (i.e., minimum and maximum temperature for the same days)</span>
-<span class='co'># # can be standardized using standardize==T</span>
-<span class='co'># GHCN.temp &lt;- get_ghcn_daily(template=vepPolygon, </span>
-<span class='co'>#      label='VEPIIN', </span>
-<span class='co'>#      elements=c('tmin','tmax'), </span>
-<span class='co'>#      standardize=T)</span>
-<span class='co'># </span>
-<span class='co'># # Plot the VEP polygon</span>
-<span class='co'># plot(vepPolygon)</span>
-<span class='co'># </span>
-<span class='co'># # Plot the spatial locations</span>
-<span class='co'># plot(GHCN.temp$spatial, pch=1, add=T)</span>
-<span class='co'># legend('bottomleft', pch=1, legend='GHCN Temperature Records')</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># Extract data for the Village Ecodynamics Project 'VEPIIN' study area:</span>
+<span class='co'># http://village.anth.wsu.edu</span>
+<span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/raster/topics/extent'>extent</a></span>(<span class='fl'>672800</span>,<span class='fl'>740000</span>,<span class='fl'>4102000</span>,<span class='fl'>4170000</span>),
+     <span class='kw'>proj4string</span><span class='kw'>=</span><span class='st'>'+proj=utm +datum=NAD83 +zone=12'</span>)
+
+<span class='co'># Get the daily GHCN data (GLOBAL)</span>
+<span class='co'># Returns a list: the first element is the spatial locations of stations,</span>
+<span class='co'># and the second is a list of the stations and their daily data</span>
+<span class='no'>GHCN.prcp</span> <span class='kw'>&lt;-</span> <span class='fu'>get_ghcn_daily</span>(<span class='kw'>template</span><span class='kw'>=</span><span class='no'>vepPolygon</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'VEPIIN'</span>, <span class='kw'>elements</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>'prcp'</span>))
+
+<span class='co'># Plot the VEP polygon</span>
+<span class='fu'>plot</span>(<span class='no'>vepPolygon</span>)
+
+<span class='co'># Plot the spatial locations</span>
+<span class='fu'>plot</span>(<span class='no'>GHCN.prcp</span>$<span class='no'>spatial</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='no'>T</span>)
+<span class='fu'>legend</span>(<span class='st'>'bottomleft'</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>legend</span><span class='kw'>=</span><span class='st'>'GHCN Precipitation Records'</span>)
+
+<span class='co'># Elements for which you require the same data</span>
+<span class='co'># (i.e., minimum and maximum temperature for the same days)</span>
+<span class='co'># can be standardized using standardize==T</span>
+<span class='no'>GHCN.temp</span> <span class='kw'>&lt;-</span> <span class='fu'>get_ghcn_daily</span>(<span class='kw'>template</span><span class='kw'>=</span><span class='no'>vepPolygon</span>,
+     <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'VEPIIN'</span>,
+     <span class='kw'>elements</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>'tmin'</span>,<span class='st'>'tmax'</span>),
+     <span class='kw'>standardize</span><span class='kw'>=</span><span class='no'>T</span>)
+
+<span class='co'># Plot the VEP polygon</span>
+<span class='fu'>plot</span>(<span class='no'>vepPolygon</span>)
+
+<span class='co'># Plot the spatial locations</span>
+<span class='fu'>plot</span>(<span class='no'>GHCN.temp</span>$<span class='no'>spatial</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='no'>T</span>)
+<span class='fu'>legend</span>(<span class='st'>'bottomleft'</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>legend</span><span class='kw'>=</span><span class='st'>'GHCN Temperature Records'</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -1,4 +1,7 @@
-# FedData 2.4.5.9000
+# FedData 2.4.6
+* DAYMET functions now do *not* operate in parallel. This was breaking the download functions.
+* Final update for version 2 of FedData.
+* Accepted to ROpenSci! Migrating to the ROpenSci organization on GitHub.
 
 # FedData 2.4.3
 * writeOGR for SSURGO and NHD were failing on Windows when the `extraction.dir` included a trailing slash. Paths are now normalized to remove the trailing slash.

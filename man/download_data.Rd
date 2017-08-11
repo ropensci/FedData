@@ -21,7 +21,7 @@ download_data(url, destdir = getwd(), timestamping = T, nc = F,
 \item{progress}{Should a progress bar be shown with cURL output?}
 }
 \value{
-A logical vector of the same length as x.
+A character string of the file path to the downloaded file.
 }
 \description{
 This function makes it easy to implement timestamping and no-clobber of files.

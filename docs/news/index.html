@@ -23,14 +23,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -49,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -79,23 +88,32 @@
     </div>
 
     <div class="contents">
+    <div id="feddata-2-4-6" class="section level1">
+<h1 class="hasAnchor">
+<a href="#feddata-2-4-6" class="anchor"></a>FedData 2.4.6</h1>
+<ul>
+<li>DAYMET functions now do <em>not</em> operate in parallel. This was breaking the download functions.</li>
+<li>Final update for version 2 of FedData.</li>
+<li>Accepted to ROpenSci! Migrating.</li>
+</ul>
+</div>
     <div id="feddata-2-4-3" class="section level1">
 <h1 class="hasAnchor">
-<a href="#feddata-2-4-3" class="anchor"> </a>FedData 2.4.3</h1>
+<a href="#feddata-2-4-3" class="anchor"></a>FedData 2.4.3</h1>
 <ul>
 <li>writeOGR for SSURGO and NHD were failing on Windows when the <code>extraction.dir</code> included a trailing slash. Paths are now normalized to remove the trailing slash.</li>
 </ul>
 </div>
     <div id="feddata-2-4-2" class="section level1">
 <h1 class="hasAnchor">
-<a href="#feddata-2-4-2" class="anchor"> </a>FedData 2.4.2</h1>
+<a href="#feddata-2-4-2" class="anchor"></a>FedData 2.4.2</h1>
 <ul>
 <li>Updated the <code>get_ned</code> function to provide more useful errors and warnings when downloads are unsuccessful.</li>
 </ul>
 </div>
     <div id="feddata-2-4-1" class="section level1">
 <h1 class="hasAnchor">
-<a href="#feddata-2-4-1" class="anchor"> </a>FedData 2.4.1</h1>
+<a href="#feddata-2-4-1" class="anchor"></a>FedData 2.4.1</h1>
 <ul>
 <li>Added pkgdown site.</li>
 <li>SSURGO functions (e.g., <code>get_ssurgo</code>) now doesn’t bomb on large (&gt; 1 billion sq meter) requests. Now, the area of interest is broken into smaller chunks to build the download list.</li>
@@ -103,7 +121,7 @@
 </div>
     <div id="feddata-2-4-0" class="section level1">
 <h1 class="hasAnchor">
-<a href="#feddata-2-4-0" class="anchor"> </a>FedData 2.4.0</h1>
+<a href="#feddata-2-4-0" class="anchor"></a>FedData 2.4.0</h1>
 <ul>
 <li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
 <li>Updated DAYMET functions to fix a bug that downloaded only one tile at a time.</li>
@@ -117,6 +135,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#feddata-2-4-6">2.4.6</a></li>
         <li><a href="#feddata-2-4-3">2.4.3</a></li>
         <li><a href="#feddata-2-4-2">2.4.2</a></li>
         <li><a href="#feddata-2-4-1">2.4.1</a></li>

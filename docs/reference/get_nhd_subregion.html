@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Download and crop data from a zipped HUC4 subregion
- — get_nhd_subregion • FedData</title>
+of the National Hydrography Dataset. — get_nhd_subregion • FedData</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -24,14 +24,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -50,6 +53,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -76,7 +85,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Download and crop data from a zipped HUC4 subregion
-</h1>
+of the National Hydrography Dataset.</h1>
     </div>
 
     
@@ -84,19 +93,26 @@
  within the specified <code>template</code>. If template is not provided, returns the entire HUC4 subregion.</p>
     
 
-    <pre><span class='fu'>get_nhd_subregion</span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>area</span>, <span class='no'>raw.dir</span>)</pre>
+    <pre class="usage"><span class='fu'>get_nhd_subregion</span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>area</span>, <span class='no'>raw.dir</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>template</dt>
-      <dd>A Raster* or Spatial* object to serve 
-as a template for cropping.</dd>
-      <dt>area</dt>
-      <dd>A 4-character string indicating the HUC4 NHD subregion to download and crop.</dd>
-      <dt>raw.dir</dt>
-      <dd>A character string indicating where raw downloaded files should be put.
-The directory will be created if missing.</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>template</th>
+      <td><p>A Raster* or Spatial* object to serve 
+as a template for cropping.</p></td>
+    </tr>
+    <tr>
+      <th>area</th>
+      <td><p>A 4-character string indicating the HUC4 NHD subregion to download and crop.</p></td>
+    </tr>
+    <tr>
+      <th>raw.dir</th>
+      <td><p>A character string indicating where raw downloaded files should be put.
+The directory will be created if missing.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 

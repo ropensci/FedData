@@ -23,14 +23,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -49,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -85,16 +94,21 @@ for the Schweingruber-type Tucson format. Chronologies that are unable to be rea
 are reported to the user.</p>
     
 
-    <pre><span class='fu'>download_itrdb</span>(<span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='st'>"./RAW/ITRDB/"</span>, <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>download_itrdb</span>(<span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='st'>"./RAW/ITRDB/"</span>, <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>raw.dir</dt>
-      <dd>A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to &#39;./RAW/ITRDB/&#39;.</dd>
-      <dt>force.redo</dt>
-      <dd>If a download already exists, should a new one be created? Defaults to FALSE.</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>raw.dir</th>
+      <td><p>A character string indicating where raw downloaded files should be put.
+The directory will be created if missing. Defaults to './RAW/ITRDB/'.</p></td>
+    </tr>
+    <tr>
+      <th>force.redo</th>
+      <td><p>If a download already exists, should a new one be created? Defaults to FALSE.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
