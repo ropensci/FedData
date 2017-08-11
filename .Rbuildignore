@@ -11,3 +11,4 @@
 ^README-.*\.png$
 ^RAW$
 ^EXTRACTIONS$
+^.*\.png$
