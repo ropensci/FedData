@@ -8,7 +8,5 @@
 ^codecov\.yml$
 ^docs$
 ^README\.Rmd$
-^README-.*\.png$
 ^RAW$
 ^EXTRACTIONS$
-^.*\.png$
