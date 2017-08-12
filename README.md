@@ -73,8 +73,8 @@ library(magrittr)
 
 # Extract data for the Village Ecodynamics Project "VEPIIN" study area:
 # http://veparchaeology.org
-vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000),
-                                  proj4string="+proj=utm +datum=NAD83 +zone=12")
+vepPolygon <- polygon_from_extent(raster::extent(672800, 740000, 4102000, 4170000),
+                                  proj4string = "+proj=utm +datum=NAD83 +zone=12")
 ```
 
 #### Get and plot the National Elevation Dataset for the study area
@@ -82,8 +82,8 @@ vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000),
 ``` r
 # Get the NED (USA ONLY)
 # Returns a raster
-NED <- get_ned(template=vepPolygon,
-               label="VEPIIN")
+NED <- get_ned(template = vepPolygon,
+               label = "VEPIIN")
 # Plot with raster::plot
 raster::plot(NED)
 ```
@@ -111,14 +111,18 @@ raster::plot(DAYMET$tmax$X1985.10.23)
 # Get the daily GHCN data (GLOBAL)
 # Returns a list: the first element is the spatial locations of stations,
 # and the second is a list of the stations and their daily data
-GHCN.prcp <- get_ghcn_daily(template=vepPolygon, 
-                            label="VEPIIN", 
-                            elements=c('prcp'))
+GHCN.prcp <- get_ghcn_daily(template = vepPolygon, 
+                            label = "VEPIIN", 
+                            elements = c('prcp'))
 # Plot the NED again
 raster::plot(NED)
 # Plot the spatial locations
-sp::plot(GHCN.prcp$spatial, pch=1, add=T)
-legend('bottomleft', pch=1, legend="GHCN Precipitation Records")
+sp::plot(GHCN.prcp$spatial,
+         pch = 1,
+         add = TRUE)
+legend('bottomleft',
+       pch = 1,
+       legend="GHCN Precipitation Records")
 ```
 
 ![](inst/image/README-unnamed-chunk-8-1.png)
@@ -133,12 +137,16 @@ GHCN.temp <- get_ghcn_daily(template = vepPolygon,
                             label = "VEPIIN", 
                             elements = c('tmin','tmax'), 
                             years = 1980:1985,
-                            standardize = T)
+                            standardize = TRUE)
 # Plot the NED again
 raster::plot(NED)
 # Plot the spatial locations
-sp::plot(GHCN.temp$spatial, add=T, pch=1)
-legend('bottomleft', pch=1, legend="GHCN Temperature Records")
+sp::plot(GHCN.temp$spatial,
+         add = TRUE,
+         pch = 1)
+legend('bottomleft',
+       pch = 1,
+       legend = "GHCN Temperature Records")
 ```
 
 ![](inst/image/README-unnamed-chunk-9-1.png)
@@ -147,13 +155,15 @@ legend('bottomleft', pch=1, legend="GHCN Temperature Records")
 
 ``` r
 # Get the NHD (USA ONLY)
-NHD <- get_nhd(template=vepPolygon, 
-               label="VEPIIN")
+NHD <- get_nhd(template = vepPolygon, 
+               label = "VEPIIN")
 # Plot the NED again
 raster::plot(NED)
 # Plot the NHD data
 NHD %>%
-  lapply(sp::plot, col='black', add=T)
+  lapply(sp::plot,
+         col = 'black',
+         add = TRUE)
 ```
 
 ![](inst/image/README-unnamed-chunk-10-1.png)
@@ -162,16 +172,16 @@ NHD %>%
 
 ``` r
 # Get the NRCS SSURGO data (USA ONLY)
-SSURGO.VEPIIN <- get_ssurgo(template=vepPolygon, 
-                     label="VEPIIN")
+SSURGO.VEPIIN <- get_ssurgo(template = vepPolygon, 
+                     label = "VEPIIN")
 #> Warning: 1 parsing failure.
 #> row # A tibble: 1 x 5 col     row     col               expected actual expected   <int>   <chr>                  <chr>  <chr> actual 1  1276 slope.r no trailing characters     .5 file # ... with 1 more variables: file <chr>
 # Plot the NED again
 raster::plot(NED)
 # Plot the SSURGO mapunit polygons
 plot(SSURGO.VEPIIN$spatial,
-     lwd=0.1,
-     add=T)
+     lwd = 0.1,
+     add = TRUE)
 ```
 
 ![](inst/image/README-unnamed-chunk-11-1.png)
@@ -180,21 +190,21 @@ plot(SSURGO.VEPIIN$spatial,
 
 ``` r
 # Or, download by Soil Survey Area names
-SSURGO.areas <- get_ssurgo(template=c("CO670","CO075"), 
-                           label="CO_TEST")
+SSURGO.areas <- get_ssurgo(template = c("CO670","CO075"), 
+                           label = "CO_TEST")
 
 # Let's just look at spatial data for CO675
 SSURGO.areas.CO675 <- SSURGO.areas$spatial[SSURGO.areas$spatial$AREASYMBOL=="CO075",]
 
 # And get the NED data under them for pretty plotting
-NED.CO675 <- get_ned(template=SSURGO.areas.CO675,
-                            label="SSURGO_CO675")
+NED.CO675 <- get_ned(template = SSURGO.areas.CO675,
+                            label = "SSURGO_CO675")
                
 # Plot the SSURGO mapunit polygons, but only for CO675
 plot(NED.CO675)
 plot(SSURGO.areas.CO675,
-     lwd=0.1,
-     add=T)
+     lwd = 0.1,
+     add = TRUE)
 ```
 
 ![](inst/image/README-unnamed-chunk-12-1.png)
@@ -203,14 +213,18 @@ plot(SSURGO.areas.CO675,
 
 ``` r
 # Get the ITRDB records
-ITRDB <- get_itrdb(template=vepPolygon,
-                        label="VEPIIN",
-                        makeSpatial=T)
+ITRDB <- get_itrdb(template = vepPolygon,
+                        label = "VEPIIN",
+                        makeSpatial = TRUE)
 # Plot the NED again
 raster::plot(NED)
 # Map the locations of the tree ring chronologies
-plot(ITRDB$metadata, pch=1, add=T)
-legend('bottomleft', pch=1, legend="ITRDB chronologies")
+plot(ITRDB$metadata,
+     pch = 1,
+     add = TRUE)
+legend('bottomleft',
+       pch = 1,
+       legend = "ITRDB chronologies")
 ```
 
 ![](inst/image/README-unnamed-chunk-13-1.png)

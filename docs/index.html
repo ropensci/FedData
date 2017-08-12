@@ -44,7 +44,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/bocinsky/FedData">
+  <a href="https://github.com/ropensci/FedData">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -107,7 +107,7 @@
 <li>
 <p>Development version from GitHub:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"bocinsky/FedData"</span>)</code></pre></div>
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"ropensci/FedData"</span>)</code></pre></div>
 </li>
 <li>
 <p>Linux (Ubuntu 14.04.5 or 16.04.1):</p>
@@ -118,14 +118,14 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <p>Then, in R:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">update.packages</span>(<span class="st">"survival"</span>)
 <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"bocinsky/FedData"</span>)</code></pre></div>
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"ropensci/FedData"</span>)</code></pre></div>
 </li>
 </ul>
 </div>
 <div id="demonstration" class="section level3">
 <h3 class="hasAnchor">
 <a href="#demonstration" class="anchor"></a>Demonstration</h3>
-<p>This demonstration script is available as an R Markdown document in the GitHub repository: <a href="https://github.com/bocinsky/FedData" class="uri">https://github.com/bocinsky/FedData</a>.</p>
+<p>This demonstration script is available as an R Markdown document in the GitHub repository: <a href="https://github.com/ropensci/FedData" class="uri">https://github.com/ropensci/FedData</a>.</p>
 <div id="load-feddata-and-define-a-study-area" class="section level4">
 <h4 class="hasAnchor">
 <a href="#load-feddata-and-define-a-study-area" class="anchor"></a>Load <code>FedData</code> and define a study area</h4>
@@ -135,16 +135,16 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 
 <span class="co"># Extract data for the Village Ecodynamics Project "VEPIIN" study area:</span>
 <span class="co"># http://veparchaeology.org</span>
-vepPolygon &lt;-<span class="st"> </span><span class="kw"><a href="reference/polygon_from_extent.html">polygon_from_extent</a></span>(raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extent">extent</a></span>(<span class="dv">672800</span>,<span class="dv">740000</span>,<span class="dv">4102000</span>,<span class="dv">4170000</span>),
-                                  <span class="dt">proj4string=</span><span class="st">"+proj=utm +datum=NAD83 +zone=12"</span>)</code></pre></div>
+vepPolygon &lt;-<span class="st"> </span><span class="kw"><a href="reference/polygon_from_extent.html">polygon_from_extent</a></span>(raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/extent">extent</a></span>(<span class="dv">672800</span>, <span class="dv">740000</span>, <span class="dv">4102000</span>, <span class="dv">4170000</span>),
+                                  <span class="dt">proj4string =</span> <span class="st">"+proj=utm +datum=NAD83 +zone=12"</span>)</code></pre></div>
 </div>
 <div id="get-and-plot-the-national-elevation-dataset-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
 <a href="#get-and-plot-the-national-elevation-dataset-for-the-study-area" class="anchor"></a>Get and plot the National Elevation Dataset for the study area</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get the NED (USA ONLY)</span>
 <span class="co"># Returns a raster</span>
-NED &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ned.html">get_ned</a></span>(<span class="dt">template=</span>vepPolygon,
-               <span class="dt">label=</span><span class="st">"VEPIIN"</span>)
+NED &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ned.html">get_ned</a></span>(<span class="dt">template =</span> vepPolygon,
+               <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)
 <span class="co"># Plot with raster::plot</span>
 raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</code></pre></div>
 <p><img src="inst/image/README-unnamed-chunk-6-1.png" width="672"></p>
@@ -168,14 +168,18 @@ raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentat
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get the daily GHCN data (GLOBAL)</span>
 <span class="co"># Returns a list: the first element is the spatial locations of stations,</span>
 <span class="co"># and the second is a list of the stations and their daily data</span>
-GHCN.prcp &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ghcn_daily.html">get_ghcn_daily</a></span>(<span class="dt">template=</span>vepPolygon, 
-                            <span class="dt">label=</span><span class="st">"VEPIIN"</span>, 
-                            <span class="dt">elements=</span><span class="kw">c</span>(<span class="st">'prcp'</span>))
+GHCN.prcp &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ghcn_daily.html">get_ghcn_daily</a></span>(<span class="dt">template =</span> vepPolygon, 
+                            <span class="dt">label =</span> <span class="st">"VEPIIN"</span>, 
+                            <span class="dt">elements =</span> <span class="kw">c</span>(<span class="st">'prcp'</span>))
 <span class="co"># Plot the NED again</span>
 raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)
 <span class="co"># Plot the spatial locations</span>
-sp<span class="op">::</span><span class="kw">plot</span>(GHCN.prcp<span class="op">$</span>spatial, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">add=</span>T)
-<span class="kw">legend</span>(<span class="st">'bottomleft'</span>, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">legend=</span><span class="st">"GHCN Precipitation Records"</span>)</code></pre></div>
+sp<span class="op">::</span><span class="kw">plot</span>(GHCN.prcp<span class="op">$</span>spatial,
+         <span class="dt">pch =</span> <span class="dv">1</span>,
+         <span class="dt">add =</span> <span class="ot">TRUE</span>)
+<span class="kw">legend</span>(<span class="st">'bottomleft'</span>,
+       <span class="dt">pch =</span> <span class="dv">1</span>,
+       <span class="dt">legend=</span><span class="st">"GHCN Precipitation Records"</span>)</code></pre></div>
 <p><img src="inst/image/README-unnamed-chunk-8-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-daily-ghcn-temperature-data-for-the-study-area" class="section level4">
@@ -188,76 +192,86 @@ GHCN.temp &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_
                             <span class="dt">label =</span> <span class="st">"VEPIIN"</span>, 
                             <span class="dt">elements =</span> <span class="kw">c</span>(<span class="st">'tmin'</span>,<span class="st">'tmax'</span>), 
                             <span class="dt">years =</span> <span class="dv">1980</span><span class="op">:</span><span class="dv">1985</span>,
-                            <span class="dt">standardize =</span> T)
+                            <span class="dt">standardize =</span> <span class="ot">TRUE</span>)
 <span class="co"># Plot the NED again</span>
 raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)
 <span class="co"># Plot the spatial locations</span>
-sp<span class="op">::</span><span class="kw">plot</span>(GHCN.temp<span class="op">$</span>spatial, <span class="dt">add=</span>T, <span class="dt">pch=</span><span class="dv">1</span>)
-<span class="kw">legend</span>(<span class="st">'bottomleft'</span>, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">legend=</span><span class="st">"GHCN Temperature Records"</span>)</code></pre></div>
+sp<span class="op">::</span><span class="kw">plot</span>(GHCN.temp<span class="op">$</span>spatial,
+         <span class="dt">add =</span> <span class="ot">TRUE</span>,
+         <span class="dt">pch =</span> <span class="dv">1</span>)
+<span class="kw">legend</span>(<span class="st">'bottomleft'</span>,
+       <span class="dt">pch =</span> <span class="dv">1</span>,
+       <span class="dt">legend =</span> <span class="st">"GHCN Temperature Records"</span>)</code></pre></div>
 <p><img src="inst/image/README-unnamed-chunk-9-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-national-hydrography-dataset-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
 <a href="#get-and-plot-the-national-hydrography-dataset-for-the-study-area" class="anchor"></a>Get and plot the National Hydrography Dataset for the study area</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get the NHD (USA ONLY)</span>
-NHD &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nhd.html">get_nhd</a></span>(<span class="dt">template=</span>vepPolygon, 
-               <span class="dt">label=</span><span class="st">"VEPIIN"</span>)
+NHD &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nhd.html">get_nhd</a></span>(<span class="dt">template =</span> vepPolygon, 
+               <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)
 <span class="co"># Plot the NED again</span>
 raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)
 <span class="co"># Plot the NHD data</span>
 NHD <span class="op">%&gt;%</span>
-<span class="st">  </span><span class="kw">lapply</span>(sp<span class="op">::</span>plot, <span class="dt">col=</span><span class="st">'black'</span>, <span class="dt">add=</span>T)</code></pre></div>
+<span class="st">  </span><span class="kw">lapply</span>(sp<span class="op">::</span>plot,
+         <span class="dt">col =</span> <span class="st">'black'</span>,
+         <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p><img src="inst/image/README-unnamed-chunk-10-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-nrcs-ssurgo-data-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
 <a href="#get-and-plot-the-nrcs-ssurgo-data-for-the-study-area" class="anchor"></a>Get and plot the NRCS SSURGO data for the study area</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get the NRCS SSURGO data (USA ONLY)</span>
-SSURGO.VEPIIN &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ssurgo.html">get_ssurgo</a></span>(<span class="dt">template=</span>vepPolygon, 
-                     <span class="dt">label=</span><span class="st">"VEPIIN"</span>)
+SSURGO.VEPIIN &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ssurgo.html">get_ssurgo</a></span>(<span class="dt">template =</span> vepPolygon, 
+                     <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)
 <span class="co">#&gt; Warning: 1 parsing failure.</span>
 <span class="co">#&gt; row # A tibble: 1 x 5 col     row     col               expected actual expected   &lt;int&gt;   &lt;chr&gt;                  &lt;chr&gt;  &lt;chr&gt; actual 1  1276 slope.r no trailing characters     .5 file # ... with 1 more variables: file &lt;chr&gt;</span>
 <span class="co"># Plot the NED again</span>
 raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)
 <span class="co"># Plot the SSURGO mapunit polygons</span>
 <span class="kw">plot</span>(SSURGO.VEPIIN<span class="op">$</span>spatial,
-     <span class="dt">lwd=</span><span class="fl">0.1</span>,
-     <span class="dt">add=</span>T)</code></pre></div>
+     <span class="dt">lwd =</span> <span class="fl">0.1</span>,
+     <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p><img src="inst/image/README-unnamed-chunk-11-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-nrcs-ssurgo-data-for-particular-soil-survey-areas" class="section level4">
 <h4 class="hasAnchor">
 <a href="#get-and-plot-the-nrcs-ssurgo-data-for-particular-soil-survey-areas" class="anchor"></a>Get and plot the NRCS SSURGO data for particular soil survey areas</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Or, download by Soil Survey Area names</span>
-SSURGO.areas &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ssurgo.html">get_ssurgo</a></span>(<span class="dt">template=</span><span class="kw">c</span>(<span class="st">"CO670"</span>,<span class="st">"CO075"</span>), 
-                           <span class="dt">label=</span><span class="st">"CO_TEST"</span>)
+SSURGO.areas &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ssurgo.html">get_ssurgo</a></span>(<span class="dt">template =</span> <span class="kw">c</span>(<span class="st">"CO670"</span>,<span class="st">"CO075"</span>), 
+                           <span class="dt">label =</span> <span class="st">"CO_TEST"</span>)
 
 <span class="co"># Let's just look at spatial data for CO675</span>
 SSURGO.areas.CO675 &lt;-<span class="st"> </span>SSURGO.areas<span class="op">$</span>spatial[SSURGO.areas<span class="op">$</span>spatial<span class="op">$</span>AREASYMBOL<span class="op">==</span><span class="st">"CO075"</span>,]
 
 <span class="co"># And get the NED data under them for pretty plotting</span>
-NED.CO675 &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ned.html">get_ned</a></span>(<span class="dt">template=</span>SSURGO.areas.CO675,
-                            <span class="dt">label=</span><span class="st">"SSURGO_CO675"</span>)
+NED.CO675 &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ned.html">get_ned</a></span>(<span class="dt">template =</span> SSURGO.areas.CO675,
+                            <span class="dt">label =</span> <span class="st">"SSURGO_CO675"</span>)
                
 <span class="co"># Plot the SSURGO mapunit polygons, but only for CO675</span>
 <span class="kw">plot</span>(NED.CO675)
 <span class="kw">plot</span>(SSURGO.areas.CO675,
-     <span class="dt">lwd=</span><span class="fl">0.1</span>,
-     <span class="dt">add=</span>T)</code></pre></div>
+     <span class="dt">lwd =</span> <span class="fl">0.1</span>,
+     <span class="dt">add =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p><img src="inst/image/README-unnamed-chunk-12-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-itrdb-chronology-locations-in-the-study-area" class="section level4">
 <h4 class="hasAnchor">
 <a href="#get-and-plot-the-itrdb-chronology-locations-in-the-study-area" class="anchor"></a>Get and plot the ITRDB chronology locations in the study area</h4>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Get the ITRDB records</span>
-ITRDB &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_itrdb.html">get_itrdb</a></span>(<span class="dt">template=</span>vepPolygon,
-                        <span class="dt">label=</span><span class="st">"VEPIIN"</span>,
-                        <span class="dt">makeSpatial=</span>T)
+ITRDB &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_itrdb.html">get_itrdb</a></span>(<span class="dt">template =</span> vepPolygon,
+                        <span class="dt">label =</span> <span class="st">"VEPIIN"</span>,
+                        <span class="dt">makeSpatial =</span> <span class="ot">TRUE</span>)
 <span class="co"># Plot the NED again</span>
 raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)
 <span class="co"># Map the locations of the tree ring chronologies</span>
-<span class="kw">plot</span>(ITRDB<span class="op">$</span>metadata, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">add=</span>T)
-<span class="kw">legend</span>(<span class="st">'bottomleft'</span>, <span class="dt">pch=</span><span class="dv">1</span>, <span class="dt">legend=</span><span class="st">"ITRDB chronologies"</span>)</code></pre></div>
+<span class="kw">plot</span>(ITRDB<span class="op">$</span>metadata,
+     <span class="dt">pch =</span> <span class="dv">1</span>,
+     <span class="dt">add =</span> <span class="ot">TRUE</span>)
+<span class="kw">legend</span>(<span class="st">'bottomleft'</span>,
+       <span class="dt">pch =</span> <span class="dv">1</span>,
+       <span class="dt">legend =</span> <span class="st">"ITRDB chronologies"</span>)</code></pre></div>
 <p><img src="inst/image/README-unnamed-chunk-13-1.png" width="672"></p>
 <hr>
 </div>
@@ -277,9 +291,9 @@ raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentat
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cran.r-project.org/package=FedData">https://​cran.r-project.org/​package=FedData</a>
 </li>
-<li>Browse source code at <br><a href="https://github.com/bocinsky/FedData">https://​github.com/​bocinsky/​FedData</a>
+<li>Browse source code at <br><a href="https://github.com/ropensci/FedData">https://​github.com/​ropensci/​FedData</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/bocinsky/FedData/issues">https://​github.com/​bocinsky/​FedData/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/ropensci/FedData/issues">https://​github.com/​ropensci/​FedData/​issues</a>
 </li>
 </ul>
 <h2>License</h2>
