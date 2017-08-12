@@ -39,7 +39,7 @@ This package has been built and tested on a source (Homebrew) install of *R* on 
 
     ``` r
     install.packages("devtools")
-    devtools::install_github("bocinsky/FedData")
+    devtools::install_github("ropensci/FedData")
     ```
 
 -   Linux (Ubuntu 14.04.5 or 16.04.1):
@@ -57,12 +57,12 @@ This package has been built and tested on a source (Homebrew) install of *R* on 
     ``` r
     update.packages("survival")
     install.packages("devtools")
-    devtools::install_github("bocinsky/FedData")
+    devtools::install_github("ropensci/FedData")
     ```
 
 ### Demonstration
 
-This demonstration script is available as an R Markdown document in the GitHub repository: <https://github.com/bocinsky/FedData>.
+This demonstration script is available as an R Markdown document in the GitHub repository: <https://github.com/ropensci/FedData>.
 
 #### Load `FedData` and define a study area
 

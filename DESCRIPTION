@@ -21,8 +21,8 @@ Authors@R: c(person(given = c("R.", "Kyle"), family = "Bocinsky",
     person(given = c("Dylan"), family = "Beaudette", role = "ctb"),
     person(given = c("Scott"), family = "Chamberlain", role = "ctb"))
 Maintainer: R. Kyle Bocinsky <bocinsky@gmail.com>
-URL: https://github.com/bocinsky/FedData
-BugReports: https://github.com/bocinsky/FedData/issues
+URL: https://github.com/ropensci/FedData
+BugReports: https://github.com/ropensci/FedData/issues
 License: MIT + file LICENSE
 Depends:
     R (>= 3.2.0),
