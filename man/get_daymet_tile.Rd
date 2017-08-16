@@ -12,7 +12,7 @@ as a template for cropping. If missing, entire tile is returned.}
 
 \item{tileID}{A numeric indicating the DAYMET tile ID number.}
 
-\item{elements}{A character vector of elemets to extract.\cr
+\item{elements}{A character vector of elements to extract.\cr
 The available elements are:\cr
 dayl = Duration of the daylight period in seconds per day. This calculation is based on the period of the day during which the sun is above a hypothetical flat horizon.\cr
 prcp = Daily total precipitation in millimeters per day, sum of all forms converted to water-equivalent. Precipitation occurrence on any given day may be ascertained.\cr

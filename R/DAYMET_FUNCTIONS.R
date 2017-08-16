@@ -6,7 +6,7 @@
 #' @param template A Raster* or Spatial* object to serve
 #' as a template for cropping.
 #' @param label A character string naming the study area.
-#' @param elements A character vector of elemets to extract.\cr
+#' @param elements A character vector of elements to extract.\cr
 #' The available elements are:\cr
 #' dayl = Duration of the daylight period in seconds per day. This calculation is based on the period of the day during which the sun is above a hypothetical flat horizon.\cr
 #' prcp = Daily total precipitation in millimeters per day, sum of all forms converted to water-equivalent. Precipitation occurrence on any given day may be ascertained.\cr
@@ -154,7 +154,7 @@ get_daymet <- function(template,
 #' Tiles are downloaded in the NetCDF format. \code{download_daymet_tile} returns the path to the downloaded NetCDF tile files.
 #'
 #' @param tileID A numeric indicating the DAYMET tile ID number.
-#' @param elements A character vector of elemets to extract.\cr
+#' @param elements A character vector of elements to extract.\cr
 #' The available elements are:\cr
 #' dayl = Duration of the daylight period in seconds per day. This calculation is based on the period of the day during which the sun is above a hypothetical flat horizon.\cr
 #' prcp = Daily total precipitation in millimeters per day, sum of all forms converted to water-equivalent. Precipitation occurrence on any given day may be ascertained.\cr
@@ -202,7 +202,7 @@ download_daymet_tile <- function(tileID, elements, years, raw.dir) {
 #' @param template A Raster* or Spatial* object to serve
 #' as a template for cropping. If missing, entire tile is returned.
 #' @param tileID A numeric indicating the DAYMET tile ID number.
-#' @param elements A character vector of elemets to extract.\cr
+#' @param elements A character vector of elements to extract.\cr
 #' The available elements are:\cr
 #' dayl = Duration of the daylight period in seconds per day. This calculation is based on the period of the day during which the sun is above a hypothetical flat horizon.\cr
 #' prcp = Daily total precipitation in millimeters per day, sum of all forms converted to water-equivalent. Precipitation occurrence on any given day may be ascertained.\cr

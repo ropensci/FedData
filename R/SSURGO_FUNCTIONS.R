@@ -411,10 +411,10 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
   return(list(spatial = mapunits, tabular = tables))
 }
 
-#' Extract data from a SSURGO databse pertaining to a set of mapunits.
+#' Extract data from a SSURGO database pertaining to a set of mapunits.
 #'
 #' \code{extract_ssurgo_data} creates a directed graph of the joins in a SSURGO tabular dataset,
-#' and then iterates through the tables, only retaining data pertinant to a set of mapunits.
+#' and then iterates through the tables, only retaining data pertinent to a set of mapunits.
 #' 
 #' @param tables A list of SSURGO tabular data.
 #' @param mapunits A character vector of mapunits (likely dropped from SSURGO spatial data)

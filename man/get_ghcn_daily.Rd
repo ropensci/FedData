@@ -16,7 +16,7 @@ will be downloaded!}
 
 \item{label}{A character string naming the study area.}
 
-\item{elements}{A character vector of elemets to extract.\cr
+\item{elements}{A character vector of elements to extract.\cr
 The five core elements are:\cr
 PRCP = Precipitation (tenths of mm)\cr
 SNOW = Snowfall (mm)\cr
@@ -38,7 +38,7 @@ AWDR = Average daily wind direction (degrees)\cr
 AWND = Average daily wind speed (tenths of meters per second)\cr
 DAEV = Number of days included in the multiday evaporation
 total (MDEV)\cr
-DAPR = Number of days included in the multiday precipiation 
+DAPR = Number of days included in the multiday precipitation 
 total (MDPR)\cr
 DASF = Number of days included in the multiday snowfall 
 total (MDSF)\cr
@@ -62,7 +62,7 @@ MDPR = Multiday precipitation total (tenths of mm; use with DAPR and
                                      DWPR, if available)\cr
 MDSF = Multiday snowfall total \cr
 MDTN = Multiday minimum temperature (tenths of degrees C; use with DATN)\cr
-MDTX = Multiday maximum temperature (tenths of degress C; use with DATX)\cr
+MDTX = Multiday maximum temperature (tenths of degrees C; use with DATX)\cr
 MDWM = Multiday wind movement (km)\cr
 MNPN = Daily minimum temperature of water in an evaporation pan 
 (tenths of degrees C)\cr
@@ -125,7 +125,7 @@ WT** = Weather Type where ** has one of the following values:\cr
   \cr
 01 = Fog, ice fog, or freezing fog (may include heavy fog)\cr
 02 = Heavy fog or heaving freezing fog (not always 
-                                        distinquished from fog)\cr
+                                        distinguished from fog)\cr
 03 = Thunder\cr
 04 = Ice pellets, sleet, snow pellets, or small hail \cr
 05 = Hail (may include small hail)\cr

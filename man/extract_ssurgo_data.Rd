@@ -2,7 +2,7 @@
 % Please edit documentation in R/SSURGO_FUNCTIONS.R
 \name{extract_ssurgo_data}
 \alias{extract_ssurgo_data}
-\title{Extract data from a SSURGO databse pertaining to a set of mapunits.}
+\title{Extract data from a SSURGO database pertaining to a set of mapunits.}
 \usage{
 extract_ssurgo_data(tables, mapunits)
 }
@@ -17,6 +17,6 @@ A list of extracted SSURGO tabular data.
 }
 \description{
 \code{extract_ssurgo_data} creates a directed graph of the joins in a SSURGO tabular dataset,
-and then iterates through the tables, only retaining data pertinant to a set of mapunits.
+and then iterates through the tables, only retaining data pertinent to a set of mapunits.
 }
 \keyword{internal}

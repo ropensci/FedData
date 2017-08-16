@@ -10,7 +10,7 @@ get_ghcn_inventory(template = NULL, elements = NULL, raw.dir)
 \item{template}{A Raster* or Spatial* object to serve 
 as a template for cropping.}
 
-\item{elements}{A character vector of elemets to extract.
+\item{elements}{A character vector of elements to extract.
 Common elements include 'tmin', 'tmax', and 'prcp'.}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.

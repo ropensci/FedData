@@ -14,7 +14,7 @@
 #' as a template for cropping. Alternatively, a character vector providing GHCN station IDs. If missing, all stations
 #' will be downloaded!
 #' @param label A character string naming the study area.
-#' @param elements A character vector of elemets to extract.\cr
+#' @param elements A character vector of elements to extract.\cr
 #' The five core elements are:\cr
 #' PRCP = Precipitation (tenths of mm)\cr
 #' SNOW = Snowfall (mm)\cr
@@ -36,7 +36,7 @@
 #' AWND = Average daily wind speed (tenths of meters per second)\cr
 #' DAEV = Number of days included in the multiday evaporation
 #' total (MDEV)\cr
-#' DAPR = Number of days included in the multiday precipiation 
+#' DAPR = Number of days included in the multiday precipitation 
 #' total (MDPR)\cr
 #' DASF = Number of days included in the multiday snowfall 
 #' total (MDSF)\cr
@@ -60,7 +60,7 @@
 #'                                      DWPR, if available)\cr
 #' MDSF = Multiday snowfall total \cr
 #' MDTN = Multiday minimum temperature (tenths of degrees C; use with DATN)\cr
-#' MDTX = Multiday maximum temperature (tenths of degress C; use with DATX)\cr
+#' MDTX = Multiday maximum temperature (tenths of degrees C; use with DATX)\cr
 #' MDWM = Multiday wind movement (km)\cr
 #' MNPN = Daily minimum temperature of water in an evaporation pan 
 #' (tenths of degrees C)\cr
@@ -123,7 +123,7 @@
 #'   \cr
 #' 01 = Fog, ice fog, or freezing fog (may include heavy fog)\cr
 #' 02 = Heavy fog or heaving freezing fog (not always 
-#'                                         distinquished from fog)\cr
+#'                                         distinguished from fog)\cr
 #' 03 = Thunder\cr
 #' 04 = Ice pellets, sleet, snow pellets, or small hail \cr
 #' 05 = Hail (may include small hail)\cr
@@ -343,7 +343,7 @@ download_ghcn_daily_station <- function(ID, raw.dir, force.redo = F) {
 #' tables for the station
 #' 
 #' @param ID A character string giving the station ID.
-#' @param elements A character vector of elemets to extract.\cr
+#' @param elements A character vector of elements to extract.\cr
 #' The five core elements are:\cr
 #' PRCP = Precipitation (tenths of mm)\cr
 #' SNOW = Snowfall (mm)\cr
@@ -365,7 +365,7 @@ download_ghcn_daily_station <- function(ID, raw.dir, force.redo = F) {
 #' AWND = Average daily wind speed (tenths of meters per second)\cr
 #' DAEV = Number of days included in the multiday evaporation
 #' total (MDEV)\cr
-#' DAPR = Number of days included in the multiday precipiation 
+#' DAPR = Number of days included in the multiday precipitation 
 #' total (MDPR)\cr
 #' DASF = Number of days included in the multiday snowfall 
 #' total (MDSF)\cr
@@ -389,7 +389,7 @@ download_ghcn_daily_station <- function(ID, raw.dir, force.redo = F) {
 #'                                      DWPR, if available)\cr
 #' MDSF = Multiday snowfall total \cr
 #' MDTN = Multiday minimum temperature (tenths of degrees C; use with DATN)\cr
-#' MDTX = Multiday maximum temperature (tenths of degress C; use with DATX)\cr
+#' MDTX = Multiday maximum temperature (tenths of degrees C; use with DATX)\cr
 #' MDWM = Multiday wind movement (km)\cr
 #' MNPN = Daily minimum temperature of water in an evaporation pan 
 #' (tenths of degrees C)\cr
@@ -452,7 +452,7 @@ download_ghcn_daily_station <- function(ID, raw.dir, force.redo = F) {
 #'   \cr
 #' 01 = Fog, ice fog, or freezing fog (may include heavy fog)\cr
 #' 02 = Heavy fog or heaving freezing fog (not always 
-#'                                         distinquished from fog)\cr
+#'                                         distinguished from fog)\cr
 #' 03 = Thunder\cr
 #' 04 = Ice pellets, sleet, snow pellets, or small hail \cr
 #' 05 = Hail (may include small hail)\cr
@@ -554,7 +554,7 @@ get_ghcn_daily_station <- function(ID,
 #' 
 #' @param template A Raster* or Spatial* object to serve 
 #' as a template for cropping.
-#' @param elements A character vector of elemets to extract.
+#' @param elements A character vector of elements to extract.
 #' Common elements include 'tmin', 'tmax', and 'prcp'.
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing.
