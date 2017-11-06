@@ -108,8 +108,10 @@ get_ssurgo <- function(template,
   # Get data for each study area
   SSURGOData <- lapply(1:nrow(SSURGOAreas), function(i) {
     message("(Down)Loading SSURGO data for survey area ", i, " of ", nrow(SSURGOAreas), ": ", as.character(SSURGOAreas$areasymbol[i]))
-    get_ssurgo_study_area(template = template.poly, area = as.character(SSURGOAreas$areasymbol[i]), date = as.Date(SSURGOAreas$saverest[i], 
-                                                                                                                   format = "%m/%d/%Y"), raw.dir = raw.dir)
+    get_ssurgo_study_area(template = template.poly,
+                          area = as.character(SSURGOAreas$areasymbol[i]),
+                          date = as.Date(SSURGOAreas$saverest[i], format = "%m/%d/%Y"),
+                          raw.dir = raw.dir)
   })
   
   # Combine mapunits
@@ -348,7 +350,7 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
     suppressWarnings(mapunits <- rgdal::readOGR(paste0(tmpdir, "/", area, "/spatial"), layer = paste0("soilmu_a_", tolower(area)), 
                                                 verbose = F))
   } else {
-    suppressWarnings(mapunits <- rgdal::readOGR(tmpdir, layer = paste0("soilmu_a_", tolower(area)), verbose = F))
+    suppressWarnings(mapunits <- rgdal::readOGR(paste0(tmpdir, "/", area, "/spatial"), layer = paste0("soilmu_a_", tolower(area)), verbose = F))
   }
   
   # Crop to study area
@@ -374,13 +376,13 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
     names(tablesData) <- basename(files)
     tablesData <- tablesData[!sapply(tablesData, is.null)]
   } else {
-    files <- list.files(tmpdir, full.names = T, pattern = "tabular")
+    files <- list.files(paste0(tmpdir, "/", area, "/tabular"), full.names = T)
     tablesData <- lapply(files, function(file) {
       tryCatch(return(utils::read.delim(file, header = F, sep = "|", stringsAsFactors = F)), error = function(e) {
         return(NULL)
       })
     })
-    names(tablesData) <- gsub(paste0(area, "\\\\tabular\\\\"), "", basename(files))
+    names(tablesData) <- basename(files)
     tablesData <- tablesData[!sapply(tablesData, is.null)]
   }
   

@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 
 `FedData` is an *R* package implementing functions to automate downloading geospatial data available from several federated data sources (mainly sources maintained by the US Federal government).
 
-**FedData version 2.4.6 will be the final CRAN release of FedData 2. FedData 3 will be released in the coming months, but some code built on FedData 2 will not be compatible with FedData 3.**
+**FedData version 2.4 will be the final minor CRAN release of FedData 2. FedData 3 will be released in the coming months, but some code built on FedData 2 will not be compatible with FedData 3.**
 
 Currently, the package enables extraction from six datasets: 
 

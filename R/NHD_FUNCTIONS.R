@@ -209,8 +209,8 @@ get_nhd_subregion <- function(template = NULL, area, raw.dir) {
   utils::unzip(file, exdir = tmpdir)
   
   # Get the path to the geodatabase
-  dsn <- list.files(tmpdir, full.names = T)
-  dsn <- dsn[grepl("gdb", dsn)]
+  dsn <- list.files(tmpdir, full.names = T, pattern = "*.gdb")
+  # dsn <- dsn[grepl(".gdb", dsn)]
   dsn <- normalizePath(dsn)
   
   # List all layers in the geodatabase

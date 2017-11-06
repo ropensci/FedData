@@ -1,9 +1,25 @@
+---
+name: FedData-release
+layout: post
+title: FedData - Getting assorted geospatial data into R
+date: 2017-11-06
+authors:
+  - name: Kyle Bocinsky
+categories:
+  - technotes
+tags:
+  - R
+  - package
+  - data-access
+  - packages
+  - spatial
+  - geospatial
+  - review
+  - onboarding
+  - FedData
+---
 
-[![cran version](http://www.r-pkg.org/badges/version/FedData)](https://cran.r-project.org/package=FedData) [![CRAN downloads per month](http://cranlogs.r-pkg.org/badges/FedData)](https://github.com/metacran/cranlogs.app) [![CRAN downloads](http://cranlogs.r-pkg.org/badges/grand-total/FedData)](https://github.com/metacran/cranlogs.app) [![Build Status](https://api.travis-ci.org/ropensci/FedData.png)](https://travis-ci.org/ropensci/FedData) <!-- [![Coverage Status](https://img.shields.io/codecov/c/github/ropensci/FedData/master.svg)](https://codecov.io/github/ropensci/FedData?branch=master) --> [![Zenodo DOI](https://zenodo.org/badge/23774237.svg)](https://zenodo.org/badge/latestdoi/23774237) [![ROpenSci Status](https://ropensci.org/badges/13_status.svg)](https://github.com/ropensci/onboarding/issues/13)
-
-`FedData` is an *R* package implementing functions to automate downloading geospatial data available from several federated data sources (mainly sources maintained by the US Federal government).
-
-**FedData version 2.4 will be the final minor CRAN release of FedData 2. FedData 3 will be released in the coming months, but some code built on FedData 2 will not be compatible with FedData 3.**
+The package [FedData](https://github.com/ropensci/FedData) is now part of [rOpenSci](https://ropensci.org/). FedData includes functions to automate downloading geospatial data available from several federated data sources (mainly sources maintained by the US Federal government).
 
 Currently, the package enables extraction from six datasets:
 
@@ -14,57 +30,28 @@ Currently, the package enables extraction from six datasets:
 -   The [Daymet](https://daymet.ornl.gov/) gridded estimates of daily weather parameters for North America, version 3, available from the Oak Ridge National Laboratory's Distributed Active Archive Center (DAAC), and
 -   The [International Tree Ring Data Bank (ITRDB)](http://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/tree-ring), coordinated by National Climatic Data Center at NOAA.
 
-This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the [**sp**](https://cran.r-project.org/package=sp), [**raster**](https://cran.r-project.org/package=raster), and [**rgdal**](https://cran.r-project.org/package=rgdal) packages.
+FedData is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the [**sp**](https://cran.r-project.org/package=sp), [**raster**](https://cran.r-project.org/package=raster), and [**rgdal**](https://cran.r-project.org/package=rgdal) packages.
 
-This package has been built and tested on a source (Homebrew) install of *R* on macOS 10.12 (Sierra), and has been successfully run on Ubuntu 14.04.5 LTS (Trusty), Ubuntu 16.04.1 LTS (Xenial) and binary installs of *R* on Mac OS 10.12 and Windows 10.
+Acknowledgements
+----------------
 
-### Development
+FedData is a product of SKOPE ([Synthesizing Knowledge of Past Environments](http://www.openskope.org)) and the [Village Ecodynamics Project](http://veparchaeology.org/).
 
--   [Kyle Bocinsky](http://bocinsky.io) - Crow Canyon Archaeological Center, Cortez, CO
+FedData was reviewed for [rOpenSci](https://ropensci.org) by [@jooolia](https://github.com/jooolia), and was greatly improved as a result. [rOpenSci](https://ropensci.org) onboarding was coordinated by [@sckott](https://github.com/sckott).
 
-### Contributors
+TODO
+----
 
--   Dylan Beaudette - USDA-NRCS Soil Survey Office, Sonora, CA
--   Scott Chamberlain - ROpenSci and Museum of Paleontology at UC Berkeley
+**The current CRAN version of FedData, v2.4, will be the final minor CRAN release of FedData 2. FedData 3 will be released in the coming months, but some code built on FedData 2 will not be compatible with FedData 3.**
 
-### Install `FedData`
+FedData was initially developed prior to widespread use of modern web mapping services and RESTful APIs by many Federal data-holders. Future releases of FedData will limit data transfer by utilizing server-side geospatial and data queries. We will also implement of data grammars from [dplyr](https://github.com/hadley/dplyr), tidy data structures, piping throughout ([magrittr](https://github.com/tidyverse/magrittr)), functional programming using [purrr](https://github.com/hadley/purrr), simple features for spatial data from [sf](https://github.com/edzer/sfr), and local data storage in OGC-compliant data formats (probably geojson and netCDF). I am also aiming for 100% testing coverage!
 
--   From CRAN:
+All that being said, much of the functionality of the FedData package could be spun off into more domain-specific packages. For example, ITRDB download functions could be part of the [dplR](https://r-forge.r-project.org/projects/dplr/) dendrochronology package; concepts/functions having to do with the GHCN data integrated into [rnoaa](https://github.com/ropensci/rnoaa); and Daymet concepts integrated into [daymetr](https://github.com/khufkens/daymetr). I welcome any and all suggestions about how to improve the utility of FedData; please [submit an issue](https://github.com/ropensci/FedData/issues).
 
-    ``` r
-    install.packages('FedData')
-    ```
+Examples
+--------
 
--   Development version from GitHub:
-
-    ``` r
-    install.packages("devtools")
-    devtools::install_github("ropensci/FedData")
-    ```
-
--   Linux (Ubuntu 14.04.5 or 16.04.1):
-
-    First, in terminal:
-
-    ``` bash
-    sudo add-apt-repository ppa:ubuntugis/ppa -y
-    sudo apt-get update -q
-    sudo apt-get install libssl-dev libcurl4-openssl-dev netcdf-bin libnetcdf-dev gdal-bin libgdal-dev
-    ```
-
-    Then, in R:
-
-    ``` r
-    update.packages("survival")
-    install.packages("devtools")
-    devtools::install_github("ropensci/FedData")
-    ```
-
-### Demonstration
-
-This demonstration script is available as an R Markdown document in the GitHub repository: <https://github.com/ropensci/FedData>.
-
-#### Load `FedData` and define a study area
+### Load `FedData` and define a study area
 
 ``` r
 # FedData Tester
@@ -77,7 +64,7 @@ vepPolygon <- polygon_from_extent(raster::extent(672800, 740000, 4102000, 417000
                                   proj4string = "+proj=utm +datum=NAD83 +zone=12")
 ```
 
-#### Get and plot the National Elevation Dataset for the study area
+### Get and plot the National Elevation Dataset for the study area
 
 ``` r
 # Get the NED (USA ONLY)
@@ -88,9 +75,9 @@ NED <- get_ned(template = vepPolygon,
 raster::plot(NED)
 ```
 
-![](inst/image/README-unnamed-chunk-6-1.png)
+![](https://github.com/ropensci/FedData/raw/master/inst/image/README-unnamed-chunk-6-1.png)
 
-#### Get and plot the Daymet dataset for the study area
+### Get and plot the Daymet dataset for the study area
 
 ``` r
 # Get the DAYMET (North America only)
@@ -103,9 +90,9 @@ DAYMET <- get_daymet(template = vepPolygon,
 raster::plot(DAYMET$tmax$X1985.10.23)
 ```
 
-![](inst/image/README-unnamed-chunk-7-1.png)
+![](https://github.com/ropensci/FedData/raw/master/inst/image/README-unnamed-chunk-7-1.png)
 
-#### Get and plot the daily GHCN precipitation data for the study area
+### Get and plot the daily GHCN precipitation data for the study area
 
 ``` r
 # Get the daily GHCN data (GLOBAL)
@@ -125,9 +112,9 @@ legend('bottomleft',
        legend="GHCN Precipitation Records")
 ```
 
-![](inst/image/README-unnamed-chunk-8-1.png)
+![](https://github.com/ropensci/FedData/raw/master/inst/image/README-unnamed-chunk-8-1.png)
 
-#### Get and plot the daily GHCN temperature data for the study area
+### Get and plot the daily GHCN temperature data for the study area
 
 ``` r
 # Elements for which you require the same data
@@ -149,9 +136,9 @@ legend('bottomleft',
        legend = "GHCN Temperature Records")
 ```
 
-![](inst/image/README-unnamed-chunk-9-1.png)
+![](https://github.com/ropensci/FedData/raw/master/inst/image/README-unnamed-chunk-9-1.png)
 
-#### Get and plot the National Hydrography Dataset for the study area
+### Get and plot the National Hydrography Dataset for the study area
 
 ``` r
 # Get the NHD (USA ONLY)
@@ -166,9 +153,9 @@ NHD %>%
          add = TRUE)
 ```
 
-![](inst/image/README-unnamed-chunk-10-1.png)
+![](https://github.com/ropensci/FedData/raw/master/inst/image/README-unnamed-chunk-10-1.png)
 
-#### Get and plot the NRCS SSURGO data for the study area
+### Get and plot the NRCS SSURGO data for the study area
 
 ``` r
 # Get the NRCS SSURGO data (USA ONLY)
@@ -184,9 +171,9 @@ plot(SSURGO.VEPIIN$spatial,
      add = TRUE)
 ```
 
-![](inst/image/README-unnamed-chunk-11-1.png)
+![](https://github.com/ropensci/FedData/raw/master/inst/image/README-unnamed-chunk-11-1.png)
 
-#### Get and plot the NRCS SSURGO data for particular soil survey areas
+### Get and plot the NRCS SSURGO data for particular soil survey areas
 
 ``` r
 # Or, download by Soil Survey Area names
@@ -207,9 +194,9 @@ plot(SSURGO.areas.CO675,
      add = TRUE)
 ```
 
-![](inst/image/README-unnamed-chunk-12-1.png)
+![](https://github.com/ropensci/FedData/raw/master/inst/image/README-unnamed-chunk-12-1.png)
 
-#### Get and plot the ITRDB chronology locations in the study area
+### Get and plot the ITRDB chronology locations in the study area
 
 ``` r
 # Get the ITRDB records
@@ -227,14 +214,4 @@ legend('bottomleft',
        legend = "ITRDB chronologies")
 ```
 
-![](inst/image/README-unnamed-chunk-13-1.png)
-
-------------------------------------------------------------------------
-
-### Acknowledgements
-
-This package is a product of SKOPE ([Synthesizing Knowledge of Past Environments](http://www.openskope.org)) and the Village Ecodynamics Project. This software is licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-FedData was reviewed for [rOpenSci](https://ropensci.org) by [@jooolia](https://github.com/jooolia), and was greatly improved as a result. [rOpenSci](https://ropensci.org) onboarding was coordinated by [@sckott](https://github.com/sckott).
-
-[![ropensci\_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
+![](https://github.com/ropensci/FedData/raw/master/inst/image/README-unnamed-chunk-13-1.png)

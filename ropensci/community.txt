@@ -1,0 +1,3 @@
+Kyle is a computational archaeologist interested in human-environment interactions in the past, present, and future. He maintains [FedData](https://github.com/ropensci/FedData).
+
+
