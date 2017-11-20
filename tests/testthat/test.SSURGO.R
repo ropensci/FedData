@@ -18,7 +18,7 @@ test_that("The SoilDB data queries work", {
   
   template = "blah"
   q <- paste0("SELECT areasymbol, saverest FROM sacatalog WHERE areasymbol IN (",paste(paste0("'",template,"'"),collapse=','),");")
-  expect_error(soilDB::SDA_query(q))
+  expect_null(soilDB::SDA_query(q))
 })
 
 test_that("The SSURGO datasets are available at the correct URL", {

@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 [![Build Status](https://api.travis-ci.org/ropensci/FedData.png)](https://travis-ci.org/ropensci/FedData)
 <!-- [![Coverage Status](https://img.shields.io/codecov/c/github/ropensci/FedData/master.svg)](https://codecov.io/github/ropensci/FedData?branch=master) -->
 [![Zenodo DOI](https://zenodo.org/badge/23774237.svg)](https://zenodo.org/badge/latestdoi/23774237)
-[![ROpenSci Status](https://ropensci.org/badges/13_status.svg)](https://github.com/ropensci/onboarding/issues/13)
+[![ROpenSci Status](https://badges.ropensci.org/13_status.svg)](https://github.com/ropensci/onboarding/issues/13)
 
 `FedData` is an *R* package implementing functions to automate downloading geospatial data available from several federated data sources (mainly sources maintained by the US Federal government).
 
@@ -217,4 +217,4 @@ This package is a product of SKOPE ([Synthesizing Knowledge of Past Environments
 
 FedData was reviewed for [rOpenSci](https://ropensci.org) by [\@jooolia](https://github.com/jooolia), and was greatly improved as a result. [rOpenSci](https://ropensci.org) onboarding was coordinated by [\@sckott](https://github.com/sckott).
 
-[![ropensci_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
+[![ropensci_footer](http://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)

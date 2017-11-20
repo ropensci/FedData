@@ -1,5 +1,5 @@
 
-[![cran version](http://www.r-pkg.org/badges/version/FedData)](https://cran.r-project.org/package=FedData) [![CRAN downloads per month](http://cranlogs.r-pkg.org/badges/FedData)](https://github.com/metacran/cranlogs.app) [![CRAN downloads](http://cranlogs.r-pkg.org/badges/grand-total/FedData)](https://github.com/metacran/cranlogs.app) [![Build Status](https://api.travis-ci.org/ropensci/FedData.png)](https://travis-ci.org/ropensci/FedData) <!-- [![Coverage Status](https://img.shields.io/codecov/c/github/ropensci/FedData/master.svg)](https://codecov.io/github/ropensci/FedData?branch=master) --> [![Zenodo DOI](https://zenodo.org/badge/23774237.svg)](https://zenodo.org/badge/latestdoi/23774237) [![ROpenSci Status](https://ropensci.org/badges/13_status.svg)](https://github.com/ropensci/onboarding/issues/13)
+[![cran version](http://www.r-pkg.org/badges/version/FedData)](https://cran.r-project.org/package=FedData) [![CRAN downloads per month](http://cranlogs.r-pkg.org/badges/FedData)](https://github.com/metacran/cranlogs.app) [![CRAN downloads](http://cranlogs.r-pkg.org/badges/grand-total/FedData)](https://github.com/metacran/cranlogs.app) [![Build Status](https://api.travis-ci.org/ropensci/FedData.png)](https://travis-ci.org/ropensci/FedData) <!-- [![Coverage Status](https://img.shields.io/codecov/c/github/ropensci/FedData/master.svg)](https://codecov.io/github/ropensci/FedData?branch=master) --> [![Zenodo DOI](https://zenodo.org/badge/23774237.svg)](https://zenodo.org/badge/latestdoi/23774237) [![ROpenSci Status](https://badges.ropensci.org/13_status.svg)](https://github.com/ropensci/onboarding/issues/13)
 
 `FedData` is an *R* package implementing functions to automate downloading geospatial data available from several federated data sources (mainly sources maintained by the US Federal government).
 
@@ -99,6 +99,8 @@ DAYMET <- get_daymet(template = vepPolygon,
                label = "VEPIIN",
                elements = c("prcp","tmax"),
                years = 1980:1985)
+#> Warning in as.POSIXlt.POSIXct(x): unknown timezone 'zone/tz/2017c.1.0/
+#> zoneinfo/America/Denver'
 # Plot with raster::plot
 raster::plot(DAYMET$tmax$X1985.10.23)
 ```
@@ -175,7 +177,7 @@ NHD %>%
 SSURGO.VEPIIN <- get_ssurgo(template = vepPolygon, 
                      label = "VEPIIN")
 #> Warning: 1 parsing failure.
-#> row # A tibble: 1 x 5 col     row     col               expected actual expected   <int>   <chr>                  <chr>  <chr> actual 1  1276 slope.r no trailing characters     .5 file # ... with 1 more variables: file <chr>
+#> row # A tibble: 1 x 5 col     row     col               expected actual expected   <int>   <chr>                  <chr>  <chr> actual 1  1277 slope.r no trailing characters     .5 file # ... with 1 more variables: file <chr>
 # Plot the NED again
 raster::plot(NED)
 # Plot the SSURGO mapunit polygons
@@ -237,4 +239,4 @@ This package is a product of SKOPE ([Synthesizing Knowledge of Past Environments
 
 FedData was reviewed for [rOpenSci](https://ropensci.org) by [@jooolia](https://github.com/jooolia), and was greatly improved as a result. [rOpenSci](https://ropensci.org) onboarding was coordinated by [@sckott](https://github.com/sckott).
 
-[![ropensci\_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
+[![ropensci\_footer](http://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
