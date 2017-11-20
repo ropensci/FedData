@@ -296,6 +296,6 @@ get_daymet_tile <- function(template, tileID, elements = NULL, years = NULL, raw
 #'   \item{YMin}{the minimum latitude of the tile}
 #'   \item{YMax}{the maximum latitude of the tile}
 #' }
-#' @source \url{https://github.com/khufkens/daymetr/blob/master/data/DAYMET_grid.RData}
+#' @source \url{https://github.com/khufkens/daymetr/blob/master/data/tile_outlines.rda}
 #' @keywords internal
 "tiles"
