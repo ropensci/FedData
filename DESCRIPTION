@@ -14,7 +14,7 @@ Description: Functions to automate downloading geospatial data available from
     for North America, version 3, available from the Oak Ridge National Laboratory's
     Distributed Active Archive Center (DAAC); and the International Tree Ring Data Bank.
 Version: 2.4.7
-Date: 2017-11-06
+Date: 2017-11-19
 Author: R. Kyle Bocinsky [aut, cre], Dylan Beaudette [ctb], Scott Chamberlain [ctb]
 Authors@R: c(person(given = c("R.", "Kyle"), family = "Bocinsky",
     role = c("aut", "cre"), email = "bocinsky@gmail.com"),
