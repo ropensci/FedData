@@ -13,7 +13,7 @@
   \item{YMax}{the maximum latitude of the tile}
 }}
 \source{
-\url{https://github.com/khufkens/daymetr/blob/master/data/DAYMET_grid.RData}
+\url{https://github.com/khufkens/daymetr/blob/master/data/tile_outlines.rda}
 }
 \usage{
 tiles
