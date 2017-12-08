@@ -5,7 +5,9 @@
 \title{Download and crop the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.}
 \usage{
 get_ned(template, label, res = "1", raw.dir = "./RAW/NED",
-  extraction.dir = paste0("./EXTRACTIONS/", label, "/NED"), force.redo = F)
+  extraction.dir = paste0("./EXTRACTIONS/", label, "/NED"),
+  raster.options = c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"),
+  force.redo = F)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve 
@@ -21,6 +23,8 @@ The directory will be created if missing. Defaults to './RAW/NED/'.}
 
 \item{extraction.dir}{A character string indicating where the extracted and cropped DEM should be put.
 The directory will be created if missing. Defaults to './EXTRACTIONS/NED/'.}
+
+\item{raster.options}{a vector of options for raster::writeRaster.}
 
 \item{force.redo}{If an extraction for this template and label already exists, should a new one be created?}
 }

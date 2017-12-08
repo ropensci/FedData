@@ -12,6 +12,7 @@
 #' The directory will be created if missing. Defaults to './RAW/NED/'.
 #' @param extraction.dir A character string indicating where the extracted and cropped DEM should be put.
 #' The directory will be created if missing. Defaults to './EXTRACTIONS/NED/'.
+#' @param raster.options a vector of options for raster::writeRaster. 
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created?
 #' @return A \code{RasterLayer} DEM cropped to the extent of the template.
 #' @export
@@ -35,7 +36,10 @@ get_ned <- function(template,
                     label,
                     res = "1",
                     raw.dir = "./RAW/NED",
-                    extraction.dir = paste0("./EXTRACTIONS/", label, "/NED"), 
+                    extraction.dir = paste0("./EXTRACTIONS/", label, "/NED"),
+                    raster.options = c("COMPRESS=DEFLATE",
+                                       "ZLEVEL=9",
+                                       "INTERLEAVE=BAND"),
                     force.redo = F) {
   
   raw.dir <- normalizePath(paste0(raw.dir,"/."), mustWork = FALSE)  
@@ -103,9 +107,7 @@ get_ned <- function(template,
   raster::writeRaster(tiles,
                       paste(extraction.dir, "/", label, "_NED_", res, ".tif", sep = ""),
                       datatype = "FLT4S",
-                      options = c("COMPRESS=DEFLATE",
-                                  "ZLEVEL=9",
-                                  "INTERLEAVE=BAND"), 
+                      options = raster.options, 
                       overwrite = T,
                       setStatistics = FALSE)
   
