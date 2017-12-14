@@ -23,6 +23,7 @@ apt_packages:
   - libgdal-dev
   
 r_packages:
+  - devtools
   - Rcpp
   - roxygen2
   - survival
