@@ -4,7 +4,7 @@ Title: Functions to Automate Downloading Geospatial Data Available from Several
     Federated Data Sources
 Description: Functions to automate downloading geospatial data available from
     several federated data sources (mainly sources maintained by the US Federal
-    government). Currently, the package enables extraction from six datasets:
+    government). Currently, the package enables extraction from seven datasets:
     The National Elevation Dataset digital elevation models (1 and 1/3 arc-second;
     USGS); The National Hydrography Dataset (USGS); The Soil Survey Geographic
     (SSURGO) database from the National Cooperative Soil Survey (NCSS), which is
@@ -12,9 +12,10 @@ Description: Functions to automate downloading geospatial data available from
     Global Historical Climatology Network (GHCN), coordinated by National Climatic
     Data Center at NOAA; the Daymet gridded estimates of daily weather parameters 
     for North America, version 3, available from the Oak Ridge National Laboratory's
-    Distributed Active Archive Center (DAAC); and the International Tree Ring Data Bank.
-Version: 2.4.7
-Date: 2017-11-19
+    Distributed Active Archive Center (DAAC); the International Tree Ring Data Bank; 
+    and the National Land Cover Database (NLCD).
+Version: 2.5.0
+Date: 2017-12-14
 Author: R. Kyle Bocinsky [aut, cre], Dylan Beaudette [ctb], Scott Chamberlain [ctb]
 Authors@R: c(person(given = c("R.", "Kyle"), family = "Bocinsky",
     role = c("aut", "cre"), email = "bocinsky@gmail.com"),
@@ -43,7 +44,8 @@ Imports:
     dplyr,
     magrittr,
     foreach,
-    ncdf4
+    ncdf4,
+    stringr
 Repository: CRAN
 NeedsCompilation: no
 RoxygenNote: 6.0.1

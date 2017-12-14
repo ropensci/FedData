@@ -1,5 +1,11 @@
-# Make CRAN check not complain about .
-if (getRversion() >= "2.15.1") utils::globalVariables(c(".", "element"))
+# Make CRAN check not complain about "." and package data
+if (getRversion() >= "2.15.1") utils::globalVariables(c(".",
+                                                        "element",
+                                                        "nlcd_tiles",
+                                                        "nlcd_landcover_pam",
+                                                        "nlcd_canopy_pam",
+                                                        "nlcd_impervious_pam",
+                                                        "daymet_tiles"))
 
 #' Install and load a package.
 #'

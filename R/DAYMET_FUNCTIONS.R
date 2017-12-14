@@ -98,11 +98,11 @@ get_daymet <- function(template,
     return(extracted.DAYMET)
   }
   
-  data(tiles, envir = environment())
+  data(daymet_tiles, envir = environment())
   
-  template.latlon <- template %>% sp::spTransform(raster::projection(tiles))
+  template.latlon <- template %>% sp::spTransform(raster::projection(daymet_tiles))
   
-  tile.ids <- tiles$TileID[!is.na(tiles %over% template.latlon)]
+  tile.ids <- daymet_tiles$TileID[!is.na(daymet_tiles %over% template.latlon)]
   
   tile.ids <- tile.ids[!is.na(tile.ids)]
   tile.ids <- unique(tile.ids)
@@ -298,4 +298,4 @@ get_daymet_tile <- function(template, tileID, elements = NULL, years = NULL, raw
 #' }
 #' @source \url{https://github.com/khufkens/daymetr/blob/master/data/tile_outlines.rda}
 #' @keywords internal
-"tiles"
+"daymet_tiles"

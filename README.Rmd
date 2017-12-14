@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 
 `FedData` is an *R* package implementing functions to automate downloading geospatial data available from several federated data sources (mainly sources maintained by the US Federal government).
 
-**FedData version 2.4 will be the final minor CRAN release of FedData 2. FedData 3 will be released in the coming months, but some code built on FedData 2 will not be compatible with FedData 3.**
+**FedData version 2.5 will be the final minor CRAN release of FedData 2. FedData 3 will be released in the coming months, but some code built on FedData 2 will not be compatible with FedData 3.**
 
 Currently, the package enables extraction from six datasets: 
 
@@ -31,10 +31,11 @@ Currently, the package enables extraction from six datasets:
 * The [Global Historical Climatology Network (GHCN)](http://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn), coordinated by National Climatic Data Center at NOAA,
 * The [Daymet](https://daymet.ornl.gov/) gridded estimates of daily weather parameters for North America, version 3, available from the Oak Ridge National Laboratory's Distributed Active Archive Center (DAAC), and
 * The [International Tree Ring Data Bank (ITRDB)](http://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/tree-ring), coordinated by National Climatic Data Center at NOAA.
+* The [National Land Cover Database (NLCD)](https://www.mrlc.gov/) from 2011, 2006, and 2001.
 
 This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the [**sp**](https://cran.r-project.org/package=sp), [**raster**](https://cran.r-project.org/package=raster), and [**rgdal**](https://cran.r-project.org/package=rgdal) packages.
 
-This package has been built and tested on a source (Homebrew) install of *R* on macOS 10.12 (Sierra), and has been successfully run on Ubuntu 14.04.5 LTS (Trusty), Ubuntu 16.04.1 LTS (Xenial) and binary installs of *R* on Mac OS 10.12 and Windows 10.
+This package has been built and tested on a source (Homebrew) install of *R* on macOS 10.13 (High Sierra), and has been successfully run on Ubuntu 14.04.5 LTS (Trusty), Ubuntu 16.04.1 LTS (Xenial) and binary installs of *R* on Mac OS 10.13 and Windows 10.
 
 ### Development
 + [Kyle Bocinsky](http://bocinsky.io) - Crow Canyon Archaeological Center, Cortez, CO
@@ -208,6 +209,33 @@ plot(ITRDB$metadata,
 legend('bottomleft',
        pch = 1,
        legend = "ITRDB chronologies")
+```
+
+#### Get and plot the National Land Cover Dataset for the study area
+```{r results="hide", message=FALSE}
+# Get the NLCD (USA ONLY)
+# Returns a raster
+NLCD <- get_nlcd(template = vepPolygon,
+                 year = 2011,
+                 dataset = "landcover",
+                 label = "VEPIIN")
+# Plot with raster::plot
+raster::plot(NLCD)
+
+# You can also download the Canopy or impervious datasets:
+NLCD_canopy <- get_nlcd(template = vepPolygon,
+                 year = 2011,
+                 dataset = "canopy",
+                 label = "VEPIIN")
+# Plot with raster::plot
+raster::plot(NLCD_canopy)
+
+NLCD_impervious <- get_nlcd(template = vepPolygon,
+                 year = 2011,
+                 dataset = "impervious",
+                 label = "VEPIIN")
+# Plot with raster::plot
+raster::plot(NLCD_impervious)
 ```
 
 -----------

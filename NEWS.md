@@ -1,3 +1,6 @@
+# FedData 2.5.0
+* Added functions for the National Land Cover Database.
+
 # FedData 2.4.7
 * SSURGO fixed test where supplying an unavailable survey area now returns NULL instead of an error.
 * SSURGO zip directory encoding changes as of late October 2017 forced changes in the FedData:::get_ssurgo_study_area function.
