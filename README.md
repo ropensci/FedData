@@ -21,7 +21,7 @@ sources (mainly sources maintained by the US Federal government).
 FedData 3 will be released in the coming months, but some code built on
 FedData 2 will not be compatible with FedData 3.**
 
-Currently, the package enables extraction from six datasets:
+Currently, the package enables extraction from seven datasets:
 
   - The [National Elevation Dataset (NED)](http://ned.usgs.gov) digital
     elevation models (1 and 1/3 arc-second; USGS)
@@ -29,19 +29,19 @@ Currently, the package enables extraction from six datasets:
   - The [Soil Survey Geographic (SSURGO)
     database](http://websoilsurvey.sc.egov.usda.gov/) from the National
     Cooperative Soil Survey (NCSS), which is led by the Natural
-    Resources Conservation Service (NRCS) under the USDA,
+    Resources Conservation Service (NRCS) under the USDA
   - The [Global Historical Climatology Network
     (GHCN)](http://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn),
-    coordinated by National Climatic Data Center at NOAA,
+    coordinated by National Climatic Data Center at NOAA
   - The [Daymet](https://daymet.ornl.gov/) gridded estimates of daily
     weather parameters for North America, version 3, available from the
     Oak Ridge National Laboratory’s Distributed Active Archive Center
-    (DAAC), and
+    (DAAC)
   - The [International Tree Ring Data Bank
     (ITRDB)](http://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/tree-ring),
-    coordinated by National Climatic Data Center at NOAA.
+    coordinated by National Climatic Data Center at NOAA
   - The [National Land Cover Database (NLCD)](https://www.mrlc.gov/)
-    from 2011, 2006, and 2001.
+    from 2011, 2006, and 2001
 
 This package is designed with the large-scale geographic information
 system (GIS) use-case in mind: cases where the use of dynamic
