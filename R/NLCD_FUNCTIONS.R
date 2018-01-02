@@ -11,9 +11,9 @@
 #' @param dataset A character string representing type of the NLCD product.
 #' Acceptable values are landcover' (default), 'impervious', and 'canopy'.
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
-#' The directory will be created if missing. Defaults to './RAW/NED/'.
+#' The directory will be created if missing. Defaults to './RAW/NLCD/'.
 #' @param extraction.dir A character string indicating where the extracted and cropped DEM should be put.
-#' The directory will be created if missing. Defaults to './EXTRACTIONS/NED/'.
+#' The directory will be created if missing. Defaults to './EXTRACTIONS/NLCD/'.
 #' @param raster.options a vector of options for raster::writeRaster. 
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created?
 #' @return A \code{RasterLayer} DEM cropped to the extent of the template.
@@ -92,7 +92,7 @@ get_nlcd <- function(template,
   
   # Mosaic all tiles
   if (length(tiles) > 1) {
-    message("Mosaicking NED tiles.")
+    message("Mosaicking NLCD tiles.")
     utils::flush.console()
     
     # tiles$fun <- mean
