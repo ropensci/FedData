@@ -98,7 +98,7 @@ get_daymet <- function(template,
     return(extracted.DAYMET)
   }
   
-  data(daymet_tiles, envir = environment())
+  data(daymet_tiles, package = "FedData")
   
   template.latlon <- template %>% sp::spTransform(raster::projection(daymet_tiles))
   

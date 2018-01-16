@@ -60,7 +60,7 @@ get_nlcd <- function(template,
   template <- template %<>%
     polygon_from_extent()
   
-  data(nlcd_tiles, envir = environment())
+  data(nlcd_tiles, package = "FedData")
   
   template.latlon <- template %>%
     sp::spTransform(raster::projection(nlcd_tiles))
@@ -125,15 +125,15 @@ get_nlcd <- function(template,
   
   # Save the PAM attributes file
   if(dataset == "landcover"){
-    data(nlcd_landcover_pam, envir = environment())
+    data(nlcd_landcover_pam, package = "FedData")
     readr::write_lines(nlcd_landcover_pam,
                        paste0(extraction.dir, "/", label, "_NLCD_", year,"_",dataset, ".tif.aux.xml"))
   }else if(dataset == "canopy"){
-    data(nlcd_canopy_pam, envir = environment())
+    data(nlcd_canopy_pam, package = "FedData")
     readr::write_lines(nlcd_canopy_pam,
                        paste0(extraction.dir, "/", label, "_NLCD_", year,"_",dataset, ".tif.aux.xml"))
   }else if(dataset == "impervious"){
-    data(nlcd_impervious_pam, envir = environment())
+    data(nlcd_impervious_pam, package = "FedData")
     readr::write_lines(nlcd_impervious_pam,
                        paste0(extraction.dir, "/", label, "_NLCD_", year,"_",dataset, ".tif.aux.xml"))
   }
