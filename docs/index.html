@@ -222,12 +222,16 @@
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># Get the NRCS SSURGO data (USA ONLY)</span></a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">SSURGO.VEPIIN &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ssurgo.html">get_ssurgo</a></span>(<span class="dt">template =</span> vepPolygon, </a>
 <a class="sourceLine" id="cb10-3" data-line-number="3">                     <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co"># Plot the NED again</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co"># Plot the SSURGO mapunit polygons</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="kw">plot</span>(SSURGO.VEPIIN<span class="op">$</span>spatial,</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">     <span class="dt">lwd =</span> <span class="fl">0.1</span>,</a>
-<a class="sourceLine" id="cb10-9" data-line-number="9">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">#&gt; Warning in rbind(names(probs), probs_f): number of columns of result is not</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; a multiple of vector length (arg 2)</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt; Warning: 1 parsing failure.</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt; row # A tibble: 1 x 5 col     row col     expected               actual file                         expected   &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;                  &lt;chr&gt;  &lt;chr&gt;                        actual 1  1277 slope.r no trailing characters .5     '/Users/bocinsky/git/FedDat… file # A tibble: 1 x 5</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co"># Plot the NED again</span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="co"># Plot the SSURGO mapunit polygons</span></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="kw">plot</span>(SSURGO.VEPIIN<span class="op">$</span>spatial,</a>
+<a class="sourceLine" id="cb10-12" data-line-number="12">     <span class="dt">lwd =</span> <span class="fl">0.1</span>,</a>
+<a class="sourceLine" id="cb10-13" data-line-number="13">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="inst/image/README-unnamed-chunk-11-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-nrcs-ssurgo-data-for-particular-soil-survey-areas" class="section level4">
@@ -258,16 +262,15 @@
 <a class="sourceLine" id="cb12-2" data-line-number="2">ITRDB &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_itrdb.html">get_itrdb</a></span>(<span class="dt">template =</span> vepPolygon,</a>
 <a class="sourceLine" id="cb12-3" data-line-number="3">                        <span class="dt">label =</span> <span class="st">"VEPIIN"</span>,</a>
 <a class="sourceLine" id="cb12-4" data-line-number="4">                        <span class="dt">makeSpatial =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; Warning in eval(jsub, SDenv, parent.frame()): NAs introduced by coercion</span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co"># Plot the NED again</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7">raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co"># Map the locations of the tree ring chronologies</span></a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="kw">plot</span>(ITRDB<span class="op">$</span>metadata,</a>
-<a class="sourceLine" id="cb12-10" data-line-number="10">     <span class="dt">pch =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb12-11" data-line-number="11">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="kw">legend</span>(<span class="st">'bottomleft'</span>,</a>
-<a class="sourceLine" id="cb12-13" data-line-number="13">       <span class="dt">pch =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb12-14" data-line-number="14">       <span class="dt">legend =</span> <span class="st">"ITRDB chronologies"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co"># Plot the NED again</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co"># Map the locations of the tree ring chronologies</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="kw">plot</span>(ITRDB<span class="op">$</span>metadata,</a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">     <span class="dt">pch =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb12-10" data-line-number="10">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="kw">legend</span>(<span class="st">'bottomleft'</span>,</a>
+<a class="sourceLine" id="cb12-12" data-line-number="12">       <span class="dt">pch =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb12-13" data-line-number="13">       <span class="dt">legend =</span> <span class="st">"ITRDB chronologies"</span>)</a></code></pre></div>
 <p><img src="inst/image/README-unnamed-chunk-13-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-national-land-cover-dataset-for-the-study-area" class="section level4">
@@ -336,7 +339,7 @@
 <li><a href="https://github.com/metacran/cranlogs.app"><img src="http://cranlogs.r-pkg.org/badges/FedData" alt="CRAN downloads per month"></a></li>
 <li><a href="https://github.com/metacran/cranlogs.app"><img src="http://cranlogs.r-pkg.org/badges/grand-total/FedData" alt="CRAN downloads"></a></li>
 <li><a href="https://travis-ci.org/ropensci/FedData"><img src="https://api.travis-ci.org/ropensci/FedData.png" alt="Build Status"></a></li>
-<li><a href="https://zenodo.org/badge/latestdoi/23774237"><img src="https://zenodo.org/badge/23774237.svg" alt="Zenodo DOI"></a></li>
+<li><a href="https://doi.org/10.5281/zenodo.596344"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.596344.svg" alt="Zenodo DOI"></a></li>
 <li><a href="https://github.com/ropensci/onboarding/issues/13"><img src="https://badges.ropensci.org/13_status.svg" alt="ROpenSci Status"></a></li>
 </ul>
 </div>

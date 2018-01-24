@@ -9,7 +9,7 @@ downloads](http://cranlogs.r-pkg.org/badges/grand-total/FedData)](https://github
 Status](https://api.travis-ci.org/ropensci/FedData.png)](https://travis-ci.org/ropensci/FedData)
 <!-- [![Coverage Status](https://img.shields.io/codecov/c/github/ropensci/FedData/master.svg)](https://codecov.io/github/ropensci/FedData?branch=master) -->
 [![Zenodo
-DOI](https://zenodo.org/badge/23774237.svg)](https://zenodo.org/badge/latestdoi/23774237)
+DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.596344.svg)](https://doi.org/10.5281/zenodo.596344)
 [![ROpenSci
 Status](https://badges.ropensci.org/13_status.svg)](https://github.com/ropensci/onboarding/issues/13)
 
