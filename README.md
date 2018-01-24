@@ -177,15 +177,6 @@ GHCN.temp <- get_ghcn_daily(template = vepPolygon,
                             elements = c('tmin','tmax'), 
                             years = 1980:1985,
                             standardize = TRUE)
-#> Warning: Unknown or uninitialised column: 'ELEMENT'.
-#> Warning in get_ghcn_daily_station(ID = station, elements = elements, years
-#> = years, : Elements not available: TMAX, TMIN
-#> Warning: Unknown or uninitialised column: 'ELEMENT'.
-#> Warning in get_ghcn_daily_station(ID = station, elements = elements, years
-#> = years, : Elements not available: TMAX, TMIN
-#> Warning: Unknown or uninitialised column: 'ELEMENT'.
-#> Warning in get_ghcn_daily_station(ID = station, elements = elements, years
-#> = years, : Elements not available: TMAX, TMIN
 # Plot the NED again
 raster::plot(NED)
 # Plot the spatial locations
@@ -222,6 +213,10 @@ NHD %>%
 # Get the NRCS SSURGO data (USA ONLY)
 SSURGO.VEPIIN <- get_ssurgo(template = vepPolygon, 
                      label = "VEPIIN")
+#> Warning in rbind(names(probs), probs_f): number of columns of result is not
+#> a multiple of vector length (arg 2)
+#> Warning: 1 parsing failure.
+#> row # A tibble: 1 x 5 col     row col     expected               actual file                         expected   <int> <chr>   <chr>                  <chr>  <chr>                        actual 1  1277 slope.r no trailing characters .5     '/Users/bocinsky/git/FedDat… file # A tibble: 1 x 5
 # Plot the NED again
 raster::plot(NED)
 # Plot the SSURGO mapunit polygons
@@ -262,7 +257,6 @@ plot(SSURGO.areas.CO675,
 ITRDB <- get_itrdb(template = vepPolygon,
                         label = "VEPIIN",
                         makeSpatial = TRUE)
-#> Warning in eval(jsub, SDenv, parent.frame()): NAs introduced by coercion
 # Plot the NED again
 raster::plot(NED)
 # Map the locations of the tree ring chronologies

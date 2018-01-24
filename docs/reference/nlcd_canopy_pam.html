@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read metadata from a Tucson-format chronology file. — read_crn_metadata • FedData</title>
+<title>The NLCD canopy PAM attributes. — nlcd_canopy_pam • FedData</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,50 +83,26 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read metadata from a Tucson-format chronology file.</h1>
+    <h1>The NLCD canopy PAM attributes.</h1>
     </div>
 
     
-    <p>This function includes improvements to the <code><a href='read_crn.html'>read_crn</a></code> function from the 
-<span class="pkg">dplR</span> library. The principle changes are better parsing of metadata, and support
-for the Schweingruber-type Tucson format. Chronologies that are unable to be read
-are reported to the user. The user (or <code><a href='read_crn.html'>read_crn</a></code>) must tell the function whether
-the file is a Schweingruber-type chronology.</p>
+    <p>A dataset containing the PAM attributes.</p>
     
 
-    <pre class="usage"><span class='fu'>read_crn_metadata</span>(<span class='no'>file</span>, <span class='no'>SCHWEINGRUBER</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>file</th>
-      <td><p>A character string path pointing to a <code>*.crn</code> file to be read.</p></td>
-    </tr>
-    <tr>
-      <th>SCHWEINGRUBER</th>
-      <td><p>Is the file in the Schweingruber-type Tucson format?</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <pre class="usage"><span class='no'>nlcd_canopy_pam</span></pre>
+        
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data.frame containing the metadata.</p>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Location information is converted to decimal degrees.</p>
+    <p>An object of class <code>character</code> of length 2345.</p>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#details">Details</a></li>
+      <li><a href="#format">Format</a></li>
           </ul>
 
   </div>

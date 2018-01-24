@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download and crop the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset. — get_ned • FedData</title>
+<title>Download and crop the National Land Cover Database. — get_nlcd • FedData</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -83,18 +83,18 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download and crop the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.</h1>
+    <h1>Download and crop the National Land Cover Database.</h1>
     </div>
 
     
-    <p><code>get_ned</code> returns a <code>RasterLayer</code> of elevation data cropped to a given
+    <p><code>get_nlcd</code> returns a <code>RasterLayer</code> of NLCD data cropped to a given
 template study area.</p>
     
 
-    <pre class="usage"><span class='fu'>get_ned</span>(<span class='no'>template</span>, <span class='no'>label</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='st'>"1"</span>, <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='st'>"./RAW/NED"</span>,
-  <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='st'>"./EXTRACTIONS/"</span>, <span class='no'>label</span>, <span class='st'>"/NED"</span>),
-  <span class='kw'>raster.options</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"COMPRESS=DEFLATE"</span>, <span class='st'>"ZLEVEL=9"</span>, <span class='st'>"INTERLEAVE=BAND"</span>),
-  <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
+    <pre class="usage"><span class='fu'>get_nlcd</span>(<span class='no'>template</span>, <span class='no'>label</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2011</span>, <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"landcover"</span>,
+  <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='st'>"./RAW/NLCD"</span>, <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='st'>"./EXTRACTIONS/"</span>, <span class='no'>label</span>,
+  <span class='st'>"/NLCD"</span>), <span class='kw'>raster.options</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"COMPRESS=DEFLATE"</span>, <span class='st'>"ZLEVEL=9"</span>,
+  <span class='st'>"INTERLEAVE=BAND"</span>), <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -109,19 +109,24 @@ as a template for cropping.</p></td>
       <td><p>A character string naming the study area.</p></td>
     </tr>
     <tr>
-      <th>res</th>
-      <td><p>A character string representing the desired resolution of the NED. '1'
-indicates the 1 arc-second NED (the default), while '13' indicates the 1/3 arc-second dataset.</p></td>
+      <th>year</th>
+      <td><p>An integer representing the year of desired NLCD product.
+Acceptable values are 2011 (default), 2006, and 2001.</p></td>
+    </tr>
+    <tr>
+      <th>dataset</th>
+      <td><p>A character string representing type of the NLCD product.
+Acceptable values are landcover' (default), 'impervious', and 'canopy'.</p></td>
     </tr>
     <tr>
       <th>raw.dir</th>
       <td><p>A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to './RAW/NED/'.</p></td>
+The directory will be created if missing. Defaults to './RAW/NLCD/'.</p></td>
     </tr>
     <tr>
       <th>extraction.dir</th>
       <td><p>A character string indicating where the extracted and cropped DEM should be put.
-The directory will be created if missing. Defaults to './EXTRACTIONS/NED/'.</p></td>
+The directory will be created if missing. Defaults to './EXTRACTIONS/NLCD/'.</p></td>
     </tr>
     <tr>
       <th>raster.options</th>
@@ -145,12 +150,12 @@ The directory will be created if missing. Defaults to './EXTRACTIONS/NED/'.</p><
 <span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/raster/topics/extent'>extent</a></span>(<span class='fl'>672800</span>,<span class='fl'>740000</span>,<span class='fl'>4102000</span>,<span class='fl'>4170000</span>),
      <span class='kw'>proj4string</span><span class='kw'>=</span><span class='st'>'+proj=utm +datum=NAD83 +zone=12'</span>)
 
-<span class='co'># Get the NED (USA ONLY)</span>
+<span class='co'># Get the NLCD (USA ONLY)</span>
 <span class='co'># Returns a raster</span>
-<span class='no'>NED</span> <span class='kw'>&lt;-</span> <span class='fu'>get_ned</span>(<span class='kw'>template</span><span class='kw'>=</span><span class='no'>vepPolygon</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'VEPIIN'</span>)
+<span class='no'>NLCD</span> <span class='kw'>&lt;-</span> <span class='fu'>get_nlcd</span>(<span class='kw'>template</span><span class='kw'>=</span><span class='no'>vepPolygon</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'VEPIIN'</span>)
 
 <span class='co'># Plot with raster::plot</span>
-<span class='fu'>plot</span>(<span class='no'>NED</span>)
+<span class='fu'>plot</span>(<span class='no'>NLCD</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
