@@ -11,4 +11,4 @@ nlcd_canopy_pam
 \description{
 A dataset containing the PAM attributes.
 }
-\keyword{internal}
+\keyword{datasets}

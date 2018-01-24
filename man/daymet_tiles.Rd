@@ -21,4 +21,4 @@ daymet_tiles
 \description{
 A dataset containing the DAYMET tiles.
 }
-\keyword{internal}
+\keyword{datasets}

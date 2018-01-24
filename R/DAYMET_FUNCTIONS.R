@@ -98,7 +98,7 @@ get_daymet <- function(template,
     return(extracted.DAYMET)
   }
   
-  data(daymet_tiles, package = "FedData")
+  daymet_tiles <- FedData::daymet_tiles
   
   template.latlon <- template %>% sp::spTransform(raster::projection(daymet_tiles))
   
@@ -297,5 +297,4 @@ get_daymet_tile <- function(template, tileID, elements = NULL, years = NULL, raw
 #'   \item{YMax}{the maximum latitude of the tile}
 #' }
 #' @source \url{https://github.com/khufkens/daymetr/blob/master/data/tile_outlines.rda}
-#' @keywords internal
 "daymet_tiles"

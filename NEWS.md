@@ -1,3 +1,7 @@
+# FedData 2.5.1
+* Switch to laze-loading data.
+* Updated NHD paths to new National Map directory structure.
+
 # FedData 2.5.0
 * Added functions for the National Land Cover Database.
 

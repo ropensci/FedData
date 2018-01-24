@@ -14,4 +14,4 @@ nlcd_tiles
 \description{
 A dataset containing the NLCD tiles.
 }
-\keyword{internal}
+\keyword{datasets}

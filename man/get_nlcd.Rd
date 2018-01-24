@@ -22,10 +22,10 @@ Acceptable values are 2011 (default), 2006, and 2001.}
 Acceptable values are landcover' (default), 'impervious', and 'canopy'.}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to './RAW/NED/'.}
+The directory will be created if missing. Defaults to './RAW/NLCD/'.}
 
 \item{extraction.dir}{A character string indicating where the extracted and cropped DEM should be put.
-The directory will be created if missing. Defaults to './EXTRACTIONS/NED/'.}
+The directory will be created if missing. Defaults to './EXTRACTIONS/NLCD/'.}
 
 \item{raster.options}{a vector of options for raster::writeRaster.}
 

@@ -176,7 +176,7 @@ get_huc4 <- function(template = NULL, raw.dir) {
 #' @export
 #' @keywords internal
 download_nhd_subregion <- function(area, raw.dir) {
-  url <- paste0("https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/NHD/HU4/HighResolution/GDB/NHD_H_", area, "_GDB.zip")
+  url <- paste0("https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/NHD/HU4/HighResolution/GDB/NHD_H_",area,"_HU4_GDB.zip")
   
   destdir <- raw.dir
   download_data(url = url, destdir = destdir)
