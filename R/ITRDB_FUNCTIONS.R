@@ -612,9 +612,9 @@ read_crn_data <- function(file, SCHWEINGRUBER) {
     digits.year <- max(nchar(years), 4)
     dig.dif <- digits.year - nchar(years[[1]])
     
-    encoding = getOption("encoding")
+    # encoding = getOption("encoding")
     ## Open the data file for reading
-    con <- file(file, encoding = encoding)
+    con <- file(file=)
     on.exit(close(con))
     
     ## Read 4th line - should be first data line
