@@ -21,6 +21,9 @@ apt_packages:
   - libnetcdf-dev
   - gdal-bin
   - libgdal-dev
+  - libudunits2-dev
+  - libproj-dev
+  - libgeos-dev
   
 r_packages:
   - devtools
