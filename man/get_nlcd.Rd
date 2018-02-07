@@ -19,7 +19,9 @@ as a template for cropping.}
 Acceptable values are 2011 (default), 2006, and 2001.}
 
 \item{dataset}{A character string representing type of the NLCD product.
-Acceptable values are landcover' (default), 'impervious', and 'canopy'.}
+Acceptable values are 'landcover' (default), 'impervious', and 'canopy'.
+As of February 7, 2018, the canopy data for 2006 are not available through the National Map Staged datasets,
+and so aren't available in FedData.}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
 The directory will be created if missing. Defaults to './RAW/NLCD/'.}

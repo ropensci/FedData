@@ -9,7 +9,9 @@
 #' @param year An integer representing the year of desired NLCD product.
 #' Acceptable values are 2011 (default), 2006, and 2001.
 #' @param dataset A character string representing type of the NLCD product.
-#' Acceptable values are landcover' (default), 'impervious', and 'canopy'.
+#' Acceptable values are 'landcover' (default), 'impervious', and 'canopy'.
+#' As of February 7, 2018, the canopy data for 2006 are not available through the National Map Staged datasets,
+#' and so aren't available in FedData.
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing. Defaults to './RAW/NLCD/'.
 #' @param extraction.dir A character string indicating where the extracted and cropped DEM should be put.
@@ -241,11 +243,9 @@ get_nlcd_tile <- function(template = NULL,
              }
            })
   
-  tile <- stringr::str_c(tmpdir,"/NLCD",
-                         year, "_",
-                         dataset_abbr, "_",
-                         tileName,
-                         ".tif") %>%
+  tile <- tmpdir %>%
+    list.files(pattern = "\\.tif$",
+               full.names = TRUE) %>%
     raster::raster()
   
   if (!is.null(template)) {
