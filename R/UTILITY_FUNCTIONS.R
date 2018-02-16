@@ -156,6 +156,7 @@ download_data <- function(url, destdir = getwd(), timestamping = T, nc = F, verb
         if (file.info(temp.file)$size > 0) {
             file.copy(temp.file, destfile, overwrite = T)
         }
+        return(destfile)
     } else {
         message("Downloading file: ", url)
         opts <- list(verbose = verbose,
@@ -171,4 +172,5 @@ download_data <- function(url, destdir = getwd(), timestamping = T, nc = F, verb
                  error = function(e) stop("Download of ", url, " failed!"))
         return(destfile)
     }
+    return(destfile)
 }
