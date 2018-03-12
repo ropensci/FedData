@@ -1,3 +1,7 @@
+# FedData 2.5.2
+* Updated NHD HUC4 to copy stored on Github.
+* Fixed bug in ITRDB that caused some chronologies not to be read.
+
 # FedData 2.5.1
 * Switch to laze-loading data.
 * Updated NHD paths to new National Map directory structure.

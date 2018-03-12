@@ -66,7 +66,7 @@ get_nhd <- function(template,
   message("(Down)Loading the NHD HUC4 dataset.")
   HUC4 <- get_huc4(template = template, raw.dir = raw.dir)
   
-  area.list <- formatC(HUC4$HUC4, width = 4, format = "d", flag = "0")
+  area.list <- HUC4$HUC4 %>% as.character()
   
   # Get the spatial data for each area
   message("(Down)Loading the NHD subregion data.")
@@ -145,7 +145,7 @@ get_huc4 <- function(template = NULL, raw.dir) {
   
   utils::unzip(huc4File, exdir = tmpdir)
   
-  HUC4 <- sf::st_read(tmpdir,
+  HUC4 <- sf::st_read(stringr::str_c(tmpdir,"/data-raw/nhd_huc4.gpkg"),
                       quiet = TRUE) %>%
     as("Spatial")
   

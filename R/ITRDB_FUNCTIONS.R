@@ -614,7 +614,7 @@ read_crn_data <- function(file, SCHWEINGRUBER) {
     
     # encoding = getOption("encoding")
     ## Open the data file for reading
-    con <- file(file=)
+    con <- file(file)
     on.exit(close(con))
     
     ## Read 4th line - should be first data line
@@ -646,7 +646,7 @@ read_crn_data <- function(file, SCHWEINGRUBER) {
     suppressWarnings(chron.stats <- utils::read.fwf(con, c(yearStart, digits.year, 6, 6, 6, 7, 9, 9, 10), skip = nlines - 1, 
                                                     strip.white = TRUE, colClasses = "character", stringsAsFactors = F))
     ## Unintuitively, the connection object seems to have been destroyed by the previous read.fwf.  We need to create a new one.
-    con <- file(file, encoding = encoding)
+    con <- file(file)
     
     ## If columns 3 in chron.stats is an integer then there is no statistics line
     if ((!is.integer(chron.stats[[3]]) | (chron.stats[[3]] == 0)) & !grepl(" ", chron.stats[[3]])) {
