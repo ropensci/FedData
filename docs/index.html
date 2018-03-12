@@ -277,16 +277,15 @@
 <a class="sourceLine" id="cb12-2" data-line-number="2">ITRDB &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_itrdb.html">get_itrdb</a></span>(<span class="dt">template =</span> vepPolygon,</a>
 <a class="sourceLine" id="cb12-3" data-line-number="3">                        <span class="dt">label =</span> <span class="st">"VEPIIN"</span>,</a>
 <a class="sourceLine" id="cb12-4" data-line-number="4">                        <span class="dt">makeSpatial =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; Warning in eval(jsub, SDenv, parent.frame()): NAs introduced by coercion</span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co"># Plot the NED again</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7">raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co"># Map the locations of the tree ring chronologies</span></a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="kw">plot</span>(ITRDB<span class="op">$</span>metadata,</a>
-<a class="sourceLine" id="cb12-10" data-line-number="10">     <span class="dt">pch =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb12-11" data-line-number="11">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="kw">legend</span>(<span class="st">'bottomleft'</span>,</a>
-<a class="sourceLine" id="cb12-13" data-line-number="13">       <span class="dt">pch =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb12-14" data-line-number="14">       <span class="dt">legend =</span> <span class="st">"ITRDB chronologies"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co"># Plot the NED again</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co"># Map the locations of the tree ring chronologies</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="kw">plot</span>(ITRDB<span class="op">$</span>metadata,</a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">     <span class="dt">pch =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb12-10" data-line-number="10">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="kw">legend</span>(<span class="st">'bottomleft'</span>,</a>
+<a class="sourceLine" id="cb12-12" data-line-number="12">       <span class="dt">pch =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb12-13" data-line-number="13">       <span class="dt">legend =</span> <span class="st">"ITRDB chronologies"</span>)</a></code></pre></div>
 <p><img src="inst/image/README-unnamed-chunk-13-1.png" width="672"></p>
 </div>
 <div id="get-and-plot-the-national-land-cover-dataset-for-the-study-area" class="section level4">
