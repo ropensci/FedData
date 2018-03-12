@@ -18,6 +18,8 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -25,6 +27,7 @@
 <script src="../pkgdown.js"></script>
   
   
+<meta property="og:title" content="All news" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -88,6 +91,69 @@
     </div>
 
     <div class="contents">
+    <div class="section level1">
+<h1>FedData 2.5.2</h1>
+<ul>
+<li>Updated NHD HUC4 to copy stored on Github.</li>
+<li>Fixed bug in ITRDB that caused some chronologies not to be read.</li>
+</ul>
+</div>
+    <div class="section level1">
+<h1>FedData 2.5.1</h1>
+<ul>
+<li>Switch to laze-loading data.</li>
+<li>Updated NHD paths to new National Map directory structure.</li>
+</ul>
+</div>
+    <div class="section level1">
+<h1>FedData 2.5.0</h1>
+<ul>
+<li>Added functions for the National Land Cover Database.</li>
+</ul>
+</div>
+    <div class="section level1">
+<h1>FedData 2.4.7</h1>
+<ul>
+<li>SSURGO fixed test where supplying an unavailable survey area now returns NULL instead of an error.</li>
+<li>SSURGO zip directory encoding changes as of late October 2017 forced changes in the FedData:::get_ssurgo_study_area function.</li>
+<li>Fixed issue where NHD template wouldn’t load because they added a jpeg preview to the directory.</li>
+</ul>
+</div>
+    <div class="section level1">
+<h1>FedData 2.4.6</h1>
+<ul>
+<li>DAYMET functions now do <em>not</em> operate in parallel. This was breaking the download functions.</li>
+<li>Final update for version 2 of FedData.</li>
+<li>Accepted to ROpenSci! Migrating to the ROpenSci organization on GitHub.</li>
+</ul>
+</div>
+    <div class="section level1">
+<h1>FedData 2.4.3</h1>
+<ul>
+<li>writeOGR for SSURGO and NHD were failing on Windows when the <code>extraction.dir</code> included a trailing slash. Paths are now normalized to remove the trailing slash.</li>
+</ul>
+</div>
+    <div class="section level1">
+<h1>FedData 2.4.2</h1>
+<ul>
+<li>Updated the <code>get_ned</code> function to provide more useful errors and warnings when downloads are unsuccessful.</li>
+</ul>
+</div>
+    <div class="section level1">
+<h1>FedData 2.4.1</h1>
+<ul>
+<li>Added pkgdown site.</li>
+<li>SSURGO functions (e.g., <code>get_ssurgo</code>) now doesn’t bomb on large (&gt; 1 billion sq meter) requests. Now, the area of interest is broken into smaller chunks to build the download list.</li>
+</ul>
+</div>
+    <div class="section level1">
+<h1>FedData 2.4.0</h1>
+<ul>
+<li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
+<li>Updated DAYMET functions to fix a bug that downloaded only one tile at a time.</li>
+<li>Linted all code.</li>
+</ul>
+</div>
     </div>
   </div>
 
@@ -95,6 +161,15 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#NA">2.5.2</a></li>
+        <li><a href="#NA">2.5.1</a></li>
+        <li><a href="#NA">2.5.0</a></li>
+        <li><a href="#NA">2.4.7</a></li>
+        <li><a href="#NA">2.4.6</a></li>
+        <li><a href="#NA">2.4.3</a></li>
+        <li><a href="#NA">2.4.2</a></li>
+        <li><a href="#NA">2.4.1</a></li>
+        <li><a href="#NA">2.4.0</a></li>
       </ul>
     </div>
   </div>
@@ -115,3 +190,4 @@
 
   </body>
 </html>
+

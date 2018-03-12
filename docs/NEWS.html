@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download a zipped NHD HUC4 subregion. — download_nhd_subregion • FedData</title>
+<title>/Users/bocinsky/git/FedData/NEWS.md • FedData</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -22,16 +22,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
-<script src="../pkgdown.js"></script>
+<link href="pkgdown.css" rel="stylesheet">
+<script src="jquery.sticky-kit.min.js"></script>
+<script src="pkgdown.js"></script>
   
   
-<meta property="og:title" content="Download a zipped NHD HUC4 subregion. — download_nhd_subregion" />
-
-<meta property="og:description" content="HUC4 subregion are specified by a unique character string, best obtained using the get_huc4 function.
-download_nhd_subregion returns the path to the downloaded zip file." />
-<meta name="twitter:card" content="summary" />
+<meta property="og:title" content="/Users/bocinsky/git/FedData/NEWS.md" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -44,7 +40,7 @@ download_nhd_subregion returns the path to the downloaded zip file." />
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-title-body">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -54,21 +50,21 @@ download_nhd_subregion returns the path to the downloaded zip file." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">FedData</a>
+      <a class="navbar-brand" href="index.html">FedData</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
+  <a href="index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="news/index.html">News</a>
 </li>
       </ul>
       
@@ -88,48 +84,81 @@ download_nhd_subregion returns the path to the downloaded zip file." />
       </header>
 
       <div class="row">
-  <div class="col-md-9 contents">
+  <div class="contents col-md-12">
     <div class="page-header">
-    <h1>Download a zipped NHD HUC4 subregion.</h1>
+      <h1>/Users/bocinsky/git/FedData/NEWS.md</h1>
     </div>
 
-    
-    <p>HUC4 subregion are specified by a unique character string, best obtained using the <code><a href='get_huc4.html'>get_huc4</a></code> function.
-<code>download_nhd_subregion</code> returns the path to the downloaded zip file.</p>
-    
 
-    <pre class="usage"><span class='fu'>download_nhd_subregion</span>(<span class='no'>area</span>, <span class='no'>raw.dir</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>area</th>
-      <td><p>A 4-character string indicating the HUC4 NHD subregion to download.</p></td>
-    </tr>
-    <tr>
-      <th>raw.dir</th>
-      <td><p>A character string indicating where raw downloaded files should be put.
-The directory will be created if missing.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A character string representing the full local path of the downloaded zip file.</p>
-    
-
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-          </ul>
-
-  </div>
+<div class="section level1">
+<h1>FedData 2.5.2</h1>
+<ul>
+<li>Updated NHD HUC4 to copy stored on Github.</li>
+<li>Fixed bug in ITRDB that caused some chronologies not to be read.</li>
+</ul>
 </div>
+<div class="section level1">
+<h1>FedData 2.5.1</h1>
+<ul>
+<li>Switch to laze-loading data.</li>
+<li>Updated NHD paths to new National Map directory structure.</li>
+</ul>
+</div>
+<div class="section level1">
+<h1>FedData 2.5.0</h1>
+<ul>
+<li>Added functions for the National Land Cover Database.</li>
+</ul>
+</div>
+<div class="section level1">
+<h1>FedData 2.4.7</h1>
+<ul>
+<li>SSURGO fixed test where supplying an unavailable survey area now returns NULL instead of an error.</li>
+<li>SSURGO zip directory encoding changes as of late October 2017 forced changes in the FedData:::get_ssurgo_study_area function.</li>
+<li>Fixed issue where NHD template wouldn’t load because they added a jpeg preview to the directory.</li>
+</ul>
+</div>
+<div class="section level1">
+<h1>FedData 2.4.6</h1>
+<ul>
+<li>DAYMET functions now do <em>not</em> operate in parallel. This was breaking the download functions.</li>
+<li>Final update for version 2 of FedData.</li>
+<li>Accepted to ROpenSci! Migrating to the ROpenSci organization on GitHub.</li>
+</ul>
+</div>
+<div class="section level1">
+<h1>FedData 2.4.3</h1>
+<ul>
+<li>writeOGR for SSURGO and NHD were failing on Windows when the <code>extraction.dir</code> included a trailing slash. Paths are now normalized to remove the trailing slash.</li>
+</ul>
+</div>
+<div class="section level1">
+<h1>FedData 2.4.2</h1>
+<ul>
+<li>Updated the <code>get_ned</code> function to provide more useful errors and warnings when downloads are unsuccessful.</li>
+</ul>
+</div>
+<div class="section level1">
+<h1>FedData 2.4.1</h1>
+<ul>
+<li>Added pkgdown site.</li>
+<li>SSURGO functions (e.g., <code>get_ssurgo</code>) now doesn’t bomb on large (&gt; 1 billion sq meter) requests. Now, the area of interest is broken into smaller chunks to build the download list.</li>
+</ul>
+</div>
+<div class="section level1">
+<h1>FedData 2.4.0</h1>
+<ul>
+<li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
+<li>Updated DAYMET functions to fix a bug that downloaded only one tile at a time.</li>
+<li>Linted all code.</li>
+</ul>
+</div>
+
+
+  </div>
+
+</div>
+
 
       <footer>
       <div class="copyright">

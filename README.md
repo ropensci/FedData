@@ -1,60 +1,97 @@
 
-[![cran version](http://www.r-pkg.org/badges/version/FedData)](https://cran.r-project.org/package=FedData) [![CRAN downloads per month](http://cranlogs.r-pkg.org/badges/FedData)](https://github.com/metacran/cranlogs.app) [![CRAN downloads](http://cranlogs.r-pkg.org/badges/grand-total/FedData)](https://github.com/metacran/cranlogs.app) [![Build Status](https://api.travis-ci.org/ropensci/FedData.png)](https://travis-ci.org/ropensci/FedData) <!-- [![Coverage Status](https://img.shields.io/codecov/c/github/ropensci/FedData/master.svg)](https://codecov.io/github/ropensci/FedData?branch=master) --> [![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.596344.svg)](https://doi.org/10.5281/zenodo.596344) [![ROpenSci Status](https://badges.ropensci.org/13_status.svg)](https://github.com/ropensci/onboarding/issues/13)
+[![cran
+version](https://www.r-pkg.org/badges/version/FedData)](https://cran.r-project.org/package=FedData)
+[![CRAN downloads per
+month](https://cranlogs.r-pkg.org/badges/FedData)](https://github.com/metacran/cranlogs.app)
+[![CRAN
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/FedData)](https://github.com/metacran/cranlogs.app)
+[![Build
+Status](https://api.travis-ci.org/ropensci/FedData.png)](https://travis-ci.org/ropensci/FedData)
+<!-- [![Coverage Status](https://img.shields.io/codecov/c/github/ropensci/FedData/master.svg)](https://codecov.io/github/ropensci/FedData?branch=master) -->
+[![Zenodo
+DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.596344.svg)](https://doi.org/10.5281/zenodo.596344)
+[![ROpenSci
+Status](https://badges.ropensci.org/13_status.svg)](https://github.com/ropensci/onboarding/issues/13)
 
-`FedData` is an *R* package implementing functions to automate downloading geospatial data available from several federated data sources (mainly sources maintained by the US Federal government).
+`FedData` is an *R* package implementing functions to automate
+downloading geospatial data available from several federated data
+sources (mainly sources maintained by the US Federal government).
 
-**FedData version 2.5 will be the final minor CRAN release of FedData 2. FedData 3 will be released in the coming months, but some code built on FedData 2 will not be compatible with FedData 3.**
+**FedData version 2.5 will be the final minor CRAN release of FedData 2.
+FedData 3 will be released in the coming months, but some code built on
+FedData 2 will not be compatible with FedData 3.**
 
 Currently, the package enables extraction from seven datasets:
 
--   The [National Elevation Dataset (NED)](http://ned.usgs.gov) digital elevation models (1 and 1/3 arc-second; USGS)
--   The [National Hydrography Dataset (NHD)](http://nhd.usgs.gov) (USGS)
--   The [Soil Survey Geographic (SSURGO) database](http://websoilsurvey.sc.egov.usda.gov/) from the National Cooperative Soil Survey (NCSS), which is led by the Natural Resources Conservation Service (NRCS) under the USDA
--   The [Global Historical Climatology Network (GHCN)](http://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn), coordinated by National Climatic Data Center at NOAA
--   The [Daymet](https://daymet.ornl.gov/) gridded estimates of daily weather parameters for North America, version 3, available from the Oak Ridge National Laboratory's Distributed Active Archive Center (DAAC)
--   The [International Tree Ring Data Bank (ITRDB)](http://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/tree-ring), coordinated by National Climatic Data Center at NOAA
--   The [National Land Cover Database (NLCD)](https://www.mrlc.gov/) from 2011, 2006, and 2001
+  - The [National Elevation Dataset (NED)](http://ned.usgs.gov) digital
+    elevation models (1 and 1/3 arc-second; USGS)
+  - The [National Hydrography Dataset (NHD)](http://nhd.usgs.gov) (USGS)
+  - The [Soil Survey Geographic (SSURGO)
+    database](http://websoilsurvey.sc.egov.usda.gov/) from the National
+    Cooperative Soil Survey (NCSS), which is led by the Natural
+    Resources Conservation Service (NRCS) under the USDA
+  - The [Global Historical Climatology Network
+    (GHCN)](http://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn),
+    coordinated by National Climatic Data Center at NOAA
+  - The [Daymet](https://daymet.ornl.gov/) gridded estimates of daily
+    weather parameters for North America, version 3, available from the
+    Oak Ridge National Laboratory’s Distributed Active Archive Center
+    (DAAC)
+  - The [International Tree Ring Data Bank
+    (ITRDB)](http://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/tree-ring),
+    coordinated by National Climatic Data Center at NOAA
+  - The [National Land Cover Database (NLCD)](https://www.mrlc.gov/)
+    from 2011, 2006, and 2001
 
-This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the [**sp**](https://cran.r-project.org/package=sp), [**raster**](https://cran.r-project.org/package=raster), and [**rgdal**](https://cran.r-project.org/package=rgdal) packages.
+This package is designed with the large-scale geographic information
+system (GIS) use-case in mind: cases where the use of dynamic
+web-services is impractical due to the scale (spatial and/or temporal)
+of analysis. It functions primarily as a means of downloading tiled or
+otherwise spatially-defined datasets; additionally, it can preprocess
+those datasets by extracting data within an area of interest (AoI),
+defined spatially. It relies heavily on the
+[**sp**](https://cran.r-project.org/package=sp),
+[**raster**](https://cran.r-project.org/package=raster), and
+[**rgdal**](https://cran.r-project.org/package=rgdal) packages.
 
-This package has been built and tested on a source (Homebrew) install of *R* on macOS 10.13 (High Sierra), and has been successfully run on Ubuntu 14.04.5 LTS (Trusty), Ubuntu 16.04.1 LTS (Xenial) and binary installs of *R* on Mac OS 10.13 and Windows 10.
+This package has been built and tested on a source (Homebrew) install of
+*R* on macOS 10.13 (High Sierra), and has been successfully run on
+Ubuntu 14.04.5 LTS (Trusty), Ubuntu 16.04.1 LTS (Xenial) and binary
+installs of *R* on Mac OS 10.13 and Windows 10.
 
 ### Development
 
--   [Kyle Bocinsky](http://bocinsky.io) - Crow Canyon Archaeological Center, Cortez, CO
+  - [Kyle Bocinsky](http://bocinsky.io) - Crow Canyon Archaeological
+    Center, Cortez, CO
 
 ### Contributors
 
--   Dylan Beaudette - USDA-NRCS Soil Survey Office, Sonora, CA
--   Scott Chamberlain - ROpenSci and Museum of Paleontology at UC Berkeley
+  - Dylan Beaudette - USDA-NRCS Soil Survey Office, Sonora, CA
+  - Scott Chamberlain - ROpenSci and Museum of Paleontology at UC
+    Berkeley
 
 ### Install `FedData`
 
--   From CRAN:
-
+  - From CRAN:
+    
     ``` r
     install.packages('FedData')
     ```
 
--   Development version from GitHub:
-
+  - Development version from GitHub:
+    
     ``` r
     install.packages("devtools")
     devtools::install_github("ropensci/FedData")
     ```
 
--   Linux (Ubuntu 14.04.5 or 16.04.1):
-
-    First, in terminal:
-
-    ``` bash
-    sudo add-apt-repository ppa:ubuntugis/ppa -y
-    sudo apt-get update -q
-    sudo apt-get install libssl-dev libcurl4-openssl-dev netcdf-bin libnetcdf-dev gdal-bin libgdal-dev
-    ```
-
+  - Linux (Ubuntu 14.04.5 or 16.04.1):
+    
+    First, in terminal: `bash sudo add-apt-repository ppa:ubuntugis/ppa
+    -y sudo apt-get update -q sudo apt-get install libssl-dev
+    libcurl4-openssl-dev netcdf-bin libnetcdf-dev gdal-bin libgdal-dev`
     Then, in R:
-
+    
     ``` r
     update.packages("survival")
     install.packages("devtools")
@@ -63,7 +100,8 @@ This package has been built and tested on a source (Homebrew) install of *R* on 
 
 ### Demonstration
 
-This demonstration script is available as an R Markdown document in the GitHub repository: <https://github.com/ropensci/FedData>.
+This demonstration script is available as an R Markdown document in the
+GitHub repository: <https://github.com/ropensci/FedData>.
 
 #### Load `FedData` and define a study area
 
@@ -89,7 +127,7 @@ NED <- get_ned(template = vepPolygon,
 raster::plot(NED)
 ```
 
-![](inst/image/README-unnamed-chunk-6-1.png)
+![](inst/image/README-unnamed-chunk-6-1.png)<!-- -->
 
 #### Get and plot the Daymet dataset for the study area
 
@@ -104,7 +142,7 @@ DAYMET <- get_daymet(template = vepPolygon,
 raster::plot(DAYMET$tmax$X1985.10.23)
 ```
 
-![](inst/image/README-unnamed-chunk-7-1.png)
+![](inst/image/README-unnamed-chunk-7-1.png)<!-- -->
 
 #### Get and plot the daily GHCN precipitation data for the study area
 
@@ -126,7 +164,7 @@ legend('bottomleft',
        legend="GHCN Precipitation Records")
 ```
 
-![](inst/image/README-unnamed-chunk-8-1.png)
+![](inst/image/README-unnamed-chunk-8-1.png)<!-- -->
 
 #### Get and plot the daily GHCN temperature data for the study area
 
@@ -150,7 +188,7 @@ legend('bottomleft',
        legend = "GHCN Temperature Records")
 ```
 
-![](inst/image/README-unnamed-chunk-9-1.png)
+![](inst/image/README-unnamed-chunk-9-1.png)<!-- -->
 
 #### Get and plot the National Hydrography Dataset for the study area
 
@@ -167,7 +205,7 @@ NHD %>%
          add = TRUE)
 ```
 
-![](inst/image/README-unnamed-chunk-10-1.png)
+![](inst/image/README-unnamed-chunk-10-1.png)<!-- -->
 
 #### Get and plot the NRCS SSURGO data for the study area
 
@@ -187,7 +225,7 @@ plot(SSURGO.VEPIIN$spatial,
      add = TRUE)
 ```
 
-![](inst/image/README-unnamed-chunk-11-1.png)
+![](inst/image/README-unnamed-chunk-11-1.png)<!-- -->
 
 #### Get and plot the NRCS SSURGO data for particular soil survey areas
 
@@ -210,7 +248,7 @@ plot(SSURGO.areas.CO675,
      add = TRUE)
 ```
 
-![](inst/image/README-unnamed-chunk-12-1.png)
+![](inst/image/README-unnamed-chunk-12-1.png)<!-- -->
 
 #### Get and plot the ITRDB chronology locations in the study area
 
@@ -230,7 +268,7 @@ legend('bottomleft',
        legend = "ITRDB chronologies")
 ```
 
-![](inst/image/README-unnamed-chunk-13-1.png)
+![](inst/image/README-unnamed-chunk-13-1.png)<!-- -->
 
 #### Get and plot the National Land Cover Dataset for the study area
 
@@ -245,7 +283,7 @@ NLCD <- get_nlcd(template = vepPolygon,
 raster::plot(NLCD)
 ```
 
-![](inst/image/README-unnamed-chunk-14-1.png)![](inst/image/README-unnamed-chunk-14-2.png)
+![](inst/image/README-unnamed-chunk-14-1.png)<!-- -->![](inst/image/README-unnamed-chunk-14-2.png)<!-- -->
 
 ``` r
 
@@ -258,7 +296,7 @@ NLCD_canopy <- get_nlcd(template = vepPolygon,
 raster::plot(NLCD_canopy)
 ```
 
-![](inst/image/README-unnamed-chunk-14-3.png)![](inst/image/README-unnamed-chunk-14-4.png)
+![](inst/image/README-unnamed-chunk-14-3.png)<!-- -->![](inst/image/README-unnamed-chunk-14-4.png)<!-- -->
 
 ``` r
 
@@ -270,14 +308,20 @@ NLCD_impervious <- get_nlcd(template = vepPolygon,
 raster::plot(NLCD_impervious)
 ```
 
-![](inst/image/README-unnamed-chunk-14-5.png)![](inst/image/README-unnamed-chunk-14-6.png)
+![](inst/image/README-unnamed-chunk-14-5.png)<!-- -->![](inst/image/README-unnamed-chunk-14-6.png)<!-- -->
 
-------------------------------------------------------------------------
+-----
 
 ### Acknowledgements
 
-This package is a product of SKOPE ([Synthesizing Knowledge of Past Environments](http://www.openskope.org)) and the Village Ecodynamics Project. This software is licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This package is a product of SKOPE ([Synthesizing Knowledge of Past
+Environments](http://www.openskope.org)) and the Village Ecodynamics
+Project. This software is licensed under the [MIT
+license](https://opensource.org/licenses/MIT).
 
-FedData was reviewed for [rOpenSci](https://ropensci.org) by [@jooolia](https://github.com/jooolia), and was greatly improved as a result. [rOpenSci](https://ropensci.org) onboarding was coordinated by [@sckott](https://github.com/sckott).
+FedData was reviewed for [rOpenSci](https://ropensci.org) by
+[@jooolia](https://github.com/jooolia), and was greatly improved as a
+result. [rOpenSci](https://ropensci.org) onboarding was coordinated by
+[@sckott](https://github.com/sckott).
 
 <!-- [![ropensci_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org) -->
