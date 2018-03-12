@@ -27,8 +27,7 @@ BugReports: https://github.com/ropensci/FedData/issues
 License: MIT + file LICENSE
 Depends:
     R (>= 3.2.0),
-    sp,
-    sf
+    sp
 Imports:
     data.table,
     devtools,
@@ -46,7 +45,8 @@ Imports:
     magrittr,
     foreach,
     ncdf4,
-    stringr
+    stringr,
+    sf
 Repository: CRAN
 NeedsCompilation: no
 RoxygenNote: 6.0.1
