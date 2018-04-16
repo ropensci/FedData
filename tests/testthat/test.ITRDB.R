@@ -3,10 +3,10 @@ library(httr)
 library(curl)
 context("International Tree Ring Data Bank tests")
 
-test_that("The ITRDB is available at the correct URL", {
-  expect_false(suppressWarnings(httr::http_error("ftp://ftp.ncdc.noaa.gov/pub/data/paleo/treering/chronologies/")))
-  expect_error(suppressWarnings(httr::http_error("ftp://ftp.ncdc.noaa.gov/pub/data/paleo/treering/blah/")))
-})
+# test_that("The ITRDB is available at the correct URL", {
+#   expect_false(suppressWarnings(httr::http_error("ftp://ftp.ncdc.noaa.gov/pub/data/paleo/treering/chronologies/")))
+#   expect_error(suppressWarnings(httr::http_error("ftp://ftp.ncdc.noaa.gov/pub/data/paleo/treering/blah/")))
+# })
 
 test_that("ITRDB version files are available", {
   opts <- list(
