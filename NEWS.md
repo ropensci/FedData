@@ -1,3 +1,6 @@
+# FedData 2.5.3
+* Added httr to package imports.
+
 # FedData 2.5.2
 * Updated NHD HUC4 to copy stored on Github.
 * Fixed bug in ITRDB that caused some chronologies not to be read.

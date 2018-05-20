@@ -14,8 +14,8 @@ Description: Functions to automate downloading geospatial data available from
     for North America, version 3, available from the Oak Ridge National Laboratory's
     Distributed Active Archive Center (DAAC); the International Tree Ring Data Bank; 
     and the National Land Cover Database (NLCD).
-Version: 2.5.2
-Date: 2018-3-12
+Version: 2.5.3
+Date: 2018-5-20
 Author: R. Kyle Bocinsky [aut, cre], Dylan Beaudette [ctb], Scott Chamberlain [ctb]
 Authors@R: c(person(given = c("R.", "Kyle"), family = "Bocinsky",
     role = c("aut", "cre"), email = "bocinsky@gmail.com"),
@@ -46,7 +46,8 @@ Imports:
     foreach,
     ncdf4,
     stringr,
-    sf
+    sf,
+    httr
 Repository: CRAN
 NeedsCompilation: no
 RoxygenNote: 6.0.1
