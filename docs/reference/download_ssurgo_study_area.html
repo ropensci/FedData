@@ -25,13 +25,16 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Download a zipped directory containing the spatial and tabular data for a SSURGO study area. — download_ssurgo_study_area" />
 
 <meta property="og:description" content="download_ssurgo_study_area first tries to download data including a state-specific Access
 template, then the general US template." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +57,12 @@ template, then the general US template." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">FedData</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">FedData</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.5.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -68,7 +75,7 @@ template, then the general US template." />
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -80,6 +87,7 @@ template, then the general US template." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -87,20 +95,24 @@ template, then the general US template." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Download a zipped directory containing the spatial and tabular data for a SSURGO study area.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/SSURGO_FUNCTIONS.R'><code>R/SSURGO_FUNCTIONS.R</code></a></small>
+    <div class="hidden name"><code>download_ssurgo_study_area.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>download_ssurgo_study_area</code> first tries to download data including a state-specific Access
 template, then the general US template.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>download_ssurgo_study_area</span>(<span class='no'>area</span>, <span class='no'>date</span>, <span class='no'>raw.dir</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -146,6 +158,8 @@ area for these data. This information may be gleaned from the SSURGO Inventory (
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

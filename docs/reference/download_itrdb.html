@@ -25,8 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Download the latest version of the ITRDB. — download_itrdb" />
 
 <meta property="og:description" content="Downloads and parses the latest zipped (numbered) version of the ITRDB.
@@ -35,6 +36,8 @@ dplR library. The principle changes are better parsing of metadata, and support
 for the Schweingruber-type Tucson format. Chronologies that are unable to be read
 are reported to the user." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -57,8 +60,12 @@ are reported to the user." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">FedData</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">FedData</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.5.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -71,7 +78,7 @@ are reported to the user." />
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -83,6 +90,7 @@ are reported to the user." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -90,12 +98,15 @@ are reported to the user." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Download the latest version of the ITRDB.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/ITRDB_FUNCTIONS.R'><code>R/ITRDB_FUNCTIONS.R</code></a></small>
+    <div class="hidden name"><code>download_itrdb.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Downloads and parses the latest zipped (numbered) version of the ITRDB.
 This function includes improvements to the <code><a href='read_crn.html'>read_crn</a></code> function from the 
@@ -103,10 +114,11 @@ This function includes improvements to the <code><a href='read_crn.html'>read_cr
 for the Schweingruber-type Tucson format. Chronologies that are unable to be read
 are reported to the user.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>download_itrdb</span>(<span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='st'>"./RAW/ITRDB/"</span>, <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -148,6 +160,8 @@ The directory will be created if missing. Defaults to './RAW/ITRDB/'.</p></td>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

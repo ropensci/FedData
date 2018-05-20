@@ -25,8 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Download the latest version of the ITRDB, and extract given parameters. — get_itrdb" />
 
 <meta property="og:description" content="get_itrdb returns a named list of length 3:
@@ -36,6 +37,8 @@ and names of extracted ITRDB chronologies,
 'depths': A matrix of tree-ring sample depths.
 " />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -58,8 +61,12 @@ and names of extracted ITRDB chronologies,
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">FedData</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">FedData</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.5.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -72,7 +79,7 @@ and names of extracted ITRDB chronologies,
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -84,6 +91,7 @@ and names of extracted ITRDB chronologies,
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -91,12 +99,15 @@ and names of extracted ITRDB chronologies,
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Download the latest version of the ITRDB, and extract given parameters.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/ITRDB_FUNCTIONS.R'><code>R/ITRDB_FUNCTIONS.R</code></a></small>
+    <div class="hidden name"><code>get_itrdb.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>get_itrdb</code> returns a named list of length 3:</p><ol>
 <li><p>'metadata': A data.table or <code>SpatialPointsDataFrame</code> (if <code>makeSpatial==TRUE</code>) of the locations 
@@ -105,6 +116,7 @@ and names of extracted ITRDB chronologies,</p></li>
 <li><p>'depths': A matrix of tree-ring sample depths.</p></li>
 </ol>
     
+    </div>
 
     <pre class="usage"><span class='fu'>get_itrdb</span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>recon.years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>calib.years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>species</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>measurement.type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -112,7 +124,7 @@ and names of extracted ITRDB chronologies,</p></li>
   <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'>ifelse</span>(!<span class='fu'>is.null</span>(<span class='no'>label</span>), <span class='fu'>paste0</span>(<span class='st'>"./EXTRACTIONS/"</span>, <span class='no'>label</span>,
   <span class='st'>"/ITRDB"</span>), <span class='st'>"./EXTRACTIONS/ITRDB"</span>), <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -232,6 +244,8 @@ The directory will be created if missing. Defaults to './EXTRACTIONS/ITRDB/'.</p
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

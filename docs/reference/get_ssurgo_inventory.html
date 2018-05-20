@@ -25,13 +25,16 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Download and crop a shapefile of the SSURGO study areas. — get_ssurgo_inventory" />
 
 <meta property="og:description" content="get_ssurgo_inventory returns a SpatialPolygonsDataFrame of the SSURGO study areas within
 the specified template. If template is not provided, returns the entire SSURGO inventory of study areas." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +57,12 @@ the specified template. If template is not provided, returns the entire SSURGO i
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">FedData</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">FedData</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.5.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -68,7 +75,7 @@ the specified template. If template is not provided, returns the entire SSURGO i
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -80,6 +87,7 @@ the specified template. If template is not provided, returns the entire SSURGO i
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -87,20 +95,24 @@ the specified template. If template is not provided, returns the entire SSURGO i
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Download and crop a shapefile of the SSURGO study areas.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/SSURGO_FUNCTIONS.R'><code>R/SSURGO_FUNCTIONS.R</code></a></small>
+    <div class="hidden name"><code>get_ssurgo_inventory.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>get_ssurgo_inventory</code> returns a <code>SpatialPolygonsDataFrame</code> of the SSURGO study areas within
 the specified <code>template</code>. If template is not provided, returns the entire SSURGO inventory of study areas.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>get_ssurgo_inventory</span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>raw.dir</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -144,6 +156,8 @@ the specified <code>template</code>.</p>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

@@ -25,13 +25,16 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Download a zipped tile from the National Land Cover Database. — download_nlcd_tile" />
 
 <meta property="og:description" content="Tiles are 3x3 degree.
 Tiles are downloaded in zipped geotiff format. download_nlcd_tile returns the path to the downloaded zip file." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +57,12 @@ Tiles are downloaded in zipped geotiff format. download_nlcd_tile returns the pa
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">FedData</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">FedData</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.5.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -68,7 +75,7 @@ Tiles are downloaded in zipped geotiff format. download_nlcd_tile returns the pa
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -80,6 +87,7 @@ Tiles are downloaded in zipped geotiff format. download_nlcd_tile returns the pa
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -87,20 +95,24 @@ Tiles are downloaded in zipped geotiff format. download_nlcd_tile returns the pa
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Download a zipped tile from the National Land Cover Database.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/NLCD_FUNCTIONS.R'><code>R/NLCD_FUNCTIONS.R</code></a></small>
+    <div class="hidden name"><code>download_nlcd_tile.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Tiles are 3x3 degree.
 Tiles are downloaded in zipped geotiff format. <code>download_nlcd_tile</code> returns the path to the downloaded zip file.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>download_nlcd_tile</span>(<span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2011</span>, <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"landcover"</span>, <span class='no'>tileName</span>, <span class='no'>raw.dir</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -150,6 +162,8 @@ The directory will be created if missing. Defaults to './RAW/NLCD/'.</p></td>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

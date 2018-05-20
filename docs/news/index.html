@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>All news • FedData</title>
+<title>Changelog • FedData</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,9 +25,12 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
-<meta property="og:title" content="All news" />
+
+
+
+<meta property="og:title" content="Changelog" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -50,8 +53,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">FedData</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">FedData</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.5.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -64,7 +71,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -76,6 +83,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -83,93 +91,118 @@
       
       </header>
 
-      <div class="row">
-
-  <div class="col-md-9">
+<div class="row">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Change log <small>All releases</small></h1>
+      <h1>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/ropensci/FedData/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="contents">
-    <div class="section level1">
-<h1>FedData 2.5.2</h1>
+    <div id="feddata-2-5-3" class="section level1">
+<h1 class="page-header">
+<a href="#feddata-2-5-3" class="anchor"></a>FedData 2.5.3<small> Unreleased </small>
+</h1>
+<ul>
+<li>Added httr to package imports.</li>
+</ul>
+</div>
+    <div id="feddata-2-5-2" class="section level1">
+<h1 class="page-header">
+<a href="#feddata-2-5-2" class="anchor"></a>FedData 2.5.2<small> 2018-03-12 </small>
+</h1>
 <ul>
 <li>Updated NHD HUC4 to copy stored on Github.</li>
 <li>Fixed bug in ITRDB that caused some chronologies not to be read.</li>
 </ul>
 </div>
-    <div class="section level1">
-<h1>FedData 2.5.1</h1>
+    <div id="feddata-2-5-1" class="section level1">
+<h1 class="page-header">
+<a href="#feddata-2-5-1" class="anchor"></a>FedData 2.5.1<small> 2018-01-24 </small>
+</h1>
 <ul>
 <li>Switch to laze-loading data.</li>
 <li>Updated NHD paths to new National Map directory structure.</li>
 </ul>
 </div>
-    <div class="section level1">
-<h1>FedData 2.5.0</h1>
+    <div id="feddata-2-5-0" class="section level1">
+<h1 class="page-header">
+<a href="#feddata-2-5-0" class="anchor"></a>FedData 2.5.0<small> 2017-12-15 </small>
+</h1>
 <ul>
 <li>Added functions for the National Land Cover Database.</li>
 </ul>
 </div>
-    <div class="section level1">
-<h1>FedData 2.4.7</h1>
+    <div id="feddata-2-4-7" class="section level1">
+<h1 class="page-header">
+<a href="#feddata-2-4-7" class="anchor"></a>FedData 2.4.7<small> 2017-11-20 </small>
+</h1>
 <ul>
 <li>SSURGO fixed test where supplying an unavailable survey area now returns NULL instead of an error.</li>
 <li>SSURGO zip directory encoding changes as of late October 2017 forced changes in the FedData:::get_ssurgo_study_area function.</li>
 <li>Fixed issue where NHD template wouldn’t load because they added a jpeg preview to the directory.</li>
 </ul>
 </div>
-    <div class="section level1">
-<h1>FedData 2.4.6</h1>
+    <div id="feddata-2-4-6" class="section level1">
+<h1 class="page-header">
+<a href="#feddata-2-4-6" class="anchor"></a>FedData 2.4.6<small> 2017-08-18 </small>
+</h1>
 <ul>
 <li>DAYMET functions now do <em>not</em> operate in parallel. This was breaking the download functions.</li>
 <li>Final update for version 2 of FedData.</li>
 <li>Accepted to ROpenSci! Migrating to the ROpenSci organization on GitHub.</li>
 </ul>
 </div>
-    <div class="section level1">
-<h1>FedData 2.4.3</h1>
+    <div id="feddata-2-4-3" class="section level1">
+<h1 class="page-header">
+<a href="#feddata-2-4-3" class="anchor"></a>FedData 2.4.3<small> Unreleased </small>
+</h1>
 <ul>
 <li>writeOGR for SSURGO and NHD were failing on Windows when the <code>extraction.dir</code> included a trailing slash. Paths are now normalized to remove the trailing slash.</li>
 </ul>
 </div>
-    <div class="section level1">
-<h1>FedData 2.4.2</h1>
+    <div id="feddata-2-4-2" class="section level1">
+<h1 class="page-header">
+<a href="#feddata-2-4-2" class="anchor"></a>FedData 2.4.2<small> Unreleased </small>
+</h1>
 <ul>
 <li>Updated the <code>get_ned</code> function to provide more useful errors and warnings when downloads are unsuccessful.</li>
 </ul>
 </div>
-    <div class="section level1">
-<h1>FedData 2.4.1</h1>
+    <div id="feddata-2-4-1" class="section level1">
+<h1 class="page-header">
+<a href="#feddata-2-4-1" class="anchor"></a>FedData 2.4.1<small> Unreleased </small>
+</h1>
 <ul>
 <li>Added pkgdown site.</li>
 <li>SSURGO functions (e.g., <code>get_ssurgo</code>) now doesn’t bomb on large (&gt; 1 billion sq meter) requests. Now, the area of interest is broken into smaller chunks to build the download list.</li>
 </ul>
 </div>
-    <div class="section level1">
-<h1>FedData 2.4.0</h1>
+    <div id="feddata-2-4-0" class="section level1">
+<h1 class="page-header">
+<a href="#feddata-2-4-0" class="anchor"></a>FedData 2.4.0<small> 2017-01-20 </small>
+</h1>
 <ul>
 <li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
 <li>Updated DAYMET functions to fix a bug that downloaded only one tile at a time.</li>
 <li>Linted all code.</li>
 </ul>
 </div>
-    </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#NA">2.5.2</a></li>
-        <li><a href="#NA">2.5.1</a></li>
-        <li><a href="#NA">2.5.0</a></li>
-        <li><a href="#NA">2.4.7</a></li>
-        <li><a href="#NA">2.4.6</a></li>
-        <li><a href="#NA">2.4.3</a></li>
-        <li><a href="#NA">2.4.2</a></li>
-        <li><a href="#NA">2.4.1</a></li>
-        <li><a href="#NA">2.4.0</a></li>
+        <li><a href="#feddata-2-5-3">2.5.3</a></li>
+        <li><a href="#feddata-2-5-2">2.5.2</a></li>
+        <li><a href="#feddata-2-5-1">2.5.1</a></li>
+        <li><a href="#feddata-2-5-0">2.5.0</a></li>
+        <li><a href="#feddata-2-4-7">2.4.7</a></li>
+        <li><a href="#feddata-2-4-6">2.4.6</a></li>
+        <li><a href="#feddata-2-4-3">2.4.3</a></li>
+        <li><a href="#feddata-2-4-2">2.4.2</a></li>
+        <li><a href="#feddata-2-4-1">2.4.1</a></li>
+        <li><a href="#feddata-2-4-0">2.4.0</a></li>
       </ul>
     </div>
   </div>
@@ -187,6 +220,8 @@
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

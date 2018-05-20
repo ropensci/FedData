@@ -25,14 +25,17 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Download and extract the daily data for a GHCN weather station. — get_ghcn_daily_station" />
 
 <meta property="og:description" content="get_ghcn_daily_station returns a named list of data.frames, one for
 each elements. If elements is undefined, it returns all available weather
 tables for the station" />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -55,8 +58,12 @@ tables for the station" />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">FedData</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">FedData</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.5.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -69,7 +76,7 @@ tables for the station" />
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -81,6 +88,7 @@ tables for the station" />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -88,22 +96,26 @@ tables for the station" />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Download and extract the daily data for a GHCN weather station.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/GHCN_FUNCTIONS.R'><code>R/GHCN_FUNCTIONS.R</code></a></small>
+    <div class="hidden name"><code>get_ghcn_daily_station.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>get_ghcn_daily_station</code> returns a named list of <code>data.frames</code>, one for
 each <code>elements</code>. If <code>elements</code> is undefined, it returns all available weather
 tables for the station</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>get_ghcn_daily_station</span>(<span class='no'>ID</span>, <span class='kw'>elements</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>raw.dir</span>,
   <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -112,142 +124,142 @@ tables for the station</p>
     </tr>
     <tr>
       <th>elements</th>
-      <td><p>A character vector of elements to extract.
-The five core elements are:
-PRCP = Precipitation (tenths of mm)
-SNOW = Snowfall (mm)
-SNWD = Snow depth (mm)
-TMAX = Maximum temperature (tenths of degrees C)
-TMIN = Minimum temperature (tenths of degrees C)
-
-The other elements are:</p>  
+      <td><p>A character vector of elements to extract.<br />
+The five core elements are:<br />
+PRCP = Precipitation (tenths of mm)<br />
+SNOW = Snowfall (mm)<br />
+SNWD = Snow depth (mm)<br />
+TMAX = Maximum temperature (tenths of degrees C)<br />
+TMIN = Minimum temperature (tenths of degrees C)<br />
+<br />
+The other elements are:<br /></p>  
 <p>ACMC = Average cloudiness midnight to midnight from 30-second 
-ceilometer data (percent)
+ceilometer data (percent)<br />
 ACMH = Average cloudiness midnight to midnight from 
-manual observations (percent)
+manual observations (percent)<br />
 ACSC = Average cloudiness sunrise to sunset from 30-second 
-ceilometer data (percent)
+ceilometer data (percent)<br />
 ACSH = Average cloudiness sunrise to sunset from manual 
-observations (percent)
-AWDR = Average daily wind direction (degrees)
-AWND = Average daily wind speed (tenths of meters per second)
+observations (percent)<br />
+AWDR = Average daily wind direction (degrees)<br />
+AWND = Average daily wind speed (tenths of meters per second)<br />
 DAEV = Number of days included in the multiday evaporation
-total (MDEV)
+total (MDEV)<br />
 DAPR = Number of days included in the multiday precipitation 
-total (MDPR)
+total (MDPR)<br />
 DASF = Number of days included in the multiday snowfall 
-total (MDSF)
+total (MDSF)<br />
 DATN = Number of days included in the multiday minimum temperature 
-(MDTN)
+(MDTN)<br />
 DATX = Number of days included in the multiday maximum temperature 
-(MDTX)
+(MDTX)<br />
 DAWM = Number of days included in the multiday wind movement
-(MDWM)
+(MDWM)<br />
 DWPR = Number of days with non-zero precipitation included in 
-multiday precipitation total (MDPR)
-EVAP = Evaporation of water from evaporation pan (tenths of mm)
+multiday precipitation total (MDPR)<br />
+EVAP = Evaporation of water from evaporation pan (tenths of mm)<br />
 FMTM = Time of fastest mile or fastest 1-minute wind 
-(hours and minutes, i.e., HHMM)
-FRGB = Base of frozen ground layer (cm)
-FRGT = Top of frozen ground layer (cm)
-FRTH = Thickness of frozen ground layer (cm)
-GAHT = Difference between river and gauge height (cm)
-MDEV = Multiday evaporation total (tenths of mm; use with DAEV)
+(hours and minutes, i.e., HHMM)<br />
+FRGB = Base of frozen ground layer (cm)<br />
+FRGT = Top of frozen ground layer (cm)<br />
+FRTH = Thickness of frozen ground layer (cm)<br />
+GAHT = Difference between river and gauge height (cm)<br />
+MDEV = Multiday evaporation total (tenths of mm; use with DAEV)<br />
 MDPR = Multiday precipitation total (tenths of mm; use with DAPR and 
-                                     DWPR, if available)
-MDSF = Multiday snowfall total 
-MDTN = Multiday minimum temperature (tenths of degrees C; use with DATN)
-MDTX = Multiday maximum temperature (tenths of degrees C; use with DATX)
-MDWM = Multiday wind movement (km)
+                                     DWPR, if available)<br />
+MDSF = Multiday snowfall total <br />
+MDTN = Multiday minimum temperature (tenths of degrees C; use with DATN)<br />
+MDTX = Multiday maximum temperature (tenths of degrees C; use with DATX)<br />
+MDWM = Multiday wind movement (km)<br />
 MNPN = Daily minimum temperature of water in an evaporation pan 
-(tenths of degrees C)
+(tenths of degrees C)<br />
 MXPN = Daily maximum temperature of water in an evaporation pan 
-(tenths of degrees C)
-PGTM = Peak gust time (hours and minutes, i.e., HHMM)
-PSUN = Daily percent of possible sunshine (percent)
+(tenths of degrees C)<br />
+PGTM = Peak gust time (hours and minutes, i.e., HHMM)<br />
+PSUN = Daily percent of possible sunshine (percent)<br />
 SN*# = Minimum soil temperature (tenths of degrees C)
   where * corresponds to a code
 for ground cover and # corresponds to a code for soil 
-depth.
-
-Ground cover codes include the following:
-0 = unknown
-1 = grass
-2 = fallow
-3 = bare ground
-4 = brome grass
-5 = sod
-6 = straw multch
-7 = grass muck
-8 = bare muck
-
-Depth codes include the following:
-1 = 5 cm
-2 = 10 cm
-3 = 20 cm
-4 = 50 cm
-5 = 100 cm
-6 = 150 cm
-7 = 180 cm
-
+depth.<br />
+<br />
+Ground cover codes include the following:<br />
+0 = unknown<br />
+1 = grass<br />
+2 = fallow<br />
+3 = bare ground<br />
+4 = brome grass<br />
+5 = sod<br />
+6 = straw multch<br />
+7 = grass muck<br />
+8 = bare muck<br />
+<br />
+Depth codes include the following:<br />
+1 = 5 cm<br />
+2 = 10 cm<br />
+3 = 20 cm<br />
+4 = 50 cm<br />
+5 = 100 cm<br />
+6 = 150 cm<br />
+7 = 180 cm<br />
+<br />
 SX*# = Maximum soil temperature (tenths of degrees C) 
   where * corresponds to a code for ground cover 
-and # corresponds to a code for soil depth. 
-See SN*# for ground cover and depth codes. 
+and # corresponds to a code for soil depth.<br /> 
+See SN*# for ground cover and depth codes. <br />
 TAVG = Average temperature (tenths of degrees C)
 [Note that TAVG from source 'S' corresponds
 to an average for the period ending at
-2400 UTC rather than local midnight]
-THIC = Thickness of ice on water (tenths of mm)
-TOBS = Temperature at the time of observation (tenths of degrees C)
-TSUN = Daily total sunshine (minutes)
-WDF1 = Direction of fastest 1-minute wind (degrees)
-WDF2 = Direction of fastest 2-minute wind (degrees)
-WDF5 = Direction of fastest 5-second wind (degrees)
-WDFG = Direction of peak wind gust (degrees)
-WDFI = Direction of highest instantaneous wind (degrees)
-WDFM = Fastest mile wind direction (degrees)
-WDMV = 24-hour wind movement (km)
-WESD = Water equivalent of snow on the ground (tenths of mm)
-WESF = Water equivalent of snowfall (tenths of mm)
-WSF1 = Fastest 1-minute wind speed (tenths of meters per second)
-WSF2 = Fastest 2-minute wind speed (tenths of meters per second)
-WSF5 = Fastest 5-second wind speed (tenths of meters per second)
-WSFG = Peak gust wind speed (tenths of meters per second)
-WSFI = Highest instantaneous wind speed (tenths of meters per second)
-WSFM = Fastest mile wind speed (tenths of meters per second)
-WT** = Weather Type where ** has one of the following values:
-  
-01 = Fog, ice fog, or freezing fog (may include heavy fog)
+2400 UTC rather than local midnight]<br />
+THIC = Thickness of ice on water (tenths of mm)<br />
+TOBS = Temperature at the time of observation (tenths of degrees C)<br />
+TSUN = Daily total sunshine (minutes)<br />
+WDF1 = Direction of fastest 1-minute wind (degrees)<br />
+WDF2 = Direction of fastest 2-minute wind (degrees)<br />
+WDF5 = Direction of fastest 5-second wind (degrees)<br />
+WDFG = Direction of peak wind gust (degrees)<br />
+WDFI = Direction of highest instantaneous wind (degrees)<br />
+WDFM = Fastest mile wind direction (degrees)<br />
+WDMV = 24-hour wind movement (km)<br />
+WESD = Water equivalent of snow on the ground (tenths of mm)<br />
+WESF = Water equivalent of snowfall (tenths of mm)<br />
+WSF1 = Fastest 1-minute wind speed (tenths of meters per second)<br />
+WSF2 = Fastest 2-minute wind speed (tenths of meters per second)<br />
+WSF5 = Fastest 5-second wind speed (tenths of meters per second)<br />
+WSFG = Peak gust wind speed (tenths of meters per second)<br />
+WSFI = Highest instantaneous wind speed (tenths of meters per second)<br />
+WSFM = Fastest mile wind speed (tenths of meters per second)<br />
+WT** = Weather Type where ** has one of the following values:<br />
+  <br />
+01 = Fog, ice fog, or freezing fog (may include heavy fog)<br />
 02 = Heavy fog or heaving freezing fog (not always 
-                                        distinguished from fog)
-03 = Thunder
-04 = Ice pellets, sleet, snow pellets, or small hail 
-05 = Hail (may include small hail)
-06 = Glaze or rime 
+                                        distinguished from fog)<br />
+03 = Thunder<br />
+04 = Ice pellets, sleet, snow pellets, or small hail <br />
+05 = Hail (may include small hail)<br />
+06 = Glaze or rime <br />
 07 = Dust, volcanic ash, blowing dust, blowing sand, or 
-blowing obstruction
-08 = Smoke or haze 
-09 = Blowing or drifting snow
-10 = Tornado, waterspout, or funnel cloud 
-11 = High or damaging winds
-12 = Blowing spray
-13 = Mist
-14 = Drizzle
-15 = Freezing drizzle 
-16 = Rain (may include freezing rain, drizzle, and freezing drizzle) 
-17 = Freezing rain 
-18 = Snow, snow pellets, snow grains, or ice crystals
-19 = Unknown source of precipitation 
-21 = Ground fog 
-22 = Ice fog or freezing fog
-
+blowing obstruction<br />
+08 = Smoke or haze <br />
+09 = Blowing or drifting snow<br />
+10 = Tornado, waterspout, or funnel cloud <br />
+11 = High or damaging winds<br />
+12 = Blowing spray<br />
+13 = Mist<br />
+14 = Drizzle<br />
+15 = Freezing drizzle <br />
+16 = Rain (may include freezing rain, drizzle, and freezing drizzle) <br />
+17 = Freezing rain <br />
+18 = Snow, snow pellets, snow grains, or ice crystals<br />
+19 = Unknown source of precipitation <br />
+21 = Ground fog <br />
+22 = Ice fog or freezing fog<br />
+<br />
 WV** = Weather in the Vicinity where ** has one of the following 
-values:
-01 = Fog, ice fog, or freezing fog (may include heavy fog)
-03 = Thunder
-07 = Ash, dust, sand, or other blowing obstruction
-18 = Snow or ice crystals
+values:<br />
+01 = Fog, ice fog, or freezing fog (may include heavy fog)<br />
+03 = Thunder<br />
+07 = Ash, dust, sand, or other blowing obstruction<br />
+18 = Snow or ice crystals<br />
 20 = Rain or snow shower</p></td>
     </tr>
     <tr>
@@ -296,6 +308,8 @@ values:
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

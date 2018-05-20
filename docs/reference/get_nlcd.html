@@ -25,13 +25,16 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Download and crop the National Land Cover Database. — get_nlcd" />
 
 <meta property="og:description" content="get_nlcd returns a RasterLayer of NLCD data cropped to a given
 template study area." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +57,12 @@ template study area." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">FedData</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">FedData</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.5.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -68,7 +75,7 @@ template study area." />
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -80,6 +87,7 @@ template study area." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -87,23 +95,27 @@ template study area." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Download and crop the National Land Cover Database.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/NLCD_FUNCTIONS.R'><code>R/NLCD_FUNCTIONS.R</code></a></small>
+    <div class="hidden name"><code>get_nlcd.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>get_nlcd</code> returns a <code>RasterLayer</code> of NLCD data cropped to a given
 template study area.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>get_nlcd</span>(<span class='no'>template</span>, <span class='no'>label</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2011</span>, <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"landcover"</span>,
   <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='st'>"./RAW/NLCD"</span>, <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='st'>"./EXTRACTIONS/"</span>, <span class='no'>label</span>,
   <span class='st'>"/NLCD"</span>), <span class='kw'>raster.options</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"COMPRESS=DEFLATE"</span>, <span class='st'>"ZLEVEL=9"</span>,
   <span class='st'>"INTERLEAVE=BAND"</span>), <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -191,6 +203,8 @@ The directory will be created if missing. Defaults to './EXTRACTIONS/NLCD/'.</p>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

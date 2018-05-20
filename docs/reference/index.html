@@ -25,9 +25,12 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Function reference" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -50,8 +53,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">FedData</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">FedData</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.5.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -64,7 +71,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -76,6 +83,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -83,106 +91,102 @@
       
       </header>
 
-      <div class="row">
-  <div class="col-md-9">
+<div class="row">
+  <div class="contents col-md-9">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;2.5.2</small>
-      </h1>
+      <h1>Reference</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    <table class="ref-index">
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <colgroup>
+      
+      <col class="alias" />
+      <col class="title" />
+    </colgroup>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="daymet_tiles.html">daymet_tiles</a></code> </p>
-          </td>
-          <td><p>The DAYMET tiles SpatialPolygonsDataFrame.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="get_daymet.html">get_daymet</a></code> </p>
-          </td>
-          <td><p>Download and crop the 1-km DAYMET daily weather dataset.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="get_ghcn_daily.html">get_ghcn_daily</a></code> </p>
-          </td>
-          <td><p>Download and crop the Global Historical Climate Network-Daily data.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="get_itrdb.html">get_itrdb</a></code> </p>
-          </td>
-          <td><p>Download the latest version of the ITRDB, and extract given parameters.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="get_ned.html">get_ned</a></code> </p>
-          </td>
-          <td><p>Download and crop the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="get_nhd.html">get_nhd</a></code> </p>
-          </td>
-          <td><p>Download and crop the National Hydrography Dataset.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="get_nlcd.html">get_nlcd</a></code> </p>
-          </td>
-          <td><p>Download and crop the National Land Cover Database.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="get_ssurgo.html">get_ssurgo</a></code> </p>
-          </td>
-          <td><p>Download and crop data from the NRCS SSURGO soils database.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nlcd_canopy_pam.html">nlcd_canopy_pam</a></code> </p>
-          </td>
-          <td><p>The NLCD canopy PAM attributes.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nlcd_impervious_pam.html">nlcd_impervious_pam</a></code> </p>
-          </td>
-          <td><p>The NLCD impervious PAM attributes.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nlcd_landcover_pam.html">nlcd_landcover_pam</a></code> </p>
-          </td>
-          <td><p>The NLCD landcover PAM attributes.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nlcd_tiles.html">nlcd_tiles</a></code> </p>
-          </td>
-          <td><p>The NLCD tiles SpatialPolygonsDataFrame.</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+    <tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="daymet_tiles.html">daymet_tiles</a></code> </p>
+        </td>
+        <td><p>The DAYMET tiles SpatialPolygonsDataFrame.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_daymet.html">get_daymet()</a></code> </p>
+        </td>
+        <td><p>Download and crop the 1-km DAYMET daily weather dataset.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_ghcn_daily.html">get_ghcn_daily()</a></code> </p>
+        </td>
+        <td><p>Download and crop the Global Historical Climate Network-Daily data.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_itrdb.html">get_itrdb()</a></code> </p>
+        </td>
+        <td><p>Download the latest version of the ITRDB, and extract given parameters.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_ned.html">get_ned()</a></code> </p>
+        </td>
+        <td><p>Download and crop the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_nhd.html">get_nhd()</a></code> </p>
+        </td>
+        <td><p>Download and crop the National Hydrography Dataset.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_nlcd.html">get_nlcd()</a></code> </p>
+        </td>
+        <td><p>Download and crop the National Land Cover Database.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_ssurgo.html">get_ssurgo()</a></code> </p>
+        </td>
+        <td><p>Download and crop data from the NRCS SSURGO soils database.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="nlcd_canopy_pam.html">nlcd_canopy_pam</a></code> </p>
+        </td>
+        <td><p>The NLCD canopy PAM attributes.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="nlcd_impervious_pam.html">nlcd_impervious_pam</a></code> </p>
+        </td>
+        <td><p>The NLCD impervious PAM attributes.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="nlcd_landcover_pam.html">nlcd_landcover_pam</a></code> </p>
+        </td>
+        <td><p>The NLCD landcover PAM attributes.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="nlcd_tiles.html">nlcd_tiles</a></code> </p>
+        </td>
+        <td><p>The NLCD tiles SpatialPolygonsDataFrame.</p></td>
+      </tr>
+    </tbody>
+    </table>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -204,6 +208,8 @@
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

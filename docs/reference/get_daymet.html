@@ -25,13 +25,16 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Download and crop the 1-km DAYMET daily weather dataset. — get_daymet" />
 
 <meta property="og:description" content="get_daymet returns a RasterBrick of weather data cropped to a given
 template study area." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +57,12 @@ template study area." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">FedData</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">FedData</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.5.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -68,7 +75,7 @@ template study area." />
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -80,6 +87,7 @@ template study area." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -87,22 +95,26 @@ template study area." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Download and crop the 1-km DAYMET daily weather dataset.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/DAYMET_FUNCTIONS.R'><code>R/DAYMET_FUNCTIONS.R</code></a></small>
+    <div class="hidden name"><code>get_daymet.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>get_daymet</code> returns a <code>RasterBrick</code> of weather data cropped to a given
 template study area.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>get_daymet</span>(<span class='no'>template</span>, <span class='no'>label</span>, <span class='kw'>elements</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='st'>"./RAW/DAYMET"</span>, <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='st'>"./EXTRACTIONS/"</span>, <span class='no'>label</span>,
   <span class='st'>"/DAYMET"</span>), <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -116,15 +128,15 @@ as a template for cropping.</p></td>
     </tr>
     <tr>
       <th>elements</th>
-      <td><p>A character vector of elements to extract.
-The available elements are:
-dayl = Duration of the daylight period in seconds per day. This calculation is based on the period of the day during which the sun is above a hypothetical flat horizon.
-prcp = Daily total precipitation in millimeters per day, sum of all forms converted to water-equivalent. Precipitation occurrence on any given day may be ascertained.
-srad = Incident shortwave radiation flux density in watts per square meter, taken as an average over the daylight period of the day. NOTE: Daily total radiation (MJ/m2/day) can be calculated as follows: ((srad (W/m2) * dayl (s/day)) / l,000,000)
-swe = Snow water equivalent in kilograms per square meter. The amount of water contained within the snowpack.
-tmax = Daily maximum 2-meter air temperature in degrees Celsius.
-tmin = Daily minimum 2-meter air temperature in degrees Celsius.
-vp = Water vapor pressure in pascals. Daily average partial pressure of water vapor.</p></td>
+      <td><p>A character vector of elements to extract.<br />
+The available elements are:<br />
+dayl = Duration of the daylight period in seconds per day. This calculation is based on the period of the day during which the sun is above a hypothetical flat horizon.<br />
+prcp = Daily total precipitation in millimeters per day, sum of all forms converted to water-equivalent. Precipitation occurrence on any given day may be ascertained.<br />
+srad = Incident shortwave radiation flux density in watts per square meter, taken as an average over the daylight period of the day. NOTE: Daily total radiation (MJ/m2/day) can be calculated as follows: ((srad (W/m2) * dayl (s/day)) / l,000,000)<br />
+swe = Snow water equivalent in kilograms per square meter. The amount of water contained within the snowpack.<br />
+tmax = Daily maximum 2-meter air temperature in degrees Celsius.<br />
+tmin = Daily minimum 2-meter air temperature in degrees Celsius.<br />
+vp = Water vapor pressure in pascals. Daily average partial pressure of water vapor.<br /></p></td>
     </tr>
     <tr>
       <th>years</th>
@@ -193,6 +205,8 @@ The directory will be created if missing. Defaults to './EXTRACTIONS/DAYMET/'.</
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

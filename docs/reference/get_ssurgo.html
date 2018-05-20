@@ -25,13 +25,16 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Download and crop data from the NRCS SSURGO soils database. — get_ssurgo" />
 
 <meta property="og:description" content="This is an efficient method for spatially merging several different soil survey areas
 as well as merging their tabular data." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +57,12 @@ as well as merging their tabular data." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">FedData</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">FedData</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.5.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -68,7 +75,7 @@ as well as merging their tabular data." />
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -80,6 +87,7 @@ as well as merging their tabular data." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -87,22 +95,26 @@ as well as merging their tabular data." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Download and crop data from the NRCS SSURGO soils database.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/SSURGO_FUNCTIONS.R'><code>R/SSURGO_FUNCTIONS.R</code></a></small>
+    <div class="hidden name"><code>get_ssurgo.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This is an efficient method for spatially merging several different soil survey areas
 as well as merging their tabular data.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>get_ssurgo</span>(<span class='no'>template</span>, <span class='no'>label</span>, <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='st'>"./RAW/SSURGO"</span>,
   <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='st'>"./EXTRACTIONS/"</span>, <span class='no'>label</span>, <span class='st'>"/SSURGO"</span>),
   <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -199,6 +211,8 @@ in the template, and</p></li>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

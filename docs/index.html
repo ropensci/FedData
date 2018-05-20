@@ -31,7 +31,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -40,8 +40,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">FedData</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="index.html">FedData</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.5.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
@@ -54,7 +58,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="news/index.html">News</a>
+  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -74,12 +78,11 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     
 
     
     
-<div class="contents">
 
 <p><code>FedData</code> is an <em>R</em> package implementing functions to automate downloading geospatial data available from several federated data sources (mainly sources maintained by the US Federal government).</p>
 <p><strong>FedData version 2.5 will be the final minor CRAN release of FedData 2. FedData 3 will be released in the coming months, but some code built on FedData 2 will not be compatible with FedData 3.</strong></p>
@@ -159,7 +162,7 @@
 <a class="sourceLine" id="cb5-4" data-line-number="4">               <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</a>
 <a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co"># Plot with raster::plot</span></a>
 <a class="sourceLine" id="cb5-6" data-line-number="6">raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a></code></pre></div>
-<p><img src="inst/image/README-unnamed-chunk-6-1.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-6-1.png" width="700"></p>
 </div>
 <div id="get-and-plot-the-daymet-dataset-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -172,7 +175,7 @@
 <a class="sourceLine" id="cb6-6" data-line-number="6">               <span class="dt">years =</span> <span class="dv">1980</span><span class="op">:</span><span class="dv">1985</span>)</a>
 <a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co"># Plot with raster::plot</span></a>
 <a class="sourceLine" id="cb6-8" data-line-number="8">raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(DAYMET<span class="op">$</span>tmax<span class="op">$</span>X1985.<span class="fl">10.23</span>)</a></code></pre></div>
-<p><img src="inst/image/README-unnamed-chunk-7-1.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-7-1.png" width="700"></p>
 </div>
 <div id="get-and-plot-the-daily-ghcn-precipitation-data-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -192,7 +195,7 @@
 <a class="sourceLine" id="cb7-13" data-line-number="13"><span class="kw">legend</span>(<span class="st">'bottomleft'</span>,</a>
 <a class="sourceLine" id="cb7-14" data-line-number="14">       <span class="dt">pch =</span> <span class="dv">1</span>,</a>
 <a class="sourceLine" id="cb7-15" data-line-number="15">       <span class="dt">legend=</span><span class="st">"GHCN Precipitation Records"</span>)</a></code></pre></div>
-<p><img src="inst/image/README-unnamed-chunk-8-1.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-8-1.png" width="700"></p>
 </div>
 <div id="get-and-plot-the-daily-ghcn-temperature-data-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -214,7 +217,7 @@
 <a class="sourceLine" id="cb8-15" data-line-number="15"><span class="kw">legend</span>(<span class="st">'bottomleft'</span>,</a>
 <a class="sourceLine" id="cb8-16" data-line-number="16">       <span class="dt">pch =</span> <span class="dv">1</span>,</a>
 <a class="sourceLine" id="cb8-17" data-line-number="17">       <span class="dt">legend =</span> <span class="st">"GHCN Temperature Records"</span>)</a></code></pre></div>
-<p><img src="inst/image/README-unnamed-chunk-9-1.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-9-1.png" width="700"></p>
 </div>
 <div id="get-and-plot-the-national-hydrography-dataset-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -229,7 +232,7 @@
 <a class="sourceLine" id="cb9-8" data-line-number="8"><span class="st">  </span><span class="kw">lapply</span>(sp<span class="op">::</span>plot,</a>
 <a class="sourceLine" id="cb9-9" data-line-number="9">         <span class="dt">col =</span> <span class="st">'black'</span>,</a>
 <a class="sourceLine" id="cb9-10" data-line-number="10">         <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="inst/image/README-unnamed-chunk-10-1.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-10-1.png" width="700"></p>
 </div>
 <div id="get-and-plot-the-nrcs-ssurgo-data-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -247,7 +250,7 @@
 <a class="sourceLine" id="cb10-11" data-line-number="11"><span class="kw">plot</span>(SSURGO.VEPIIN<span class="op">$</span>spatial,</a>
 <a class="sourceLine" id="cb10-12" data-line-number="12">     <span class="dt">lwd =</span> <span class="fl">0.1</span>,</a>
 <a class="sourceLine" id="cb10-13" data-line-number="13">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="inst/image/README-unnamed-chunk-11-1.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-11-1.png" width="700"></p>
 </div>
 <div id="get-and-plot-the-nrcs-ssurgo-data-for-particular-soil-survey-areas" class="section level4">
 <h4 class="hasAnchor">
@@ -268,7 +271,7 @@
 <a class="sourceLine" id="cb11-14" data-line-number="14"><span class="kw">plot</span>(SSURGO.areas.CO675,</a>
 <a class="sourceLine" id="cb11-15" data-line-number="15">     <span class="dt">lwd =</span> <span class="fl">0.1</span>,</a>
 <a class="sourceLine" id="cb11-16" data-line-number="16">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="inst/image/README-unnamed-chunk-12-1.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-12-1.png" width="700"></p>
 </div>
 <div id="get-and-plot-the-itrdb-chronology-locations-in-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -286,7 +289,7 @@
 <a class="sourceLine" id="cb12-11" data-line-number="11"><span class="kw">legend</span>(<span class="st">'bottomleft'</span>,</a>
 <a class="sourceLine" id="cb12-12" data-line-number="12">       <span class="dt">pch =</span> <span class="dv">1</span>,</a>
 <a class="sourceLine" id="cb12-13" data-line-number="13">       <span class="dt">legend =</span> <span class="st">"ITRDB chronologies"</span>)</a></code></pre></div>
-<p><img src="inst/image/README-unnamed-chunk-13-1.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-13-1.png" width="700"></p>
 </div>
 <div id="get-and-plot-the-national-land-cover-dataset-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
@@ -299,7 +302,7 @@
 <a class="sourceLine" id="cb13-6" data-line-number="6">                 <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</a>
 <a class="sourceLine" id="cb13-7" data-line-number="7"><span class="co"># Plot with raster::plot</span></a>
 <a class="sourceLine" id="cb13-8" data-line-number="8">raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NLCD)</a></code></pre></div>
-<p><img src="inst/image/README-unnamed-chunk-14-1.png" width="672"><img src="inst/image/README-unnamed-chunk-14-2.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-14-1.png" width="700"><img src="inst/image/README-unnamed-chunk-14-2.png" width="700"></p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="co"># You can also download the Canopy or impervious datasets:</span></a>
 <a class="sourceLine" id="cb14-3" data-line-number="3">NLCD_canopy &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nlcd.html">get_nlcd</a></span>(<span class="dt">template =</span> vepPolygon,</a>
@@ -308,7 +311,7 @@
 <a class="sourceLine" id="cb14-6" data-line-number="6">                 <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</a>
 <a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co"># Plot with raster::plot</span></a>
 <a class="sourceLine" id="cb14-8" data-line-number="8">raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NLCD_canopy)</a></code></pre></div>
-<p><img src="inst/image/README-unnamed-chunk-14-3.png" width="672"><img src="inst/image/README-unnamed-chunk-14-4.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-14-3.png" width="700"><img src="inst/image/README-unnamed-chunk-14-4.png" width="700"></p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"></a>
 <a class="sourceLine" id="cb15-2" data-line-number="2">NLCD_impervious &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nlcd.html">get_nlcd</a></span>(<span class="dt">template =</span> vepPolygon,</a>
 <a class="sourceLine" id="cb15-3" data-line-number="3">                 <span class="dt">year =</span> <span class="dv">2011</span>,</a>
@@ -316,7 +319,7 @@
 <a class="sourceLine" id="cb15-5" data-line-number="5">                 <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</a>
 <a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co"># Plot with raster::plot</span></a>
 <a class="sourceLine" id="cb15-7" data-line-number="7">raster<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NLCD_impervious)</a></code></pre></div>
-<p><img src="inst/image/README-unnamed-chunk-14-5.png" width="672"><img src="inst/image/README-unnamed-chunk-14-6.png" width="672"></p>
+<p><img src="inst/image/README-unnamed-chunk-14-5.png" width="700"><img src="inst/image/README-unnamed-chunk-14-6.png" width="700"></p>
 <hr>
 </div>
 </div>
@@ -327,27 +330,37 @@
 <p>FedData was reviewed for <a href="https://ropensci.org">rOpenSci</a> by <a href="https://github.com/jooolia">@jooolia</a>, and was greatly improved as a result. <a href="https://ropensci.org">rOpenSci</a> onboarding was coordinated by <a href="https://github.com/sckott">@sckott</a>.</p>
 <!-- [![ropensci_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org) -->
 </div>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2 class="hasAnchor">
-<a href="#sidebar" class="anchor"></a>Links</h2>
+    <div class="links">
+<h2>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cran.r-project.org/package=FedData">https://​cran.r-project.org/​package=FedData</a>
+<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=FedData">https://​cloud.r-project.org/​package=FedData</a>
 </li>
 <li>Browse source code at <br><a href="https://github.com/ropensci/FedData">https://​github.com/​ropensci/​FedData</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/ropensci/FedData/issues">https://​github.com/​ropensci/​FedData/​issues</a>
 </li>
 </ul>
+</div>
+<div class="license">
 <h2>License</h2>
-<p><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE.html">LICENSE</a></p>
+<ul class="list-unstyled">
+<li>
+<a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
+</li>
+</ul>
+</div>
+<div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>R. Kyle Bocinsky <br><small class="roles"> Author, maintainer </small>  </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
+</div>
+
+      <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://cran.r-project.org/package=FedData"><img src="https://www.r-pkg.org/badges/version/FedData" alt="cran version"></a></li>
@@ -357,6 +370,7 @@
 <li><a href="https://doi.org/10.5281/zenodo.596344"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.596344.svg" alt="Zenodo DOI"></a></li>
 <li><a href="https://github.com/ropensci/onboarding/issues/13"><img src="https://badges.ropensci.org/13_status.svg" alt="ROpenSci Status"></a></li>
 </ul>
+</div>
 </div>
 
 </div>
@@ -372,6 +386,8 @@
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>

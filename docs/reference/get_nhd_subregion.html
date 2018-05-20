@@ -26,14 +26,17 @@ of the National Hydrography Dataset. — get_nhd_subregion • FedData</title>
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Download and crop data from a zipped HUC4 subregion
 of the National Hydrography Dataset. — get_nhd_subregion" />
 
 <meta property="og:description" content="get_nhd_subregion returns a list of SpatialPolygonsDataFrames of the layers of the HUC4 subregion,
  within the specified template. If template is not provided, returns the entire HUC4 subregion." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -56,8 +59,12 @@ of the National Hydrography Dataset. — get_nhd_subregion" />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">FedData</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">FedData</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.5.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -70,7 +77,7 @@ of the National Hydrography Dataset. — get_nhd_subregion" />
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -82,6 +89,7 @@ of the National Hydrography Dataset. — get_nhd_subregion" />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,21 +97,25 @@ of the National Hydrography Dataset. — get_nhd_subregion" />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Download and crop data from a zipped HUC4 subregion
 of the National Hydrography Dataset.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/NHD_FUNCTIONS.R'><code>R/NHD_FUNCTIONS.R</code></a></small>
+    <div class="hidden name"><code>get_nhd_subregion.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>get_nhd_subregion</code> returns a list of <code>SpatialPolygonsDataFrame</code>s of the layers of the HUC4 subregion,
  within the specified <code>template</code>. If template is not provided, returns the entire HUC4 subregion.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>get_nhd_subregion</span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>area</span>, <span class='no'>raw.dir</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -151,6 +163,8 @@ the specified <code>template</code>.</p>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

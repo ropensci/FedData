@@ -25,13 +25,16 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Download and crop a tile from the National Land Cover Database. — get_nlcd_tile" />
 
 <meta property="og:description" content="get_nlcd_tile returns a RasterLayer cropped within the specified template.
 If template is not provided, returns the entire NLCD tile." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +57,12 @@ If template is not provided, returns the entire NLCD tile." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">FedData</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">FedData</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.5.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -68,7 +75,7 @@ If template is not provided, returns the entire NLCD tile." />
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -80,6 +87,7 @@ If template is not provided, returns the entire NLCD tile." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -87,21 +95,25 @@ If template is not provided, returns the entire NLCD tile." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Download and crop a tile from the National Land Cover Database.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/NLCD_FUNCTIONS.R'><code>R/NLCD_FUNCTIONS.R</code></a></small>
+    <div class="hidden name"><code>get_nlcd_tile.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>get_nlcd_tile</code> returns a <code>RasterLayer</code> cropped within the specified <code>template</code>.
 If template is not provided, returns the entire NLCD tile.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>get_nlcd_tile</span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2011</span>, <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"landcover"</span>,
   <span class='no'>tileName</span>, <span class='no'>raw.dir</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -156,6 +168,8 @@ The directory will be created by <code>download_nlcd_tile</code> if missing. Def
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

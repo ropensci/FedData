@@ -25,13 +25,16 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Extract data from a SSURGO database pertaining to a set of mapunits. — extract_ssurgo_data" />
 
 <meta property="og:description" content="extract_ssurgo_data creates a directed graph of the joins in a SSURGO tabular dataset,
 and then iterates through the tables, only retaining data pertinent to a set of mapunits." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -54,8 +57,12 @@ and then iterates through the tables, only retaining data pertinent to a set of 
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">FedData</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">FedData</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.5.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -68,7 +75,7 @@ and then iterates through the tables, only retaining data pertinent to a set of 
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -80,6 +87,7 @@ and then iterates through the tables, only retaining data pertinent to a set of 
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -87,20 +95,24 @@ and then iterates through the tables, only retaining data pertinent to a set of 
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Extract data from a SSURGO database pertaining to a set of mapunits.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/SSURGO_FUNCTIONS.R'><code>R/SSURGO_FUNCTIONS.R</code></a></small>
+    <div class="hidden name"><code>extract_ssurgo_data.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>extract_ssurgo_data</code> creates a directed graph of the joins in a SSURGO tabular dataset,
 and then iterates through the tables, only retaining data pertinent to a set of mapunits.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>extract_ssurgo_data</span>(<span class='no'>tables</span>, <span class='no'>mapunits</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -142,6 +154,8 @@ defining which mapunits to retain.</p></td>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

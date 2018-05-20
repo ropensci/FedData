@@ -25,8 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
 <meta property="og:title" content="Read a Tucson-format chronology file. — read_crn" />
 
 <meta property="og:description" content="This function includes improvements to the read.crn function from the 
@@ -34,6 +35,8 @@ dplR library. The principle changes are better parsing of metadata, and support
 for the Schweingruber-type Tucson format. Chronologies that are unable to be read
 are reported to the user. This function automatically recognizes Schweingruber-type files." />
 <meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -56,8 +59,12 @@ are reported to the user. This function automatically recognizes Schweingruber-t
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">FedData</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">FedData</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.5.3</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -70,7 +77,7 @@ are reported to the user. This function automatically recognizes Schweingruber-t
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -82,6 +89,7 @@ are reported to the user. This function automatically recognizes Schweingruber-t
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -89,22 +97,26 @@ are reported to the user. This function automatically recognizes Schweingruber-t
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Read a Tucson-format chronology file.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/ITRDB_FUNCTIONS.R'><code>R/ITRDB_FUNCTIONS.R</code></a></small>
+    <div class="hidden name"><code>read_crn.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function includes improvements to the <code>read.crn</code> function from the 
 <span class="pkg">dplR</span> library. The principle changes are better parsing of metadata, and support
 for the Schweingruber-type Tucson format. Chronologies that are unable to be read
 are reported to the user. This function automatically recognizes Schweingruber-type files.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>read_crn</span>(<span class='no'>file</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -147,6 +159,8 @@ are reported to the user. This function automatically recognizes Schweingruber-t
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>
