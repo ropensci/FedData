@@ -15,7 +15,7 @@ Description: Functions to automate downloading geospatial data available from
     Distributed Active Archive Center (DAAC); the International Tree Ring Data Bank; 
     and the National Land Cover Database (NLCD).
 Version: 2.5.3
-Date: 2018-5-20
+Date: 2018-5-21
 Author: R. Kyle Bocinsky [aut, cre], Dylan Beaudette [ctb], Scott Chamberlain [ctb]
 Authors@R: c(person(given = c("R.", "Kyle"), family = "Bocinsky",
     role = c("aut", "cre"), email = "bocinsky@gmail.com"),

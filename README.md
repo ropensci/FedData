@@ -1,5 +1,5 @@
-FedData
-================
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 [![cran
 version](https://www.r-pkg.org/badges/version/FedData)](https://cran.r-project.org/package=FedData)
@@ -129,7 +129,7 @@ NED <- get_ned(template = vepPolygon,
 raster::plot(NED)
 ```
 
-![](inst/image/README-unnamed-chunk-6-1.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="50%" />
 
 #### Get and plot the Daymet dataset for the study area
 
@@ -144,7 +144,7 @@ DAYMET <- get_daymet(template = vepPolygon,
 raster::plot(DAYMET$tmax$X1985.10.23)
 ```
 
-![](inst/image/README-unnamed-chunk-7-1.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="50%" />
 
 #### Get and plot the daily GHCN precipitation data for the study area
 
@@ -166,7 +166,7 @@ legend('bottomleft',
        legend="GHCN Precipitation Records")
 ```
 
-![](inst/image/README-unnamed-chunk-8-1.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="50%" />
 
 #### Get and plot the daily GHCN temperature data for the study area
 
@@ -190,7 +190,7 @@ legend('bottomleft',
        legend = "GHCN Temperature Records")
 ```
 
-![](inst/image/README-unnamed-chunk-9-1.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="50%" />
 
 #### Get and plot the National Hydrography Dataset for the study area
 
@@ -207,7 +207,7 @@ NHD %>%
          add = TRUE)
 ```
 
-![](inst/image/README-unnamed-chunk-10-1.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="50%" />
 
 #### Get and plot the NRCS SSURGO data for the study area
 
@@ -227,7 +227,7 @@ plot(SSURGO.VEPIIN$spatial,
      add = TRUE)
 ```
 
-![](inst/image/README-unnamed-chunk-11-1.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="50%" />
 
 #### Get and plot the NRCS SSURGO data for particular soil survey areas
 
@@ -250,7 +250,7 @@ plot(SSURGO.areas.CO675,
      add = TRUE)
 ```
 
-![](inst/image/README-unnamed-chunk-12-1.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="50%" />
 
 #### Get and plot the ITRDB chronology locations in the study area
 
@@ -270,7 +270,7 @@ legend('bottomleft',
        legend = "ITRDB chronologies")
 ```
 
-![](inst/image/README-unnamed-chunk-13-1.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-12-1.png" width="50%" />
 
 #### Get and plot the National Land Cover Dataset for the study area
 
@@ -285,7 +285,7 @@ NLCD <- get_nlcd(template = vepPolygon,
 raster::plot(NLCD)
 ```
 
-![](inst/image/README-unnamed-chunk-14-1.png)<!-- -->![](inst/image/README-unnamed-chunk-14-2.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-13-1.png" width="50%" /><img src="man/figures/README-unnamed-chunk-13-2.png" width="50%" />
 
 ``` r
 
@@ -298,7 +298,7 @@ NLCD_canopy <- get_nlcd(template = vepPolygon,
 raster::plot(NLCD_canopy)
 ```
 
-![](inst/image/README-unnamed-chunk-14-3.png)<!-- -->![](inst/image/README-unnamed-chunk-14-4.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-13-3.png" width="50%" /><img src="man/figures/README-unnamed-chunk-13-4.png" width="50%" />
 
 ``` r
 
@@ -310,7 +310,7 @@ NLCD_impervious <- get_nlcd(template = vepPolygon,
 raster::plot(NLCD_impervious)
 ```
 
-![](inst/image/README-unnamed-chunk-14-5.png)<!-- -->![](inst/image/README-unnamed-chunk-14-6.png)<!-- -->
+<img src="man/figures/README-unnamed-chunk-13-5.png" width="50%" /><img src="man/figures/README-unnamed-chunk-13-6.png" width="50%" />
 
 -----
 

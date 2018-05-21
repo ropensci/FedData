@@ -1,17 +1,16 @@
 ---
-title: FedData
 output: github_document
-editor_options: 
-  chunk_output_type: console
 ---
 
-```{r, echo = FALSE}
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "inst/image/README-"
+  fig.path = "man/figures/README-",
+  out.width = "50%"
 )
-
 ```
 
 [![cran version](https://www.r-pkg.org/badges/version/FedData)](https://cran.r-project.org/package=FedData)
