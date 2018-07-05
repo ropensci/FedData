@@ -129,7 +129,7 @@ NED <- get_ned(template = vepPolygon,
 raster::plot(NED)
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 #### Get and plot the Daymet dataset for the study area
 
@@ -144,7 +144,7 @@ DAYMET <- get_daymet(template = vepPolygon,
 raster::plot(DAYMET$tmax$X1985.10.23)
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 #### Get and plot the daily GHCN precipitation data for the study area
 
@@ -166,7 +166,7 @@ legend('bottomleft',
        legend="GHCN Precipitation Records")
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 #### Get and plot the daily GHCN temperature data for the study area
 
@@ -190,7 +190,7 @@ legend('bottomleft',
        legend = "GHCN Temperature Records")
 ```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
 #### Get and plot the National Hydrography Dataset for the study area
 
@@ -207,7 +207,7 @@ NHD %>%
          add = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
 
 #### Get and plot the NRCS SSURGO data for the study area
 
@@ -215,6 +215,10 @@ NHD %>%
 # Get the NRCS SSURGO data (USA ONLY)
 SSURGO.VEPIIN <- get_ssurgo(template = vepPolygon, 
                      label = "VEPIIN")
+#> Warning in rbind(names(probs), probs_f): number of columns of result is not
+#> a multiple of vector length (arg 2)
+#> Warning: 1 parsing failure.
+#> row # A tibble: 1 x 5 col     row col     expected               actual file                         expected   <int> <chr>   <chr>                  <chr>  <chr>                        actual 1  1277 slope.r no trailing characters .5     '/Users/bocinsky/git/FedDat… file # A tibble: 1 x 5
 # Plot the NED again
 raster::plot(NED)
 # Plot the SSURGO mapunit polygons
@@ -223,7 +227,7 @@ plot(SSURGO.VEPIIN$spatial,
      add = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
 
 #### Get and plot the NRCS SSURGO data for particular soil survey areas
 
@@ -246,7 +250,7 @@ plot(SSURGO.areas.CO675,
      add = TRUE)
 ```
 
-<img src="man/figures/README-unnamed-chunk-11-1.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
 
 #### Get and plot the ITRDB chronology locations in the study area
 
@@ -255,7 +259,6 @@ plot(SSURGO.areas.CO675,
 ITRDB <- get_itrdb(template = vepPolygon,
                         label = "VEPIIN",
                         makeSpatial = TRUE)
-#> Warning in eval(jsub, SDenv, parent.frame()): NAs introduced by coercion
 # Plot the NED again
 raster::plot(NED)
 # Map the locations of the tree ring chronologies
@@ -267,7 +270,7 @@ legend('bottomleft',
        legend = "ITRDB chronologies")
 ```
 
-<img src="man/figures/README-unnamed-chunk-12-1.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
 
 #### Get and plot the National Land Cover Dataset for the study area
 
@@ -282,7 +285,7 @@ NLCD <- get_nlcd(template = vepPolygon,
 raster::plot(NLCD)
 ```
 
-<img src="man/figures/README-unnamed-chunk-13-1.png" width="50%" /><img src="man/figures/README-unnamed-chunk-13-2.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" /><img src="man/figures/README-unnamed-chunk-13-2.png" width="100%" />
 
 ``` r
 
@@ -295,7 +298,7 @@ NLCD_canopy <- get_nlcd(template = vepPolygon,
 raster::plot(NLCD_canopy)
 ```
 
-<img src="man/figures/README-unnamed-chunk-13-3.png" width="50%" /><img src="man/figures/README-unnamed-chunk-13-4.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-13-3.png" width="100%" /><img src="man/figures/README-unnamed-chunk-13-4.png" width="100%" />
 
 ``` r
 
@@ -307,7 +310,7 @@ NLCD_impervious <- get_nlcd(template = vepPolygon,
 raster::plot(NLCD_impervious)
 ```
 
-<img src="man/figures/README-unnamed-chunk-13-5.png" width="50%" /><img src="man/figures/README-unnamed-chunk-13-6.png" width="50%" />
+<img src="man/figures/README-unnamed-chunk-13-5.png" width="100%" /><img src="man/figures/README-unnamed-chunk-13-6.png" width="100%" />
 
 -----
 
