@@ -13,3 +13,4 @@
 ^ropensci$
 ^data-raw$
 ^CRAN-RELEASE$
+^_pkgdown\.yml$

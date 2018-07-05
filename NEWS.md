@@ -1,3 +1,6 @@
+# FedData 2.5.4
+* Fixed issue in downloading NED tiles.
+
 # FedData 2.5.3
 * Added httr to package imports.
 
