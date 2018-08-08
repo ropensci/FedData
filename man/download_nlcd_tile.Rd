@@ -4,7 +4,8 @@
 \alias{download_nlcd_tile}
 \title{Download a zipped tile from the National Land Cover Database.}
 \usage{
-download_nlcd_tile(year = 2011, dataset = "landcover", tileName, raw.dir)
+download_nlcd_tile(year = 2011, dataset = "landcover", tileName,
+  raw.dir)
 }
 \arguments{
 \item{year}{An integer representing the year of desired NLCD product. Acceptable values are 2011 (default), 2006, and 2001.}

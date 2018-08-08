@@ -246,13 +246,21 @@ get_nlcd_tile <- function(template = NULL,
   tile <- tmpdir %>%
     list.files(pattern = "\\.tif$",
                full.names = TRUE) %>%
-    raster::raster()
+    raster::raster() %>%
+    raster::readAll()
   
   if (!is.null(template)) {
     
-    tile <- tryCatch(tile %>% raster::crop(y = template %>% sp::spTransform(CRSobj = tile %>% raster::projection()), snap = "out"), 
+    tile <- tryCatch(tile %>% 
+                       raster::crop(y = template %>% 
+                                             sp::spTransform(CRSobj = tile %>% 
+                                                               raster::projection()), 
+                                           snap = "out"), 
                      error = function(e) {
-                       tile %>% raster::crop(y = template %>% sp::spTransform(CRSobj = tile %>% raster::projection()))
+                       tile %>% 
+                         raster::crop(y = template %>% 
+                                        sp::spTransform(CRSobj = tile %>% 
+                                                          raster::projection()))
                      })
   }
   

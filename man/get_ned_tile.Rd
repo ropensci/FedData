@@ -4,7 +4,8 @@
 \alias{get_ned_tile}
 \title{Download and crop tile from the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.}
 \usage{
-get_ned_tile(template = NULL, res = "1", tileNorthing, tileWesting, raw.dir)
+get_ned_tile(template = NULL, res = "1", tileNorthing, tileWesting,
+  raw.dir)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve 

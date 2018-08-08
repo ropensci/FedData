@@ -5,8 +5,8 @@
 \title{Download and crop the National Land Cover Database.}
 \usage{
 get_nlcd(template, label, year = 2011, dataset = "landcover",
-  raw.dir = "./RAW/NLCD", extraction.dir = paste0("./EXTRACTIONS/", label,
-  "/NLCD"), raster.options = c("COMPRESS=DEFLATE", "ZLEVEL=9",
+  raw.dir = "./RAW/NLCD", extraction.dir = paste0("./EXTRACTIONS/",
+  label, "/NLCD"), raster.options = c("COMPRESS=DEFLATE", "ZLEVEL=9",
   "INTERLEAVE=BAND"), force.redo = F)
 }
 \arguments{

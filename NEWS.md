@@ -1,3 +1,9 @@
+# FedData 2.5.5
+* Fixed issue (#41) that occurs when mosaicking NLCD tiles that are not cropped. 
+When they aren't cropped, the NLCD data is never read into memory, and the temporary 
+file that the raster was created from gets destroyed.
+Solution: Force NLCD data into memory prior to mosaicking.
+
 # FedData 2.5.4
 * Fixed issue in downloading NED tiles.
 

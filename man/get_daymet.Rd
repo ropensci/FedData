@@ -5,8 +5,8 @@
 \title{Download and crop the 1-km DAYMET daily weather dataset.}
 \usage{
 get_daymet(template, label, elements = NULL, years = NULL,
-  raw.dir = "./RAW/DAYMET", extraction.dir = paste0("./EXTRACTIONS/", label,
-  "/DAYMET"), force.redo = F)
+  raw.dir = "./RAW/DAYMET", extraction.dir = paste0("./EXTRACTIONS/",
+  label, "/DAYMET"), force.redo = F)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve
