@@ -38,3 +38,17 @@ test_that("The NLCD tiles are available at the correct URL", {
                 ".zip")
   expect_true(suppressWarnings(httr::http_error(url)))
 })
+
+test_that("NLCD missing tile issue 41 is fixed", {
+  skip_on_cran()
+  FedData::get_nlcd(template = FedData::nlcd_tiles[1:2,], 
+                    label = "Domain1", 
+                    year = 2011, 
+                    dataset = "landcover", 
+                    raw.dir = "../../RAW/NLCD/", 
+                    extraction.dir="../../EXTRACTIONS/Domain1/NLCD/")
+})
+  
+  
+
+
