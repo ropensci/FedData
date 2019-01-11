@@ -305,7 +305,7 @@ get_nlcd_tile <- function(template = NULL,
 #' @importFrom raster values
 #' @importFrom dplyr filter
 #' @export
-#' @references \url{https://www.mrlc.gov/nlcd11_leg.php}
+#' @references \url{https://www.mrlc.gov/data/legends/national-land-cover-database-2011-nlcd2011-legend}
 #' @examples
 #' \dontrun{
 #' # Extract data for the Village Ecodynamics Project 'VEPIIN' study area:

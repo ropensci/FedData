@@ -57,3 +57,4 @@ Suggests: testthat,
     covr,
     roxygen2
 LazyData: true
+Encoding: UTF-8

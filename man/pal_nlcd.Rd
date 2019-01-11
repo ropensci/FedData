@@ -29,5 +29,5 @@ legend("bottom", legend = cols$description, fill = cols$color,
 }
 }
 \references{
-\url{https://www.mrlc.gov/nlcd11_leg.php}
+\url{https://www.mrlc.gov/data/legends/national-land-cover-database-2011-nlcd2011-legend}
 }
