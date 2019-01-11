@@ -1,3 +1,7 @@
+# FedData 2.5.6
+* Built-in access to the Soils Data Analysis query service to remove dependency on
+soilDB package.
+
 # FedData 2.5.5
 * Fixed issue (#41) that occurs when mosaicking NLCD tiles that are not cropped. 
 When they aren't cropped, the NLCD data is never read into memory, and the temporary 

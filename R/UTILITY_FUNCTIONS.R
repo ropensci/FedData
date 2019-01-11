@@ -5,7 +5,9 @@ if (getRversion() >= "2.15.1") utils::globalVariables(c(".",
                                                         "nlcd_landcover_pam",
                                                         "nlcd_canopy_pam",
                                                         "nlcd_impervious_pam",
-                                                        "daymet_tiles"))
+                                                        "daymet_tiles",
+                                                        "NewDataSet",
+                                                        'Table'))
 
 #' Install and load a package.
 #'

@@ -1,6 +1,5 @@
 library(FedData)
 library(httr)
-library(soilDB)
 context("NRCS soils database (SSURGO) tests")
 
 test_that("The SSURGO inventory dataset is available at the correct URL", {
@@ -14,18 +13,18 @@ test_that("The SSURGO inventory dataset is available at the correct URL", {
 test_that("The SoilDB data queries work", {
   template = "CO670"
   q <- paste0("SELECT areasymbol, saverest FROM sacatalog WHERE areasymbol IN (",paste(paste0("'",template,"'"),collapse=','),");")
-  expect_is(soilDB::SDA_query(q),"data.frame")
+  expect_is(SDA_query(q),"data.frame")
   
   template = "blah"
   q <- paste0("SELECT areasymbol, saverest FROM sacatalog WHERE areasymbol IN (",paste(paste0("'",template,"'"),collapse=','),");")
-  expect_null(soilDB::SDA_query(q))
+  expect_error(SDA_query(q))
 })
 
 test_that("The SSURGO datasets are available at the correct URL", {
   
   template = "CO670"
   q <- paste0("SELECT areasymbol, saverest FROM sacatalog WHERE areasymbol IN (",paste(paste0("'",template,"'"),collapse=','),");")
-  q <- soilDB::SDA_query(q)
+  q <- SDA_query(q)
   q$saverest <- as.Date(q$saverest,format="%m/%d/%Y")
   
   url <- paste("https://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/wss_SSA_",q$areasymbol,"_[",q$saverest,"].zip",sep='')

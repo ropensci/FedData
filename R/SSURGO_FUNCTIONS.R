@@ -84,7 +84,7 @@ get_ssurgo <- function(template,
   if (class(template) == "character") {
     q <- paste0("SELECT areasymbol, saverest FROM sacatalog WHERE areasymbol IN (", paste(paste0("'", template, "'"), collapse = ","), 
                 ");")
-    SSURGOAreas <- soilDB::SDA_query(q)
+    SSURGOAreas <- SDA_query(q)
     
     template.poly <- template
     
@@ -225,45 +225,45 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
     n = NULL
     SSURGOAreas <- foreach::foreach(n = 1:length(bounds),
                                     .combine = rbind) %do% {
-      
-      bound <- sp::bbox(bounds[n])
-      if (identical(bound[1, 1], bound[1, 2])) 
-        bound[1, 2] <- bound[1, 2] + 1e-04
-      if (identical(bound[2, 1], bound[2, 2])) 
-        bound[2, 2] <- bound[2, 2] + 1e-04
-      
-      bbox.text <- paste(bound, collapse = ",")
-      
-      url <- paste("https://sdmdataaccess.nrcs.usda.gov/Spatial/SDMNAD83Geographic.wfs?Service=WFS&Version=1.0.0&Request=GetFeature&Typename=SurveyAreaPoly&BBOX=", 
-                   bbox.text, sep = "")
-      
-      temp.file <- paste0(tempdir(), "/soils.gml")
-      
-      opts <- list(verbose = F, noprogress = T, fresh_connect = TRUE)
-      hand <- curl::new_handle()
-      curl::handle_setopt(hand, .list = opts)
-      tryCatch(status <- curl::curl_download(url, destfile = temp.file, handle = hand), error = function(e) stop("Download of ", 
-                                                                                                                 url, " failed!"))
-      
-      SSURGOAreas <- rgdal::readOGR(dsn = temp.file, 
-                                    layer = "surveyareapoly", 
-                                    disambiguateFIDs = TRUE, 
-                                    stringsAsFactors = FALSE, 
-                                    verbose = FALSE)
-      raster::projection(SSURGOAreas) <- raster::projection(template)
-      
-      # Get a list of SSURGO study areas within the project study area
-      if (class(template) == "SpatialPointsDataFrame" & length(template) == 1) {
-        template <- polygon_from_extent(bounds, proj4string = raster::projection(template))
-      }
-      SSURGOAreas <- raster::crop(SSURGOAreas, sp::spTransform(template, sp::CRS(raster::projection(SSURGOAreas))))
-      
-      SSURGOAreas <- SSURGOAreas@data
-      
-      SSURGOAreas$saverest <- as.Date(SSURGOAreas$saverest, format = "%b %d %Y")
-      
-      return(SSURGOAreas)
-    }
+                                      
+                                      bound <- sp::bbox(bounds[n])
+                                      if (identical(bound[1, 1], bound[1, 2])) 
+                                        bound[1, 2] <- bound[1, 2] + 1e-04
+                                      if (identical(bound[2, 1], bound[2, 2])) 
+                                        bound[2, 2] <- bound[2, 2] + 1e-04
+                                      
+                                      bbox.text <- paste(bound, collapse = ",")
+                                      
+                                      url <- paste("https://sdmdataaccess.nrcs.usda.gov/Spatial/SDMNAD83Geographic.wfs?Service=WFS&Version=1.0.0&Request=GetFeature&Typename=SurveyAreaPoly&BBOX=", 
+                                                   bbox.text, sep = "")
+                                      
+                                      temp.file <- paste0(tempdir(), "/soils.gml")
+                                      
+                                      opts <- list(verbose = F, noprogress = T, fresh_connect = TRUE)
+                                      hand <- curl::new_handle()
+                                      curl::handle_setopt(hand, .list = opts)
+                                      tryCatch(status <- curl::curl_download(url, destfile = temp.file, handle = hand), error = function(e) stop("Download of ", 
+                                                                                                                                                 url, " failed!"))
+                                      
+                                      SSURGOAreas <- rgdal::readOGR(dsn = temp.file, 
+                                                                    layer = "surveyareapoly", 
+                                                                    disambiguateFIDs = TRUE, 
+                                                                    stringsAsFactors = FALSE, 
+                                                                    verbose = FALSE)
+                                      raster::projection(SSURGOAreas) <- raster::projection(template)
+                                      
+                                      # Get a list of SSURGO study areas within the project study area
+                                      if (class(template) == "SpatialPointsDataFrame" & length(template) == 1) {
+                                        template <- polygon_from_extent(bounds, proj4string = raster::projection(template))
+                                      }
+                                      SSURGOAreas <- raster::crop(SSURGOAreas, sp::spTransform(template, sp::CRS(raster::projection(SSURGOAreas))))
+                                      
+                                      SSURGOAreas <- SSURGOAreas@data
+                                      
+                                      SSURGOAreas$saverest <- as.Date(SSURGOAreas$saverest, format = "%b %d %Y")
+                                      
+                                      return(SSURGOAreas)
+                                    }
     
     SSURGOAreas <- unique(SSURGOAreas)
     
@@ -449,3 +449,30 @@ extract_ssurgo_data <- function(tables, mapunits) {
   
   return(tables)
 }
+
+#' Submit a Soil Data Access (SDA) Query
+#'
+#' \code{SDA_query} submit an SQL or SQL Data Shaping query to retrieve data from the Soil Data Mart.
+#' Please see https://sdmdataaccess.sc.egov.usda.gov/Query.aspx for guidelines
+#' 
+#' @param q A character string representing a SQL query to the SDA service
+#' @return A tibble returned from the SDA service
+#' @export
+#' @keywords internal
+SDA_query <- function (q) {
+
+    tryCatch(httr::POST(url = "https://sdmdataaccess.sc.egov.usda.gov/tabular/post.rest", 
+               body = list(query = q),
+               encode = "form") %>%
+    httr::content(as = "parse", encoding = "UTF-8") %>%
+    xml2::as_list() %$%
+    NewDataSet %$%
+    Table %>%
+    unlist(recursive = FALSE) %>%
+    tibble::as_tibble(),
+    error = function(e){
+      stop("Improperly formatted SDA SQL request")
+    })
+  
+}
+
