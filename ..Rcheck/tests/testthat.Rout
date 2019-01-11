@@ -1,0 +1,31 @@
+
+R version 3.5.2 (2018-12-20) -- "Eggshell Igloo"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(FedData)
+Loading required package: sp
+> 
+> test_check("FedData")
+══ testthat results  ════════════════════════════════════════════════════════════════════════════════════════════════════════════
+OK: 26 SKIPPED: 1 FAILED: 0
+Warning messages:
+1: closing unused connection 6 (http://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/blah.zip) 
+2: closing unused connection 5 (https://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/wss_SSA_CO670_[2018-09-10].zip) 
+> 
+> proc.time()
+   user  system elapsed 
+  6.174   0.250  17.567 
