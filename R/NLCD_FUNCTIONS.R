@@ -298,3 +298,63 @@ get_nlcd_tile <- function(template = NULL,
 #' A dataset containing the PAM attributes.
 #'
 "nlcd_impervious_pam"
+
+#' NLCD colour map palettes
+#'
+#' @return A data frame with official class descriptions and hexencoded rgb(a) colour values
+#' @importFrom raster values
+#' @importFrom dplyr filter
+#' @export
+#' @references \url{https://www.mrlc.gov/nlcd11_leg.php}
+#' @examples
+#' \dontrun{
+#' # Extract data for the Village Ecodynamics Project 'VEPIIN' study area:
+#' # http://village.anth.wsu.edu
+#' vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), 
+#'      proj4string='+proj=utm +datum=NAD83 +zone=12')
+#' 
+#' NLCD <- get_nlcd(template=vepPolygon, label='VEPIIN')
+#' NLCD <- as.matrix(table(raster::values(NLCD)))
+#' cols <- dplyr::filter(pal_nlcd(), code %in% row.names(NLCD))
+
+#' par(xpd = TRUE, mar = c(10, 3, 2, 1))
+#' barplot(NLCD, beside = FALSE, col = cols$color) 
+#' legend("bottom", legend = cols$description, fill = cols$color, 
+#'        ncol = 2, inset = c(0, -0.6))
+#' }
+pal_nlcd <- function() {
+  data.frame(
+    class = c("water", "water",
+              "developed", "developed", "developed", "developed",
+              "barren",
+              "forest", "forest", "forest",
+              "shrubland", "shrubland",
+              "herbaceous", "herbaceous", "herbaceous", "herbaceous",
+              "planted", "planted",
+              "wetlands", "wetlands"),
+    code = as.character(c(11, 12,
+             21, 22, 23, 24,
+             31,
+             41, 42, 43,
+             51, 52,
+             71, 72, 73, 74,
+             81, 82,
+             90, 95)),
+    description = c("Open Water", "Perennial Ice/Snow",
+                    "Developed, Open Space", "Developed, Low Intensity", "Developed, Medium Intensity", "Developed, High Intensity",
+                    "Barren Land (Rock/Sand/Clay)",
+                    "Deciduous Forest", "Evergreen Forest", "Mixed Forest",
+                    "Dwarf Scrub", "Scrub/Shrub",
+                    "Grassland/Herbaceous", "Sedge/Herbaceuous", "Lichens", "Moss",
+                    "Pasture/Hay", "Cultivated Crops",
+                    "Woody Wetlands", "Emergent Herbaceous Wetlands"),
+    color = c("#476BA0", "#D1DDF9",
+              "#DDC9C9", "#D89382", "#ED0000", "#AA0000",
+              "#B2ADA3",
+              "#68AA63", "#1C6330", "#B5C98E",
+              "#A58C30", "#CCBA7C",
+              "#E2E2C1", "#C9C977", "#99C147", "#77AD93",
+              "#DBD83D", "#AA7028",
+              "#BAD8EA", "#70A3BA"),
+    stringsAsFactors = FALSE)
+}
