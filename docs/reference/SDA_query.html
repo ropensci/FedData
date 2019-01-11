@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download a zipped directory containing the spatial and tabular data for a SSURGO study area. — download_ssurgo_study_area • FedData</title>
+<title>Submit a Soil Data Access (SDA) Query — SDA_query • FedData</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,10 @@
 
 
 
-<meta property="og:title" content="Download a zipped directory containing the spatial and tabular data for a SSURGO study area. — download_ssurgo_study_area" />
+<meta property="og:title" content="Submit a Soil Data Access (SDA) Query — SDA_query" />
 
-<meta property="og:description" content="download_ssurgo_study_area first tries to download data including a state-specific Access
-template, then the general US template." />
+<meta property="og:description" content="SDA_query submit an SQL or SQL Data Shaping query to retrieve data from the Soil Data Mart.
+Please see https://sdmdataaccess.sc.egov.usda.gov/Query.aspx for guidelines" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -103,41 +103,32 @@ template, then the general US template." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download a zipped directory containing the spatial and tabular data for a SSURGO study area.</h1>
+    <h1>Submit a Soil Data Access (SDA) Query</h1>
     <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/SSURGO_FUNCTIONS.R'><code>R/SSURGO_FUNCTIONS.R</code></a></small>
-    <div class="hidden name"><code>download_ssurgo_study_area.Rd</code></div>
+    <div class="hidden name"><code>SDA_query.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>download_ssurgo_study_area</code> first tries to download data including a state-specific Access
-template, then the general US template.</p>
+    <p><code>SDA_query</code> submit an SQL or SQL Data Shaping query to retrieve data from the Soil Data Mart.
+Please see https://sdmdataaccess.sc.egov.usda.gov/Query.aspx for guidelines</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>download_ssurgo_study_area</span>(<span class='no'>area</span>, <span class='no'>date</span>, <span class='no'>raw.dir</span>)</pre>
+    <pre class="usage"><span class='fu'>SDA_query</span>(<span class='no'>q</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>area</th>
-      <td><p>A character string indicating the SSURGO study area to be downloaded.</p></td>
-    </tr>
-    <tr>
-      <th>date</th>
-      <td><p>A character string indicating the date of the most recent update to the SSURGO 
-area for these data. This information may be gleaned from the SSURGO Inventory (<code><a href='get_ssurgo_inventory.html'>get_ssurgo_inventory</a></code>).</p></td>
-    </tr>
-    <tr>
-      <th>raw.dir</th>
-      <td><p>A character string indicating where raw downloaded files should be put.</p></td>
+      <th>q</th>
+      <td><p>A character string representing a SQL query to the SDA service</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character string representing the full local path of the SSURGO study areas zipped directory.</p>
+    <p>A tibble returned from the SDA service</p>
     
 
   </div>

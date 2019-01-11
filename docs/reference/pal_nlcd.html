@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download and crop the 1-km DAYMET daily weather dataset. — get_daymet • FedData</title>
+<title>NLCD colour map palettes — pal_nlcd • FedData</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Download and crop the 1-km DAYMET daily weather dataset. — get_daymet" />
+<meta property="og:title" content="NLCD colour map palettes — pal_nlcd" />
 
-<meta property="og:description" content="get_daymet returns a RasterBrick of weather data cropped to a given
-template study area." />
+<meta property="og:description" content="NLCD colour map palettes" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -103,69 +102,26 @@ template study area." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download and crop the 1-km DAYMET daily weather dataset.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/DAYMET_FUNCTIONS.R'><code>R/DAYMET_FUNCTIONS.R</code></a></small>
-    <div class="hidden name"><code>get_daymet.Rd</code></div>
+    <h1>NLCD colour map palettes</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/NLCD_FUNCTIONS.R'><code>R/NLCD_FUNCTIONS.R</code></a></small>
+    <div class="hidden name"><code>pal_nlcd.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p><code>get_daymet</code> returns a <code>RasterBrick</code> of weather data cropped to a given
-template study area.</p>
+    <p>NLCD colour map palettes</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_daymet</span>(<span class='no'>template</span>, <span class='no'>label</span>, <span class='kw'>elements</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='st'>"./RAW/DAYMET"</span>, <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"./EXTRACTIONS/"</span>,
-  <span class='no'>label</span>, <span class='st'>"/DAYMET"</span>), <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>template</th>
-      <td><p>A Raster* or Spatial* object to serve
-as a template for cropping.</p></td>
-    </tr>
-    <tr>
-      <th>label</th>
-      <td><p>A character string naming the study area.</p></td>
-    </tr>
-    <tr>
-      <th>elements</th>
-      <td><p>A character vector of elements to extract.<br />
-The available elements are:<br />
-dayl = Duration of the daylight period in seconds per day. This calculation is based on the period of the day during which the sun is above a hypothetical flat horizon.<br />
-prcp = Daily total precipitation in millimeters per day, sum of all forms converted to water-equivalent. Precipitation occurrence on any given day may be ascertained.<br />
-srad = Incident shortwave radiation flux density in watts per square meter, taken as an average over the daylight period of the day. NOTE: Daily total radiation (MJ/m2/day) can be calculated as follows: ((srad (W/m2) * dayl (s/day)) / l,000,000)<br />
-swe = Snow water equivalent in kilograms per square meter. The amount of water contained within the snowpack.<br />
-tmax = Daily maximum 2-meter air temperature in degrees Celsius.<br />
-tmin = Daily minimum 2-meter air temperature in degrees Celsius.<br />
-vp = Water vapor pressure in pascals. Daily average partial pressure of water vapor.<br /></p></td>
-    </tr>
-    <tr>
-      <th>years</th>
-      <td><p>A numeric vector of years to extract.</p></td>
-    </tr>
-    <tr>
-      <th>raw.dir</th>
-      <td><p>A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to './RAW/DAYMET/'.</p></td>
-    </tr>
-    <tr>
-      <th>extraction.dir</th>
-      <td><p>A character string indicating where the extracted and cropped DEM should be put.
-The directory will be created if missing. Defaults to './EXTRACTIONS/DAYMET/'.</p></td>
-    </tr>
-    <tr>
-      <th>force.redo</th>
-      <td><p>If an extraction for this template and label already exists, should a new one be created?</p></td>
-    </tr>
-    </table>
-    
+    <pre class="usage"><span class='fu'>pal_nlcd</span>()</pre>
+        
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A named list of <code>RasterBrick</code>s of weather data cropped to the extent of the template.</p>
+    <p>A data frame with official class descriptions and hexencoded rgb(a) colour values</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p><a href='https://www.mrlc.gov/data/legends/national-land-cover-database-2011-nlcd2011-legend'>https://www.mrlc.gov/data/legends/national-land-cover-database-2011-nlcd2011-legend</a></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -175,23 +131,22 @@ The directory will be created if missing. Defaults to './EXTRACTIONS/DAYMET/'.</
 <span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/raster/topics/extent'>extent</a></span>(<span class='fl'>672800</span>,<span class='fl'>740000</span>,<span class='fl'>4102000</span>,<span class='fl'>4170000</span>),
      <span class='kw'>proj4string</span><span class='kw'>=</span><span class='st'>'+proj=utm +datum=NAD83 +zone=12'</span>)
 
-<span class='co'># Get the DAYMET (North America only)</span>
-<span class='co'># Returns a list of raster bricks</span>
-<span class='no'>DAYMET</span> <span class='kw'>&lt;-</span> <span class='fu'>get_daymet</span>(<span class='kw'>template</span><span class='kw'>=</span><span class='no'>vepPolygon</span>,
-                     <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'VEPIIN'</span>,
-                     <span class='kw'>elements</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'prcp'</span>,<span class='st'>'tmin'</span>,<span class='st'>'tmax'</span>),
-                     <span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>1980</span>:<span class='fl'>1985</span>)
-
-<span class='co'># Plot with raster::plot</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>DAYMET</span>$<span class='no'>tmin</span>$<span class='no'>X1985.10.23</span>)
+<span class='no'>NLCD</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_nlcd.html'>get_nlcd</a></span>(<span class='kw'>template</span><span class='kw'>=</span><span class='no'>vepPolygon</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'VEPIIN'</span>)
+<span class='no'>NLCD</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/matrix'>as.matrix</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/table'>table</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/raster/topics/getValues'>values</a></span>(<span class='no'>NLCD</span>)))
+<span class='no'>cols</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='fu'>pal_nlcd</span>(), <span class='no'>code</span> <span class='kw'>%in%</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/row.names'>row.names</a></span>(<span class='no'>NLCD</span>))
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/par'>par</a></span>(<span class='kw'>xpd</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>mar</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>3</span>, <span class='fl'>2</span>, <span class='fl'>1</span>))
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/barplot'>barplot</a></span>(<span class='no'>NLCD</span>, <span class='kw'>beside</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='no'>cols</span>$<span class='no'>color</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/legend'>legend</a></span>(<span class='st'>"bottom"</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='no'>cols</span>$<span class='no'>description</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='no'>cols</span>$<span class='no'>color</span>,
+       <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>inset</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, -<span class='fl'>0.6</span>))
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#references">References</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
