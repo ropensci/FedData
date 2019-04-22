@@ -3,6 +3,8 @@ library(httr)
 context("NRCS soils database (SSURGO) tests")
 
 test_that("The SSURGO inventory dataset is available at the correct URL", {
+  skip_on_cran()
+  
   url <- 'http://websoilsurvey.sc.egov.usda.gov/DataAvailability/SoilDataAvailabilityShapefile.zip'
   expect_false(suppressWarnings(httr::http_error(url)))
   
@@ -11,6 +13,8 @@ test_that("The SSURGO inventory dataset is available at the correct URL", {
 })
 
 test_that("The SoilDB data queries work", {
+  skip_on_cran()
+  
   template = "CO670"
   q <- paste0("SELECT areasymbol, saverest FROM sacatalog WHERE areasymbol IN (",paste(paste0("'",template,"'"),collapse=','),");")
   expect_is(SDA_query(q),"data.frame")
@@ -21,6 +25,7 @@ test_that("The SoilDB data queries work", {
 })
 
 test_that("The SSURGO datasets are available at the correct URL", {
+  skip_on_cran()
   
   template = "CO670"
   q <- paste0("SELECT areasymbol, saverest FROM sacatalog WHERE areasymbol IN (",paste(paste0("'",template,"'"),collapse=','),");")

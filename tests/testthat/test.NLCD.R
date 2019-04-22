@@ -3,6 +3,8 @@ library(httr)
 context("National Land Cover Dataset tests")
 
 test_that("The NLCD tiles are available at the correct URL", {
+  skip_on_cran()
+  
   year = 2011
   dataset = "landcover"
   tileName = "N36W108"

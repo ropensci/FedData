@@ -38,7 +38,7 @@ Currently, the package enables extraction from seven datasets:
 
 This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the [**sp**](https://cran.r-project.org/package=sp), [**raster**](https://cran.r-project.org/package=raster), and [**rgdal**](https://cran.r-project.org/package=rgdal) packages.
 
-This package has been built and tested on a source (Homebrew) install of *R* on macOS 10.13 (High Sierra), and has been successfully run on Ubuntu 14.04.5 LTS (Trusty), Ubuntu 16.04.1 LTS (Xenial) and binary installs of *R* on Mac OS 10.13 and Windows 10.
+This package has been built and tested on a source (Homebrew) install of *R* on macOS 10.14 (High Sierra), and has been successfully run on Ubuntu 14.04.5 LTS (Trusty), Ubuntu 16.04.1 LTS (Xenial) and binary installs of *R* on Mac OS 10.14 and Windows 10.
 
 ### Development
 + [Kyle Bocinsky](http://bocinsky.io) - Crow Canyon Archaeological Center, Cortez, CO
@@ -99,7 +99,7 @@ raster::plot(NED)
 ```
 
 #### Get and plot the Daymet dataset for the study area
-```{r results="hide", message=FALSE}
+```{r results="hide", message=FALSE, warning=FALSE}
 # Get the DAYMET (North America only)
 # Returns a raster
 DAYMET <- get_daymet(template = vepPolygon,
@@ -165,7 +165,7 @@ NHD %>%
 ```
 
 #### Get and plot the NRCS SSURGO data for the study area
-```{r results="hide", message=FALSE}
+```{r results="hide", message=FALSE, warning=FALSE}
 # Get the NRCS SSURGO data (USA ONLY)
 SSURGO.VEPIIN <- get_ssurgo(template = vepPolygon, 
                      label = "VEPIIN")

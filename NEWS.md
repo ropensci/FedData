@@ -1,3 +1,6 @@
+# FedData 2.5.7
+* Removing many internet resource tests from CRAN, to satisfy: 'Packages which use Internet resources should fail gracefully with an informative message if the resource is not available (and not give a check warning nor error).'
+
 # FedData 2.5.6
 * Built-in access to the Soils Data Analysis query service to remove dependency on
 soilDB package.

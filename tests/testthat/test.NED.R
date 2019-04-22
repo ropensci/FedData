@@ -3,6 +3,8 @@ library(httr)
 context("National Elevation Dataset tests")
 
 test_that("The NED tiles are available at the correct URL", {
+  skip_on_cran()
+  
   res <- "1"
   tileNorthing <- "35"
   tileWesting <- "100"
@@ -22,6 +24,8 @@ test_that("The NED tiles are available at the correct URL", {
 })
 
 test_that("NED URLs fall back to legacy format", {
+  skip_on_cran()
+  
   res <- "1"
   tileNorthing <- "36"
   tileWesting <- "110"

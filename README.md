@@ -57,9 +57,9 @@ defined spatially. It relies heavily on the
 [**rgdal**](https://cran.r-project.org/package=rgdal) packages.
 
 This package has been built and tested on a source (Homebrew) install of
-*R* on macOS 10.13 (High Sierra), and has been successfully run on
+*R* on macOS 10.14 (High Sierra), and has been successfully run on
 Ubuntu 14.04.5 LTS (Trusty), Ubuntu 16.04.1 LTS (Xenial) and binary
-installs of *R* on Mac OS 10.13 and Windows 10.
+installs of *R* on Mac OS 10.14 and Windows 10.
 
 ### Development
 
@@ -215,10 +215,6 @@ NHD %>%
 # Get the NRCS SSURGO data (USA ONLY)
 SSURGO.VEPIIN <- get_ssurgo(template = vepPolygon, 
                      label = "VEPIIN")
-#> Warning in rbind(names(probs), probs_f): number of columns of result is not
-#> a multiple of vector length (arg 2)
-#> Warning: 1 parsing failure.
-#> row # A tibble: 1 x 5 col     row col     expected               actual file                         expected   <int> <chr>   <chr>                  <chr>  <chr>                        actual 1  1277 slope.r no trailing characters .5     '/Users/bocinsky/git/FedDat… file # A tibble: 1 x 5
 # Plot the NED again
 raster::plot(NED)
 # Plot the SSURGO mapunit polygons
@@ -235,6 +231,15 @@ plot(SSURGO.VEPIIN$spatial,
 # Or, download by Soil Survey Area names
 SSURGO.areas <- get_ssurgo(template = c("CO670","CO075"), 
                            label = "CO_TEST")
+#> Warning: 36 parsing failures.
+#>  row       col           expected                     actual                                                                                file
+#> 4561 ponddurcl 1/0/T/F/TRUE/FALSE Very brief (4 to 48 hours) '/Users/bocinsky/git/FedData/EXTRACTIONS/CO_TEST/SSURGO/CO_TEST_SSURGO_comonth.csv'
+#> 4561 ponddep.r 1/0/T/F/TRUE/FALSE 10                         '/Users/bocinsky/git/FedData/EXTRACTIONS/CO_TEST/SSURGO/CO_TEST_SSURGO_comonth.csv'
+#> 4561 ponddep.h 1/0/T/F/TRUE/FALSE 15                         '/Users/bocinsky/git/FedData/EXTRACTIONS/CO_TEST/SSURGO/CO_TEST_SSURGO_comonth.csv'
+#> 4562 ponddurcl 1/0/T/F/TRUE/FALSE Very brief (4 to 48 hours) '/Users/bocinsky/git/FedData/EXTRACTIONS/CO_TEST/SSURGO/CO_TEST_SSURGO_comonth.csv'
+#> 4562 ponddep.r 1/0/T/F/TRUE/FALSE 10                         '/Users/bocinsky/git/FedData/EXTRACTIONS/CO_TEST/SSURGO/CO_TEST_SSURGO_comonth.csv'
+#> .... ......... .................. .......................... ...................................................................................
+#> See problems(...) for more details.
 
 # Let's just look at spatial data for CO675
 SSURGO.areas.CO675 <- SSURGO.areas$spatial[SSURGO.areas$spatial$AREASYMBOL=="CO075",]

@@ -3,6 +3,8 @@ library(httr)
 context("Daymet tests")
 
 test_that("The Daymet tiles are available at the correct URL", {
+  skip_on_cran()
+  
   year <- 1985
   element <- "prcp"
   tileID <- 11376

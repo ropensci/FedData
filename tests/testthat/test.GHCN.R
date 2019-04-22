@@ -1,6 +1,7 @@
 library(FedData)
 library(httr)
 context("Global Historical Climatology Network tests")
+skip_on_cran()
 
 test_that("The GHCN inventory is available at the correct URL", {
   expect_false(suppressWarnings(httr::http_error("ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt")))
