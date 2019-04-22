@@ -43,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">FedData</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.7</span>
       </span>
     </div>
 
@@ -99,7 +99,7 @@
 <li>The <a href="https://www.mrlc.gov/">National Land Cover Database (NLCD)</a> from 2011, 2006, and 2001</li>
 </ul>
 <p>This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the <a href="https://cran.r-project.org/package=sp"><strong>sp</strong></a>, <a href="https://cran.r-project.org/package=raster"><strong>raster</strong></a>, and <a href="https://cran.r-project.org/package=rgdal"><strong>rgdal</strong></a> packages.</p>
-<p>This package has been built and tested on a source (Homebrew) install of <em>R</em> on macOS 10.13 (High Sierra), and has been successfully run on Ubuntu 14.04.5 LTS (Trusty), Ubuntu 16.04.1 LTS (Xenial) and binary installs of <em>R</em> on Mac OS 10.13 and Windows 10.</p>
+<p>This package has been built and tested on a source (Homebrew) install of <em>R</em> on macOS 10.14 (High Sierra), and has been successfully run on Ubuntu 14.04.5 LTS (Trusty), Ubuntu 16.04.1 LTS (Xenial) and binary installs of <em>R</em> on Mac OS 10.14 and Windows 10.</p>
 <div id="development" class="section level3">
 <h3 class="hasAnchor">
 <a href="#development" class="anchor"></a>Development</h3>
@@ -123,19 +123,19 @@
 <ul>
 <li>
 <p>From CRAN:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">'FedData'</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">'FedData'</span>)</a></code></pre></div>
 </li>
 <li>
 <p>Development version from GitHub:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb2-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"ropensci/FedData"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"ropensci/FedData"</span>)</a></code></pre></div>
 </li>
 <li>
 <p>Linux (Ubuntu 14.04.5 or 16.04.1):</p>
 <p>First, in terminal: <code>bash   sudo add-apt-repository ppa:ubuntugis/ppa -y   sudo apt-get update -q   sudo apt-get install libssl-dev libcurl4-openssl-dev netcdf-bin libnetcdf-dev gdal-bin libgdal-dev</code> Then, in R:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/update.packages">update.packages</a></span>(<span class="st">"survival"</span>)</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
-<a class="sourceLine" id="cb3-3" title="3">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"ropensci/FedData"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/update.packages">update.packages</a></span>(<span class="st">"survival"</span>)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"ropensci/FedData"</span>)</a></code></pre></div>
 </li>
 </ul>
 </div>
@@ -146,212 +146,186 @@
 <div id="load-feddata-and-define-a-study-area" class="section level4">
 <h4 class="hasAnchor">
 <a href="#load-feddata-and-define-a-study-area" class="anchor"></a>Load <code>FedData</code> and define a study area</h4>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># FedData Tester</span></a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(FedData)</a>
-<a class="sourceLine" id="cb4-3" title="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
-<a class="sourceLine" id="cb4-4" title="4"></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="co"># Extract data for the Village Ecodynamics Project "VEPIIN" study area:</span></a>
-<a class="sourceLine" id="cb4-6" title="6"><span class="co"># http://veparchaeology.org</span></a>
-<a class="sourceLine" id="cb4-7" title="7">vepPolygon &lt;-<span class="st"> </span><span class="kw"><a href="reference/polygon_from_extent.html">polygon_from_extent</a></span>(raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/extent">extent</a></span>(<span class="dv">672800</span>, <span class="dv">740000</span>, <span class="dv">4102000</span>, <span class="dv">4170000</span>),</a>
-<a class="sourceLine" id="cb4-8" title="8">                                  <span class="dt">proj4string =</span> <span class="st">"+proj=utm +datum=NAD83 +zone=12"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># FedData Tester</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(FedData)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co"># Extract data for the Village Ecodynamics Project "VEPIIN" study area:</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co"># http://veparchaeology.org</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">vepPolygon &lt;-<span class="st"> </span><span class="kw"><a href="reference/polygon_from_extent.html">polygon_from_extent</a></span>(raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/extent">extent</a></span>(<span class="dv">672800</span>, <span class="dv">740000</span>, <span class="dv">4102000</span>, <span class="dv">4170000</span>),</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">                                  <span class="dt">proj4string =</span> <span class="st">"+proj=utm +datum=NAD83 +zone=12"</span>)</a></code></pre></div>
 </div>
 <div id="get-and-plot-the-national-elevation-dataset-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
 <a href="#get-and-plot-the-national-elevation-dataset-for-the-study-area" class="anchor"></a>Get and plot the National Elevation Dataset for the study area</h4>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Get the NED (USA ONLY)</span></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="co"># Returns a raster</span></a>
-<a class="sourceLine" id="cb5-3" title="3">NED &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ned.html">get_ned</a></span>(<span class="dt">template =</span> vepPolygon,</a>
-<a class="sourceLine" id="cb5-4" title="4">               <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</a>
-<a class="sourceLine" id="cb5-5" title="5"><span class="co"># Plot with raster::plot</span></a>
-<a class="sourceLine" id="cb5-6" title="6">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Get the NED (USA ONLY)</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># Returns a raster</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">NED &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ned.html">get_ned</a></span>(<span class="dt">template =</span> vepPolygon,</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">               <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co"># Plot with raster::plot</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%"></p>
 </div>
 <div id="get-and-plot-the-daymet-dataset-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
 <a href="#get-and-plot-the-daymet-dataset-for-the-study-area" class="anchor"></a>Get and plot the Daymet dataset for the study area</h4>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># Get the DAYMET (North America only)</span></a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="co"># Returns a raster</span></a>
-<a class="sourceLine" id="cb6-3" title="3">DAYMET &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_daymet.html">get_daymet</a></span>(<span class="dt">template =</span> vepPolygon,</a>
-<a class="sourceLine" id="cb6-4" title="4">               <span class="dt">label =</span> <span class="st">"VEPIIN"</span>,</a>
-<a class="sourceLine" id="cb6-5" title="5">               <span class="dt">elements =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"prcp"</span>,<span class="st">"tmax"</span>),</a>
-<a class="sourceLine" id="cb6-6" title="6">               <span class="dt">years =</span> <span class="dv">1980</span><span class="op">:</span><span class="dv">1985</span>)</a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="co">#&gt; Warning in cbind(m[i, ], vals): number of rows of result is not a multiple</span></a>
-<a class="sourceLine" id="cb6-8" title="8"><span class="co">#&gt; of vector length (arg 2)</span></a>
-<a class="sourceLine" id="cb6-9" title="9"></a>
-<a class="sourceLine" id="cb6-10" title="10"><span class="co">#&gt; Warning in cbind(m[i, ], vals): number of rows of result is not a multiple</span></a>
-<a class="sourceLine" id="cb6-11" title="11"><span class="co">#&gt; of vector length (arg 2)</span></a>
-<a class="sourceLine" id="cb6-12" title="12"></a>
-<a class="sourceLine" id="cb6-13" title="13"><span class="co">#&gt; Warning in cbind(m[i, ], vals): number of rows of result is not a multiple</span></a>
-<a class="sourceLine" id="cb6-14" title="14"><span class="co">#&gt; of vector length (arg 2)</span></a>
-<a class="sourceLine" id="cb6-15" title="15"></a>
-<a class="sourceLine" id="cb6-16" title="16"><span class="co">#&gt; Warning in cbind(m[i, ], vals): number of rows of result is not a multiple</span></a>
-<a class="sourceLine" id="cb6-17" title="17"><span class="co">#&gt; of vector length (arg 2)</span></a>
-<a class="sourceLine" id="cb6-18" title="18"></a>
-<a class="sourceLine" id="cb6-19" title="19"><span class="co">#&gt; Warning in cbind(m[i, ], vals): number of rows of result is not a multiple</span></a>
-<a class="sourceLine" id="cb6-20" title="20"><span class="co">#&gt; of vector length (arg 2)</span></a>
-<a class="sourceLine" id="cb6-21" title="21"></a>
-<a class="sourceLine" id="cb6-22" title="22"><span class="co">#&gt; Warning in cbind(m[i, ], vals): number of rows of result is not a multiple</span></a>
-<a class="sourceLine" id="cb6-23" title="23"><span class="co">#&gt; of vector length (arg 2)</span></a>
-<a class="sourceLine" id="cb6-24" title="24"></a>
-<a class="sourceLine" id="cb6-25" title="25"><span class="co">#&gt; Warning in cbind(m[i, ], vals): number of rows of result is not a multiple</span></a>
-<a class="sourceLine" id="cb6-26" title="26"><span class="co">#&gt; of vector length (arg 2)</span></a>
-<a class="sourceLine" id="cb6-27" title="27"></a>
-<a class="sourceLine" id="cb6-28" title="28"><span class="co">#&gt; Warning in cbind(m[i, ], vals): number of rows of result is not a multiple</span></a>
-<a class="sourceLine" id="cb6-29" title="29"><span class="co">#&gt; of vector length (arg 2)</span></a>
-<a class="sourceLine" id="cb6-30" title="30"></a>
-<a class="sourceLine" id="cb6-31" title="31"><span class="co">#&gt; Warning in cbind(m[i, ], vals): number of rows of result is not a multiple</span></a>
-<a class="sourceLine" id="cb6-32" title="32"><span class="co">#&gt; of vector length (arg 2)</span></a>
-<a class="sourceLine" id="cb6-33" title="33"></a>
-<a class="sourceLine" id="cb6-34" title="34"><span class="co">#&gt; Warning in cbind(m[i, ], vals): number of rows of result is not a multiple</span></a>
-<a class="sourceLine" id="cb6-35" title="35"><span class="co">#&gt; of vector length (arg 2)</span></a>
-<a class="sourceLine" id="cb6-36" title="36"></a>
-<a class="sourceLine" id="cb6-37" title="37"><span class="co">#&gt; Warning in cbind(m[i, ], vals): number of rows of result is not a multiple</span></a>
-<a class="sourceLine" id="cb6-38" title="38"><span class="co">#&gt; of vector length (arg 2)</span></a>
-<a class="sourceLine" id="cb6-39" title="39"></a>
-<a class="sourceLine" id="cb6-40" title="40"><span class="co">#&gt; Warning in cbind(m[i, ], vals): number of rows of result is not a multiple</span></a>
-<a class="sourceLine" id="cb6-41" title="41"><span class="co">#&gt; of vector length (arg 2)</span></a>
-<a class="sourceLine" id="cb6-42" title="42"><span class="co"># Plot with raster::plot</span></a>
-<a class="sourceLine" id="cb6-43" title="43">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(DAYMET<span class="op">$</span>tmax<span class="op">$</span>X1985.<span class="fl">10.23</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Get the DAYMET (North America only)</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co"># Returns a raster</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">DAYMET &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_daymet.html">get_daymet</a></span>(<span class="dt">template =</span> vepPolygon,</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">               <span class="dt">label =</span> <span class="st">"VEPIIN"</span>,</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">               <span class="dt">elements =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"prcp"</span>,<span class="st">"tmax"</span>),</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">               <span class="dt">years =</span> <span class="dv">1980</span><span class="op">:</span><span class="dv">1985</span>)</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co"># Plot with raster::plot</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(DAYMET<span class="op">$</span>tmax<span class="op">$</span>X1985.<span class="fl">10.23</span>)</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
 </div>
 <div id="get-and-plot-the-daily-ghcn-precipitation-data-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
 <a href="#get-and-plot-the-daily-ghcn-precipitation-data-for-the-study-area" class="anchor"></a>Get and plot the daily GHCN precipitation data for the study area</h4>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># Get the daily GHCN data (GLOBAL)</span></a>
-<a class="sourceLine" id="cb7-2" title="2"><span class="co"># Returns a list: the first element is the spatial locations of stations,</span></a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="co"># and the second is a list of the stations and their daily data</span></a>
-<a class="sourceLine" id="cb7-4" title="4">GHCN.prcp &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ghcn_daily.html">get_ghcn_daily</a></span>(<span class="dt">template =</span> vepPolygon, </a>
-<a class="sourceLine" id="cb7-5" title="5">                            <span class="dt">label =</span> <span class="st">"VEPIIN"</span>, </a>
-<a class="sourceLine" id="cb7-6" title="6">                            <span class="dt">elements =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'prcp'</span>))</a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="co"># Plot the NED again</span></a>
-<a class="sourceLine" id="cb7-8" title="8">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a>
-<a class="sourceLine" id="cb7-9" title="9"><span class="co"># Plot the spatial locations</span></a>
-<a class="sourceLine" id="cb7-10" title="10">sp<span class="op">::</span><span class="kw">plot</span>(GHCN.prcp<span class="op">$</span>spatial,</a>
-<a class="sourceLine" id="cb7-11" title="11">         <span class="dt">pch =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb7-12" title="12">         <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb7-13" title="13"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/legend">legend</a></span>(<span class="st">'bottomleft'</span>,</a>
-<a class="sourceLine" id="cb7-14" title="14">       <span class="dt">pch =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb7-15" title="15">       <span class="dt">legend=</span><span class="st">"GHCN Precipitation Records"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Get the daily GHCN data (GLOBAL)</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co"># Returns a list: the first element is the spatial locations of stations,</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co"># and the second is a list of the stations and their daily data</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">GHCN.prcp &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ghcn_daily.html">get_ghcn_daily</a></span>(<span class="dt">template =</span> vepPolygon, </a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">                            <span class="dt">label =</span> <span class="st">"VEPIIN"</span>, </a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">                            <span class="dt">elements =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'prcp'</span>))</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co"># Plot the NED again</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co"># Plot the spatial locations</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">sp<span class="op">::</span><span class="kw">plot</span>(GHCN.prcp<span class="op">$</span>spatial,</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">         <span class="dt">pch =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">         <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/legend">legend</a></span>(<span class="st">'bottomleft'</span>,</a>
+<a class="sourceLine" id="cb7-14" data-line-number="14">       <span class="dt">pch =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb7-15" data-line-number="15">       <span class="dt">legend=</span><span class="st">"GHCN Precipitation Records"</span>)</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%"></p>
 </div>
 <div id="get-and-plot-the-daily-ghcn-temperature-data-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
 <a href="#get-and-plot-the-daily-ghcn-temperature-data-for-the-study-area" class="anchor"></a>Get and plot the daily GHCN temperature data for the study area</h4>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># Elements for which you require the same data</span></a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="co"># (i.e., minimum and maximum temperature for the same days)</span></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="co"># can be standardized using standardize==T</span></a>
-<a class="sourceLine" id="cb8-4" title="4">GHCN.temp &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ghcn_daily.html">get_ghcn_daily</a></span>(<span class="dt">template =</span> vepPolygon, </a>
-<a class="sourceLine" id="cb8-5" title="5">                            <span class="dt">label =</span> <span class="st">"VEPIIN"</span>, </a>
-<a class="sourceLine" id="cb8-6" title="6">                            <span class="dt">elements =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'tmin'</span>,<span class="st">'tmax'</span>), </a>
-<a class="sourceLine" id="cb8-7" title="7">                            <span class="dt">years =</span> <span class="dv">1980</span><span class="op">:</span><span class="dv">1985</span>,</a>
-<a class="sourceLine" id="cb8-8" title="8">                            <span class="dt">standardize =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb8-9" title="9"><span class="co"># Plot the NED again</span></a>
-<a class="sourceLine" id="cb8-10" title="10">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a>
-<a class="sourceLine" id="cb8-11" title="11"><span class="co"># Plot the spatial locations</span></a>
-<a class="sourceLine" id="cb8-12" title="12">sp<span class="op">::</span><span class="kw">plot</span>(GHCN.temp<span class="op">$</span>spatial,</a>
-<a class="sourceLine" id="cb8-13" title="13">         <span class="dt">add =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb8-14" title="14">         <span class="dt">pch =</span> <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb8-15" title="15"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/legend">legend</a></span>(<span class="st">'bottomleft'</span>,</a>
-<a class="sourceLine" id="cb8-16" title="16">       <span class="dt">pch =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb8-17" title="17">       <span class="dt">legend =</span> <span class="st">"GHCN Temperature Records"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># Elements for which you require the same data</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co"># (i.e., minimum and maximum temperature for the same days)</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co"># can be standardized using standardize==T</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">GHCN.temp &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ghcn_daily.html">get_ghcn_daily</a></span>(<span class="dt">template =</span> vepPolygon, </a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">                            <span class="dt">label =</span> <span class="st">"VEPIIN"</span>, </a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">                            <span class="dt">elements =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'tmin'</span>,<span class="st">'tmax'</span>), </a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">                            <span class="dt">years =</span> <span class="dv">1980</span><span class="op">:</span><span class="dv">1985</span>,</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">                            <span class="dt">standardize =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co"># Plot the NED again</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co"># Plot the spatial locations</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">sp<span class="op">::</span><span class="kw">plot</span>(GHCN.temp<span class="op">$</span>spatial,</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">         <span class="dt">add =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb8-14" data-line-number="14">         <span class="dt">pch =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/legend">legend</a></span>(<span class="st">'bottomleft'</span>,</a>
+<a class="sourceLine" id="cb8-16" data-line-number="16">       <span class="dt">pch =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb8-17" data-line-number="17">       <span class="dt">legend =</span> <span class="st">"GHCN Temperature Records"</span>)</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-8-1.png" width="100%"></p>
 </div>
 <div id="get-and-plot-the-national-hydrography-dataset-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
 <a href="#get-and-plot-the-national-hydrography-dataset-for-the-study-area" class="anchor"></a>Get and plot the National Hydrography Dataset for the study area</h4>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># Get the NHD (USA ONLY)</span></a>
-<a class="sourceLine" id="cb9-2" title="2">NHD &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nhd.html">get_nhd</a></span>(<span class="dt">template =</span> vepPolygon, </a>
-<a class="sourceLine" id="cb9-3" title="3">               <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="co"># Plot the NED again</span></a>
-<a class="sourceLine" id="cb9-5" title="5">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="co"># Plot the NHD data</span></a>
-<a class="sourceLine" id="cb9-7" title="7">NHD <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(sp<span class="op">::</span>plot,</a>
-<a class="sourceLine" id="cb9-9" title="9">         <span class="dt">col =</span> <span class="st">'black'</span>,</a>
-<a class="sourceLine" id="cb9-10" title="10">         <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># Get the NHD (USA ONLY)</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">NHD &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nhd.html">get_nhd</a></span>(<span class="dt">template =</span> vepPolygon, </a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">               <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co"># Plot the NED again</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co"># Plot the NHD data</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">NHD <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(sp<span class="op">::</span>plot,</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">         <span class="dt">col =</span> <span class="st">'black'</span>,</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">         <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="100%"></p>
 </div>
 <div id="get-and-plot-the-nrcs-ssurgo-data-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
 <a href="#get-and-plot-the-nrcs-ssurgo-data-for-the-study-area" class="anchor"></a>Get and plot the NRCS SSURGO data for the study area</h4>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># Get the NRCS SSURGO data (USA ONLY)</span></a>
-<a class="sourceLine" id="cb10-2" title="2">SSURGO.VEPIIN &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ssurgo.html">get_ssurgo</a></span>(<span class="dt">template =</span> vepPolygon, </a>
-<a class="sourceLine" id="cb10-3" title="3">                     <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</a>
-<a class="sourceLine" id="cb10-4" title="4"><span class="co"># Plot the NED again</span></a>
-<a class="sourceLine" id="cb10-5" title="5">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a>
-<a class="sourceLine" id="cb10-6" title="6"><span class="co"># Plot the SSURGO mapunit polygons</span></a>
-<a class="sourceLine" id="cb10-7" title="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(SSURGO.VEPIIN<span class="op">$</span>spatial,</a>
-<a class="sourceLine" id="cb10-8" title="8">     <span class="dt">lwd =</span> <span class="fl">0.1</span>,</a>
-<a class="sourceLine" id="cb10-9" title="9">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># Get the NRCS SSURGO data (USA ONLY)</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">SSURGO.VEPIIN &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ssurgo.html">get_ssurgo</a></span>(<span class="dt">template =</span> vepPolygon, </a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">                     <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co"># Plot the NED again</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co"># Plot the SSURGO mapunit polygons</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(SSURGO.VEPIIN<span class="op">$</span>spatial,</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">     <span class="dt">lwd =</span> <span class="fl">0.1</span>,</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-10-1.png" width="100%"></p>
 </div>
 <div id="get-and-plot-the-nrcs-ssurgo-data-for-particular-soil-survey-areas" class="section level4">
 <h4 class="hasAnchor">
 <a href="#get-and-plot-the-nrcs-ssurgo-data-for-particular-soil-survey-areas" class="anchor"></a>Get and plot the NRCS SSURGO data for particular soil survey areas</h4>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co"># Or, download by Soil Survey Area names</span></a>
-<a class="sourceLine" id="cb11-2" title="2">SSURGO.areas &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ssurgo.html">get_ssurgo</a></span>(<span class="dt">template =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"CO670"</span>,<span class="st">"CO075"</span>), </a>
-<a class="sourceLine" id="cb11-3" title="3">                           <span class="dt">label =</span> <span class="st">"CO_TEST"</span>)</a>
-<a class="sourceLine" id="cb11-4" title="4"></a>
-<a class="sourceLine" id="cb11-5" title="5"><span class="co"># Let's just look at spatial data for CO675</span></a>
-<a class="sourceLine" id="cb11-6" title="6">SSURGO.areas.CO675 &lt;-<span class="st"> </span>SSURGO.areas<span class="op">$</span>spatial[SSURGO.areas<span class="op">$</span>spatial<span class="op">$</span>AREASYMBOL<span class="op">==</span><span class="st">"CO075"</span>,]</a>
-<a class="sourceLine" id="cb11-7" title="7"></a>
-<a class="sourceLine" id="cb11-8" title="8"><span class="co"># And get the NED data under them for pretty plotting</span></a>
-<a class="sourceLine" id="cb11-9" title="9">NED.CO675 &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ned.html">get_ned</a></span>(<span class="dt">template =</span> SSURGO.areas.CO675,</a>
-<a class="sourceLine" id="cb11-10" title="10">                            <span class="dt">label =</span> <span class="st">"SSURGO_CO675"</span>)</a>
-<a class="sourceLine" id="cb11-11" title="11">               </a>
-<a class="sourceLine" id="cb11-12" title="12"><span class="co"># Plot the SSURGO mapunit polygons, but only for CO675</span></a>
-<a class="sourceLine" id="cb11-13" title="13"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(NED.CO675)</a>
-<a class="sourceLine" id="cb11-14" title="14"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(SSURGO.areas.CO675,</a>
-<a class="sourceLine" id="cb11-15" title="15">     <span class="dt">lwd =</span> <span class="fl">0.1</span>,</a>
-<a class="sourceLine" id="cb11-16" title="16">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># Or, download by Soil Survey Area names</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2">SSURGO.areas &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ssurgo.html">get_ssurgo</a></span>(<span class="dt">template =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"CO670"</span>,<span class="st">"CO075"</span>), </a>
+<a class="sourceLine" id="cb11-3" data-line-number="3">                           <span class="dt">label =</span> <span class="st">"CO_TEST"</span>)</a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co">#&gt; Warning: 36 parsing failures.</span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co">#&gt;  row       col           expected                     actual                                                                                file</span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt; 4561 ponddurcl 1/0/T/F/TRUE/FALSE Very brief (4 to 48 hours) '/Users/bocinsky/git/FedData/EXTRACTIONS/CO_TEST/SSURGO/CO_TEST_SSURGO_comonth.csv'</span></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co">#&gt; 4561 ponddep.r 1/0/T/F/TRUE/FALSE 10                         '/Users/bocinsky/git/FedData/EXTRACTIONS/CO_TEST/SSURGO/CO_TEST_SSURGO_comonth.csv'</span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">#&gt; 4561 ponddep.h 1/0/T/F/TRUE/FALSE 15                         '/Users/bocinsky/git/FedData/EXTRACTIONS/CO_TEST/SSURGO/CO_TEST_SSURGO_comonth.csv'</span></a>
+<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">#&gt; 4562 ponddurcl 1/0/T/F/TRUE/FALSE Very brief (4 to 48 hours) '/Users/bocinsky/git/FedData/EXTRACTIONS/CO_TEST/SSURGO/CO_TEST_SSURGO_comonth.csv'</span></a>
+<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">#&gt; 4562 ponddep.r 1/0/T/F/TRUE/FALSE 10                         '/Users/bocinsky/git/FedData/EXTRACTIONS/CO_TEST/SSURGO/CO_TEST_SSURGO_comonth.csv'</span></a>
+<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co">#&gt; .... ......... .................. .......................... ...................................................................................</span></a>
+<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt; See problems(...) for more details.</span></a>
+<a class="sourceLine" id="cb11-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co"># Let's just look at spatial data for CO675</span></a>
+<a class="sourceLine" id="cb11-15" data-line-number="15">SSURGO.areas.CO675 &lt;-<span class="st"> </span>SSURGO.areas<span class="op">$</span>spatial[SSURGO.areas<span class="op">$</span>spatial<span class="op">$</span>AREASYMBOL<span class="op">==</span><span class="st">"CO075"</span>,]</a>
+<a class="sourceLine" id="cb11-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb11-17" data-line-number="17"><span class="co"># And get the NED data under them for pretty plotting</span></a>
+<a class="sourceLine" id="cb11-18" data-line-number="18">NED.CO675 &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_ned.html">get_ned</a></span>(<span class="dt">template =</span> SSURGO.areas.CO675,</a>
+<a class="sourceLine" id="cb11-19" data-line-number="19">                            <span class="dt">label =</span> <span class="st">"SSURGO_CO675"</span>)</a>
+<a class="sourceLine" id="cb11-20" data-line-number="20">               </a>
+<a class="sourceLine" id="cb11-21" data-line-number="21"><span class="co"># Plot the SSURGO mapunit polygons, but only for CO675</span></a>
+<a class="sourceLine" id="cb11-22" data-line-number="22"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(NED.CO675)</a>
+<a class="sourceLine" id="cb11-23" data-line-number="23"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(SSURGO.areas.CO675,</a>
+<a class="sourceLine" id="cb11-24" data-line-number="24">     <span class="dt">lwd =</span> <span class="fl">0.1</span>,</a>
+<a class="sourceLine" id="cb11-25" data-line-number="25">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="100%"></p>
 </div>
 <div id="get-and-plot-the-itrdb-chronology-locations-in-the-study-area" class="section level4">
 <h4 class="hasAnchor">
 <a href="#get-and-plot-the-itrdb-chronology-locations-in-the-study-area" class="anchor"></a>Get and plot the ITRDB chronology locations in the study area</h4>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co"># Get the ITRDB records</span></a>
-<a class="sourceLine" id="cb12-2" title="2">ITRDB &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_itrdb.html">get_itrdb</a></span>(<span class="dt">template =</span> vepPolygon,</a>
-<a class="sourceLine" id="cb12-3" title="3">                        <span class="dt">label =</span> <span class="st">"VEPIIN"</span>,</a>
-<a class="sourceLine" id="cb12-4" title="4">                        <span class="dt">makeSpatial =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb12-5" title="5"><span class="co"># Plot the NED again</span></a>
-<a class="sourceLine" id="cb12-6" title="6">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a>
-<a class="sourceLine" id="cb12-7" title="7"><span class="co"># Map the locations of the tree ring chronologies</span></a>
-<a class="sourceLine" id="cb12-8" title="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ITRDB<span class="op">$</span>metadata,</a>
-<a class="sourceLine" id="cb12-9" title="9">     <span class="dt">pch =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb12-10" title="10">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb12-11" title="11"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/legend">legend</a></span>(<span class="st">'bottomleft'</span>,</a>
-<a class="sourceLine" id="cb12-12" title="12">       <span class="dt">pch =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb12-13" title="13">       <span class="dt">legend =</span> <span class="st">"ITRDB chronologies"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># Get the ITRDB records</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">ITRDB &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_itrdb.html">get_itrdb</a></span>(<span class="dt">template =</span> vepPolygon,</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">                        <span class="dt">label =</span> <span class="st">"VEPIIN"</span>,</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">                        <span class="dt">makeSpatial =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co"># Plot the NED again</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co"># Map the locations of the tree ring chronologies</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ITRDB<span class="op">$</span>metadata,</a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">     <span class="dt">pch =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb12-10" data-line-number="10">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/legend">legend</a></span>(<span class="st">'bottomleft'</span>,</a>
+<a class="sourceLine" id="cb12-12" data-line-number="12">       <span class="dt">pch =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb12-13" data-line-number="13">       <span class="dt">legend =</span> <span class="st">"ITRDB chronologies"</span>)</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-12-1.png" width="100%"></p>
 </div>
 <div id="get-and-plot-the-national-land-cover-dataset-for-the-study-area" class="section level4">
 <h4 class="hasAnchor">
 <a href="#get-and-plot-the-national-land-cover-dataset-for-the-study-area" class="anchor"></a>Get and plot the National Land Cover Dataset for the study area</h4>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co"># Get the NLCD (USA ONLY)</span></a>
-<a class="sourceLine" id="cb13-2" title="2"><span class="co"># Returns a raster</span></a>
-<a class="sourceLine" id="cb13-3" title="3">NLCD &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nlcd.html">get_nlcd</a></span>(<span class="dt">template =</span> vepPolygon,</a>
-<a class="sourceLine" id="cb13-4" title="4">                 <span class="dt">year =</span> <span class="dv">2011</span>,</a>
-<a class="sourceLine" id="cb13-5" title="5">                 <span class="dt">dataset =</span> <span class="st">"landcover"</span>,</a>
-<a class="sourceLine" id="cb13-6" title="6">                 <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</a>
-<a class="sourceLine" id="cb13-7" title="7"><span class="co"># Plot with raster::plot</span></a>
-<a class="sourceLine" id="cb13-8" title="8">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NLCD)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># Get the NLCD (USA ONLY)</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co"># Returns a raster</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">NLCD &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nlcd.html">get_nlcd</a></span>(<span class="dt">template =</span> vepPolygon,</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">                 <span class="dt">year =</span> <span class="dv">2011</span>,</a>
+<a class="sourceLine" id="cb13-5" data-line-number="5">                 <span class="dt">dataset =</span> <span class="st">"landcover"</span>,</a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">                 <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</a>
+<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="co"># Plot with raster::plot</span></a>
+<a class="sourceLine" id="cb13-8" data-line-number="8">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NLCD)</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-13-1.png" width="100%"><img src="reference/figures/README-unnamed-chunk-13-2.png" width="100%"></p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"></a>
-<a class="sourceLine" id="cb14-2" title="2"><span class="co"># You can also download the Canopy or impervious datasets:</span></a>
-<a class="sourceLine" id="cb14-3" title="3">NLCD_canopy &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nlcd.html">get_nlcd</a></span>(<span class="dt">template =</span> vepPolygon,</a>
-<a class="sourceLine" id="cb14-4" title="4">                 <span class="dt">year =</span> <span class="dv">2011</span>,</a>
-<a class="sourceLine" id="cb14-5" title="5">                 <span class="dt">dataset =</span> <span class="st">"canopy"</span>,</a>
-<a class="sourceLine" id="cb14-6" title="6">                 <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</a>
-<a class="sourceLine" id="cb14-7" title="7"><span class="co"># Plot with raster::plot</span></a>
-<a class="sourceLine" id="cb14-8" title="8">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NLCD_canopy)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="co"># You can also download the Canopy or impervious datasets:</span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3">NLCD_canopy &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nlcd.html">get_nlcd</a></span>(<span class="dt">template =</span> vepPolygon,</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">                 <span class="dt">year =</span> <span class="dv">2011</span>,</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5">                 <span class="dt">dataset =</span> <span class="st">"canopy"</span>,</a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">                 <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co"># Plot with raster::plot</span></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NLCD_canopy)</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-13-3.png" width="100%"><img src="reference/figures/README-unnamed-chunk-13-4.png" width="100%"></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"></a>
-<a class="sourceLine" id="cb15-2" title="2">NLCD_impervious &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nlcd.html">get_nlcd</a></span>(<span class="dt">template =</span> vepPolygon,</a>
-<a class="sourceLine" id="cb15-3" title="3">                 <span class="dt">year =</span> <span class="dv">2011</span>,</a>
-<a class="sourceLine" id="cb15-4" title="4">                 <span class="dt">dataset =</span> <span class="st">"impervious"</span>,</a>
-<a class="sourceLine" id="cb15-5" title="5">                 <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</a>
-<a class="sourceLine" id="cb15-6" title="6"><span class="co"># Plot with raster::plot</span></a>
-<a class="sourceLine" id="cb15-7" title="7">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NLCD_impervious)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">NLCD_impervious &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nlcd.html">get_nlcd</a></span>(<span class="dt">template =</span> vepPolygon,</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">                 <span class="dt">year =</span> <span class="dv">2011</span>,</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">                 <span class="dt">dataset =</span> <span class="st">"impervious"</span>,</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">                 <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co"># Plot with raster::plot</span></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NLCD_impervious)</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-13-5.png" width="100%"><img src="reference/figures/README-unnamed-chunk-13-6.png" width="100%"></p>
 <hr>
 </div>
