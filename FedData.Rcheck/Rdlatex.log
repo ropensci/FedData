@@ -1,0 +1,398 @@
+Hmm ... looks like a package
+
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 2
+Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
+(./Rd2.tex
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/url/url.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/local/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+No file Rd2.aux.
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1phv.fd) [1{/usr/local/te
+xlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Underfull \hbox (badness 10000) in paragraph at lines 106--115
+
+[2] (/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 186--195
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 186--195
+
+
+Overfull \hbox (7.03741pt too wide) in paragraph at lines 196--324
+\T1/ptm/m/n/10 DATN = Num-ber of days in-cluded in the mul-ti-day min-i-mum tem
+-per-a-ture (MDTN) 
+
+Overfull \hbox (8.69746pt too wide) in paragraph at lines 196--324
+\T1/ptm/m/n/10 DATX = Num-ber of days in-cluded in the mul-ti-day max-i-mum tem
+-per-a-ture (MDTX) 
+
+Overfull \hbox (0.8264pt too wide) in paragraph at lines 196--324
+\T1/ptm/m/n/10 MDPR = Mul-ti-day pre-cip-i-ta-tion to-tal (tenths of mm; use wi
+th DAPR and DWPR,
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--324
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--324
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--324
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--324
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--324
+
+[4]
+Underfull \vbox (badness 10000) has occurred while \output is active [5]
+Underfull \vbox (badness 2894) has occurred while \output is active [6]
+[7] [8] [9] [10] [11] [12] [13] [14]
+Overfull \hbox (22.78088pt too wide) in paragraph at lines 852--853
+[][][]$\T1/zi4/m/n/10 https : / / www . mrlc . gov / data / legends / national-
+[]land-[]cover-[]database-[]2011-[]nlcd2011-[]legend$[][] 
+No file Rd2.ind.
+[15] (./Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.data.frame} has been referenced but does not exist, replaced by a fixed on
+e
+
+{/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/us
+r/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive
+/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/local/texlive/20
+18/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/local/t
+exlive/2018/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/
+2018/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf
+-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/font
+s/type1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/ur
+w/times/utmri8a.pfb>
+Output written on Rd2.pdf (15 pages, 114696 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2018] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (20 entries accepted, 0 rejected).
+Sorting entries....done (86 comparisons).
+Generating output file Rd2.ind....done (37 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 2
+Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
+(./Rd2.tex
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/url/url.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/local/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+(./Rd2.aux) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(./Rd2.out) (./Rd2.out)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1phv.fd) (./Rd2.toc
+[1{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}])
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 106--115
+
+[3] (/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+Underfull \hbox (badness 10000) in paragraph at lines 186--195
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 186--195
+
+[4]
+Overfull \hbox (7.03741pt too wide) in paragraph at lines 196--324
+\T1/ptm/m/n/10 DATN = Num-ber of days in-cluded in the mul-ti-day min-i-mum tem
+-per-a-ture (MDTN) 
+
+Overfull \hbox (8.69746pt too wide) in paragraph at lines 196--324
+\T1/ptm/m/n/10 DATX = Num-ber of days in-cluded in the mul-ti-day max-i-mum tem
+-per-a-ture (MDTX) 
+
+Overfull \hbox (0.8264pt too wide) in paragraph at lines 196--324
+\T1/ptm/m/n/10 MDPR = Mul-ti-day pre-cip-i-ta-tion to-tal (tenths of mm; use wi
+th DAPR and DWPR,
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--324
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--324
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--324
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--324
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--324
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active [5]
+Underfull \vbox (badness 10000) has occurred while \output is active [6]
+[7] [8] [9] [10] [11] [12] [13] [14]
+Overfull \hbox (22.78088pt too wide) in paragraph at lines 852--853
+[][][]$\T1/zi4/m/n/10 https : / / www . mrlc . gov / data / legends / national-
+[]land-[]cover-[]database-[]2011-[]nlcd2011-[]legend$[][] 
+[15] (./Rd2.ind [16] [17]) (./Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.data.frame} has been referenced but does not exist, replaced by a fixed on
+e
+
+{/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/us
+r/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive
+/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/local/texlive/20
+18/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/local/t
+exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/te
+xlive/2018/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2
+018/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-
+dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts
+/type1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw
+/times/utmri8a.pfb>
+Output written on Rd2.pdf (17 pages, 125484 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2018] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (20 entries accepted, 0 rejected).
+Sorting entries....done (86 comparisons).
+Generating output file Rd2.ind....done (37 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2018-04-01> patch level 2
+Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
+(./Rd2.tex
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/url/url.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/textcomp.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1enc.dfu)))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/t1enc.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.112, 2017/01/04 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/local/texlive/2018/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/local/texlive/2018/texmf-dist/tex/generic/ifxetex/ifxetex.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/latexconfig/hyperref.cfg))
+(/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2018/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 366.
+
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+(./Rd2.aux) (/usr/local/texlive/2018/texmf-dist/tex/latex/base/ts1cmr.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2018/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2018/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(./Rd2.out) (./Rd2.out)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/local/texlive/2018/texmf-dist/tex/latex/psnfss/t1phv.fd) (./Rd2.toc
+[1{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}])
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 106--115
+
+[3] (/usr/local/texlive/2018/texmf-dist/tex/latex/inconsolata/ts1zi4.fd)
+Underfull \hbox (badness 10000) in paragraph at lines 186--195
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 186--195
+
+[4]
+Overfull \hbox (7.03741pt too wide) in paragraph at lines 196--324
+\T1/ptm/m/n/10 DATN = Num-ber of days in-cluded in the mul-ti-day min-i-mum tem
+-per-a-ture (MDTN) 
+
+Overfull \hbox (8.69746pt too wide) in paragraph at lines 196--324
+\T1/ptm/m/n/10 DATX = Num-ber of days in-cluded in the mul-ti-day max-i-mum tem
+-per-a-ture (MDTX) 
+
+Overfull \hbox (0.8264pt too wide) in paragraph at lines 196--324
+\T1/ptm/m/n/10 MDPR = Mul-ti-day pre-cip-i-ta-tion to-tal (tenths of mm; use wi
+th DAPR and DWPR,
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--324
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--324
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--324
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--324
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 196--324
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active [5]
+Underfull \vbox (badness 10000) has occurred while \output is active [6]
+[7] [8] [9] [10] [11] [12] [13] [14]
+Overfull \hbox (22.78088pt too wide) in paragraph at lines 852--853
+[][][]$\T1/zi4/m/n/10 https : / / www . mrlc . gov / data / legends / national-
+[]land-[]cover-[]database-[]2011-[]nlcd2011-[]legend$[][] 
+[15] (./Rd2.ind [16] [17]) (./Rd2.aux) )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.data.frame} has been referenced but does not exist, replaced by a fixed on
+e
+
+{/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-ts1.enc}{/us
+r/local/texlive/2018/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/local/texlive
+/2018/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/local/texlive/20
+18/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb></usr/local/t
+exlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/te
+xlive/2018/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2
+018/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-
+dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts
+/type1/urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw
+/times/utmri8a.pfb>
+Output written on Rd2.pdf (17 pages, 125793 bytes).
+Transcript written on Rd2.log.
+Saving output to ‘FedData-manual.pdf’ ...
+Done
+You may want to clean up by 'rm -Rf /var/folders/wf/lwmk1vtj0px2znhhn6_3pvvr0000gn/T//RtmpADmyaW/Rd2pdf138a85c3fccd0'
