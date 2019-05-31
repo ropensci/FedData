@@ -6,7 +6,7 @@
 \usage{
 get_itrdb(template = NULL, label = NULL, recon.years = NULL,
   calib.years = NULL, species = NULL, measurement.type = NULL,
-  chronology.type = NULL, makeSpatial = F, raw.dir = "./RAW/ITRDB",
+  chronology.type = NULL, raw.dir = "./RAW/ITRDB",
   extraction.dir = ifelse(!is.null(label), paste0("./EXTRACTIONS/",
   label, "/ITRDB"), "./EXTRACTIONS/ITRDB"), force.redo = FALSE)
 }
@@ -50,8 +50,6 @@ if missing, all available chronologies are given.}
 \item 'Measurements Only'
 }
 if missing, all available chronologies are given.}
-
-\item{makeSpatial}{Should the metadata be presented as a SpatialPointsDataFrame? Defaults to FALSE.}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
 The directory will be created if missing. Defaults to './RAW/ITRDB/'.}

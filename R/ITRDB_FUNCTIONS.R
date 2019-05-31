@@ -41,7 +41,6 @@
 #' \item 'Measurements Only'
 #' }
 #' if missing, all available chronologies are given.
-#' @param makeSpatial Should the metadata be presented as a SpatialPointsDataFrame? Defaults to FALSE.
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing. Defaults to './RAW/ITRDB/'.
 #' @param extraction.dir A character string indicating where the extracted and cropped ITRDB dataset should be put.
@@ -50,6 +49,7 @@
 #' @return A named list containing the 'metadata', 'widths', and 'depths' data. 
 #' @export
 #' @importFrom data.table :=
+#' @importFrom sf st_as_sf st_transform st_intersection
 #' @examples
 #' \dontrun{
 #' # Extract data for the Village Ecodynamics Project 'VEPIIN' study area:
@@ -74,7 +74,6 @@ get_itrdb <- function(template = NULL,
                       species = NULL,
                       measurement.type = NULL,
                       chronology.type = NULL,
-                      makeSpatial = F,
                       raw.dir = "./RAW/ITRDB",
                       extraction.dir = ifelse(!is.null(label),
                                               paste0("./EXTRACTIONS/", label, "/ITRDB"),
@@ -100,59 +99,87 @@ get_itrdb <- function(template = NULL,
     return(out)
   }
   
-  data <- download_itrdb(raw.dir = raw.dir, force.redo = force.redo)
+  data <- download_itrdb(raw.dir = raw.dir, force.redo = force.redo) %>%
+    tibble::as_tibble()
   
   ## Nulling out to appease R CMD CHECK
   LAT <- LON <- START <- END <- SPECIES <- MEASUREMENT_TYPE <- CHRONOLOGY_TYPE <- NULL
   
   if (!is.null(calib.years)) {
-    data <- data[START < min(calib.years) & END > max(calib.years)]
+    data %<>%
+      dplyr::filter(START < min(calib.years) & END > max(calib.years))
   }
   
   if (!is.null(species)) {
-    data <- data[SPECIES %in% species]
+    data %<>%
+      dplyr::filter(SPECIES %in% species)
   }
   
   if (!is.null(measurement.type)) {
-    data <- data[MEASUREMENT_TYPE %in% measurement.type]
+    data %<>%
+      dplyr::filter(MEASUREMENT_TYPE %in% measurement.type)
   }
   
   if (!is.null(chronology.type)) {
-    data <- data[CHRONOLOGY_TYPE %in% chronology.type]
+    data %<>%
+      dplyr::filter(CHRONOLOGY_TYPE %in% chronology.type)
   }
   
+  data %<>%
+    tibble::as_tibble() %>%
+    dplyr::mutate(data = data %>% 
+                    purrr::map(function(x){
+                      x %>%
+                        as.data.frame() %>%
+                        tibble::rownames_to_column("year") %>%
+                        tibble::as_tibble() %>%
+                        dplyr::mutate(year = as.integer(year)) %>%
+                        dplyr::select(year, dplyr::everything())
+                    })) %>%
+    dplyr::filter(LAT >= -90 & LAT <= 90 & LON >= -180 & LON <= 180) %>%
+    sf::st_as_sf(coords = c("LON", "LAT"), crs = 4326)
+  
   if (!is.null(template)) {
-    data <- data[LAT >= -90 & LAT <= 90 & LON >= -180 & LON <= 180]
-    sp.data <- sp::SpatialPointsDataFrame(as.matrix(data[, c("LON", "LAT"), with = F]), data = data[, "SERIES", with = F, drop = F], 
-                                          proj4string = sp::CRS("+proj=longlat +datum=WGS84"))
-    data <- data[!is.na((sp.data %over% sp::spTransform(template, sp::CRS(raster::projection(sp.data)))))]
-    rm(sp.data)
+    
+    data %<>%
+      sf::st_intersection(template %>%
+                            sf::st_as_sf() %>%
+                            sf::st_transform(4326) %>%
+                            dplyr::mutate(Id = NULL))
+    
     if (dim(data)[[1]] == 0) 
       stop("No ITRDB chronologies within template polygon.")
   }
   
   if (is.null(recon.years)) {
-    if (dim(data)[[1]] == 0) 
-      stop("No ITRDB chronologies within template polygon.")
-    all.years <- range(as.numeric(unique(unlist(sapply(data[, data], rownames)))))
-    recon.years <- all.years[[1]]:all.years[[2]]
+    recon.years <- 
+      data$data %>%
+      purrr::map(magrittr::extract2,"year") %>%
+      unlist() %>%
+      range() %>%
+      {.[[1]]:.[[2]]}
   }
   
-  all.data <- lapply(data[, data], function(df) {
-    df <- df[rownames(df) %in% recon.years, ]
-    df.years <- as.numeric(rownames(df))
-    missing.years <- setdiff(recon.years, df.years)
-    missing.mat <- matrix(nrow = length(missing.years), ncol = 2)
-    colnames(missing.mat) <- c("WIDTH", "DEPTH")
-    rownames(missing.mat) <- missing.years
-    df.all <- rbind(df, missing.mat)
-    df.all <- df.all[order(as.numeric(rownames(df.all))), ]
-  })
-  names(all.data) <- data$SERIES
+  year_df <- tibble::tibble(year = recon.years)
+  
+  all.data <- 
+    data$data %>%
+    magrittr::set_names(.,data$SERIES) %>%
+    purrr::map(
+      function(df) {
+        df %>%
+          dplyr::filter(year %in% recon.years) %>%
+          dplyr::right_join(year_df, 
+                            by = "year") %>%
+          dplyr::arrange(year)
+        
+      }
+    )
   
   widths <- sapply(all.data, function(df) {
     data.matrix(df[, "WIDTH", drop = F])
   })
+  
   depths <- sapply(all.data, function(df) {
     data.matrix(df[, "DEPTH", drop = F])
   })
@@ -160,10 +187,7 @@ get_itrdb <- function(template = NULL,
   colnames(widths) <- colnames(depths) <- names(all.data)
   rownames(widths) <- rownames(depths) <- recon.years
   
-  data <- data[, `:=`(data, NULL)]
-  if (makeSpatial) {
-    data <- sp::SpatialPointsDataFrame(as.matrix(data[, c("LON", "LAT"), with = F]), data = data, proj4string = sp::CRS("+proj=longlat +datum=WGS84"))
-  }
+  data$data <- NULL
   
   out <- list(metadata = data, widths = widths, depths = depths)
   if (!is.null(label)) {

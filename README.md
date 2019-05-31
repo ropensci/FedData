@@ -262,14 +262,22 @@ plot(SSURGO.areas.CO675,
 ``` r
 # Get the ITRDB records
 ITRDB <- get_itrdb(template = vepPolygon,
-                        label = "VEPIIN",
-                        makeSpatial = TRUE)
+                   label = "VEPIIN",
+                   recon.years = 850:2000,
+                   calib.years = 1924:1983,
+                   measurement.type = "Ring Width",
+                   chronology.type = "ARSTND")
+#> Warning: attribute variables are assumed to be spatially constant
+#> throughout all geometries
+
 # Plot the NED again
 raster::plot(NED)
 # Map the locations of the tree ring chronologies
 plot(ITRDB$metadata,
      pch = 1,
      add = TRUE)
+#> Warning in plot.sf(ITRDB$metadata, pch = 1, add = TRUE): ignoring all but
+#> the first attribute
 legend('bottomleft',
        pch = 1,
        legend = "ITRDB chronologies")

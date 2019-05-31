@@ -14,8 +14,8 @@ Description: Functions to automate downloading geospatial data available from
     for North America, version 3, available from the Oak Ridge National Laboratory's
     Distributed Active Archive Center (DAAC); the International Tree Ring Data Bank; 
     and the National Land Cover Database (NLCD).
-Version: 2.5.7
-Date: 2019-04-21
+Version: 3.0.0.9000
+Date: 2019-05-31
 Authors@R: c(person(given = c("R.", "Kyle"), family = "Bocinsky",
     role = c("aut", "cre"), email = "bocinsky@gmail.com"),
     person(given = c("Dylan"), family = "Beaudette", role = "ctb"),
@@ -25,7 +25,8 @@ BugReports: https://github.com/ropensci/FedData/issues
 License: MIT + file LICENSE
 Depends:
     R (>= 3.2.0),
-    sp
+    sp,
+    sf
 Imports:
     data.table,
     devtools,
@@ -44,9 +45,9 @@ Imports:
     foreach,
     ncdf4,
     stringr,
-    sf,
     httr,
-    xml2
+    xml2,
+    purrr
 Repository: CRAN
 NeedsCompilation: no
 RoxygenNote: 6.1.1

@@ -4,14 +4,14 @@
 \alias{get_nlcd_tile}
 \title{Download and crop a tile from the National Land Cover Database.}
 \usage{
-get_nlcd_tile(template = NULL, year = 2011, dataset = "landcover",
+get_nlcd_tile(template = NULL, year = 2016, dataset = "landcover",
   tileName, raw.dir)
 }
 \arguments{
 \item{template}{A \code{Raster*} or \code{Spatial*} object to serve 
 as a template for cropping. If missing, entire tile is returned.}
 
-\item{year}{An integer representing the year of desired NLCD product. Acceptable values are 2011 (default), 2006, and 2001.}
+\item{year}{An integer representing the year of desired NLCD product. Acceptable values are 2016 (default), 2011, 2006, and 2001.}
 
 \item{dataset}{A character string representing type of the NLCD product. Acceptable values are landcover' (default), 'impervious', and 'canopy'.}
 

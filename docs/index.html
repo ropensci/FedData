@@ -43,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">FedData</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.5.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">3.0.0.9000</span>
       </span>
     </div>
 
@@ -285,17 +285,23 @@
 <a href="#get-and-plot-the-itrdb-chronology-locations-in-the-study-area" class="anchor"></a>Get and plot the ITRDB chronology locations in the study area</h4>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># Get the ITRDB records</span></a>
 <a class="sourceLine" id="cb12-2" data-line-number="2">ITRDB &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_itrdb.html">get_itrdb</a></span>(<span class="dt">template =</span> vepPolygon,</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">                        <span class="dt">label =</span> <span class="st">"VEPIIN"</span>,</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">                        <span class="dt">makeSpatial =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co"># Plot the NED again</span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co"># Map the locations of the tree ring chronologies</span></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ITRDB<span class="op">$</span>metadata,</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">     <span class="dt">pch =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb12-10" data-line-number="10">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/legend">legend</a></span>(<span class="st">'bottomleft'</span>,</a>
-<a class="sourceLine" id="cb12-12" data-line-number="12">       <span class="dt">pch =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb12-13" data-line-number="13">       <span class="dt">legend =</span> <span class="st">"ITRDB chronologies"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb12-3" data-line-number="3">                   <span class="dt">label =</span> <span class="st">"VEPIIN"</span>,</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">                   <span class="dt">recon.years =</span> <span class="dv">850</span><span class="op">:</span><span class="dv">2000</span>,</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">                   <span class="dt">calib.years =</span> <span class="dv">1924</span><span class="op">:</span><span class="dv">1983</span>,</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">                   <span class="dt">measurement.type =</span> <span class="st">"Ring Width"</span>,</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">                   <span class="dt">chronology.type =</span> <span class="st">"ARSTND"</span>)</a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co"># Plot the NED again</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10">raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NED)</a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co"># Map the locations of the tree ring chronologies</span></a>
+<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(ITRDB<span class="op">$</span>metadata,</a>
+<a class="sourceLine" id="cb12-13" data-line-number="13">     <span class="dt">pch =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb12-14" data-line-number="14">     <span class="dt">add =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt; Warning in plot.sf(ITRDB$metadata, pch = 1, add = TRUE): ignoring all but</span></a>
+<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt; the first attribute</span></a>
+<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/legend">legend</a></span>(<span class="st">'bottomleft'</span>,</a>
+<a class="sourceLine" id="cb12-18" data-line-number="18">       <span class="dt">pch =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb12-19" data-line-number="19">       <span class="dt">legend =</span> <span class="st">"ITRDB chronologies"</span>)</a></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-12-1.png" width="100%"></p>
 </div>
 <div id="get-and-plot-the-national-land-cover-dataset-for-the-study-area" class="section level4">
