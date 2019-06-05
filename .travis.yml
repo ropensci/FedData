@@ -1,39 +1,27 @@
-dist: trusty
-sudo: required
-
 language: r
-sudo: required
 cache: packages
 
 r:
   - release
   - devel
-
-#warnings_are_errors: false
-before_install:
-  - sudo add-apt-repository ppa:ubuntugis/ppa -y
-  - sudo apt-get update -q
-
-apt_packages:
-  - libssl-dev
-  - libcurl4-openssl-dev
-  - netcdf-bin
-  - libnetcdf-dev
-  - gdal-bin
-  - libgdal-dev
-  - libudunits2-dev
-  - libproj-dev
-  - libgeos-dev
   
-r_packages:
-  - devtools
-  - Rcpp
-  - roxygen2
-  - survival
+addons:
+  apt:
+    sources:
+      - sourceline: 'ppa:ubuntugis/ppa'
+    packages:
+      - libssl-dev
+      - libcurl4-openssl-dev
+      - netcdf-bin
+      - libnetcdf-dev
+      - gdal-bin
+      - libgdal-dev
+      - libudunits2-dev
+      - libproj-dev
+      - libgeos-dev
 
 after_success:
   - Rscript -e 'covr::codecov()'
-  
   
 notifications:
   email:
