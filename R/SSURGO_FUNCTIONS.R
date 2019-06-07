@@ -84,7 +84,7 @@ get_ssurgo <- function(template,
   if (class(template) == "character") {
     q <- paste0("SELECT areasymbol, saverest FROM sacatalog WHERE areasymbol IN (", paste(paste0("'", template, "'"), collapse = ","), 
                 ");")
-    SSURGOAreas <- SDA_query(q)
+    SSURGOAreas <- soils_query(q)
     
     template.poly <- template
     
@@ -452,14 +452,13 @@ extract_ssurgo_data <- function(tables, mapunits) {
 
 #' Submit a Soil Data Access (SDA) Query
 #'
-#' \code{SDA_query} submit an SQL or SQL Data Shaping query to retrieve data from the Soil Data Mart.
+#' \code{soils_query} submit an SQL query to retrieve data from the Soil Data Mart.
 #' Please see https://sdmdataaccess.sc.egov.usda.gov/Query.aspx for guidelines
 #' 
 #' @param q A character string representing a SQL query to the SDA service
 #' @return A tibble returned from the SDA service
-#' @export
 #' @keywords internal
-SDA_query <- function (q) {
+soils_query <- function (q) {
 
     tryCatch(httr::POST(url = "https://sdmdataaccess.sc.egov.usda.gov/tabular/post.rest", 
                body = list(query = q),
