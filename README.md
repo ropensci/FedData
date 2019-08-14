@@ -280,7 +280,7 @@ legend('bottomleft',
 ``` r
 # Get the NLCD (USA ONLY)
 # Returns a raster
-NLCD <- get_nlcd(template = vepPolygon %>% sf::st_as_sf(),
+NLCD <- get_nlcd(template = vepPolygon,
                  year = 2016,
                  dataset = "Land_Cover",
                  label = "VEPIIN")
@@ -293,7 +293,7 @@ raster::plot(NLCD)
 ``` r
 
 # You can also download the Canopy (2011 only) or impervious datasets:
-NLCD_canopy <- get_nlcd(template = vepPolygon %>% sf::st_as_sf(),
+NLCD_canopy <- get_nlcd(template = vepPolygon,
                  year = 2011,
                  dataset = "Canopy_Cartographic",
                  label = "VEPIIN")
@@ -305,7 +305,7 @@ raster::plot(NLCD_canopy)
 
 ``` r
 
-NLCD_impervious <- get_nlcd(template = vepPolygon %>% sf::st_as_sf(),
+NLCD_impervious <- get_nlcd(template = vepPolygon,
                  year = 2016,
                  dataset = "Impervious",
                  label = "VEPIIN")

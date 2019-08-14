@@ -34,23 +34,23 @@
 #' plot(NLCD)
 #' }
 get_nlcd <- function(template,
-                    label,
-                    year = 2016,
-                    dataset = "Land_Cover",
-                    landmass = "L48",
-                    extraction.dir = paste0(tempdir(),"/FedData/extractions/nlcd/",label,"/"),
-                    force.redo = F) {
+                     label,
+                     year = 2016,
+                     dataset = "Land_Cover",
+                     landmass = "L48",
+                     extraction.dir = paste0(tempdir(),"/FedData/extractions/nlcd/",label,"/"),
+                     force.redo = F) {
   
   extraction.dir <- normalizePath(paste0(extraction.dir,"/."), mustWork = FALSE)  
   
   if(!("sf" %in% class(template)))
-    stop("`template` must be an 'sf' object.")
+    template %<>% sf::st_as_sf()
   
   coverage <- paste0("NLCD_",year,"_",dataset,"_",landmass)
   source <- paste0("https://www.mrlc.gov/geoserver/mrlc_display/",coverage,"/ows")
   
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
- 
+  
   outfile <- paste0(extraction.dir,"/",coverage,".tif")
   
   if (file.exists(outfile) & !force.redo) {
@@ -58,10 +58,10 @@ get_nlcd <- function(template,
   }
   
   if(source %>% 
-    httr::GET() %>% 
-    httr::status_code() %>%
-    identical(200L) %>%
-    magrittr::not())
+     httr::GET() %>% 
+     httr::status_code() %>%
+     identical(200L) %>%
+     magrittr::not())
     stop("No web coverage service at ", source, ". See available services at https://www.mrlc.gov/geoserver/ows?service=WCS&version=2.0.1&request=GetCapabilities")
   
   template %<>%
