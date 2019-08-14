@@ -301,7 +301,7 @@
 <a href="#get-and-plot-the-national-land-cover-dataset-for-the-study-area" class="anchor"></a>Get and plot the National Land Cover Dataset for the study area</h4>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># Get the NLCD (USA ONLY)</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a><span class="co"># Returns a raster</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a>NLCD &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nlcd.html">get_nlcd</a></span>(<span class="dt">template =</span> vepPolygon <span class="op">%&gt;%</span><span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_as_sf">st_as_sf</a></span>(),</span>
+<span id="cb13-3"><a href="#cb13-3"></a>NLCD &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nlcd.html">get_nlcd</a></span>(<span class="dt">template =</span> vepPolygon,</span>
 <span id="cb13-4"><a href="#cb13-4"></a>                 <span class="dt">year =</span> <span class="dv">2016</span>,</span>
 <span id="cb13-5"><a href="#cb13-5"></a>                 <span class="dt">dataset =</span> <span class="st">"Land_Cover"</span>,</span>
 <span id="cb13-6"><a href="#cb13-6"></a>                 <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</span>
@@ -310,7 +310,7 @@
 <p><img src="reference/figures/README-unnamed-chunk-13-1.png" width="100%"><img src="reference/figures/README-unnamed-chunk-13-2.png" width="100%"></p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a></span>
 <span id="cb14-2"><a href="#cb14-2"></a><span class="co"># You can also download the Canopy (2011 only) or impervious datasets:</span></span>
-<span id="cb14-3"><a href="#cb14-3"></a>NLCD_canopy &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nlcd.html">get_nlcd</a></span>(<span class="dt">template =</span> vepPolygon <span class="op">%&gt;%</span><span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_as_sf">st_as_sf</a></span>(),</span>
+<span id="cb14-3"><a href="#cb14-3"></a>NLCD_canopy &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nlcd.html">get_nlcd</a></span>(<span class="dt">template =</span> vepPolygon,</span>
 <span id="cb14-4"><a href="#cb14-4"></a>                 <span class="dt">year =</span> <span class="dv">2011</span>,</span>
 <span id="cb14-5"><a href="#cb14-5"></a>                 <span class="dt">dataset =</span> <span class="st">"Canopy_Cartographic"</span>,</span>
 <span id="cb14-6"><a href="#cb14-6"></a>                 <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</span>
@@ -318,7 +318,7 @@
 <span id="cb14-8"><a href="#cb14-8"></a>raster<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/raster/topics/plot">plot</a></span>(NLCD_canopy)</span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-13-3.png" width="100%"><img src="reference/figures/README-unnamed-chunk-13-4.png" width="100%"></p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a></span>
-<span id="cb15-2"><a href="#cb15-2"></a>NLCD_impervious &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nlcd.html">get_nlcd</a></span>(<span class="dt">template =</span> vepPolygon <span class="op">%&gt;%</span><span class="st"> </span>sf<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/sf/topics/st_as_sf">st_as_sf</a></span>(),</span>
+<span id="cb15-2"><a href="#cb15-2"></a>NLCD_impervious &lt;-<span class="st"> </span><span class="kw"><a href="reference/get_nlcd.html">get_nlcd</a></span>(<span class="dt">template =</span> vepPolygon,</span>
 <span id="cb15-3"><a href="#cb15-3"></a>                 <span class="dt">year =</span> <span class="dv">2016</span>,</span>
 <span id="cb15-4"><a href="#cb15-4"></a>                 <span class="dt">dataset =</span> <span class="st">"Impervious"</span>,</span>
 <span id="cb15-5"><a href="#cb15-5"></a>                 <span class="dt">label =</span> <span class="st">"VEPIIN"</span>)</span>
