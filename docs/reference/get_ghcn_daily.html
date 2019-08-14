@@ -124,9 +124,9 @@ The name of each list item is the station ID.</p></li>
     </div>
 
     <pre class="usage"><span class='fu'>get_ghcn_daily</span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>elements</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='st'>"./RAW/GHCN"</span>,
-  <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"./EXTRACTIONS/"</span>, <span class='no'>label</span>, <span class='st'>"/GHCN"</span>),
-  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
+  <span class='kw'>years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='st'>"/FedData/raw/ghcn"</span>),
+  <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='st'>"/FedData/extractions/ghcn/"</span>, <span class='no'>label</span>,
+  <span class='st'>"/"</span>), <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

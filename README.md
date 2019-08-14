@@ -231,15 +231,6 @@ plot(SSURGO.VEPIIN$spatial,
 # Or, download by Soil Survey Area names
 SSURGO.areas <- get_ssurgo(template = c("CO670","CO075"), 
                            label = "CO_TEST")
-#> Warning: 36 parsing failures.
-#>  row       col           expected                     actual                                                                                file
-#> 4561 ponddurcl 1/0/T/F/TRUE/FALSE Very brief (4 to 48 hours) '/Users/bocinsky/git/FedData/EXTRACTIONS/CO_TEST/SSURGO/CO_TEST_SSURGO_comonth.csv'
-#> 4561 ponddep.r 1/0/T/F/TRUE/FALSE 10                         '/Users/bocinsky/git/FedData/EXTRACTIONS/CO_TEST/SSURGO/CO_TEST_SSURGO_comonth.csv'
-#> 4561 ponddep.h 1/0/T/F/TRUE/FALSE 15                         '/Users/bocinsky/git/FedData/EXTRACTIONS/CO_TEST/SSURGO/CO_TEST_SSURGO_comonth.csv'
-#> 4562 ponddurcl 1/0/T/F/TRUE/FALSE Very brief (4 to 48 hours) '/Users/bocinsky/git/FedData/EXTRACTIONS/CO_TEST/SSURGO/CO_TEST_SSURGO_comonth.csv'
-#> 4562 ponddep.r 1/0/T/F/TRUE/FALSE 10                         '/Users/bocinsky/git/FedData/EXTRACTIONS/CO_TEST/SSURGO/CO_TEST_SSURGO_comonth.csv'
-#> .... ......... .................. .......................... ...................................................................................
-#> See problems(...) for more details.
 
 # Let's just look at spatial data for CO675
 SSURGO.areas.CO675 <- SSURGO.areas$spatial[SSURGO.areas$spatial$AREASYMBOL=="CO075",]
@@ -267,17 +258,16 @@ ITRDB <- get_itrdb(template = vepPolygon,
                    calib.years = 1924:1983,
                    measurement.type = "Ring Width",
                    chronology.type = "ARSTND")
+#> Warning in eval(jsub, SDenv, parent.frame()): NAs introduced by coercion
 #> Warning: attribute variables are assumed to be spatially constant
 #> throughout all geometries
 
 # Plot the NED again
 raster::plot(NED)
 # Map the locations of the tree ring chronologies
-plot(ITRDB$metadata,
+plot(ITRDB$metadata$geometry,
      pch = 1,
      add = TRUE)
-#> Warning in plot.sf(ITRDB$metadata, pch = 1, add = TRUE): ignoring all but
-#> the first attribute
 legend('bottomleft',
        pch = 1,
        legend = "ITRDB chronologies")
@@ -290,9 +280,9 @@ legend('bottomleft',
 ``` r
 # Get the NLCD (USA ONLY)
 # Returns a raster
-NLCD <- get_nlcd(template = vepPolygon,
-                 year = 2011,
-                 dataset = "landcover",
+NLCD <- get_nlcd(template = vepPolygon %>% sf::st_as_sf(),
+                 year = 2016,
+                 dataset = "Land_Cover",
                  label = "VEPIIN")
 # Plot with raster::plot
 raster::plot(NLCD)
@@ -302,10 +292,10 @@ raster::plot(NLCD)
 
 ``` r
 
-# You can also download the Canopy or impervious datasets:
-NLCD_canopy <- get_nlcd(template = vepPolygon,
+# You can also download the Canopy (2011 only) or impervious datasets:
+NLCD_canopy <- get_nlcd(template = vepPolygon %>% sf::st_as_sf(),
                  year = 2011,
-                 dataset = "canopy",
+                 dataset = "Canopy_Cartographic",
                  label = "VEPIIN")
 # Plot with raster::plot
 raster::plot(NLCD_canopy)
@@ -315,9 +305,9 @@ raster::plot(NLCD_canopy)
 
 ``` r
 
-NLCD_impervious <- get_nlcd(template = vepPolygon,
-                 year = 2011,
-                 dataset = "impervious",
+NLCD_impervious <- get_nlcd(template = vepPolygon %>% sf::st_as_sf(),
+                 year = 2016,
+                 dataset = "Impervious",
                  label = "VEPIIN")
 # Plot with raster::plot
 raster::plot(NLCD_impervious)

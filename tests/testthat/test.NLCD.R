@@ -2,55 +2,25 @@ library(FedData)
 library(httr)
 context("National Land Cover Dataset tests")
 
-test_that("The NLCD tiles are available at the correct URL", {
+test_that("The NLCD web coverage service is available at the correct URL", {
   skip_on_cran()
   
-  year = 2011
-  dataset = "landcover"
-  tileName = "N36W108"
+  year = 2016
+  dataset = "Land_Cover"
+  landmass = "L48"
   
-  if(dataset == "landcover"){
-    dataset_abbr <- "LC"
-  }else if(dataset == "impervious"){
-    dataset_abbr <- "IMP"
-  }else if(dataset == "canopy"){
-    dataset_abbr <- "CAN"
-  }else{
-    stop("Parameter 'dataset' must be one of 'landcover', 'impervious', or 'canopy'.")
-  }
+  coverage <- paste0("NLCD_",year,"_",dataset,"_",landmass)
+  source <- paste0("https://www.mrlc.gov/geoserver/mrlc_display/",coverage,"/ows")
   
-  url <- paste0("https://prd-tnm.s3.amazonaws.com/StagedProducts/NLCD/data/",
-                year, "/",
-                dataset,
-                "/3x3/NLCD",
-                year, "_",
-                dataset_abbr, "_",
-                tileName,
-                ".zip")
-  expect_false(suppressWarnings(httr::http_error(url)))
+  cat(source %>% 
+        httr::GET() %>% 
+        httr::status_code(), "\n")
   
-  tileName = "N36W200"
-  url <- paste0("https://prd-tnm.s3.amazonaws.com/StagedProducts/NLCD/data/",
-                year, "/",
-                dataset,
-                "/3x3/NLCD",
-                year, "_",
-                dataset_abbr, "_",
-                tileName,
-                ".zip")
-  expect_true(suppressWarnings(httr::http_error(url)))
+  expect_true(
+    source %>% 
+      httr::GET() %>% 
+      httr::status_code() %>%
+      identical(200L)
+  )
+  
 })
-
-test_that("NLCD missing tile issue 41 is fixed", {
-  skip_on_cran()
-  FedData::get_nlcd(template = FedData::nlcd_tiles[1:2,], 
-                    label = "Domain1", 
-                    year = 2011, 
-                    dataset = "landcover", 
-                    raw.dir = "../../RAW/NLCD/", 
-                    extraction.dir="../../EXTRACTIONS/Domain1/NLCD/")
-})
-  
-  
-
-

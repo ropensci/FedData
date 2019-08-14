@@ -4,10 +4,9 @@
 \alias{get_nlcd}
 \title{Download and crop the National Land Cover Database.}
 \usage{
-get_nlcd(template, label, year = 2016, dataset = "landcover",
-  raw.dir = "./RAW/NLCD", extraction.dir = paste0("./EXTRACTIONS/",
-  label, "/NLCD"), raster.options = c("COMPRESS=DEFLATE", "ZLEVEL=9",
-  "INTERLEAVE=BAND"), force.redo = F)
+get_nlcd(template, label, year = 2016, dataset = "Land_Cover",
+  landmass = "L48", extraction.dir = paste0(tempdir(),
+  "/FedData/extractions/nlcd/", label, "/"), force.redo = F)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve 
@@ -16,25 +15,21 @@ as a template for cropping.}
 \item{label}{A character string naming the study area.}
 
 \item{year}{An integer representing the year of desired NLCD product.
-Acceptable values are 2016 (default), 2011, 2006, and 2001.}
+Acceptable values are 2016 (default), 2011, 2008 (landcover only), 2006, 2004, and 2001.}
 
 \item{dataset}{A character string representing type of the NLCD product.
-Acceptable values are 'landcover' (default), 'impervious', and 'canopy'.
-As of February 7, 2018, the canopy data for 2006 are not available through the National Map Staged datasets,
-and so aren't available in FedData.}
+Acceptable values are 'Impervious', 'Land_Cover', 'Canopy_Cartographic' (2011 only), 'Canopy_Analytical' (2011 only), and 'Canopy_Analytical_Error' (2011 only),}
 
-\item{raw.dir}{A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to './RAW/NLCD/'.}
+\item{landmass}{A character string representing the landmass to be extracted
+Acceptable values are 'L48' (lower 48 US states, the default), 'AK' (Alaska), 'HI' (Hawaii), and 'PR' (Puerto Rico).}
 
-\item{extraction.dir}{A character string indicating where the extracted and cropped DEM should be put.
-The directory will be created if missing. Defaults to './EXTRACTIONS/NLCD/'.}
-
-\item{raster.options}{a vector of options for raster::writeRaster.}
+\item{extraction.dir}{A character string indicating where the extracted and cropped NLCD data should be put.
+The directory will be created if missing.}
 
 \item{force.redo}{If an extraction for this template and label already exists, should a new one be created?}
 }
 \value{
-A \code{RasterLayer} DEM cropped to the extent of the template.
+A \code{RasterLayer} cropped to the bounding box of the template.
 }
 \description{
 \code{get_nlcd} returns a \code{RasterLayer} of NLCD data cropped to a given
@@ -42,14 +37,15 @@ template study area.
 }
 \examples{
 \dontrun{
-# Extract data for the Village Ecodynamics Project 'VEPIIN' study area:
-# http://village.anth.wsu.edu
-vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), 
-     proj4string='+proj=utm +datum=NAD83 +zone=12')
+# Extract data for the Mesa Verde National Park:
 
 # Get the NLCD (USA ONLY)
 # Returns a raster
-NLCD <- get_nlcd(template=vepPolygon, label='VEPIIN')
+NLCD <- get_nlcd(paleocar::mvnp \%>\% 
+          sf::st_as_sf(), 
+          label = "MVNP",
+          year = 2011,
+          landmass = "L48")
 
 # Plot with raster::plot
 plot(NLCD)

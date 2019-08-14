@@ -4,9 +4,9 @@
 \alias{get_ssurgo}
 \title{Download and crop data from the NRCS SSURGO soils database.}
 \usage{
-get_ssurgo(template, label, raw.dir = "./RAW/SSURGO",
-  extraction.dir = paste0("./EXTRACTIONS/", label, "/SSURGO"),
-  force.redo = FALSE)
+get_ssurgo(template, label, raw.dir = paste0(tempdir(),
+  "/FedData/raw/ssurgo"), extraction.dir = paste0(tempdir(),
+  "/FedData/extractions/ssurgo/", label, "/"), force.redo = FALSE)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve 

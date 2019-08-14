@@ -115,8 +115,9 @@ template study area.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_ned</span>(<span class='no'>template</span>, <span class='no'>label</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='st'>"1"</span>, <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='st'>"./RAW/NED"</span>,
-  <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"./EXTRACTIONS/"</span>, <span class='no'>label</span>, <span class='st'>"/NED"</span>),
+    <pre class="usage"><span class='fu'>get_ned</span>(<span class='no'>template</span>, <span class='no'>label</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='st'>"1"</span>, <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
+  <span class='st'>"/FedData/raw/ned"</span>), <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
+  <span class='st'>"/FedData/extractions/ned/"</span>, <span class='no'>label</span>, <span class='st'>"/"</span>),
   <span class='kw'>raster.options</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"COMPRESS=DEFLATE"</span>, <span class='st'>"ZLEVEL=9"</span>, <span class='st'>"INTERLEAVE=BAND"</span>),
   <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
     

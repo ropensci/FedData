@@ -212,7 +212,7 @@ ITRDB <- get_itrdb(template = vepPolygon,
 # Plot the NED again
 raster::plot(NED)
 # Map the locations of the tree ring chronologies
-plot(ITRDB$metadata,
+plot(ITRDB$metadata$geometry,
      pch = 1,
      add = TRUE)
 legend('bottomleft',
@@ -224,24 +224,24 @@ legend('bottomleft',
 ```{r results="hide", message=FALSE}
 # Get the NLCD (USA ONLY)
 # Returns a raster
-NLCD <- get_nlcd(template = vepPolygon,
-                 year = 2011,
-                 dataset = "landcover",
+NLCD <- get_nlcd(template = vepPolygon %>% sf::st_as_sf(),
+                 year = 2016,
+                 dataset = "Land_Cover",
                  label = "VEPIIN")
 # Plot with raster::plot
 raster::plot(NLCD)
 
-# You can also download the Canopy or impervious datasets:
-NLCD_canopy <- get_nlcd(template = vepPolygon,
+# You can also download the Canopy (2011 only) or impervious datasets:
+NLCD_canopy <- get_nlcd(template = vepPolygon %>% sf::st_as_sf(),
                  year = 2011,
-                 dataset = "canopy",
+                 dataset = "Canopy_Cartographic",
                  label = "VEPIIN")
 # Plot with raster::plot
 raster::plot(NLCD_canopy)
 
-NLCD_impervious <- get_nlcd(template = vepPolygon,
-                 year = 2011,
-                 dataset = "impervious",
+NLCD_impervious <- get_nlcd(template = vepPolygon %>% sf::st_as_sf(),
+                 year = 2016,
+                 dataset = "Impervious",
                  label = "VEPIIN")
 # Plot with raster::plot
 raster::plot(NLCD_impervious)

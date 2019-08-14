@@ -54,8 +54,8 @@
 #' }
 get_ssurgo <- function(template,
                        label,
-                       raw.dir = "./RAW/SSURGO",
-                       extraction.dir = paste0("./EXTRACTIONS/", label, "/SSURGO"), 
+                       raw.dir = paste0(tempdir(),"/FedData/raw/ssurgo"),
+                       extraction.dir = paste0(tempdir(),"/FedData/extractions/ssurgo/",label,"/"), 
                        force.redo = FALSE) {
   
   raw.dir <- normalizePath(paste0(raw.dir,"/."), mustWork = FALSE)  
@@ -346,12 +346,20 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
   utils::unzip(file, exdir = tmpdir)
   
   # Get spatial data
-  if (.Platform$OS.type == "windows") {
-    suppressWarnings(mapunits <- rgdal::readOGR(paste0(tmpdir, "/", area, "/spatial"), layer = paste0("soilmu_a_", tolower(area)), 
-                                                verbose = F))
-  } else {
-    suppressWarnings(mapunits <- rgdal::readOGR(paste0(tmpdir, "/", area, "/spatial"), layer = paste0("soilmu_a_", tolower(area)), verbose = F))
-  }
+  # if (.Platform$OS.type == "windows") {
+  #   suppressWarnings(mapunits <- rgdal::readOGR(paste0(tmpdir, "/", area, "/spatial"), 
+  #                                               layer = paste0("soilmu_a_", tolower(area)), 
+  #                                               verbose = F))
+  # } else {
+  #   suppressWarnings(mapunits <- rgdal::readOGR(paste0(tmpdir, "/", area, "/spatial"), 
+  #                                               layer = paste0("soilmu_a_", tolower(area)), 
+  #                                               verbose = F))
+  # }
+  
+  mapunits <- 
+    sf::read_sf(paste0(tmpdir, "/", area, "/spatial"), layer = paste0("soilmu_a_", tolower(area))) %>%
+    lwgeom::st_make_valid() %>%
+    as("Spatial")
   
   # Crop to study area
   if (!is.null(template) & !is.character(template)) {
@@ -468,7 +476,7 @@ soils_query <- function (q) {
     NewDataSet %$%
     Table %>%
     unlist(recursive = FALSE) %>%
-    tibble::as_tibble(),
+    as.data.frame(),
     error = function(e){
       stop("Improperly formatted SDA SQL request")
     })

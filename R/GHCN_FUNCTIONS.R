@@ -201,8 +201,8 @@ get_ghcn_daily <- function(template = NULL,
                            label = NULL,
                            elements = NULL,
                            years = NULL,
-                           raw.dir = "./RAW/GHCN",
-                           extraction.dir = paste0("./EXTRACTIONS/", label, "/GHCN"),
+                           raw.dir = paste0(tempdir(),"/FedData/raw/ghcn"),
+                           extraction.dir = paste0(tempdir(),"/FedData/extractions/ghcn/",label,"/"),
                            standardize = F,
                            force.redo = F) {
   

@@ -47,7 +47,8 @@ Imports:
     stringr,
     httr,
     xml2,
-    purrr
+    purrr,
+    lwgeom
 Repository: CRAN
 NeedsCompilation: no
 RoxygenNote: 6.1.1

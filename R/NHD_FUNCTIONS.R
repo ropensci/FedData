@@ -34,8 +34,8 @@
 #' }
 get_nhd <- function(template,
                     label,
-                    raw.dir = "./RAW/NHD",
-                    extraction.dir = paste0("./EXTRACTIONS/", label, "/NHD"),
+                    raw.dir = paste0(tempdir(),"/FedData/raw/nhd"),
+                    extraction.dir = paste0(tempdir(),"/FedData/extractions/nhd/",label,"/"),
                     force.redo = FALSE) {
   
   raw.dir <- normalizePath(paste0(raw.dir,"/."), mustWork = FALSE)  

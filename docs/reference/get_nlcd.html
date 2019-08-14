@@ -115,10 +115,9 @@ template study area.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_nlcd</span>(<span class='no'>template</span>, <span class='no'>label</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"landcover"</span>,
-  <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='st'>"./RAW/NLCD"</span>, <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"./EXTRACTIONS/"</span>,
-  <span class='no'>label</span>, <span class='st'>"/NLCD"</span>), <span class='kw'>raster.options</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"COMPRESS=DEFLATE"</span>, <span class='st'>"ZLEVEL=9"</span>,
-  <span class='st'>"INTERLEAVE=BAND"</span>), <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
+    <pre class="usage"><span class='fu'>get_nlcd</span>(<span class='no'>template</span>, <span class='no'>label</span>, <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2016</span>, <span class='kw'>dataset</span> <span class='kw'>=</span> <span class='st'>"Land_Cover"</span>,
+  <span class='kw'>landmass</span> <span class='kw'>=</span> <span class='st'>"L48"</span>, <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
+  <span class='st'>"/FedData/extractions/nlcd/"</span>, <span class='no'>label</span>, <span class='st'>"/"</span>), <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -135,28 +134,22 @@ as a template for cropping.</p></td>
     <tr>
       <th>year</th>
       <td><p>An integer representing the year of desired NLCD product.
-Acceptable values are 2016 (default), 2011, 2006, and 2001.</p></td>
+Acceptable values are 2016 (default), 2011, 2008 (landcover only), 2006, 2004, and 2001.</p></td>
     </tr>
     <tr>
       <th>dataset</th>
       <td><p>A character string representing type of the NLCD product.
-Acceptable values are 'landcover' (default), 'impervious', and 'canopy'.
-As of February 7, 2018, the canopy data for 2006 are not available through the National Map Staged datasets,
-and so aren't available in FedData.</p></td>
+Acceptable values are 'Impervious', 'Land_Cover', 'Canopy_Cartographic' (2011 only), 'Canopy_Analytical' (2011 only), and 'Canopy_Analytical_Error' (2011 only),</p></td>
     </tr>
     <tr>
-      <th>raw.dir</th>
-      <td><p>A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to './RAW/NLCD/'.</p></td>
+      <th>landmass</th>
+      <td><p>A character string representing the landmass to be extracted
+Acceptable values are 'L48' (lower 48 US states, the default), 'AK' (Alaska), 'HI' (Hawaii), and 'PR' (Puerto Rico).</p></td>
     </tr>
     <tr>
       <th>extraction.dir</th>
-      <td><p>A character string indicating where the extracted and cropped DEM should be put.
-The directory will be created if missing. Defaults to './EXTRACTIONS/NLCD/'.</p></td>
-    </tr>
-    <tr>
-      <th>raster.options</th>
-      <td><p>a vector of options for raster::writeRaster.</p></td>
+      <td><p>A character string indicating where the extracted and cropped NLCD data should be put.
+The directory will be created if missing.</p></td>
     </tr>
     <tr>
       <th>force.redo</th>
@@ -166,19 +159,20 @@ The directory will be created if missing. Defaults to './EXTRACTIONS/NLCD/'.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>RasterLayer</code> DEM cropped to the extent of the template.</p>
+    <p>A <code>RasterLayer</code> cropped to the bounding box of the template.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># Extract data for the Village Ecodynamics Project 'VEPIIN' study area:</span>
-<span class='co'># http://village.anth.wsu.edu</span>
-<span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/raster/topics/extent'>extent</a></span>(<span class='fl'>672800</span>,<span class='fl'>740000</span>,<span class='fl'>4102000</span>,<span class='fl'>4170000</span>),
-     <span class='kw'>proj4string</span><span class='kw'>=</span><span class='st'>'+proj=utm +datum=NAD83 +zone=12'</span>)
+<span class='co'># Extract data for the Mesa Verde National Park:</span>
 
 <span class='co'># Get the NLCD (USA ONLY)</span>
 <span class='co'># Returns a raster</span>
-<span class='no'>NLCD</span> <span class='kw'>&lt;-</span> <span class='fu'>get_nlcd</span>(<span class='kw'>template</span><span class='kw'>=</span><span class='no'>vepPolygon</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'VEPIIN'</span>)
+<span class='no'>NLCD</span> <span class='kw'>&lt;-</span> <span class='fu'>get_nlcd</span>(<span class='kw pkg'>paleocar</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/paleocar/topics/mvnp'>mvnp</a></span> <span class='kw'>%&gt;%</span>
+          <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/sf/topics/st_as_sf'>st_as_sf</a></span>(),
+          <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"MVNP"</span>,
+          <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2011</span>,
+          <span class='kw'>landmass</span> <span class='kw'>=</span> <span class='st'>"L48"</span>)
 
 <span class='co'># Plot with raster::plot</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>NLCD</span>)

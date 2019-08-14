@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Download the latest version of the ITRDB. — download_itrdb • FedData</title>
+<title>Submit a Soil Data Access (SDA) Query — soils_query • FedData</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,13 +30,10 @@
 
 
 
-<meta property="og:title" content="Download the latest version of the ITRDB. — download_itrdb" />
+<meta property="og:title" content="Submit a Soil Data Access (SDA) Query — soils_query" />
 
-<meta property="og:description" content="Downloads and parses the latest zipped (numbered) version of the ITRDB.
-This function includes improvements to the read_crn function from the 
-dplR library. The principle changes are better parsing of metadata, and support
-for the Schweingruber-type Tucson format. Chronologies that are unable to be read
-are reported to the user." />
+<meta property="og:description" content="soils_query submit an SQL query to retrieve data from the Soil Data Mart.
+Please see https://sdmdataaccess.sc.egov.usda.gov/Query.aspx for guidelines" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -106,41 +103,32 @@ are reported to the user." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Download the latest version of the ITRDB.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/ITRDB_FUNCTIONS.R'><code>R/ITRDB_FUNCTIONS.R</code></a></small>
-    <div class="hidden name"><code>download_itrdb.Rd</code></div>
+    <h1>Submit a Soil Data Access (SDA) Query</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/SSURGO_FUNCTIONS.R'><code>R/SSURGO_FUNCTIONS.R</code></a></small>
+    <div class="hidden name"><code>soils_query.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Downloads and parses the latest zipped (numbered) version of the ITRDB.
-This function includes improvements to the <code><a href='read_crn.html'>read_crn</a></code> function from the 
-<span class="pkg">dplR</span> library. The principle changes are better parsing of metadata, and support
-for the Schweingruber-type Tucson format. Chronologies that are unable to be read
-are reported to the user.</p>
+    <p><code>soils_query</code> submit an SQL query to retrieve data from the Soil Data Mart.
+Please see https://sdmdataaccess.sc.egov.usda.gov/Query.aspx for guidelines</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>download_itrdb</span>(<span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='st'>"/FedData/raw/itrdb"</span>),
-  <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>soils_query</span>(<span class='no'>q</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>raw.dir</th>
-      <td><p>A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to './RAW/ITRDB/'.</p></td>
-    </tr>
-    <tr>
-      <th>force.redo</th>
-      <td><p>If a download already exists, should a new one be created? Defaults to FALSE.</p></td>
+      <th>q</th>
+      <td><p>A character string representing a SQL query to the SDA service</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.table containing all of the ITRDB data.</p>
+    <p>A tibble returned from the SDA service</p>
     
 
   </div>

@@ -4,7 +4,8 @@
 \alias{download_itrdb}
 \title{Download the latest version of the ITRDB.}
 \usage{
-download_itrdb(raw.dir = "./RAW/ITRDB/", force.redo = FALSE)
+download_itrdb(raw.dir = paste0(tempdir(), "/FedData/raw/itrdb"),
+  force.redo = FALSE)
 }
 \arguments{
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.

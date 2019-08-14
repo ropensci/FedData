@@ -6,9 +6,10 @@
 \usage{
 get_itrdb(template = NULL, label = NULL, recon.years = NULL,
   calib.years = NULL, species = NULL, measurement.type = NULL,
-  chronology.type = NULL, raw.dir = "./RAW/ITRDB",
-  extraction.dir = ifelse(!is.null(label), paste0("./EXTRACTIONS/",
-  label, "/ITRDB"), "./EXTRACTIONS/ITRDB"), force.redo = FALSE)
+  chronology.type = NULL, raw.dir = paste0(tempdir(),
+  "/FedData/raw/itrdb"), extraction.dir = ifelse(!is.null(label),
+  paste0(tempdir(), "/FedData/extractions/itrdb/", label, "/"),
+  paste0(tempdir(), "/FedData/extractions/itrdb")), force.redo = FALSE)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve 
@@ -52,10 +53,10 @@ if missing, all available chronologies are given.}
 if missing, all available chronologies are given.}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to './RAW/ITRDB/'.}
+The directory will be created if missing.}
 
 \item{extraction.dir}{A character string indicating where the extracted and cropped ITRDB dataset should be put.
-The directory will be created if missing. Defaults to './EXTRACTIONS/ITRDB/'.}
+The directory will be created if missing.}
 
 \item{force.redo}{If an extraction already exists, should a new one be created? Defaults to FALSE.}
 }

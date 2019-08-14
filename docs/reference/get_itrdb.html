@@ -125,9 +125,10 @@ and names of extracted ITRDB chronologies,</p></li>
 
     <pre class="usage"><span class='fu'>get_itrdb</span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>recon.years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>calib.years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>species</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>measurement.type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>chronology.type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='st'>"./RAW/ITRDB"</span>,
-  <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(!<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/NULL'>is.null</a></span>(<span class='no'>label</span>), <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"./EXTRACTIONS/"</span>,
-  <span class='no'>label</span>, <span class='st'>"/ITRDB"</span>), <span class='st'>"./EXTRACTIONS/ITRDB"</span>), <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>chronology.type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),
+  <span class='st'>"/FedData/raw/itrdb"</span>), <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/ifelse'>ifelse</a></span>(!<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/NULL'>is.null</a></span>(<span class='no'>label</span>),
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='st'>"/FedData/extractions/itrdb/"</span>, <span class='no'>label</span>, <span class='st'>"/"</span>),
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(), <span class='st'>"/FedData/extractions/itrdb"</span>)), <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,12 +186,12 @@ if missing, all available chronologies are given.</p></td>
     <tr>
       <th>raw.dir</th>
       <td><p>A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to './RAW/ITRDB/'.</p></td>
+The directory will be created if missing.</p></td>
     </tr>
     <tr>
       <th>extraction.dir</th>
       <td><p>A character string indicating where the extracted and cropped ITRDB dataset should be put.
-The directory will be created if missing. Defaults to './EXTRACTIONS/ITRDB/'.</p></td>
+The directory will be created if missing.</p></td>
     </tr>
     <tr>
       <th>force.redo</th>

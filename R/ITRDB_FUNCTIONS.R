@@ -42,9 +42,9 @@
 #' }
 #' if missing, all available chronologies are given.
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
-#' The directory will be created if missing. Defaults to './RAW/ITRDB/'.
+#' The directory will be created if missing.
 #' @param extraction.dir A character string indicating where the extracted and cropped ITRDB dataset should be put.
-#' The directory will be created if missing. Defaults to './EXTRACTIONS/ITRDB/'.
+#' The directory will be created if missing.
 #' @param force.redo If an extraction already exists, should a new one be created? Defaults to FALSE.
 #' @return A named list containing the 'metadata', 'widths', and 'depths' data. 
 #' @export
@@ -74,10 +74,10 @@ get_itrdb <- function(template = NULL,
                       species = NULL,
                       measurement.type = NULL,
                       chronology.type = NULL,
-                      raw.dir = "./RAW/ITRDB",
+                      raw.dir = paste0(tempdir(),"/FedData/raw/itrdb"),
                       extraction.dir = ifelse(!is.null(label),
-                                              paste0("./EXTRACTIONS/", label, "/ITRDB"),
-                                              "./EXTRACTIONS/ITRDB"),
+                                              paste0(tempdir(),"/FedData/extractions/itrdb/",label,"/"),
+                                              paste0(tempdir(),"/FedData/extractions/itrdb")),
                       force.redo = FALSE) {
   
   raw.dir <- normalizePath(paste0(raw.dir,"/."), mustWork = FALSE)  
@@ -211,7 +211,7 @@ get_itrdb <- function(template = NULL,
 #' @return A data.table containing all of the ITRDB data. 
 #' @export
 #' @keywords internal
-download_itrdb <- function(raw.dir = "./RAW/ITRDB/", force.redo = FALSE) {
+download_itrdb <- function(raw.dir = paste0(tempdir(),"/FedData/raw/itrdb"), force.redo = FALSE) {
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   
   opts <- list(verbose = F, noprogress = T, fresh_connect = T, ftp_use_epsv = T, forbid_reuse = T, dirlistonly = T)
@@ -230,8 +230,8 @@ download_itrdb <- function(raw.dir = "./RAW/ITRDB/", force.redo = FALSE) {
   ## A vector of the files in the output.dir
   zips <- paste0(raw.dir, "/", basename(filenames))
   
-  version <- max(as.numeric(gsub("[^0-9]", "", zips)))
-  zips <- zips[grepl(version, zips)]
+  version <- max(as.numeric(gsub("[^0-9]", "", basename(zips))))
+  zips <- zips[grepl(paste0("v",version), zips)]
   
   message("Extracting chronology data from ITRDB version ", version, " dated ", as.character(as.Date(base::file.info(zips[[1]])$mtime)))
   

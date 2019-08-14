@@ -5,9 +5,9 @@
 \title{Download and crop the Global Historical Climate Network-Daily data.}
 \usage{
 get_ghcn_daily(template = NULL, label = NULL, elements = NULL,
-  years = NULL, raw.dir = "./RAW/GHCN",
-  extraction.dir = paste0("./EXTRACTIONS/", label, "/GHCN"),
-  standardize = F, force.redo = F)
+  years = NULL, raw.dir = paste0(tempdir(), "/FedData/raw/ghcn"),
+  extraction.dir = paste0(tempdir(), "/FedData/extractions/ghcn/", label,
+  "/"), standardize = F, force.redo = F)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve 
