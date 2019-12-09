@@ -20,7 +20,7 @@ Authors@R: c(person(given = c("R.", "Kyle"), family = "Bocinsky",
     role = c("aut", "cre"), email = "bocinsky@gmail.com"),
     person(given = c("Dylan"), family = "Beaudette", role = "ctb"),
     person(given = c("Scott"), family = "Chamberlain", role = "ctb"))
-URL: https://github.com/ropensci/FedData
+URL: https://docs.ropensci.org/FedData, https://github.com/ropensci/FedData
 BugReports: https://github.com/ropensci/FedData/issues
 License: MIT + file LICENSE
 Depends:
