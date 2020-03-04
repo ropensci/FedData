@@ -7,7 +7,16 @@ if (getRversion() >= "2.15.1") utils::globalVariables(c(".",
                                                         "nlcd_impervious_pam",
                                                         "daymet_tiles",
                                                         "NewDataSet",
-                                                        'Table'))
+                                                        'Table',
+                                                        "saverest",
+                                                        "areasymbol",
+                                                        "tablesHeaders",
+                                                        "xmin",
+                                                        "xmax",
+                                                        "ymin",
+                                                        "ymax",
+                                                        "xsize",
+                                                        "ExceptionReport"))
 
 #' Install and load a package.
 #'
@@ -117,6 +126,49 @@ unwrap_rows <- function(mat, n) {
         return(mat[i, 1:n[i]])
     })
     return(as.numeric(do.call(c, out)))
+}
+
+
+#'Splits a bbox into a list of bboxes less than a certain size
+#'
+#' @param x The maximum x size of the resulting bounding boxes
+#' @param y The maximum y size of the resulting bounding boxes; defaults to x
+#' @return A list of bbox objects
+#' @export
+#' @keywords internal
+split_bbox <- function(bbox, x, y = xsize) {
+  
+  if(bbox[['xmin']] > bbox[['xmax']])
+    x <- -1 * x
+  if(bbox[['ymin']] > bbox[['ymax']])
+    y <- -1 * y
+  
+  xs <- c(seq(bbox[['xmin']],
+            bbox[['xmax']],
+            x),
+          bbox['xmax'])
+  xs <-
+    tibble::tibble(xmin = xs[1:(length(xs) - 1)],
+                   xmax = xs[2:length(xs)])
+  
+  ys <- c(seq(bbox[['ymin']],
+               bbox[['ymax']],
+               y),
+           bbox[['ymax']])
+  
+  ys <-
+    tibble::tibble(ymin = ys[1:(length(ys) - 1)],
+                   ymax = ys[2:length(ys)])
+  
+  tidyr::crossing(xs,ys) %>%
+    dplyr::rowwise() %>%
+    dplyr::group_split() %>%
+    purrr::map(as.list) %>%
+    purrr::map(unlist) %>%
+    purrr::map(sf::st_bbox, 
+               crs = sf::st_crs(bbox))
+  
+  
 }
 
 

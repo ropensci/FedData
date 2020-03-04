@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get the rightmost 'n' characters of a character string. — substr_right • FedData</title>
+<title>Splits a bbox into a list of bboxes less than a certain size — split_bbox • FedData</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="Get the rightmost 'n' characters of a character string. — substr_right" />
-<meta property="og:description" content="Get the rightmost 'n' characters of a character string." />
+<meta property="og:title" content="Splits a bbox into a list of bboxes less than a certain size — split_bbox" />
+<meta property="og:description" content="Splits a bbox into a list of bboxes less than a certain size" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -108,33 +108,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get the rightmost 'n' characters of a character string.</h1>
+    <h1>Splits a bbox into a list of bboxes less than a certain size</h1>
     <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/UTILITY_FUNCTIONS.R'><code>R/UTILITY_FUNCTIONS.R</code></a></small>
-    <div class="hidden name"><code>substr_right.Rd</code></div>
+    <div class="hidden name"><code>split_bbox.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Get the rightmost 'n' characters of a character string.</p>
+    <p>Splits a bbox into a list of bboxes less than a certain size</p>
     </div>
 
-    <pre class="usage"><span class='fu'>substr_right</span>(<span class='no'>x</span>, <span class='no'>n</span>)</pre>
+    <pre class="usage"><span class='fu'>split_bbox</span>(<span class='no'>bbox</span>, <span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='no'>xsize</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A character string.</p></td>
+      <td><p>The maximum x size of the resulting bounding boxes</p></td>
     </tr>
     <tr>
-      <th>n</th>
-      <td><p>The number of characters to retrieve.</p></td>
+      <th>y</th>
+      <td><p>The maximum y size of the resulting bounding boxes; defaults to x</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character string.</p>
+    <p>A list of bbox objects</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

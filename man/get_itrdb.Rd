@@ -4,12 +4,20 @@
 \alias{get_itrdb}
 \title{Download the latest version of the ITRDB, and extract given parameters.}
 \usage{
-get_itrdb(template = NULL, label = NULL, recon.years = NULL,
-  calib.years = NULL, species = NULL, measurement.type = NULL,
-  chronology.type = NULL, raw.dir = paste0(tempdir(),
-  "/FedData/raw/itrdb"), extraction.dir = ifelse(!is.null(label),
-  paste0(tempdir(), "/FedData/extractions/itrdb/", label, "/"),
-  paste0(tempdir(), "/FedData/extractions/itrdb")), force.redo = FALSE)
+get_itrdb(
+  template = NULL,
+  label = NULL,
+  recon.years = NULL,
+  calib.years = NULL,
+  species = NULL,
+  measurement.type = NULL,
+  chronology.type = NULL,
+  raw.dir = paste0(tempdir(), "/FedData/raw/itrdb"),
+  extraction.dir = ifelse(!is.null(label), paste0(tempdir(),
+    "/FedData/extractions/itrdb/", label, "/"), paste0(tempdir(),
+    "/FedData/extractions/itrdb")),
+  force.redo = FALSE
+)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve 

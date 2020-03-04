@@ -36,7 +36,8 @@ Currently, the package enables extraction from seven datasets:
 * The [Global Historical Climatology Network (GHCN)](http://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn), coordinated by National Climatic Data Center at NOAA
 * The [Daymet](https://daymet.ornl.gov/) gridded estimates of daily weather parameters for North America, version 3, available from the Oak Ridge National Laboratory's Distributed Active Archive Center (DAAC)
 * The [International Tree Ring Data Bank (ITRDB)](http://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/tree-ring), coordinated by National Climatic Data Center at NOAA
-* The [National Land Cover Database (NLCD)](https://www.mrlc.gov/) from 2011, 2006, and 2001
+* The [National Land Cover Database (NLCD)](https://www.mrlc.gov/)
+* The [NASS Cropland Data Layer](https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php) from the National Agricultural Statistics Service
 
 This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the [**sp**](https://cran.r-project.org/package=sp), [**raster**](https://cran.r-project.org/package=raster), and [**rgdal**](https://cran.r-project.org/package=rgdal) packages.
 
@@ -234,7 +235,7 @@ raster::plot(NLCD)
 # You can also download the Canopy (2011 only) or impervious datasets:
 NLCD_canopy <- get_nlcd(template = vepPolygon,
                  year = 2011,
-                 dataset = "Canopy_Cartographic",
+                 dataset = "Tree_Canopy",
                  label = "VEPIIN")
 # Plot with raster::plot
 raster::plot(NLCD_canopy)
@@ -246,6 +247,22 @@ NLCD_impervious <- get_nlcd(template = vepPolygon,
 # Plot with raster::plot
 raster::plot(NLCD_impervious)
 ```
+
+#### Get and plot the NASS Cropland Data Layer for the study area
+```{r results="hide", message=FALSE}
+# Get the NASS (USA ONLY)
+# Returns a raster
+NASS <- get_nass(template = vepPolygon,
+                 year = 2016,
+                 label = "VEPIIN")
+# Plot with raster::plot
+raster::plot(NASS)
+
+# Get the NASS classification table
+raster::levels(NASS)[[1]]
+
+```
+
 
 -----------
 

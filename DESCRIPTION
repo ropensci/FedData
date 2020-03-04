@@ -15,7 +15,7 @@ Description: Functions to automate downloading geospatial data available from
     Distributed Active Archive Center (DAAC); the International Tree Ring Data Bank; 
     and the National Land Cover Database (NLCD).
 Version: 3.0.0.9000
-Date: 2019-05-31
+Date: 2020-03-04
 Authors@R: c(person(given = c("R.", "Kyle"), family = "Bocinsky",
     role = c("aut", "cre"), email = "bocinsky@gmail.com"),
     person(given = c("Dylan"), family = "Beaudette", role = "ctb"),
@@ -48,10 +48,12 @@ Imports:
     httr,
     xml2,
     purrr,
-    lwgeom
+    lwgeom,
+    progress,
+    tidyr
 Repository: CRAN
 NeedsCompilation: no
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Suggests: testthat,
     covr,
     roxygen2

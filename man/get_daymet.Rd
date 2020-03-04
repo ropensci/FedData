@@ -4,10 +4,15 @@
 \alias{get_daymet}
 \title{Download and crop the 1-km DAYMET daily weather dataset.}
 \usage{
-get_daymet(template, label, elements = NULL, years = NULL,
+get_daymet(
+  template,
+  label,
+  elements = NULL,
+  years = NULL,
   raw.dir = paste0(tempdir(), "/FedData/raw/daymet"),
-  extraction.dir = paste0(tempdir(), "/FedData/extractions/daymet/",
-  label, "/"), force.redo = F)
+  extraction.dir = paste0(tempdir(), "/FedData/extractions/daymet/", label, "/"),
+  force.redo = F
+)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve

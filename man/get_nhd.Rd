@@ -4,9 +4,13 @@
 \alias{get_nhd}
 \title{Download and crop the National Hydrography Dataset.}
 \usage{
-get_nhd(template, label, raw.dir = paste0(tempdir(), "/FedData/raw/nhd"),
-  extraction.dir = paste0(tempdir(), "/FedData/extractions/nhd/", label,
-  "/"), force.redo = FALSE)
+get_nhd(
+  template,
+  label,
+  raw.dir = paste0(tempdir(), "/FedData/raw/nhd"),
+  extraction.dir = paste0(tempdir(), "/FedData/extractions/nhd/", label, "/"),
+  force.redo = FALSE
+)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve 

@@ -4,8 +4,14 @@
 \alias{get_ghcn_daily_station}
 \title{Download and extract the daily data for a GHCN weather station.}
 \usage{
-get_ghcn_daily_station(ID, elements = NULL, years = NULL, raw.dir,
-  standardize = F, force.redo = F)
+get_ghcn_daily_station(
+  ID,
+  elements = NULL,
+  years = NULL,
+  raw.dir,
+  standardize = F,
+  force.redo = F
+)
 }
 \arguments{
 \item{ID}{A character string giving the station ID.}

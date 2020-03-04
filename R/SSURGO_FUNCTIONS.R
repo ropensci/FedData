@@ -203,69 +203,73 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
   if (!is.null(template)) {
     
     if (class(template) %in% c("RasterLayer", "RasterStack", "RasterBrick")) {
-      template <- sp::spTransform(polygon_from_extent(template), sp::CRS("+proj=longlat +datum=WGS84"))
-    } else {
-      template <- sp::spTransform(template, sp::CRS("+proj=longlat +datum=WGS84"))
+      template %<>%
+        polygon_from_extent() 
     }
     
-    bounds <- polygon_from_extent(template)
+    template %<>%
+      sf::st_as_sf() %>%
+      sf::st_transform(4269)
+    
+    bounds <- template %>%
+      sf::st_bbox() %>%
+      sf::st_as_sfc()
     
     # Only download 1 square degree at a time to avoid oversized AOI error
-    if((raster::xmax(bounds) - raster::xmin(bounds)) > 1 | (raster::ymax(bounds) - raster::ymin(bounds)) > 1){
+    if((sf::st_bbox(template)[['xmax']] - sf::st_bbox(template)[['xmin']]) > 1 | 
+       (sf::st_bbox(template)[['ymax']] - sf::st_bbox(template)[['ymin']]) > 1){
       grid <- sp::GridTopology(cellcentre.offset=c(-179.5,-89.5),
                                cellsize=c(1,1),
                                cells.dim=c(360,180)) %>%
-        sp::SpatialGrid(proj4string=CRS("+proj=longlat +datum=WGS84")) %>%
-        as("SpatialPolygons")
+        # sp::SpatialGrid(proj4string=CRS("+proj=longlat +datum=WGS84")) %>%
+        as("SpatialPolygons") %>%
+        sf::st_as_sfc() %>%
+        sf::st_set_crs(4269)
       
-      bounds <- rgeos::gIntersection( grid, bounds, byid = T )
-      
+      bounds %<>%
+        sf::st_intersection(grid)
     }
     
-    n = NULL
-    SSURGOAreas <- foreach::foreach(n = 1:length(bounds),
-                                    .combine = rbind) %do% {
-                                      
-                                      bound <- sp::bbox(bounds[n])
-                                      if (identical(bound[1, 1], bound[1, 2])) 
-                                        bound[1, 2] <- bound[1, 2] + 1e-04
-                                      if (identical(bound[2, 1], bound[2, 2])) 
-                                        bound[2, 2] <- bound[2, 2] + 1e-04
-                                      
-                                      bbox.text <- paste(bound, collapse = ",")
-                                      
-                                      url <- paste("https://sdmdataaccess.nrcs.usda.gov/Spatial/SDMNAD83Geographic.wfs?Service=WFS&Version=1.0.0&Request=GetFeature&Typename=SurveyAreaPoly&BBOX=", 
-                                                   bbox.text, sep = "")
-                                      
-                                      temp.file <- paste0(tempdir(), "/soils.gml")
-                                      
-                                      opts <- list(verbose = F, noprogress = T, fresh_connect = TRUE)
-                                      hand <- curl::new_handle()
-                                      curl::handle_setopt(hand, .list = opts)
-                                      tryCatch(status <- curl::curl_download(url, destfile = temp.file, handle = hand), error = function(e) stop("Download of ", 
-                                                                                                                                                 url, " failed!"))
-                                      
-                                      SSURGOAreas <- rgdal::readOGR(dsn = temp.file, 
-                                                                    layer = "surveyareapoly", 
-                                                                    disambiguateFIDs = TRUE, 
-                                                                    stringsAsFactors = FALSE, 
-                                                                    verbose = FALSE)
-                                      raster::projection(SSURGOAreas) <- raster::projection(template)
-                                      
-                                      # Get a list of SSURGO study areas within the project study area
-                                      if (class(template) == "SpatialPointsDataFrame" & length(template) == 1) {
-                                        template <- polygon_from_extent(bounds, proj4string = raster::projection(template))
-                                      }
-                                      SSURGOAreas <- raster::crop(SSURGOAreas, sp::spTransform(template, sp::CRS(raster::projection(SSURGOAreas))))
-                                      
-                                      SSURGOAreas <- SSURGOAreas@data
-                                      
-                                      SSURGOAreas$saverest <- as.Date(SSURGOAreas$saverest, format = "%b %d %Y")
-                                      
-                                      return(SSURGOAreas)
-                                    }
-    
-    SSURGOAreas <- unique(SSURGOAreas)
+    SSURGOAreas <-
+      bounds %>%
+      purrr::map_dfr(function(x){
+        bound <- 
+          x %>%
+          sf::st_bbox()
+        
+        if (identical(bound['xmin'], bound['xmax'])) 
+          bound['xmax'] <- bound['xmax'] + 1e-04
+        if (identical(bound['ymin'], bound['ymax'])) 
+          bound['ymax'] <- bound['ymax'] + 1e-04
+        
+        bbox.text <- paste(bound, collapse = ",")
+        
+        url <- paste("https://sdmdataaccess.nrcs.usda.gov/Spatial/SDMNAD83Geographic.wfs?Service=WFS&Version=1.0.0&Request=GetFeature&Typename=SurveyAreaPoly&BBOX=", 
+                     bbox.text, sep = "")
+        
+        temp.file <- paste0(tempdir(), "/soils.gml")
+        
+        httr::GET(url,
+                  httr::write_disk(temp.file, overwrite = TRUE))
+        
+        tryCatch(      
+          suppressMessages(
+            
+            suppressWarnings(
+              sf::read_sf(temp.file,
+                          crs = 4269) %>%
+                dplyr::mutate(saverest = as.Date(saverest, format = "%b %d %Y")) %>%
+                sf::st_intersection(template) %>%
+                sf::st_drop_geometry()
+            )
+          )
+          ,
+          error = function(e){return(NULL)}
+        )
+        
+      }) %>%
+      dplyr::distinct() %>%
+      dplyr::arrange(areasymbol)
     
   } else {
     
@@ -467,19 +471,19 @@ extract_ssurgo_data <- function(tables, mapunits) {
 #' @return A tibble returned from the SDA service
 #' @keywords internal
 soils_query <- function (q) {
-
-    tryCatch(httr::POST(url = "https://sdmdataaccess.sc.egov.usda.gov/tabular/post.rest", 
-               body = list(query = q),
-               encode = "form") %>%
-    httr::content(as = "parse", encoding = "UTF-8") %>%
-    xml2::as_list() %$%
-    NewDataSet %$%
-    Table %>%
-    unlist(recursive = FALSE) %>%
-    as.data.frame(),
-    error = function(e){
-      stop("Improperly formatted SDA SQL request")
-    })
+  
+  tryCatch(httr::POST(url = "https://sdmdataaccess.sc.egov.usda.gov/tabular/post.rest", 
+                      body = list(query = q),
+                      encode = "form") %>%
+             httr::content(as = "parse", encoding = "UTF-8") %>%
+             xml2::as_list() %$%
+             NewDataSet %$%
+             Table %>%
+             unlist(recursive = FALSE) %>%
+             as.data.frame(),
+           error = function(e){
+             stop("Improperly formatted SDA SQL request")
+           })
   
 }
 

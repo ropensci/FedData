@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Get the rightmost 'n' characters of a character string. — substr_right • FedData</title>
+<title>Download and crop the NASS Cropland Data Layer. — get_nass • FedData</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,9 @@
 
 
 
-<meta property="og:title" content="Get the rightmost 'n' characters of a character string. — substr_right" />
-<meta property="og:description" content="Get the rightmost 'n' characters of a character string." />
+<meta property="og:title" content="Download and crop the NASS Cropland Data Layer. — get_nass" />
+<meta property="og:description" content="get_nass returns a RasterLayer of NASS Cropland Data Layer cropped to a given
+template study area." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -108,40 +109,87 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Get the rightmost 'n' characters of a character string.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/UTILITY_FUNCTIONS.R'><code>R/UTILITY_FUNCTIONS.R</code></a></small>
-    <div class="hidden name"><code>substr_right.Rd</code></div>
+    <h1>Download and crop the NASS Cropland Data Layer.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/NASS_FUNCTIONS.R'><code>R/NASS_FUNCTIONS.R</code></a></small>
+    <div class="hidden name"><code>get_nass.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Get the rightmost 'n' characters of a character string.</p>
+    <p><code>get_nass</code> returns a <code>RasterLayer</code> of NASS Cropland Data Layer cropped to a given
+template study area.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>substr_right</span>(<span class='no'>x</span>, <span class='no'>n</span>)</pre>
+    <pre class="usage"><span class='fu'>get_nass</span>(
+  <span class='no'>template</span>,
+  <span class='no'>label</span>,
+  <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2019</span>,
+  <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"/FedData/extractions/nass/"</span>, <span class='no'>label</span>, <span class='st'>"/"</span>),
+  <span class='kw'>raster.options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"COMPRESS=DEFLATE"</span>, <span class='st'>"ZLEVEL=9"</span>, <span class='st'>"INTERLEAVE=BAND"</span>),
+  <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A character string.</p></td>
+      <th>template</th>
+      <td><p>A Raster* or Spatial* object to serve 
+as a template for cropping.</p></td>
     </tr>
     <tr>
-      <th>n</th>
-      <td><p>The number of characters to retrieve.</p></td>
+      <th>label</th>
+      <td><p>A character string naming the study area.</p></td>
+    </tr>
+    <tr>
+      <th>year</th>
+      <td><p>An integer representing the year of desired NASS Cropland Data Layer product.
+Acceptable values are 2007--the last year.</p></td>
+    </tr>
+    <tr>
+      <th>extraction.dir</th>
+      <td><p>A character string indicating where the extracted and cropped NASS data should be put.
+The directory will be created if missing.</p></td>
+    </tr>
+    <tr>
+      <th>raster.options</th>
+      <td><p>a vector of options for raster::writeRaster.</p></td>
+    </tr>
+    <tr>
+      <th>force.redo</th>
+      <td><p>If an extraction for this template and label already exists, should a new one be created?</p></td>
+    </tr>
+    <tr>
+      <th>progress</th>
+      <td><p>Draw a progress bar when downloading?</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character string.</p>
+    <p>A <code>RasterLayer</code> cropped to the bounding box of the template.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># Extract data for the Mesa Verde National Park:</span>
+
+<span class='co'># Get the NASS (USA ONLY)</span>
+<span class='co'># Returns a raster</span>
+<span class='no'>NASS</span> <span class='kw'>&lt;-</span> <span class='fu'>get_nass</span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='kw pkg'>paleocar</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/paleocar/man/mvnp.html'>mvnp</a></span> <span class='kw'>%&gt;%</span>
+          <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_as_sf.html'>st_as_sf</a></span>(),
+          <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"MVNP"</span>,
+          <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2011</span>)
+
+<span class='co'># Plot with raster::plot</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>NASS</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

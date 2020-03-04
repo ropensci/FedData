@@ -9,7 +9,7 @@
 #' @param year An integer representing the year of desired NLCD product.
 #' Acceptable values are 2016 (default), 2011, 2008 (landcover only), 2006, 2004, and 2001.
 #' @param dataset A character string representing type of the NLCD product.
-#' Acceptable values are 'Impervious', 'Land_Cover', 'Canopy_Cartographic' (2011 only), 'Canopy_Analytical' (2011 only), and 'Canopy_Analytical_Error' (2011 only),
+#' Acceptable values are 'Impervious', 'Land_Cover', 'Tree_Canopy' (2011 and 2016 only),
 #' @param landmass A character string representing the landmass to be extracted
 #' Acceptable values are 'L48' (lower 48 US states, the default), 'AK' (Alaska), 'HI' (Hawaii), and 'PR' (Puerto Rico).
 #' @param extraction.dir A character string indicating where the extracted and cropped NLCD data should be put.
@@ -76,10 +76,9 @@ get_nlcd <- function(template,
                            subset = paste0('X("',template["xmin"],'","',template["xmax"],'")'),
                            subset = paste0('Y("',template["ymin"],'","',template["ymax"],'")')),
               httr::write_disk(path = outfile,
-                               overwrite = TRUE)) 
+                               overwrite = TRUE))
   
   outfile %>%
-    raster::raster() %>%
-    raster::readAll()
+    raster::raster()
   
 }

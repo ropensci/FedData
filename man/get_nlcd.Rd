@@ -4,9 +4,15 @@
 \alias{get_nlcd}
 \title{Download and crop the National Land Cover Database.}
 \usage{
-get_nlcd(template, label, year = 2016, dataset = "Land_Cover",
-  landmass = "L48", extraction.dir = paste0(tempdir(),
-  "/FedData/extractions/nlcd/", label, "/"), force.redo = F)
+get_nlcd(
+  template,
+  label,
+  year = 2016,
+  dataset = "Land_Cover",
+  landmass = "L48",
+  extraction.dir = paste0(tempdir(), "/FedData/extractions/nlcd/", label, "/"),
+  force.redo = F
+)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve 
@@ -18,7 +24,7 @@ as a template for cropping.}
 Acceptable values are 2016 (default), 2011, 2008 (landcover only), 2006, 2004, and 2001.}
 
 \item{dataset}{A character string representing type of the NLCD product.
-Acceptable values are 'Impervious', 'Land_Cover', 'Canopy_Cartographic' (2011 only), 'Canopy_Analytical' (2011 only), and 'Canopy_Analytical_Error' (2011 only),}
+Acceptable values are 'Impervious', 'Land_Cover', 'Tree_Canopy' (2011 and 2016 only),}
 
 \item{landmass}{A character string representing the landmass to be extracted
 Acceptable values are 'L48' (lower 48 US states, the default), 'AK' (Alaska), 'HI' (Hawaii), and 'PR' (Puerto Rico).}

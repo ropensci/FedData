@@ -43,7 +43,9 @@ Currently, the package enables extraction from seven datasets:
     (ITRDB)](http://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/tree-ring),
     coordinated by National Climatic Data Center at NOAA
   - The [National Land Cover Database (NLCD)](https://www.mrlc.gov/)
-    from 2011, 2006, and 2001
+  - The [NASS Cropland Data
+    Layer](https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php)
+    from the National Agricultural Statistics Service
 
 This package is designed with the large-scale geographic information
 system (GIS) use-case in mind: cases where the use of dynamic
@@ -259,8 +261,8 @@ ITRDB <- get_itrdb(template = vepPolygon,
                    measurement.type = "Ring Width",
                    chronology.type = "ARSTND")
 #> Warning in eval(jsub, SDenv, parent.frame()): NAs introduced by coercion
-#> Warning: attribute variables are assumed to be spatially constant
-#> throughout all geometries
+#> Warning: attribute variables are assumed to be spatially constant throughout all
+#> geometries
 
 # Plot the NED again
 raster::plot(NED)
@@ -295,7 +297,7 @@ raster::plot(NLCD)
 # You can also download the Canopy (2011 only) or impervious datasets:
 NLCD_canopy <- get_nlcd(template = vepPolygon,
                  year = 2011,
-                 dataset = "Canopy_Cartographic",
+                 dataset = "Tree_Canopy",
                  label = "VEPIIN")
 # Plot with raster::plot
 raster::plot(NLCD_canopy)
@@ -314,6 +316,26 @@ raster::plot(NLCD_impervious)
 ```
 
 <img src="man/figures/README-unnamed-chunk-13-5.png" width="100%" /><img src="man/figures/README-unnamed-chunk-13-6.png" width="100%" />
+
+#### Get and plot the NASS Cropland Data Layer for the study area
+
+``` r
+# Get the NASS (USA ONLY)
+# Returns a raster
+NASS <- get_nass(template = vepPolygon,
+                 year = 2016,
+                 label = "VEPIIN")
+# Plot with raster::plot
+raster::plot(NASS)
+```
+
+<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" /><img src="man/figures/README-unnamed-chunk-14-2.png" width="100%" />
+
+``` r
+
+# Get the NASS classification table
+raster::levels(NASS)[[1]]
+```
 
 -----
 

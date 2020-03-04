@@ -33,3 +33,22 @@ unlink("./data-raw/wbdhu4_a_us_september2017",
 
 unlink("./data-raw/nhd_huc4.gpkg",
        recursive = TRUE)
+
+
+## The NASS CDL RAT
+rat <-  tempfile(fileext = ".zip")
+download.file("https://www.nass.usda.gov/Research_and_Science/Cropland/docs/generic_cdl_attributes.tif.vat.dbf.zip",
+              destfile = rat)
+unzip(rat, exdir=tempdir())
+
+nass <- 
+  foreign::read.dbf(paste0(tempdir(), "/ESRI_attribute_files/ArcGIS10.7.0_2019_30m_cdls.img.vat.dbf")) %>%
+  tibble::as_tibble() %>%
+  dplyr::mutate(rgb = rgb(red = RED, green = GREEN, blue = BLUE, alpha = OPACITY, maxColorValue = 255)) %>%
+  dplyr::select(ID = VALUE,
+                `Land Cover` = CLASS_NAME,
+                Color = rgb)
+
+
+usethis::use_data(nass, tablesHeaders, overwrite = TRUE, internal = TRUE)
+

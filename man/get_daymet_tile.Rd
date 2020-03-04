@@ -4,8 +4,7 @@
 \alias{get_daymet_tile}
 \title{Download and crop a netcdf tile from the 1-km DAYMET daily weather dataset.}
 \usage{
-get_daymet_tile(template, tileID, elements = NULL, years = NULL,
-  raw.dir)
+get_daymet_tile(template, tileID, elements = NULL, years = NULL, raw.dir)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve
