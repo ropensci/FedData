@@ -209,7 +209,7 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
     
     template %<>%
       sf::st_as_sf() %>%
-      sf::st_transform(4269)
+      sf::st_transform(4326)
     
     bounds <- template %>%
       sf::st_bbox() %>%
@@ -224,7 +224,7 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
         # sp::SpatialGrid(proj4string=CRS("+proj=longlat +datum=WGS84")) %>%
         as("SpatialPolygons") %>%
         sf::st_as_sfc() %>%
-        sf::st_set_crs(4269)
+        sf::st_set_crs(4326)
       
       bounds %<>%
         sf::st_intersection(grid)
@@ -244,20 +244,23 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
         
         bbox.text <- paste(bound, collapse = ",")
         
-        url <- paste("https://sdmdataaccess.nrcs.usda.gov/Spatial/SDMNAD83Geographic.wfs?Service=WFS&Version=1.0.0&Request=GetFeature&Typename=SurveyAreaPoly&BBOX=", 
-                     bbox.text, sep = "")
-        
         temp.file <- paste0(tempdir(), "/soils.gml")
         
-        httr::GET(url,
-                  httr::write_disk(temp.file, overwrite = TRUE))
+        httr::GET('https://sdmdataaccess.nrcs.usda.gov/Spatial/SDMWGS84Geographic.wfs',
+                  query = list(Service = 'WFS',
+                               Version = '1.1.0',
+                               Request = 'GetFeature',
+                               Typename = 'SurveyAreaPoly',
+                               BBOX = bbox.text,
+                               SRSNAME='EPSG:4326',
+                               OUTPUTFORMAT='GML3'),
+                  httr::write_disk(temp.file, 
+                                   overwrite = TRUE))
         
         tryCatch(      
           suppressMessages(
-            
             suppressWarnings(
-              sf::read_sf(temp.file,
-                          crs = 4269) %>%
+              sf::read_sf(temp.file, crs = NA) %>%
                 dplyr::mutate(saverest = as.Date(saverest, format = "%b %d %Y")) %>%
                 sf::st_intersection(template) %>%
                 sf::st_drop_geometry()
@@ -361,7 +364,8 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
   # }
   
   mapunits <- 
-    sf::read_sf(paste0(tmpdir, "/", area, "/spatial"), layer = paste0("soilmu_a_", tolower(area))) %>%
+    sf::read_sf(paste0(tmpdir, "/", area, "/spatial"), 
+                layer = paste0("soilmu_a_", tolower(area))) %>%
     lwgeom::st_make_valid() %>%
     as("Spatial")
   

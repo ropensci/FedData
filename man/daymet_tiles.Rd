@@ -4,14 +4,16 @@
 \name{daymet_tiles}
 \alias{daymet_tiles}
 \title{The DAYMET tiles SpatialPolygonsDataFrame.}
-\format{A SpatialPolygonsDataFrame with 1060 features and 5 variables:
+\format{
+A SpatialPolygonsDataFrame with 1060 features and 5 variables:
 \describe{
   \item{TileID}{the numeric identifier of the tile}
   \item{XMin}{the minimum longitude of the tile}
   \item{XMax}{the maximum longitude of the tile}
   \item{YMin}{the minimum latitude of the tile}
   \item{YMax}{the maximum latitude of the tile}
-}}
+}
+}
 \source{
 \url{https://github.com/khufkens/daymetr/blob/master/data/tile_outlines.rda}
 }

@@ -47,9 +47,9 @@ NHD <- get_nhd(template=vepPolygon, label='VEPIIN')
 plot(vepPolygon)
 
 # Plot the NHD data
-plot(NHD$NHDFlowline, add=T)
-plot(NHD$NHDLine, add=T)
-plot(NHD$NHDArea, col='black', add=T)
-plot(NHD$NHDWaterbody, col='black', add=T)
+plot(NHD$Flowline, add=T)
+plot(NHD$Line, add=T)
+plot(NHD$Area, col='black', add=T)
+plot(NHD$Waterbody, col='black', add=T)
 }
 }
