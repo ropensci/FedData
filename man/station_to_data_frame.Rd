@@ -16,7 +16,7 @@ A \code{data.frame} of the containing the unwrapped station data
 \code{station_to_data_frame} returns a \code{data.frame} of the GHCN station data list.
 }
 \details{
-This function unwraps the station data and merges all data into a single data frame, 
+This function unwraps the station data and merges all data into a single data frame,
 with the first column being in the \code{Date} class.
 }
 \keyword{internal}

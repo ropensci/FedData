@@ -7,7 +7,7 @@
 get_ssurgo_inventory(template = NULL, raw.dir)
 }
 \arguments{
-\item{template}{A Raster* or Spatial* object to serve 
+\item{template}{A Raster* or Spatial* object to serve
 as a template for cropping.}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.

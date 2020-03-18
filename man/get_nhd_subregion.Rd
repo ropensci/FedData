@@ -8,7 +8,7 @@ of the National Hydrography Dataset.}
 get_nhd_subregion(template = NULL, area, raw.dir)
 }
 \arguments{
-\item{template}{A Raster* or Spatial* object to serve 
+\item{template}{A Raster* or Spatial* object to serve
 as a template for cropping.}
 
 \item{area}{A 4-character string indicating the HUC4 NHD subregion to download and crop.}

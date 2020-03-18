@@ -13,7 +13,7 @@ read_crn(file)
 A list containing the metadata and chronology.
 }
 \description{
-This function includes improvements to the \code{read.crn} function from the 
+This function includes improvements to the \code{read.crn} function from the
 \pkg{dplR} library. The principle changes are better parsing of metadata, and support
 for the Schweingruber-type Tucson format. Chronologies that are unable to be read
 are reported to the user. This function automatically recognizes Schweingruber-type files.

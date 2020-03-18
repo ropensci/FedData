@@ -13,7 +13,7 @@ get_nhd(
 )
 }
 \arguments{
-\item{template}{A Raster* or Spatial* object to serve 
+\item{template}{A Raster* or Spatial* object to serve
 as a template for cropping.}
 
 \item{label}{A character string naming the study area.}
@@ -30,26 +30,27 @@ The directory will be created if missing. Defaults to './EXTRACTIONS/NHD/'.}
 A list of Spatial* objects extracted from the National Hydrography Dataset.
 }
 \description{
-\code{get_nhd} returns a list of Spatial* objects extracted 
+\code{get_nhd} returns a list of Spatial* objects extracted
 from the National Hydrography Dataset.
 }
 \examples{
 \dontrun{
 # Extract data for the Village Ecodynamics Project 'VEPIIN' study area:
 # http://village.anth.wsu.edu
-vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), 
-     proj4string='+proj=utm +datum=NAD83 +zone=12')
+vepPolygon <- polygon_from_extent(raster::extent(672800, 740000, 4102000, 4170000),
+  proj4string = "+proj=utm +datum=NAD83 +zone=12"
+)
 
 # Get the NHD (USA ONLY)
-NHD <- get_nhd(template=vepPolygon, label='VEPIIN')
+NHD <- get_nhd(template = vepPolygon, label = "VEPIIN")
 
 # Plot the VEP polygon
 plot(vepPolygon)
 
 # Plot the NHD data
-plot(NHD$Flowline, add=T)
-plot(NHD$Line, add=T)
-plot(NHD$Area, col='black', add=T)
-plot(NHD$Waterbody, col='black', add=T)
+plot(NHD$Flowline, add = T)
+plot(NHD$Line, add = T)
+plot(NHD$Area, col = "black", add = T)
+plot(NHD$Waterbody, col = "black", add = T)
 }
 }

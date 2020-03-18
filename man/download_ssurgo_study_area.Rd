@@ -9,7 +9,7 @@ download_ssurgo_study_area(area, date, raw.dir)
 \arguments{
 \item{area}{A character string indicating the SSURGO study area to be downloaded.}
 
-\item{date}{A character string indicating the date of the most recent update to the SSURGO 
+\item{date}{A character string indicating the date of the most recent update to the SSURGO
 area for these data. This information may be gleaned from the SSURGO Inventory (\code{\link{get_ssurgo_inventory}}).}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.}

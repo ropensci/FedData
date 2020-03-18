@@ -16,11 +16,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-[![cran version](https://www.r-pkg.org/badges/version/FedData)](https://cran.r-project.org/package=FedData)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![CRAN version](https://www.r-pkg.org/badges/version/FedData)](https://cran.r-project.org/package=FedData)
 [![CRAN downloads per month](https://cranlogs.r-pkg.org/badges/FedData)](https://github.com/metacran/cranlogs.app)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/FedData)](https://github.com/metacran/cranlogs.app)
 [![Build Status](https://api.travis-ci.org/ropensci/FedData.png)](https://travis-ci.org/ropensci/FedData)
-<!-- [![Coverage Status](https://img.shields.io/codecov/c/github/ropensci/FedData/master.svg)](https://codecov.io/github/ropensci/FedData?branch=master) -->
+[![Coverage Status](https://img.shields.io/codecov/c/github/ropensci/FedData/master.svg)](https://codecov.io/github/ropensci/FedData?branch=master)
 [![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.596344.svg)](https://doi.org/10.5281/zenodo.596344)
 [![ROpenSci Status](https://badges.ropensci.org/13_status.svg)](https://github.com/ropensci/onboarding/issues/13)
 

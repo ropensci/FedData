@@ -9,7 +9,7 @@ polygon_from_extent(x, proj4string = NULL)
 \arguments{
 \item{x}{An \code{\link{extent}} object, or an object from which an extent object can be retrieved.}
 
-\item{proj4string}{A PROJ.4 formatted string defining the required projection. If NULL, 
+\item{proj4string}{A PROJ.4 formatted string defining the required projection. If NULL,
 the function will attempt to get the projection from x using \code{\link{projection}}}
 }
 \value{

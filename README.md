@@ -1,7 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![cran
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![CRAN
 version](https://www.r-pkg.org/badges/version/FedData)](https://cran.r-project.org/package=FedData)
 [![CRAN downloads per
 month](https://cranlogs.r-pkg.org/badges/FedData)](https://github.com/metacran/cranlogs.app)
@@ -9,7 +12,8 @@ month](https://cranlogs.r-pkg.org/badges/FedData)](https://github.com/metacran/c
 downloads](https://cranlogs.r-pkg.org/badges/grand-total/FedData)](https://github.com/metacran/cranlogs.app)
 [![Build
 Status](https://api.travis-ci.org/ropensci/FedData.png)](https://travis-ci.org/ropensci/FedData)
-<!-- [![Coverage Status](https://img.shields.io/codecov/c/github/ropensci/FedData/master.svg)](https://codecov.io/github/ropensci/FedData?branch=master) -->
+[![Coverage
+Status](https://img.shields.io/codecov/c/github/ropensci/FedData/master.svg)](https://codecov.io/github/ropensci/FedData?branch=master)
 [![Zenodo
 DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.596344.svg)](https://doi.org/10.5281/zenodo.596344)
 [![ROpenSci
@@ -207,6 +211,15 @@ NHD %>%
   lapply(sp::plot,
          col = 'black',
          add = TRUE)
+#> Warning in plot.sf(X[[i]], ...): ignoring all but the first attribute
+
+#> Warning in plot.sf(X[[i]], ...): ignoring all but the first attribute
+
+#> Warning in plot.sf(X[[i]], ...): ignoring all but the first attribute
+
+#> Warning in plot.sf(X[[i]], ...): ignoring all but the first attribute
+
+#> Warning in plot.sf(X[[i]], ...): ignoring all but the first attribute
 ```
 
 <img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />

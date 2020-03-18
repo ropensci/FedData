@@ -16,7 +16,7 @@ get_ghcn_daily(
 )
 }
 \arguments{
-\item{template}{A Raster* or Spatial* object to serve 
+\item{template}{A Raster* or Spatial* object to serve
 as a template for cropping. Alternatively, a character vector providing GHCN station IDs. If missing, all stations
 will be downloaded!}
 
@@ -31,54 +31,54 @@ TMAX = Maximum temperature (tenths of degrees C)\cr
 TMIN = Minimum temperature (tenths of degrees C)\cr
 \cr
 The other elements are:\cr
-  
-ACMC = Average cloudiness midnight to midnight from 30-second 
+
+ACMC = Average cloudiness midnight to midnight from 30-second
 ceilometer data (percent)\cr
-ACMH = Average cloudiness midnight to midnight from 
+ACMH = Average cloudiness midnight to midnight from
 manual observations (percent)\cr
-ACSC = Average cloudiness sunrise to sunset from 30-second 
+ACSC = Average cloudiness sunrise to sunset from 30-second
 ceilometer data (percent)\cr
-ACSH = Average cloudiness sunrise to sunset from manual 
+ACSH = Average cloudiness sunrise to sunset from manual
 observations (percent)\cr
 AWDR = Average daily wind direction (degrees)\cr
 AWND = Average daily wind speed (tenths of meters per second)\cr
 DAEV = Number of days included in the multiday evaporation
 total (MDEV)\cr
-DAPR = Number of days included in the multiday precipitation 
+DAPR = Number of days included in the multiday precipitation
 total (MDPR)\cr
-DASF = Number of days included in the multiday snowfall 
+DASF = Number of days included in the multiday snowfall
 total (MDSF)\cr
-DATN = Number of days included in the multiday minimum temperature 
+DATN = Number of days included in the multiday minimum temperature
 (MDTN)\cr
-DATX = Number of days included in the multiday maximum temperature 
+DATX = Number of days included in the multiday maximum temperature
 (MDTX)\cr
 DAWM = Number of days included in the multiday wind movement
 (MDWM)\cr
-DWPR = Number of days with non-zero precipitation included in 
+DWPR = Number of days with non-zero precipitation included in
 multiday precipitation total (MDPR)\cr
 EVAP = Evaporation of water from evaporation pan (tenths of mm)\cr
-FMTM = Time of fastest mile or fastest 1-minute wind 
+FMTM = Time of fastest mile or fastest 1-minute wind
 (hours and minutes, i.e., HHMM)\cr
 FRGB = Base of frozen ground layer (cm)\cr
 FRGT = Top of frozen ground layer (cm)\cr
 FRTH = Thickness of frozen ground layer (cm)\cr
 GAHT = Difference between river and gauge height (cm)\cr
 MDEV = Multiday evaporation total (tenths of mm; use with DAEV)\cr
-MDPR = Multiday precipitation total (tenths of mm; use with DAPR and 
+MDPR = Multiday precipitation total (tenths of mm; use with DAPR and
                                      DWPR, if available)\cr
 MDSF = Multiday snowfall total \cr
 MDTN = Multiday minimum temperature (tenths of degrees C; use with DATN)\cr
 MDTX = Multiday maximum temperature (tenths of degrees C; use with DATX)\cr
 MDWM = Multiday wind movement (km)\cr
-MNPN = Daily minimum temperature of water in an evaporation pan 
+MNPN = Daily minimum temperature of water in an evaporation pan
 (tenths of degrees C)\cr
-MXPN = Daily maximum temperature of water in an evaporation pan 
+MXPN = Daily maximum temperature of water in an evaporation pan
 (tenths of degrees C)\cr
 PGTM = Peak gust time (hours and minutes, i.e., HHMM)\cr
 PSUN = Daily percent of possible sunshine (percent)\cr
 SN*# = Minimum soil temperature (tenths of degrees C)
   where * corresponds to a code
-for ground cover and # corresponds to a code for soil 
+for ground cover and # corresponds to a code for soil
 depth.\cr
 \cr
 Ground cover codes include the following:\cr
@@ -101,9 +101,9 @@ Depth codes include the following:\cr
 6 = 150 cm\cr
 7 = 180 cm\cr
 \cr
-SX*# = Maximum soil temperature (tenths of degrees C) 
-  where * corresponds to a code for ground cover 
-and # corresponds to a code for soil depth.\cr 
+SX*# = Maximum soil temperature (tenths of degrees C)
+  where * corresponds to a code for ground cover
+and # corresponds to a code for soil depth.\cr
 See SN*# for ground cover and depth codes. \cr
 TAVG = Average temperature (tenths of degrees C)
 [Note that TAVG from source 'S' corresponds
@@ -130,13 +130,13 @@ WSFM = Fastest mile wind speed (tenths of meters per second)\cr
 WT** = Weather Type where ** has one of the following values:\cr
   \cr
 01 = Fog, ice fog, or freezing fog (may include heavy fog)\cr
-02 = Heavy fog or heaving freezing fog (not always 
+02 = Heavy fog or heaving freezing fog (not always
                                         distinguished from fog)\cr
 03 = Thunder\cr
 04 = Ice pellets, sleet, snow pellets, or small hail \cr
 05 = Hail (may include small hail)\cr
 06 = Glaze or rime \cr
-07 = Dust, volcanic ash, blowing dust, blowing sand, or 
+07 = Dust, volcanic ash, blowing dust, blowing sand, or
 blowing obstruction\cr
 08 = Smoke or haze \cr
 09 = Blowing or drifting snow\cr
@@ -153,7 +153,7 @@ blowing obstruction\cr
 21 = Ground fog \cr
 22 = Ice fog or freezing fog\cr
 \cr
-WV** = Weather in the Vicinity where ** has one of the following 
+WV** = Weather in the Vicinity where ** has one of the following
 values:\cr
 01 = Fog, ice fog, or freezing fog (may include heavy fog)\cr
 03 = Thunder\cr
@@ -177,10 +177,10 @@ The directory will be created if missing. Defaults to './EXTRACTIONS/GHCN/'.}
 A named list containing the 'spatial' and 'tabular' data.
 }
 \description{
-\code{get_ghcn_daily} returns a named list of length 2: 
+\code{get_ghcn_daily} returns a named list of length 2:
 \enumerate{
-\item 'spatial': A \code{SpatialPointsDataFrame} of the locations of GHCN weather stations 
-in the template, and 
+\item 'spatial': A \code{SpatialPointsDataFrame} of the locations of GHCN weather stations
+in the template, and
 \item 'tabular': A named list of \code{\link{data.frame}s} with the daily weather data for each station.
 The name of each list item is the station ID.
 }
@@ -189,34 +189,37 @@ The name of each list item is the station ID.
 \dontrun{
 # Extract data for the Village Ecodynamics Project 'VEPIIN' study area:
 # http://village.anth.wsu.edu
-vepPolygon <- polygon_from_extent(raster::extent(672800,740000,4102000,4170000), 
-     proj4string='+proj=utm +datum=NAD83 +zone=12')
+vepPolygon <- polygon_from_extent(raster::extent(672800, 740000, 4102000, 4170000),
+  proj4string = "+proj=utm +datum=NAD83 +zone=12"
+)
 
 # Get the daily GHCN data (GLOBAL)
 # Returns a list: the first element is the spatial locations of stations,
 # and the second is a list of the stations and their daily data
-GHCN.prcp <- get_ghcn_daily(template=vepPolygon, label='VEPIIN', elements=c('prcp'))
+GHCN.prcp <- get_ghcn_daily(template = vepPolygon, label = "VEPIIN", elements = c("prcp"))
 
 # Plot the VEP polygon
 plot(vepPolygon)
 
 # Plot the spatial locations
-plot(GHCN.prcp$spatial, pch=1, add=T)
-legend('bottomleft', pch=1, legend='GHCN Precipitation Records')
+plot(GHCN.prcp$spatial, pch = 1, add = T)
+legend("bottomleft", pch = 1, legend = "GHCN Precipitation Records")
 
 # Elements for which you require the same data
 # (i.e., minimum and maximum temperature for the same days)
 # can be standardized using standardize==T
-GHCN.temp <- get_ghcn_daily(template=vepPolygon, 
-     label='VEPIIN', 
-     elements=c('tmin','tmax'), 
-     standardize=T)
+GHCN.temp <- get_ghcn_daily(
+  template = vepPolygon,
+  label = "VEPIIN",
+  elements = c("tmin", "tmax"),
+  standardize = T
+)
 
 # Plot the VEP polygon
 plot(vepPolygon)
 
 # Plot the spatial locations
-plot(GHCN.temp$spatial, pch=1, add=T)
-legend('bottomleft', pch=1, legend='GHCN Temperature Records')
+plot(GHCN.temp$spatial, pch = 1, add = T)
+legend("bottomleft", pch = 1, legend = "GHCN Temperature Records")
 }
 }

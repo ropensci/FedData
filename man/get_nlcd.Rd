@@ -15,7 +15,7 @@ get_nlcd(
 )
 }
 \arguments{
-\item{template}{A Raster* or Spatial* object to serve 
+\item{template}{A Raster* or Spatial* object to serve
 as a template for cropping.}
 
 \item{label}{A character string naming the study area.}
@@ -47,11 +47,12 @@ template study area.
 
 # Get the NLCD (USA ONLY)
 # Returns a raster
-NLCD <- get_nlcd(paleocar::mvnp \%>\% 
-          sf::st_as_sf(), 
-          label = "MVNP",
-          year = 2011,
-          landmass = "L48")
+NLCD <- get_nlcd(paleocar::mvnp \%>\%
+  sf::st_as_sf(),
+label = "MVNP",
+year = 2011,
+landmass = "L48"
+)
 
 # Plot with raster::plot
 plot(NLCD)

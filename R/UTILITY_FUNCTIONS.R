@@ -1,27 +1,31 @@
 # Make CRAN check not complain about "." and package data
-if (getRversion() >= "2.15.1") utils::globalVariables(c(".",
-                                                        "element",
-                                                        "nlcd_tiles",
-                                                        "nlcd_landcover_pam",
-                                                        "nlcd_canopy_pam",
-                                                        "nlcd_impervious_pam",
-                                                        "daymet_tiles",
-                                                        "NewDataSet",
-                                                        'Table',
-                                                        "saverest",
-                                                        "areasymbol",
-                                                        "tablesHeaders",
-                                                        "xmin",
-                                                        "xmax",
-                                                        "ymin",
-                                                        "ymax",
-                                                        "xsize",
-                                                        "ExceptionReport",
-                                                        "name"))
+if (getRversion() >= "2.15.1") {
+  utils::globalVariables(c(
+    ".",
+    "element",
+    "nlcd_tiles",
+    "nlcd_landcover_pam",
+    "nlcd_canopy_pam",
+    "nlcd_impervious_pam",
+    "daymet_tiles",
+    "NewDataSet",
+    "Table",
+    "saverest",
+    "areasymbol",
+    "tablesHeaders",
+    "xmin",
+    "xmax",
+    "ymin",
+    "ymax",
+    "xsize",
+    "ExceptionReport",
+    "name"
+  ))
+}
 
 #' Install and load a package.
 #'
-#'This is a convenience function that checks whether a package is installed, and if not, installs it.
+#' This is a convenience function that checks whether a package is installed, and if not, installs it.
 #'
 #' @param x A character string representing the name of a package.
 #' @export
@@ -39,11 +43,12 @@ pkg_test <- function(x) {
       utils::install.packages(x, dependencies = TRUE, repos = "http://cran.rstudio.com")
     }
   }
-  if (!suppressWarnings(require(pkgName, character.only = TRUE))) 
+  if (!suppressWarnings(require(pkgName, character.only = TRUE))) {
     stop("Package not found")
+  }
 }
 
-#'Get the rightmost 'n' characters of a character string.
+#' Get the rightmost 'n' characters of a character string.
 #'
 #' @param x A character string.
 #' @param n The number of characters to retrieve.
@@ -54,10 +59,10 @@ substr_right <- function(x, n) {
   substr(x, nchar(x) - n + 1, nchar(x))
 }
 
-#'Turn an extent object into a polygon
+#' Turn an extent object into a polygon
 #'
 #' @param x An \code{\link{extent}} object, or an object from which an extent object can be retrieved.
-#' @param proj4string A PROJ.4 formatted string defining the required projection. If NULL, 
+#' @param proj4string A PROJ.4 formatted string defining the required projection. If NULL,
 #' the function will attempt to get the projection from x using \code{\link{projection}}
 #' @return A SpatialPolygons object.
 #' @export
@@ -66,17 +71,17 @@ polygon_from_extent <- function(x, proj4string = NULL) {
   if (is.null(proj4string)) {
     proj4string <- raster::projection(x)
   }
-  
+
   if (class(x) != "extent") {
     x <- raster::extent(x)
   }
-  
-  extent.matrix <- rbind(c(x@xmin, x@ymin), c(x@xmin, x@ymax), c(x@xmax, x@ymax), c(x@xmax, x@ymin), c(x@xmin, x@ymin))  # clockwise, 5 points to close it
+
+  extent.matrix <- rbind(c(x@xmin, x@ymin), c(x@xmin, x@ymax), c(x@xmax, x@ymax), c(x@xmax, x@ymin), c(x@xmin, x@ymin)) # clockwise, 5 points to close it
   extent.SP <- sp::SpatialPolygons(list(sp::Polygons(list(sp::Polygon(extent.matrix)), "extent")), proj4string = sp::CRS(proj4string))
   return(extent.SP)
 }
 
-#'Turn a SpatialPolygons object into a SpatialPolygonsDataFrame.
+#' Turn a SpatialPolygons object into a SpatialPolygonsDataFrame.
 #'
 #' @param x An SpatialPolygons object.
 #' @return A SpatialPolygonsDataFrame object.
@@ -91,32 +96,31 @@ spdf_from_polygon <- function(x) {
   return(x)
 }
 
-template_to_sf <- function(template){
-  
+template_to_sf <- function(template) {
   if (length(intersect(class(template), c("RasterLayer", "RasterStack", "RasterBrick", "Extent"))) > 0) {
     template %<>%
       sf::st_bbox() %>%
       sf::st_as_sfc()
   }
-  
+
   template %<>%
     sf::st_as_sf()
-  
+
   return(template)
 }
 
-read_sf_all <- function(dsn){
-  
+read_sf_all <- function(dsn) {
   dsn %>%
     sf::st_layers() %$%
     name %>%
-    magrittr::set_names(.,.) %>%
-    purrr::map(~sf::read_sf(dsn = dsn,
-                            layer = .x))
-  
+    magrittr::set_names(., .) %>%
+    purrr::map(~ sf::read_sf(
+      dsn = dsn,
+      layer = .x
+    ))
 }
 
-#'Get a logical vector of which elements in a vector are sequentially duplicated.
+#' Get a logical vector of which elements in a vector are sequentially duplicated.
 #'
 #' @param x An vector of any type, or, if \code{rows}, a matrix.
 #' @param rows Is x a matrix?
@@ -136,9 +140,9 @@ sequential_duplicated <- function(x, rows = F) {
   return(duplicates)
 }
 
-#'Unwraps a matrix and only keep the first n elements.
+#' Unwraps a matrix and only keep the first n elements.
 #'
-#'A function that unwraps a matrix and only keeps the first n elements
+#' A function that unwraps a matrix and only keeps the first n elements
 #' n can be either a constant (in which case it will be repeated), or a vector
 #' @param mat A matrix
 #' @param n A numeric vector
@@ -155,7 +159,7 @@ unwrap_rows <- function(mat, n) {
 }
 
 
-#'Splits a bbox into a list of bboxes less than a certain size
+#' Splits a bbox into a list of bboxes less than a certain size
 #'
 #' @param x The maximum x size of the resulting bounding boxes
 #' @param y The maximum y size of the resulting bounding boxes; defaults to x
@@ -163,38 +167,50 @@ unwrap_rows <- function(mat, n) {
 #' @export
 #' @keywords internal
 split_bbox <- function(bbox, x, y = xsize) {
-  
-  if(bbox[['xmin']] > bbox[['xmax']])
+  if (bbox[["xmin"]] > bbox[["xmax"]]) {
     x <- -1 * x
-  if(bbox[['ymin']] > bbox[['ymax']])
+  }
+  if (bbox[["ymin"]] > bbox[["ymax"]]) {
     y <- -1 * y
-  
-  xs <- c(seq(bbox[['xmin']],
-              bbox[['xmax']],
-              x),
-          bbox['xmax'])
+  }
+
+  xs <- c(
+    seq(
+      bbox[["xmin"]],
+      bbox[["xmax"]],
+      x
+    ),
+    bbox["xmax"]
+  )
   xs <-
-    tibble::tibble(xmin = xs[1:(length(xs) - 1)],
-                   xmax = xs[2:length(xs)])
-  
-  ys <- c(seq(bbox[['ymin']],
-              bbox[['ymax']],
-              y),
-          bbox[['ymax']])
-  
+    tibble::tibble(
+      xmin = xs[1:(length(xs) - 1)],
+      xmax = xs[2:length(xs)]
+    )
+
+  ys <- c(
+    seq(
+      bbox[["ymin"]],
+      bbox[["ymax"]],
+      y
+    ),
+    bbox[["ymax"]]
+  )
+
   ys <-
-    tibble::tibble(ymin = ys[1:(length(ys) - 1)],
-                   ymax = ys[2:length(ys)])
-  
-  tidyr::crossing(xs,ys) %>%
+    tibble::tibble(
+      ymin = ys[1:(length(ys) - 1)],
+      ymax = ys[2:length(ys)]
+    )
+
+  tidyr::crossing(xs, ys) %>%
     dplyr::rowwise() %>%
     dplyr::group_split() %>%
     purrr::map(as.list) %>%
     purrr::map(unlist) %>%
-    purrr::map(sf::st_bbox, 
-               crs = sf::st_crs(bbox))
-  
-  
+    purrr::map(sf::st_bbox,
+      crs = sf::st_crs(bbox)
+    )
 }
 
 
@@ -214,44 +230,52 @@ split_bbox <- function(bbox, x, y = xsize) {
 #' @export
 #' @keywords internal
 download_data <- function(url, destdir = getwd(), timestamping = T, nc = F, verbose = F, progress = F) {
-  
-  destdir <- normalizePath(paste0(destdir,"/."))
+  destdir <- normalizePath(paste0(destdir, "/."))
   destfile <- paste0(destdir, "/", basename(url))
   temp.file <- paste0(tempdir(), "/", basename(url))
-  
-  if (nc & file.exists(destfile)){
+
+  if (nc & file.exists(destfile)) {
     message("Local file exists. Returning.")
     return(destfile)
   } else if (timestamping & file.exists(destfile)) {
     message("Downloading file (if necessary): ", url)
-    opts <- list(verbose = verbose, noprogress = !progress, fresh_connect = TRUE, ftp_use_epsv = FALSE, forbid_reuse = TRUE, 
-                 timecondition = TRUE, timevalue = base::file.info(destfile)$mtime)
+    opts <- list(
+      verbose = verbose, noprogress = !progress, fresh_connect = TRUE, ftp_use_epsv = FALSE, forbid_reuse = TRUE,
+      timecondition = TRUE, timevalue = base::file.info(destfile)$mtime
+    )
     hand <- curl::new_handle()
     curl::handle_setopt(hand, .list = opts)
     tryCatch(status <- curl::curl_fetch_disk(url, path = temp.file, handle = hand),
-             error = function(e) {
-               message("Download of ", 
-                       url, " failed. Reverting to already cached file.")
-               return(destfile)
-             })
-    
+      error = function(e) {
+        message(
+          "Download of ",
+          url, " failed. Reverting to already cached file."
+        )
+        return(destfile)
+      }
+    )
+
     if (file.info(temp.file)$size > 0) {
       file.copy(temp.file, destfile, overwrite = T)
     }
     return(destfile)
   } else {
     message("Downloading file: ", url)
-    opts <- list(verbose = verbose,
-                 noprogress = !progress,
-                 fresh_connect = TRUE,
-                 ftp_use_epsv = FALSE,
-                 forbid_reuse = TRUE)
+    opts <- list(
+      verbose = verbose,
+      noprogress = !progress,
+      fresh_connect = TRUE,
+      ftp_use_epsv = FALSE,
+      forbid_reuse = TRUE
+    )
     hand <- curl::new_handle()
     curl::handle_setopt(hand, .list = opts)
     tryCatch(status <- curl::curl_fetch_disk(url,
-                                             path = destfile,
-                                             handle = hand),
-             error = function(e) stop("Download of ", url, " failed!"))
+      path = destfile,
+      handle = hand
+    ),
+    error = function(e) stop("Download of ", url, " failed!")
+    )
     return(destfile)
   }
   return(destfile)

@@ -7,12 +7,12 @@
 get_ssurgo_study_area(template = NULL, area, date, raw.dir)
 }
 \arguments{
-\item{template}{A Raster* or Spatial* object to serve 
+\item{template}{A Raster* or Spatial* object to serve
 as a template for cropping. If missing, whose study area is returned}
 
 \item{area}{A character string indicating the SSURGO study area to be downloaded.}
 
-\item{date}{A character string indicating the date of the most recent update to the SSURGO 
+\item{date}{A character string indicating the date of the most recent update to the SSURGO
 area for these data. This information may be gleaned from the SSURGO Inventory (\code{\link{get_ssurgo_inventory}}).}
 
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.
@@ -25,8 +25,8 @@ the specified \code{template}.
 \description{
 \code{get_ssurgo_study_area} returns a named list of length 2:
 \enumerate{
-\item 'spatial': A \code{SpatialPolygonsDataFrame} of soil mapunits 
-in the template, and 
+\item 'spatial': A \code{SpatialPolygonsDataFrame} of soil mapunits
+in the template, and
 \item 'tabular': A named list of \code{\link{data.frame}s} with the SSURGO tabular data.
 }
 }
