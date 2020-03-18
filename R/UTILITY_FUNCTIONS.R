@@ -16,7 +16,8 @@ if (getRversion() >= "2.15.1") utils::globalVariables(c(".",
                                                         "ymin",
                                                         "ymax",
                                                         "xsize",
-                                                        "ExceptionReport"))
+                                                        "ExceptionReport",
+                                                        "name"))
 
 #' Install and load a package.
 #'
@@ -26,20 +27,20 @@ if (getRversion() >= "2.15.1") utils::globalVariables(c(".",
 #' @export
 #' @keywords internal
 pkg_test <- function(x) {
+  if (grepl("/", x)) {
+    pkgName <- basename(x)
+  } else {
+    pkgName <- x
+  }
+  if (!suppressWarnings(require(pkgName, character.only = TRUE))) {
     if (grepl("/", x)) {
-        pkgName <- basename(x)
+      suppressWarnings(devtools::install_github(x))
     } else {
-        pkgName <- x
+      utils::install.packages(x, dependencies = TRUE, repos = "http://cran.rstudio.com")
     }
-    if (!suppressWarnings(require(pkgName, character.only = TRUE))) {
-        if (grepl("/", x)) {
-            suppressWarnings(devtools::install_github(x))
-        } else {
-            utils::install.packages(x, dependencies = TRUE, repos = "http://cran.rstudio.com")
-        }
-    }
-    if (!suppressWarnings(require(pkgName, character.only = TRUE))) 
-        stop("Package not found")
+  }
+  if (!suppressWarnings(require(pkgName, character.only = TRUE))) 
+    stop("Package not found")
 }
 
 #'Get the rightmost 'n' characters of a character string.
@@ -50,7 +51,7 @@ pkg_test <- function(x) {
 #' @export
 #' @keywords internal
 substr_right <- function(x, n) {
-    substr(x, nchar(x) - n + 1, nchar(x))
+  substr(x, nchar(x) - n + 1, nchar(x))
 }
 
 #'Turn an extent object into a polygon
@@ -62,17 +63,17 @@ substr_right <- function(x, n) {
 #' @export
 #' @keywords internal
 polygon_from_extent <- function(x, proj4string = NULL) {
-    if (is.null(proj4string)) {
-        proj4string <- raster::projection(x)
-    }
-    
-    if (class(x) != "extent") {
-        x <- raster::extent(x)
-    }
-    
-    extent.matrix <- rbind(c(x@xmin, x@ymin), c(x@xmin, x@ymax), c(x@xmax, x@ymax), c(x@xmax, x@ymin), c(x@xmin, x@ymin))  # clockwise, 5 points to close it
-    extent.SP <- sp::SpatialPolygons(list(sp::Polygons(list(sp::Polygon(extent.matrix)), "extent")), proj4string = sp::CRS(proj4string))
-    return(extent.SP)
+  if (is.null(proj4string)) {
+    proj4string <- raster::projection(x)
+  }
+  
+  if (class(x) != "extent") {
+    x <- raster::extent(x)
+  }
+  
+  extent.matrix <- rbind(c(x@xmin, x@ymin), c(x@xmin, x@ymax), c(x@xmax, x@ymax), c(x@xmax, x@ymin), c(x@xmin, x@ymin))  # clockwise, 5 points to close it
+  extent.SP <- sp::SpatialPolygons(list(sp::Polygons(list(sp::Polygon(extent.matrix)), "extent")), proj4string = sp::CRS(proj4string))
+  return(extent.SP)
 }
 
 #'Turn a SpatialPolygons object into a SpatialPolygonsDataFrame.
@@ -82,12 +83,37 @@ polygon_from_extent <- function(x, proj4string = NULL) {
 #' @export
 #' @keywords internal
 spdf_from_polygon <- function(x) {
-    IDs <- sapply((methods::slot(x, "polygons")), function(x) {
-        methods::slot(x, "ID")
-    })
-    df <- data.frame(rep(0, length(IDs)), row.names = IDs)
-    x <- sp::SpatialPolygonsDataFrame(x, df)
-    return(x)
+  IDs <- sapply((methods::slot(x, "polygons")), function(x) {
+    methods::slot(x, "ID")
+  })
+  df <- data.frame(rep(0, length(IDs)), row.names = IDs)
+  x <- sp::SpatialPolygonsDataFrame(x, df)
+  return(x)
+}
+
+template_to_sf <- function(template){
+  
+  if (length(intersect(class(template), c("RasterLayer", "RasterStack", "RasterBrick", "Extent"))) > 0) {
+    template %<>%
+      sf::st_bbox() %>%
+      sf::st_as_sfc()
+  }
+  
+  template %<>%
+    sf::st_as_sf()
+  
+  return(template)
+}
+
+read_sf_all <- function(dsn){
+  
+  dsn %>%
+    sf::st_layers() %$%
+    name %>%
+    magrittr::set_names(.,.) %>%
+    purrr::map(~sf::read_sf(dsn = dsn,
+                            layer = .x))
+  
 }
 
 #'Get a logical vector of which elements in a vector are sequentially duplicated.
@@ -98,16 +124,16 @@ spdf_from_polygon <- function(x) {
 #' @export
 #' @keywords internal
 sequential_duplicated <- function(x, rows = F) {
-    if (!rows) {
-        duplicates <- c(FALSE, unlist(lapply(1:(length(x) - 1), function(i) {
-            duplicated(x[i:(i + 1)])[2]
-        })))
-    } else {
-        duplicates <- c(FALSE, unlist(lapply(1:(nrow(x) - 1), function(i) {
-            duplicated(x[i:(i + 1), ])[2]
-        })))
-    }
-    return(duplicates)
+  if (!rows) {
+    duplicates <- c(FALSE, unlist(lapply(1:(length(x) - 1), function(i) {
+      duplicated(x[i:(i + 1)])[2]
+    })))
+  } else {
+    duplicates <- c(FALSE, unlist(lapply(1:(nrow(x) - 1), function(i) {
+      duplicated(x[i:(i + 1), ])[2]
+    })))
+  }
+  return(duplicates)
 }
 
 #'Unwraps a matrix and only keep the first n elements.
@@ -120,12 +146,12 @@ sequential_duplicated <- function(x, rows = F) {
 #' @export
 #' @keywords internal
 unwrap_rows <- function(mat, n) {
-    n <- rep_len(n, nrow(mat))
-    i <- 0
-    out <- lapply(1:nrow(mat), function(i) {
-        return(mat[i, 1:n[i]])
-    })
-    return(as.numeric(do.call(c, out)))
+  n <- rep_len(n, nrow(mat))
+  i <- 0
+  out <- lapply(1:nrow(mat), function(i) {
+    return(mat[i, 1:n[i]])
+  })
+  return(as.numeric(do.call(c, out)))
 }
 
 
@@ -144,17 +170,17 @@ split_bbox <- function(bbox, x, y = xsize) {
     y <- -1 * y
   
   xs <- c(seq(bbox[['xmin']],
-            bbox[['xmax']],
-            x),
+              bbox[['xmax']],
+              x),
           bbox['xmax'])
   xs <-
     tibble::tibble(xmin = xs[1:(length(xs) - 1)],
                    xmax = xs[2:length(xs)])
   
   ys <- c(seq(bbox[['ymin']],
-               bbox[['ymax']],
-               y),
-           bbox[['ymax']])
+              bbox[['ymax']],
+              y),
+          bbox[['ymax']])
   
   ys <-
     tibble::tibble(ymin = ys[1:(length(ys) - 1)],
@@ -188,45 +214,45 @@ split_bbox <- function(bbox, x, y = xsize) {
 #' @export
 #' @keywords internal
 download_data <- function(url, destdir = getwd(), timestamping = T, nc = F, verbose = F, progress = F) {
+  
+  destdir <- normalizePath(paste0(destdir,"/."))
+  destfile <- paste0(destdir, "/", basename(url))
+  temp.file <- paste0(tempdir(), "/", basename(url))
+  
+  if (nc & file.exists(destfile)){
+    message("Local file exists. Returning.")
+    return(destfile)
+  } else if (timestamping & file.exists(destfile)) {
+    message("Downloading file (if necessary): ", url)
+    opts <- list(verbose = verbose, noprogress = !progress, fresh_connect = TRUE, ftp_use_epsv = FALSE, forbid_reuse = TRUE, 
+                 timecondition = TRUE, timevalue = base::file.info(destfile)$mtime)
+    hand <- curl::new_handle()
+    curl::handle_setopt(hand, .list = opts)
+    tryCatch(status <- curl::curl_fetch_disk(url, path = temp.file, handle = hand),
+             error = function(e) {
+               message("Download of ", 
+                       url, " failed. Reverting to already cached file.")
+               return(destfile)
+             })
     
-    destdir <- normalizePath(paste0(destdir,"/."))
-    destfile <- paste0(destdir, "/", basename(url))
-    temp.file <- paste0(tempdir(), "/", basename(url))
-    
-    if (nc & file.exists(destfile)){
-      message("Local file exists. Returning.")
-      return(destfile)
-    } else if (timestamping & file.exists(destfile)) {
-        message("Downloading file (if necessary): ", url)
-        opts <- list(verbose = verbose, noprogress = !progress, fresh_connect = TRUE, ftp_use_epsv = FALSE, forbid_reuse = TRUE, 
-            timecondition = TRUE, timevalue = base::file.info(destfile)$mtime)
-        hand <- curl::new_handle()
-        curl::handle_setopt(hand, .list = opts)
-        tryCatch(status <- curl::curl_fetch_disk(url, path = temp.file, handle = hand),
-                 error = function(e) {
-          message("Download of ", 
-            url, " failed. Reverting to already cached file.")
-          return(destfile)
-          })
-        
-        if (file.info(temp.file)$size > 0) {
-            file.copy(temp.file, destfile, overwrite = T)
-        }
-        return(destfile)
-    } else {
-        message("Downloading file: ", url)
-        opts <- list(verbose = verbose,
-                     noprogress = !progress,
-                     fresh_connect = TRUE,
-                     ftp_use_epsv = FALSE,
-                     forbid_reuse = TRUE)
-        hand <- curl::new_handle()
-        curl::handle_setopt(hand, .list = opts)
-        tryCatch(status <- curl::curl_fetch_disk(url,
-                                                 path = destfile,
-                                                 handle = hand),
-                 error = function(e) stop("Download of ", url, " failed!"))
-        return(destfile)
+    if (file.info(temp.file)$size > 0) {
+      file.copy(temp.file, destfile, overwrite = T)
     }
     return(destfile)
+  } else {
+    message("Downloading file: ", url)
+    opts <- list(verbose = verbose,
+                 noprogress = !progress,
+                 fresh_connect = TRUE,
+                 ftp_use_epsv = FALSE,
+                 forbid_reuse = TRUE)
+    hand <- curl::new_handle()
+    curl::handle_setopt(hand, .list = opts)
+    tryCatch(status <- curl::curl_fetch_disk(url,
+                                             path = destfile,
+                                             handle = hand),
+             error = function(e) stop("Download of ", url, " failed!"))
+    return(destfile)
+  }
+  return(destfile)
 }

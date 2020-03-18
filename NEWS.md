@@ -2,6 +2,7 @@
 * Updated ITRDB functions to remove data.table deps.
 * Changed `SDA_query` to `soils_query` to avoid namespace masking with SoilDB.
 * Added `get_nass` to retrieve the NASS Cropland Data Layer
+* Modernized get_nhd code; now returns SF objects!
 
 # FedData 2.5.7
 * Removing many internet resource tests from CRAN, to satisfy: 'Packages which use Internet resources should fail gracefully with an informative message if the resource is not available (and not give a check warning nor error).'

@@ -39,74 +39,58 @@ get_nhd <- function(template,
                     extraction.dir = paste0(tempdir(),"/FedData/extractions/nhd/",label,"/"),
                     force.redo = FALSE) {
   
-  raw.dir <- normalizePath(paste0(raw.dir,"/."), mustWork = FALSE)  
-  extraction.dir <- normalizePath(paste0(extraction.dir,"/."), mustWork = FALSE)
+  raw.dir <- normalizePath(paste0(raw.dir,"/"), mustWork = FALSE)  
+  extraction.dir <- normalizePath(paste0(extraction.dir,"/"), mustWork = FALSE)
   
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
   
-  if (!force.redo & length(list.files(extraction.dir)) > 0) {
-    files <- list.files(extraction.dir)
-    files <- files[grepl("shp", files)]
-    files <- files[!grepl("template", files)]
-    files <- files[grepl(label, files)]
-    files <- gsub(".shp", "", files)
-    files <- files[order(files)]
-    
-    shapes <- lapply(files, function(file) {
-      rgdal::readOGR(extraction.dir, file, verbose = F)
-    })
-    names(shapes) <- gsub(paste0(label, "_NHD"), "", files)
-    names(shapes) %<>%
-      stringr::str_remove("_")
-    return(shapes)
+  out_dsn <- paste0(extraction.dir, label, "_nhd.gpkg")
+  
+  if (!force.redo & file.exists(out_dsn)) {
+    return(read_sf_all(out_dsn))
   }
   
-  if (class(template) %in% c("RasterLayer", "RasterStack", "RasterBrick")) {
-    template <- spdf_from_polygon(sp::spTransform(polygon_from_extent(template), sp::CRS("+proj=longlat +ellps=GRS80")))
-  }
+  unlink(out_dsn, 
+         recursive = TRUE, 
+         force = TRUE)
+  
+  template %<>%
+    template_to_sf()
   
   message("(Down)Loading the NHD HUC4 dataset.")
-  HUC4 <- get_huc4(template = template, raw.dir = raw.dir)
+  HUC4 <- 
+    get_huc4(template = template, 
+             raw.dir = raw.dir)
   
-  area.list <- HUC4$HUC4 %>% as.character()
+  area_list <- 
+    HUC4$HUC4 %>% 
+    as.character()
   
   # Get the spatial data for each area
   message("(Down)Loading the NHD subregion data.")
-  subregionShapes <- lapply(area.list, function(area) {
-    return(get_nhd_subregion(template = template, area = area, raw.dir = raw.dir))
-  })
+  subregion_shapes <- 
+    area_list %>%
+    purrr::map(
+      ~get_nhd_subregion(template = template,
+                         area = .x,
+                         raw.dir = raw.dir)
+    )
   
-  # Get all layer names
-  layers <- unique(unlist(lapply(subregionShapes, names)))
+  shapes <-
+    subregion_shapes %>%
+    purrr::transpose() %>%
+    purrr::map(~do.call(rbind, .x))
   
-  # Merge like datasets
-  message("Merging all NHD data in study area.")
-  allShapes <- lapply(layers, function(layer) {
-    shapes <- sapply(subregionShapes, "[[", layer)
-    null.shapes <- sapply(shapes, is.null)
-    shapes <- do.call("rbind", shapes[!null.shapes])
-    if (is.null(shapes)) 
-      return(shapes)
-    shapes <- raster::crop(shapes, sp::spTransform(template, sp::CRS(raster::projection(shapes))))
-    if (is.null(shapes)) 
-      return(shapes)
-    # shapes <- spTransform(shapes,CRS(projection(template)))
-    layer <- gsub("NHD", "", layer)
-    suppressWarnings(rgdal::writeOGR(shapes, 
-                                     dsn = extraction.dir,
-                                     layer = paste0(label, "_NHD_", layer),
-                                     driver = "ESRI Shapefile",
-                                     overwrite_layer = TRUE))
-    
-    return(shapes)
-  })
-  names(allShapes) <- gsub("NHD", "", layers)
+  shapes %>%
+    purrr::iwalk(
+      ~sf::write_sf(.x,
+                    dsn = paste0(extraction.dir, label, "_nhd.gpkg"),
+                    layer = .y,
+                    delete_layer = TRUE)
+    )
   
-  # Remove null layers
-  allShapes <- allShapes[!sapply(allShapes, is.null)]
-  
-  return(allShapes)
+  return(read_sf_all(out_dsn))
 }
 
 #' Download a zipped directory containing a shapefile of the HUC4 subregions of the NHD.
@@ -149,20 +133,24 @@ get_huc4 <- function(template = NULL, raw.dir) {
   utils::unzip(huc4File, exdir = tmpdir)
   
   HUC4 <- sf::st_read(stringr::str_c(tmpdir,"/data-raw/nhd_huc4.gpkg"),
-                      quiet = TRUE) %>%
-    as("Spatial")
-  
-  # HUC4 <- rgdal::readOGR(tmpdir, layer = "huc_04", verbose = FALSE)
-  # 
-  # HUC4@proj4string <- sp::CRS("+proj=utm +zone=15 +datum=NAD83 +ellps=WGS84")
+                      quiet = TRUE)
   
   # Get a list of NHD subregions within the project study area
   if (!is.null(template)) {
-    if (class(template) %in% c("RasterLayer", "RasterStack", "RasterBrick")) {
-      template <- spdf_from_polygon(sp::spTransform(polygon_from_extent(template), sp::CRS("+proj=longlat +ellps=GRS80")))
-    }
     
-    HUC4 <- raster::crop(HUC4, sp::spTransform(template, sp::CRS(raster::projection(HUC4))))
+    template %<>%
+      template_to_sf()
+    
+    suppressMessages(
+      suppressWarnings(
+        HUC4 %<>%
+          sf::st_intersection(template %>% 
+                                sf::st_transform(
+                                  sf::st_crs(HUC4)
+                                )
+          )
+      )
+    )
   }
   
   unlink(tmpdir, recursive = TRUE)
@@ -212,42 +200,49 @@ get_nhd_subregion <- function(template = NULL, area, raw.dir) {
   if (!dir.create(tmpdir)) 
     stop("failed to create my temporary directory")
   
-  file <- download_nhd_subregion(area = area, raw.dir = raw.dir)
+  file <- 
+    download_nhd_subregion(area = area, 
+                           raw.dir = raw.dir)
   
   utils::unzip(file, exdir = tmpdir)
   
   # Get the path to the geodatabase
-  dsn <- list.files(tmpdir, full.names = T, pattern = "*.gdb")
-  # dsn <- dsn[grepl(".gdb", dsn)]
-  dsn <- normalizePath(dsn)
+  dsn <- 
+    list.files(tmpdir, 
+               full.names = T, 
+               pattern = "*.gdb") %>%
+    normalizePath()
   
-  # List all layers in the geodatabase
-  layers <- rgdal::ogrListLayers(dsn)
-  layers <- layers[grepl("NHD", layers)]
+  layers <- 
+    dsn %>%
+    sf::st_layers()
   
-  # Get each layer in the geodatabase
-  shapes <- lapply(layers, function(layer) {
-    tryCatch(suppressWarnings(rgdal::readOGR(dsn = dsn, layer = layer, verbose = F)), error = function(e) NULL)
-  })
-  names(shapes) <- layers
+  suppressWarnings(
+    suppressMessages(
+      shapes <- 
+        layers[['name']][!is.na(unlist(layers['geomtype']))] %>%
+        stringr::str_subset("NHD") %>%
+        stringr::str_subset("EventFC", negate = TRUE) %>%
+        magrittr::set_names(.,.) %>%
+        purrr::map(function(x){
+          shape <-
+            sf::read_sf(dsn = dsn, layer = x)
+          
+          shape %>%
+            sf::st_zm() %>%
+            sf::st_intersection(template %>%
+                                  sf::st_transform(
+                                    sf::st_crs(shape)
+                                  )
+            )
+          
+        }) %>%
+        purrr::compact()
+    )
+  )
   
-  # Rename the features to prepare for merging
-  shapes <- lapply(shapes, function(shape) {
-    tryCatch(sp::spChFIDs(shape, paste(area, "_", shape$Permanent_Identifier, sep = "")), error = function(e) NULL)
-  })
-  
-  # Crop each feature to the template area
-  if (!is.null(template)) {
-    if (class(template) %in% c("RasterLayer", "RasterStack", "RasterBrick")) {
-      template <- spdf_from_polygon(sp::spTransform(polygon_from_extent(template), sp::CRS("+proj=longlat +ellps=GRS80")))
-    }
-    
-    shapes <- lapply(shapes, function(shape) {
-      tryCatch(raster::crop(shape, sp::spTransform(template, sp::CRS(raster::projection(shape)))), error = function(e) NULL)
-    })
-  }
-  
-  shapes <- shapes[!sapply(shapes, is.null)]
+  names(shapes) %<>%
+    stringr::str_remove("NHD")
   
   unlink(tmpdir, recursive = TRUE)
   
