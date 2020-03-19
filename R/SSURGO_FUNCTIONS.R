@@ -20,7 +20,7 @@
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created? Defaults to FALSE.
 #' @return A named list containing the 'spatial' and 'tabular' data.
 #' @export
-#' @importFrom sp SpatialPointsDataFrame
+#' @importFrom sp SpatialPointsDataFrame %over%
 #' @importFrom readr read_csv write_csv
 #' @importFrom rgeos gIntersection
 #' @examples

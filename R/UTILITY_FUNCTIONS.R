@@ -19,7 +19,9 @@ if (getRversion() >= "2.15.1") {
     "ymax",
     "xsize",
     "ExceptionReport",
-    "name"
+    "name",
+    "ServiceExceptionReport",
+    "year"
   ))
 }
 
@@ -280,3 +282,11 @@ download_data <- function(url, destdir = getwd(), timestamping = T, nc = F, verb
   }
   return(destfile)
 }
+
+#' The boundary of Mesa Verde National Park
+#'
+#' A dataset containing the spatial polygon defining the boundary 
+#' of Mesa Verde National Park in southwestern Colorado.
+#'
+#' @format Simple feature collection with 1 feature and 10 fields.
+"mvnp"
