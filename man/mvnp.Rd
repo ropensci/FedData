@@ -11,7 +11,7 @@ Simple feature collection with 1 feature and 10 fields.
 mvnp
 }
 \description{
-A dataset containing the spatial polygon defining the boundary 
+A dataset containing the spatial polygon defining the boundary
 of Mesa Verde National Park in southwestern Colorado.
 }
 \keyword{datasets}
