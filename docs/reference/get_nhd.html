@@ -36,7 +36,7 @@
 
 
 <meta property="og:title" content="Download and crop the National Hydrography Dataset. — get_nhd" />
-<meta property="og:description" content="get_nhd returns a list of Spatial* objects extracted 
+<meta property="og:description" content="get_nhd returns a list of Spatial* objects extracted
 from the National Hydrography Dataset." />
 <meta name="twitter:card" content="summary" />
 
@@ -115,7 +115,7 @@ from the National Hydrography Dataset." />
     </div>
 
     <div class="ref-description">
-    <p><code>get_nhd</code> returns a list of Spatial* objects extracted 
+    <p><code>get_nhd</code> returns a list of Spatial* objects extracted
 from the National Hydrography Dataset.</p>
     </div>
 
@@ -132,7 +132,7 @@ from the National Hydrography Dataset.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>template</th>
-      <td><p>A Raster* or Spatial* object to serve 
+      <td><p>A Raster* or Spatial* object to serve
 as a template for cropping.</p></td>
     </tr>
     <tr>
@@ -163,20 +163,21 @@ The directory will be created if missing. Defaults to './EXTRACTIONS/NHD/'.</p><
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Extract data for the Village Ecodynamics Project 'VEPIIN' study area:</span>
 <span class='co'># http://village.anth.wsu.edu</span>
-<span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span>(<span class='fl'>672800</span>,<span class='fl'>740000</span>,<span class='fl'>4102000</span>,<span class='fl'>4170000</span>),
-     <span class='kw'>proj4string</span><span class='kw'>=</span><span class='st'>'+proj=utm +datum=NAD83 +zone=12'</span>)
+<span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span>(<span class='fl'>672800</span>, <span class='fl'>740000</span>, <span class='fl'>4102000</span>, <span class='fl'>4170000</span>),
+  <span class='kw'>proj4string</span> <span class='kw'>=</span> <span class='st'>"+proj=utm +datum=NAD83 +zone=12"</span>
+)
 
 <span class='co'># Get the NHD (USA ONLY)</span>
-<span class='no'>NHD</span> <span class='kw'>&lt;-</span> <span class='fu'>get_nhd</span>(<span class='kw'>template</span><span class='kw'>=</span><span class='no'>vepPolygon</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'VEPIIN'</span>)
+<span class='no'>NHD</span> <span class='kw'>&lt;-</span> <span class='fu'>get_nhd</span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='no'>vepPolygon</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"VEPIIN"</span>)
 
 <span class='co'># Plot the VEP polygon</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vepPolygon</span>)
 
 <span class='co'># Plot the NHD data</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>NHD</span>$<span class='no'>NHDFlowline</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='no'>T</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>NHD</span>$<span class='no'>NHDLine</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='no'>T</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>NHD</span>$<span class='no'>NHDArea</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'black'</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='no'>T</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>NHD</span>$<span class='no'>NHDWaterbody</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'black'</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='no'>T</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>NHD</span>$<span class='no'>Flowline</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='no'>T</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>NHD</span>$<span class='no'>Line</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='no'>T</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>NHD</span>$<span class='no'>Area</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='no'>T</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>NHD</span>$<span class='no'>Waterbody</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='no'>T</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

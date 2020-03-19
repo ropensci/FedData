@@ -132,7 +132,7 @@ as well as merging their tabular data.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>template</th>
-      <td><p>A Raster* or Spatial* object to serve 
+      <td><p>A Raster* or Spatial* object to serve
 as a template for cropping; optionally, a vector of area names [e.g., c('IN087','IN088')] may be provided.</p></td>
     </tr>
     <tr>
@@ -161,7 +161,7 @@ The directory will be created if missing. Defaults to './EXTRACTIONS/SSURGO/'.</
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>get_ssurgo</code> returns a named list of length 2:</p><ol>
-<li><p>'spatial': A <code>SpatialPolygonsDataFrame</code> of soil mapunits 
+<li><p>'spatial': A <code>SpatialPolygonsDataFrame</code> of soil mapunits
 in the template, and</p></li>
 <li><p>'tabular': A named list of <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>s</code> with the SSURGO tabular data.</p></li>
 </ol>
@@ -171,30 +171,31 @@ in the template, and</p></li>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Extract data for the Village Ecodynamics Project 'VEPIIN' study area:</span>
 <span class='co'># http://village.anth.wsu.edu</span>
-<span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span>(<span class='fl'>672800</span>,<span class='fl'>740000</span>,<span class='fl'>4102000</span>,<span class='fl'>4170000</span>),
-     <span class='kw'>proj4string</span><span class='kw'>=</span><span class='st'>'+proj=utm +datum=NAD83 +zone=12'</span>)
+<span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span>(<span class='fl'>672800</span>, <span class='fl'>740000</span>, <span class='fl'>4102000</span>, <span class='fl'>4170000</span>),
+  <span class='kw'>proj4string</span> <span class='kw'>=</span> <span class='st'>"+proj=utm +datum=NAD83 +zone=12"</span>
+)
 
 <span class='co'># Get the NRCS SSURGO data (USA ONLY)</span>
-<span class='no'>SSURGO.VEPIIN</span> <span class='kw'>&lt;-</span> <span class='fu'>get_ssurgo</span>(<span class='kw'>template</span><span class='kw'>=</span><span class='no'>vepPolygon</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'VEPIIN'</span>)
+<span class='no'>SSURGO.VEPIIN</span> <span class='kw'>&lt;-</span> <span class='fu'>get_ssurgo</span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='no'>vepPolygon</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"VEPIIN"</span>)
 
 <span class='co'># Plot the VEP polygon</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vepPolygon</span>)
 
 <span class='co'># Plot the SSURGO mapunit polygons</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>SSURGO.VEPIIN</span>$<span class='no'>spatial</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>0.1</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='no'>T</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>SSURGO.VEPIIN</span>$<span class='no'>spatial</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='no'>T</span>)
 
 <span class='co'># Or, download by Soil Survey Area names</span>
-<span class='no'>SSURGO.areas</span> <span class='kw'>&lt;-</span> <span class='fu'>get_ssurgo</span>(<span class='kw'>template</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'CO670'</span>,<span class='st'>'CO075'</span>), <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'CO_TEST'</span>)
+<span class='no'>SSURGO.areas</span> <span class='kw'>&lt;-</span> <span class='fu'>get_ssurgo</span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"CO670"</span>, <span class='st'>"CO075"</span>), <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"CO_TEST"</span>)
 
 <span class='co'># Let's just look at spatial data for CO675</span>
-<span class='no'>SSURGO.areas.CO675</span> <span class='kw'>&lt;-</span> <span class='no'>SSURGO.areas</span>$<span class='no'>spatial</span>[<span class='no'>SSURGO.areas</span>$<span class='no'>spatial</span>$<span class='no'>AREASYMBOL</span><span class='kw'>==</span><span class='st'>'CO075'</span>,]
+<span class='no'>SSURGO.areas.CO675</span> <span class='kw'>&lt;-</span> <span class='no'>SSURGO.areas</span>$<span class='no'>spatial</span>[<span class='no'>SSURGO.areas</span>$<span class='no'>spatial</span>$<span class='no'>AREASYMBOL</span> <span class='kw'>==</span> <span class='st'>"CO075"</span>, ]
 
 <span class='co'># And get the NED data under them for pretty plotting</span>
-<span class='no'>NED.CO675</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_ned.html'>get_ned</a></span>(<span class='kw'>template</span><span class='kw'>=</span><span class='no'>SSURGO.areas.CO675</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'SSURGO_CO675'</span>)
+<span class='no'>NED.CO675</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='get_ned.html'>get_ned</a></span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='no'>SSURGO.areas.CO675</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"SSURGO_CO675"</span>)
 
 <span class='co'># Plot the SSURGO mapunit polygons, but only for CO675</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>NED.CO675</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>SSURGO.areas.CO675</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>0.1</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='no'>T</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>SSURGO.areas.CO675</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='no'>T</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

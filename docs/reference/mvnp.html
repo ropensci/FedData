@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read chronology data from a Tucson-format chronology file. — read_crn_data • FedData</title>
+<title>The boundary of Mesa Verde National Park — mvnp • FedData</title>
 
 
 <!-- jquery -->
@@ -35,12 +35,9 @@
 
 
 
-<meta property="og:title" content="Read chronology data from a Tucson-format chronology file. — read_crn_data" />
-<meta property="og:description" content="This function includes improvements to the read_crn function from the
-dplR library. The principle changes are better parsing of metadata, and support
-for the Schweingruber-type Tucson format. Chronologies that are unable to be read
-are reported to the user. The user (or read_crn) must tell the function whether
-the file is a Schweingruber-type chronology." />
+<meta property="og:title" content="The boundary of Mesa Verde National Park — mvnp" />
+<meta property="og:description" content="A dataset containing the spatial polygon defining the boundary 
+of Mesa Verde National Park in southwestern Colorado." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -112,44 +109,28 @@ the file is a Schweingruber-type chronology." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read chronology data from a Tucson-format chronology file.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/ITRDB_FUNCTIONS.R'><code>R/ITRDB_FUNCTIONS.R</code></a></small>
-    <div class="hidden name"><code>read_crn_data.Rd</code></div>
+    <h1>The boundary of Mesa Verde National Park</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/UTILITY_FUNCTIONS.R'><code>R/UTILITY_FUNCTIONS.R</code></a></small>
+    <div class="hidden name"><code>mvnp.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function includes improvements to the <code><a href='read_crn.html'>read_crn</a></code> function from the
-<span class="pkg">dplR</span> library. The principle changes are better parsing of metadata, and support
-for the Schweingruber-type Tucson format. Chronologies that are unable to be read
-are reported to the user. The user (or <code><a href='read_crn.html'>read_crn</a></code>) must tell the function whether
-the file is a Schweingruber-type chronology.</p>
+    <p>A dataset containing the spatial polygon defining the boundary 
+of Mesa Verde National Park in southwestern Colorado.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>read_crn_data</span>(<span class='no'>file</span>, <span class='no'>SCHWEINGRUBER</span>)</pre>
+    <pre class="usage"><span class='no'>mvnp</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>file</th>
-      <td><p>A character string path pointing to a <code>*.crn</code> file to be read.</p></td>
-    </tr>
-    <tr>
-      <th>SCHWEINGRUBER</th>
-      <td><p>Is the file in the Schweingruber-type Tucson format?</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A data.frame containing the data, or if <code>SCHWEINGRUBER==T</code>, a list containing four types of data.</p>
+    <p>Simple feature collection with 1 feature and 10 fields.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
+      <li><a href="#format">Format</a></li>
     </ul>
 
   </div>

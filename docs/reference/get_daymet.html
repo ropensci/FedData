@@ -122,11 +122,14 @@ template study area.</p>
     <pre class="usage"><span class='fu'>get_daymet</span>(
   <span class='no'>template</span>,
   <span class='no'>label</span>,
-  <span class='kw'>elements</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>years</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"/FedData/raw/daymet"</span>),
+  <span class='kw'>elements</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"dayl"</span>, <span class='st'>"prcp"</span>, <span class='st'>"srad"</span>, <span class='st'>"swe"</span>, <span class='st'>"tmax"</span>, <span class='st'>"tmin"</span>, <span class='st'>"vp"</span>),
+  <span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>1980</span>:(<span class='kw pkg'>lubridate</span><span class='kw ns'>::</span><span class='fu'><a href='http://lubridate.tidyverse.org/reference/year.html'>year</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span>()) - <span class='fl'>1</span>),
+  <span class='kw'>region</span> <span class='kw'>=</span> <span class='st'>"na"</span>,
+  <span class='kw'>tempo</span> <span class='kw'>=</span> <span class='st'>"day"</span>,
   <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"/FedData/extractions/daymet/"</span>, <span class='no'>label</span>, <span class='st'>"/"</span>),
-  <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='no'>F</span>
+  <span class='kw'>raster.options</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"COMPRESS=DEFLATE"</span>, <span class='st'>"ZLEVEL=9"</span>, <span class='st'>"INTERLEAVE=BAND"</span>),
+  <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='no'>F</span>,
+  <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -158,18 +161,36 @@ vp = Water vapor pressure in pascals. Daily average partial pressure of water va
       <td><p>A numeric vector of years to extract.</p></td>
     </tr>
     <tr>
-      <th>raw.dir</th>
-      <td><p>A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to './RAW/DAYMET/'.</p></td>
+      <th>region</th>
+      <td><p>The name of a region. The available regions are:<br />
+na = North America<br />
+hi = Hawaii<br />
+pr = Puerto Rico<br /></p></td>
+    </tr>
+    <tr>
+      <th>tempo</th>
+      <td><p>The frequency of the data. The available tempos are:<br />
+day = Daily data<br />
+mon = Monthly summary data<br />
+ann = Annual summary data<br /></p></td>
     </tr>
     <tr>
       <th>extraction.dir</th>
       <td><p>A character string indicating where the extracted and cropped DEM should be put.
-The directory will be created if missing. Defaults to './EXTRACTIONS/DAYMET/'.</p></td>
+Defaults to a temporary directory.</p></td>
+    </tr>
+    <tr>
+      <th>raster.options</th>
+      <td><p>a vector of options for raster::writeRaster.</p></td>
     </tr>
     <tr>
       <th>force.redo</th>
-      <td><p>If an extraction for this template and label already exists, should a new one be created?</p></td>
+      <td><p>If an extraction for this template and label already exists in extraction.dir, 
+should a new one be created?</p></td>
+    </tr>
+    <tr>
+      <th>progress</th>
+      <td><p>Draw a progress bar when downloading?</p></td>
     </tr>
     </table>
 
@@ -181,15 +202,18 @@ The directory will be created if missing. Defaults to './EXTRACTIONS/DAYMET/'.</
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Extract data for the Village Ecodynamics Project 'VEPIIN' study area:</span>
 <span class='co'># http://village.anth.wsu.edu</span>
-<span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span>(<span class='fl'>672800</span>,<span class='fl'>740000</span>,<span class='fl'>4102000</span>,<span class='fl'>4170000</span>),
-     <span class='kw'>proj4string</span><span class='kw'>=</span><span class='st'>'+proj=utm +datum=NAD83 +zone=12'</span>)
+<span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span>(<span class='fl'>672800</span>, <span class='fl'>740000</span>, <span class='fl'>4102000</span>, <span class='fl'>4170000</span>),
+  <span class='kw'>proj4string</span> <span class='kw'>=</span> <span class='st'>"+proj=utm +datum=NAD83 +zone=12"</span>
+)
 
 <span class='co'># Get the DAYMET (North America only)</span>
 <span class='co'># Returns a list of raster bricks</span>
-<span class='no'>DAYMET</span> <span class='kw'>&lt;-</span> <span class='fu'>get_daymet</span>(<span class='kw'>template</span><span class='kw'>=</span><span class='no'>vepPolygon</span>,
-                     <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'VEPIIN'</span>,
-                     <span class='kw'>elements</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'prcp'</span>,<span class='st'>'tmin'</span>,<span class='st'>'tmax'</span>),
-                     <span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>1980</span>:<span class='fl'>1985</span>)
+<span class='no'>DAYMET</span> <span class='kw'>&lt;-</span> <span class='fu'>get_daymet</span>(
+  <span class='kw'>template</span> <span class='kw'>=</span> <span class='no'>vepPolygon</span>,
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"VEPIIN"</span>,
+  <span class='kw'>elements</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"prcp"</span>, <span class='st'>"tmin"</span>, <span class='st'>"tmax"</span>),
+  <span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>1980</span>:<span class='fl'>1985</span>
+)
 
 <span class='co'># Plot with raster::plot</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>DAYMET</span>$<span class='no'>tmin</span>$<span class='no'>X1985.10.23</span>)

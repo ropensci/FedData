@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read chronology data from a Tucson-format chronology file. — read_crn_data • FedData</title>
+<title>Download the 1-km DAYMET daily weather dataset for a region as a netcdf. — download_daymet_thredds • FedData</title>
 
 
 <!-- jquery -->
@@ -35,12 +35,8 @@
 
 
 
-<meta property="og:title" content="Read chronology data from a Tucson-format chronology file. — read_crn_data" />
-<meta property="og:description" content="This function includes improvements to the read_crn function from the
-dplR library. The principle changes are better parsing of metadata, and support
-for the Schweingruber-type Tucson format. Chronologies that are unable to be read
-are reported to the user. The user (or read_crn) must tell the function whether
-the file is a Schweingruber-type chronology." />
+<meta property="og:title" content="Download the 1-km DAYMET daily weather dataset for a region as a netcdf. — download_daymet_thredds" />
+<meta property="og:description" content="Data are downloaded in the NetCDF format. download_daymet_thredds returns the path to the downloaded NetCDF file." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -112,37 +108,60 @@ the file is a Schweingruber-type chronology." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read chronology data from a Tucson-format chronology file.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/ITRDB_FUNCTIONS.R'><code>R/ITRDB_FUNCTIONS.R</code></a></small>
-    <div class="hidden name"><code>read_crn_data.Rd</code></div>
+    <h1>Download the 1-km DAYMET daily weather dataset for a region as a netcdf.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ropensci/FedData/blob/master/R/DAYMET_FUNCTIONS.R'><code>R/DAYMET_FUNCTIONS.R</code></a></small>
+    <div class="hidden name"><code>download_daymet_thredds.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function includes improvements to the <code><a href='read_crn.html'>read_crn</a></code> function from the
-<span class="pkg">dplR</span> library. The principle changes are better parsing of metadata, and support
-for the Schweingruber-type Tucson format. Chronologies that are unable to be read
-are reported to the user. The user (or <code><a href='read_crn.html'>read_crn</a></code>) must tell the function whether
-the file is a Schweingruber-type chronology.</p>
+    <p>Data are downloaded in the NetCDF format. <code>download_daymet_thredds</code> returns the path to the downloaded NetCDF file.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>read_crn_data</span>(<span class='no'>file</span>, <span class='no'>SCHWEINGRUBER</span>)</pre>
+    <pre class="usage"><span class='fu'>download_daymet_thredds</span>(<span class='no'>bbox</span>, <span class='no'>element</span>, <span class='no'>year</span>, <span class='no'>region</span>, <span class='no'>tempo</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>file</th>
-      <td><p>A character string path pointing to a <code>*.crn</code> file to be read.</p></td>
+      <th>bbox</th>
+      <td><p>the bounding box in WGS84 coordinates as a comma-separated character vector
+"xmin,ymin,xmax,ymax"</p></td>
     </tr>
     <tr>
-      <th>SCHWEINGRUBER</th>
-      <td><p>Is the file in the Schweingruber-type Tucson format?</p></td>
+      <th>element</th>
+      <td><p>An element to extract.<br />
+The available elements are:<br />
+dayl = Duration of the daylight period in seconds per day. This calculation is based on the period of the day during which the sun is above a hypothetical flat horizon.<br />
+prcp = Daily total precipitation in millimeters per day, sum of all forms converted to water-equivalent. Precipitation occurrence on any given day may be ascertained.<br />
+srad = Incident shortwave radiation flux density in watts per square meter, taken as an average over the daylight period of the day. NOTE: Daily total radiation (MJ/m2/day) can be calculated as follows: ((srad (W/m2) * dayl (s/day)) / l,000,000)<br />
+swe = Snow water equivalent in kilograms per square meter. The amount of water contained within the snowpack.<br />
+tmax = Daily maximum 2-meter air temperature in degrees Celsius.<br />
+tmin = Daily minimum 2-meter air temperature in degrees Celsius.<br />
+vp = Water vapor pressure in pascals. Daily average partial pressure of water vapor.<br /></p></td>
+    </tr>
+    <tr>
+      <th>year</th>
+      <td><p>An integer year to extract.</p></td>
+    </tr>
+    <tr>
+      <th>region</th>
+      <td><p>The name of a region. The available regions are:<br />
+na = North America<br />
+hi = Hawaii<br />
+pr = Puerto Rico<br /></p></td>
+    </tr>
+    <tr>
+      <th>tempo</th>
+      <td><p>The frequency of the data. The available tempos are:<br />
+day = Daily data<br />
+mon = Monthly summary data<br />
+ann = Annual summary data<br /></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data.frame containing the data, or if <code>SCHWEINGRUBER==T</code>, a list containing four types of data.</p>
+    <p>A named list of character vectors, each representing the full local paths of the tile downloads.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -134,7 +134,7 @@ template study area.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>template</th>
-      <td><p>A Raster* or Spatial* object to serve 
+      <td><p>A Raster* or Spatial* object to serve
 as a template for cropping.</p></td>
     </tr>
     <tr>
@@ -178,10 +178,11 @@ The directory will be created if missing.</p></td>
 <span class='co'># Get the NLCD (USA ONLY)</span>
 <span class='co'># Returns a raster</span>
 <span class='no'>NLCD</span> <span class='kw'>&lt;-</span> <span class='fu'>get_nlcd</span>(<span class='kw pkg'>paleocar</span><span class='kw ns'>::</span><span class='no'><a href='https://rdrr.io/pkg/paleocar/man/mvnp.html'>mvnp</a></span> <span class='kw'>%&gt;%</span>
-          <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_as_sf.html'>st_as_sf</a></span>(),
-          <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"MVNP"</span>,
-          <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2011</span>,
-          <span class='kw'>landmass</span> <span class='kw'>=</span> <span class='st'>"L48"</span>)
+  <span class='kw pkg'>sf</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sf/man/st_as_sf.html'>st_as_sf</a></span>(),
+<span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"MVNP"</span>,
+<span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>2011</span>,
+<span class='kw'>landmass</span> <span class='kw'>=</span> <span class='st'>"L48"</span>
+)
 
 <span class='co'># Plot with raster::plot</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>NLCD</span>)

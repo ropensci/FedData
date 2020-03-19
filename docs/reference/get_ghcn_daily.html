@@ -37,7 +37,7 @@
 
 <meta property="og:title" content="Download and crop the Global Historical Climate Network-Daily data. — get_ghcn_daily" />
 <meta property="og:description" content="get_ghcn_daily returns a named list of length 2:
-'spatial': A SpatialPointsDataFrame of the locations of GHCN weather stations 
+'spatial': A SpatialPointsDataFrame of the locations of GHCN weather stations
 in the template, and
 'tabular': A named list of data.frames with the daily weather data for each station.
 The name of each list item is the station ID.
@@ -121,7 +121,7 @@ The name of each list item is the station ID.
 
     <div class="ref-description">
     <p><code>get_ghcn_daily</code> returns a named list of length 2:</p><ol>
-<li><p>'spatial': A <code>SpatialPointsDataFrame</code> of the locations of GHCN weather stations 
+<li><p>'spatial': A <code>SpatialPointsDataFrame</code> of the locations of GHCN weather stations
 in the template, and</p></li>
 <li><p>'tabular': A named list of <code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a>s</code> with the daily weather data for each station.
 The name of each list item is the station ID.</p></li>
@@ -145,7 +145,7 @@ The name of each list item is the station ID.</p></li>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>template</th>
-      <td><p>A Raster* or Spatial* object to serve 
+      <td><p>A Raster* or Spatial* object to serve
 as a template for cropping. Alternatively, a character vector providing GHCN station IDs. If missing, all stations
 will be downloaded!</p></td>
     </tr>
@@ -163,54 +163,54 @@ SNWD = Snow depth (mm)<br />
 TMAX = Maximum temperature (tenths of degrees C)<br />
 TMIN = Minimum temperature (tenths of degrees C)<br />
 <br />
-The other elements are:<br /></p>  
-<p>ACMC = Average cloudiness midnight to midnight from 30-second 
+The other elements are:<br /></p>
+<p>ACMC = Average cloudiness midnight to midnight from 30-second
 ceilometer data (percent)<br />
-ACMH = Average cloudiness midnight to midnight from 
+ACMH = Average cloudiness midnight to midnight from
 manual observations (percent)<br />
-ACSC = Average cloudiness sunrise to sunset from 30-second 
+ACSC = Average cloudiness sunrise to sunset from 30-second
 ceilometer data (percent)<br />
-ACSH = Average cloudiness sunrise to sunset from manual 
+ACSH = Average cloudiness sunrise to sunset from manual
 observations (percent)<br />
 AWDR = Average daily wind direction (degrees)<br />
 AWND = Average daily wind speed (tenths of meters per second)<br />
 DAEV = Number of days included in the multiday evaporation
 total (MDEV)<br />
-DAPR = Number of days included in the multiday precipitation 
+DAPR = Number of days included in the multiday precipitation
 total (MDPR)<br />
-DASF = Number of days included in the multiday snowfall 
+DASF = Number of days included in the multiday snowfall
 total (MDSF)<br />
-DATN = Number of days included in the multiday minimum temperature 
+DATN = Number of days included in the multiday minimum temperature
 (MDTN)<br />
-DATX = Number of days included in the multiday maximum temperature 
+DATX = Number of days included in the multiday maximum temperature
 (MDTX)<br />
 DAWM = Number of days included in the multiday wind movement
 (MDWM)<br />
-DWPR = Number of days with non-zero precipitation included in 
+DWPR = Number of days with non-zero precipitation included in
 multiday precipitation total (MDPR)<br />
 EVAP = Evaporation of water from evaporation pan (tenths of mm)<br />
-FMTM = Time of fastest mile or fastest 1-minute wind 
+FMTM = Time of fastest mile or fastest 1-minute wind
 (hours and minutes, i.e., HHMM)<br />
 FRGB = Base of frozen ground layer (cm)<br />
 FRGT = Top of frozen ground layer (cm)<br />
 FRTH = Thickness of frozen ground layer (cm)<br />
 GAHT = Difference between river and gauge height (cm)<br />
 MDEV = Multiday evaporation total (tenths of mm; use with DAEV)<br />
-MDPR = Multiday precipitation total (tenths of mm; use with DAPR and 
+MDPR = Multiday precipitation total (tenths of mm; use with DAPR and
                                      DWPR, if available)<br />
 MDSF = Multiday snowfall total <br />
 MDTN = Multiday minimum temperature (tenths of degrees C; use with DATN)<br />
 MDTX = Multiday maximum temperature (tenths of degrees C; use with DATX)<br />
 MDWM = Multiday wind movement (km)<br />
-MNPN = Daily minimum temperature of water in an evaporation pan 
+MNPN = Daily minimum temperature of water in an evaporation pan
 (tenths of degrees C)<br />
-MXPN = Daily maximum temperature of water in an evaporation pan 
+MXPN = Daily maximum temperature of water in an evaporation pan
 (tenths of degrees C)<br />
 PGTM = Peak gust time (hours and minutes, i.e., HHMM)<br />
 PSUN = Daily percent of possible sunshine (percent)<br />
 SN*# = Minimum soil temperature (tenths of degrees C)
   where * corresponds to a code
-for ground cover and # corresponds to a code for soil 
+for ground cover and # corresponds to a code for soil
 depth.<br />
 <br />
 Ground cover codes include the following:<br />
@@ -233,9 +233,9 @@ Depth codes include the following:<br />
 6 = 150 cm<br />
 7 = 180 cm<br />
 <br />
-SX*# = Maximum soil temperature (tenths of degrees C) 
-  where * corresponds to a code for ground cover 
-and # corresponds to a code for soil depth.<br /> 
+SX*# = Maximum soil temperature (tenths of degrees C)
+  where * corresponds to a code for ground cover
+and # corresponds to a code for soil depth.<br />
 See SN*# for ground cover and depth codes. <br />
 TAVG = Average temperature (tenths of degrees C)
 [Note that TAVG from source 'S' corresponds
@@ -262,13 +262,13 @@ WSFM = Fastest mile wind speed (tenths of meters per second)<br />
 WT** = Weather Type where ** has one of the following values:<br />
   <br />
 01 = Fog, ice fog, or freezing fog (may include heavy fog)<br />
-02 = Heavy fog or heaving freezing fog (not always 
+02 = Heavy fog or heaving freezing fog (not always
                                         distinguished from fog)<br />
 03 = Thunder<br />
 04 = Ice pellets, sleet, snow pellets, or small hail <br />
 05 = Hail (may include small hail)<br />
 06 = Glaze or rime <br />
-07 = Dust, volcanic ash, blowing dust, blowing sand, or 
+07 = Dust, volcanic ash, blowing dust, blowing sand, or
 blowing obstruction<br />
 08 = Smoke or haze <br />
 09 = Blowing or drifting snow<br />
@@ -285,7 +285,7 @@ blowing obstruction<br />
 21 = Ground fog <br />
 22 = Ice fog or freezing fog<br />
 <br />
-WV** = Weather in the Vicinity where ** has one of the following 
+WV** = Weather in the Vicinity where ** has one of the following
 values:<br />
 01 = Fog, ice fog, or freezing fog (may include heavy fog)<br />
 03 = Thunder<br />
@@ -325,35 +325,38 @@ The directory will be created if missing. Defaults to './EXTRACTIONS/GHCN/'.</p>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Extract data for the Village Ecodynamics Project 'VEPIIN' study area:</span>
 <span class='co'># http://village.anth.wsu.edu</span>
-<span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span>(<span class='fl'>672800</span>,<span class='fl'>740000</span>,<span class='fl'>4102000</span>,<span class='fl'>4170000</span>),
-     <span class='kw'>proj4string</span><span class='kw'>=</span><span class='st'>'+proj=utm +datum=NAD83 +zone=12'</span>)
+<span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span>(<span class='fl'>672800</span>, <span class='fl'>740000</span>, <span class='fl'>4102000</span>, <span class='fl'>4170000</span>),
+  <span class='kw'>proj4string</span> <span class='kw'>=</span> <span class='st'>"+proj=utm +datum=NAD83 +zone=12"</span>
+)
 
 <span class='co'># Get the daily GHCN data (GLOBAL)</span>
 <span class='co'># Returns a list: the first element is the spatial locations of stations,</span>
 <span class='co'># and the second is a list of the stations and their daily data</span>
-<span class='no'>GHCN.prcp</span> <span class='kw'>&lt;-</span> <span class='fu'>get_ghcn_daily</span>(<span class='kw'>template</span><span class='kw'>=</span><span class='no'>vepPolygon</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'VEPIIN'</span>, <span class='kw'>elements</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'prcp'</span>))
+<span class='no'>GHCN.prcp</span> <span class='kw'>&lt;-</span> <span class='fu'>get_ghcn_daily</span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='no'>vepPolygon</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"VEPIIN"</span>, <span class='kw'>elements</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"prcp"</span>))
 
 <span class='co'># Plot the VEP polygon</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vepPolygon</span>)
 
 <span class='co'># Plot the spatial locations</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>GHCN.prcp</span>$<span class='no'>spatial</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='no'>T</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/legend.html'>legend</a></span>(<span class='st'>'bottomleft'</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>legend</span><span class='kw'>=</span><span class='st'>'GHCN Precipitation Records'</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>GHCN.prcp</span>$<span class='no'>spatial</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='no'>T</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/legend.html'>legend</a></span>(<span class='st'>"bottomleft"</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='st'>"GHCN Precipitation Records"</span>)
 
 <span class='co'># Elements for which you require the same data</span>
 <span class='co'># (i.e., minimum and maximum temperature for the same days)</span>
 <span class='co'># can be standardized using standardize==T</span>
-<span class='no'>GHCN.temp</span> <span class='kw'>&lt;-</span> <span class='fu'>get_ghcn_daily</span>(<span class='kw'>template</span><span class='kw'>=</span><span class='no'>vepPolygon</span>,
-     <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'VEPIIN'</span>,
-     <span class='kw'>elements</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'tmin'</span>,<span class='st'>'tmax'</span>),
-     <span class='kw'>standardize</span><span class='kw'>=</span><span class='no'>T</span>)
+<span class='no'>GHCN.temp</span> <span class='kw'>&lt;-</span> <span class='fu'>get_ghcn_daily</span>(
+  <span class='kw'>template</span> <span class='kw'>=</span> <span class='no'>vepPolygon</span>,
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"VEPIIN"</span>,
+  <span class='kw'>elements</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"tmin"</span>, <span class='st'>"tmax"</span>),
+  <span class='kw'>standardize</span> <span class='kw'>=</span> <span class='no'>T</span>
+)
 
 <span class='co'># Plot the VEP polygon</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vepPolygon</span>)
 
 <span class='co'># Plot the spatial locations</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>GHCN.temp</span>$<span class='no'>spatial</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='no'>T</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/legend.html'>legend</a></span>(<span class='st'>'bottomleft'</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>legend</span><span class='kw'>=</span><span class='st'>'GHCN Temperature Records'</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>GHCN.temp</span>$<span class='no'>spatial</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='no'>T</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/legend.html'>legend</a></span>(<span class='st'>"bottomleft"</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='st'>"GHCN Temperature Records"</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

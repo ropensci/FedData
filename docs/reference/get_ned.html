@@ -134,7 +134,7 @@ template study area.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>template</th>
-      <td><p>A Raster* or Spatial* object to serve 
+      <td><p>A Raster* or Spatial* object to serve
 as a template for cropping.</p></td>
     </tr>
     <tr>
@@ -174,12 +174,13 @@ The directory will be created if missing. Defaults to './EXTRACTIONS/NED/'.</p><
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Extract data for the Village Ecodynamics Project 'VEPIIN' study area:</span>
 <span class='co'># http://village.anth.wsu.edu</span>
-<span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span>(<span class='fl'>672800</span>,<span class='fl'>740000</span>,<span class='fl'>4102000</span>,<span class='fl'>4170000</span>),
-     <span class='kw'>proj4string</span><span class='kw'>=</span><span class='st'>'+proj=utm +datum=NAD83 +zone=12'</span>)
+<span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span>(<span class='fl'>672800</span>, <span class='fl'>740000</span>, <span class='fl'>4102000</span>, <span class='fl'>4170000</span>),
+  <span class='kw'>proj4string</span> <span class='kw'>=</span> <span class='st'>"+proj=utm +datum=NAD83 +zone=12"</span>
+)
 
 <span class='co'># Get the NED (USA ONLY)</span>
 <span class='co'># Returns a raster</span>
-<span class='no'>NED</span> <span class='kw'>&lt;-</span> <span class='fu'>get_ned</span>(<span class='kw'>template</span><span class='kw'>=</span><span class='no'>vepPolygon</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'VEPIIN'</span>)
+<span class='no'>NED</span> <span class='kw'>&lt;-</span> <span class='fu'>get_ned</span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='no'>vepPolygon</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"VEPIIN"</span>)
 
 <span class='co'># Plot with raster::plot</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>NED</span>)

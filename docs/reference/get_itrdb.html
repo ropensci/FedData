@@ -37,7 +37,7 @@
 
 <meta property="og:title" content="Download the latest version of the ITRDB, and extract given parameters. — get_itrdb" />
 <meta property="og:description" content="get_itrdb returns a named list of length 3:
-'metadata': A data.table or SpatialPointsDataFrame (if makeSpatial==TRUE) of the locations 
+'metadata': A data.table or SpatialPointsDataFrame (if makeSpatial==TRUE) of the locations
 and names of extracted ITRDB chronologies,
 'widths': A matrix of tree-ring widths/densities given user selection, and
 'depths': A matrix of tree-ring sample depths.
@@ -121,7 +121,7 @@ and names of extracted ITRDB chronologies,
 
     <div class="ref-description">
     <p><code>get_itrdb</code> returns a named list of length 3:</p><ol>
-<li><p>'metadata': A data.table or <code>SpatialPointsDataFrame</code> (if <code>makeSpatial==TRUE</code>) of the locations 
+<li><p>'metadata': A data.table or <code>SpatialPointsDataFrame</code> (if <code>makeSpatial==TRUE</code>) of the locations
 and names of extracted ITRDB chronologies,</p></li>
 <li><p>'widths': A matrix of tree-ring widths/densities given user selection, and</p></li>
 <li><p>'depths': A matrix of tree-ring sample depths.</p></li>
@@ -149,8 +149,8 @@ and names of extracted ITRDB chronologies,</p></li>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>template</th>
-      <td><p>A Raster* or Spatial* object to serve 
-as a template for selecting chronologies. If missing, 
+      <td><p>A Raster* or Spatial* object to serve
+as a template for selecting chronologies. If missing,
 all available global chronologies are returned.</p></td>
     </tr>
     <tr>
@@ -159,17 +159,17 @@ all available global chronologies are returned.</p></td>
     </tr>
     <tr>
       <th>recon.years</th>
-      <td><p>A numeric vector of years over which reconstructions are needed; 
+      <td><p>A numeric vector of years over which reconstructions are needed;
 if missing, the union of all years in the available chronologies are given.</p></td>
     </tr>
     <tr>
       <th>calib.years</th>
-      <td><p>A numeric vector of all required years---chronologies without these years will be discarded; 
+      <td><p>A numeric vector of all required years---chronologies without these years will be discarded;
 if missing, all available chronologies are given.</p></td>
     </tr>
     <tr>
       <th>species</th>
-      <td><p>A character vector of 4-letter tree species identifiers; 
+      <td><p>A character vector of 4-letter tree species identifiers;
 if missing, all available chronologies are given.</p></td>
     </tr>
     <tr>
@@ -221,18 +221,19 @@ The directory will be created if missing.</p></td>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Extract data for the Village Ecodynamics Project 'VEPIIN' study area:</span>
 <span class='co'># http://village.anth.wsu.edu</span>
-<span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span>(<span class='fl'>672800</span>,<span class='fl'>740000</span>,<span class='fl'>4102000</span>,<span class='fl'>4170000</span>),
-     <span class='kw'>proj4string</span><span class='kw'>=</span><span class='st'>'+proj=utm +datum=NAD83 +zone=12'</span>)
+<span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span>(<span class='fl'>672800</span>, <span class='fl'>740000</span>, <span class='fl'>4102000</span>, <span class='fl'>4170000</span>),
+  <span class='kw'>proj4string</span> <span class='kw'>=</span> <span class='st'>"+proj=utm +datum=NAD83 +zone=12"</span>
+)
 
 <span class='co'># Get the ITRDB records</span>
-<span class='no'>ITRDB</span> <span class='kw'>&lt;-</span> <span class='fu'>get_itrdb</span>(<span class='kw'>template</span><span class='kw'>=</span><span class='no'>vepPolygon</span>, <span class='kw'>label</span><span class='kw'>=</span><span class='st'>'VEPIIN'</span>, <span class='kw'>makeSpatial</span><span class='kw'>=</span><span class='no'>T</span>)
+<span class='no'>ITRDB</span> <span class='kw'>&lt;-</span> <span class='fu'>get_itrdb</span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='no'>vepPolygon</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"VEPIIN"</span>, <span class='kw'>makeSpatial</span> <span class='kw'>=</span> <span class='no'>T</span>)
 
 <span class='co'># Plot the VEP polygon</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vepPolygon</span>)
 
 <span class='co'># Map the locations of the tree ring chronologies</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>ITRDB</span>$<span class='no'>metadata</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='no'>T</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/legend.html'>legend</a></span>(<span class='st'>'bottomleft'</span>, <span class='kw'>pch</span><span class='kw'>=</span><span class='fl'>1</span>, <span class='kw'>legend</span><span class='kw'>=</span><span class='st'>'ITRDB chronologies'</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>ITRDB</span>$<span class='no'>metadata</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='no'>T</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/legend.html'>legend</a></span>(<span class='st'>"bottomleft"</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='st'>"ITRDB chronologies"</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
