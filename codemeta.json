@@ -109,11 +109,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "precommit",
-      "name": "precommit"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "roxygen2",
       "name": "roxygen2",
       "provider": {
@@ -464,7 +459,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/master/README.md",
-  "fileSize": "1484.747KB",
+  "fileSize": "1484.768KB",
   "contIntegration": "https://travis-ci.org/ropensci/FedData",
   "review": {
     "@type": "Review",

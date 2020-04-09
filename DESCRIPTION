@@ -66,11 +66,12 @@ Suggests:
     covr,
     docopt,
     lintr,
-    precommit,
     roxygen2,
     styler,
     testthat,
     usethis
+Remotes:
+    lorenzwalthert/precommit
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
