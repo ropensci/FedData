@@ -486,19 +486,23 @@ extract_ssurgo_data <- function(tables, mapunits) {
 #' @return A tibble returned from the SDA service
 #' @keywords internal
 soils_query <- function(q) {
-  tryCatch(httr::POST(
-    url = "https://sdmdataaccess.sc.egov.usda.gov/tabular/post.rest",
-    body = list(query = q),
-    encode = "form"
-  ) %>%
-    httr::content(as = "parse", encoding = "UTF-8") %>%
-    xml2::as_list() %$%
-    NewDataSet %$%
-    Table %>%
-    unlist(recursive = FALSE) %>%
-    as.data.frame(),
-  error = function(e) {
-    stop("Improperly formatted SDA SQL request")
-  }
+  tryCatch(
+    httr::POST(
+      url = "https://sdmdataaccess.sc.egov.usda.gov/tabular/post.rest",
+      body = list(
+        query = q,
+        format = "JSON+COLUMNNAME"
+      ),
+      encode = "form"
+    ) %>%
+      httr::content(as = "parse", encoding = "UTF-8") %$%
+      Table %>%
+      purrr::transpose() %>%
+      magrittr::set_names(., purrr::map_chr(., ~ (.x[[1]]))) %>%
+      purrr::map(~ (unlist(.x[-1]))) %>%
+      tibble::as_tibble(),
+    error = function(e) {
+      stop("Improperly formatted SDA SQL request")
+    }
   )
 }

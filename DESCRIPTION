@@ -3,7 +3,7 @@ Package: FedData
 Title: Functions to Automate Downloading Geospatial Data
     Available from Several Federated Data Sources
 Version: 3.0.0.9000
-Date: 2020-03-04
+Date: 2020-04-09
 Authors@R: 
     c(person(given = c("R.", "Kyle"),
              family = "Bocinsky",
@@ -62,9 +62,13 @@ Imports:
     tidyr,
     xml2
 Suggests: 
+    codemetar,
     covr,
+    docopt,
     lintr,
+    precommit,
     roxygen2,
+    styler,
     testthat,
     usethis
 Encoding: UTF-8
