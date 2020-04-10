@@ -159,6 +159,18 @@
   "softwareRequirements": [
     {
       "@type": "SoftwareApplication",
+      "identifier": "magrittr",
+      "name": "magrittr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=magrittr"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
       "version": ">= 3.2.0"
@@ -459,7 +471,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/master/README.md",
-  "fileSize": "1484.768KB",
+  "fileSize": "1483.638KB",
   "contIntegration": "https://travis-ci.org/ropensci/FedData",
   "review": {
     "@type": "Review",

@@ -34,6 +34,7 @@ URL: https://docs.ropensci.org/FedData,
     https://github.com/ropensci/FedData
 BugReports: https://github.com/ropensci/FedData/issues
 Depends:
+    magrittr,
     R (>= 3.2.0),
     sf,
     sp

@@ -381,14 +381,14 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
     lwgeom::st_make_valid() %>%
     as("Spatial")
 
-  # Crop to study area
-  if (!is.null(template) & !is.character(template)) {
-    if (class(template) %in% c("RasterLayer", "RasterStack", "RasterBrick")) {
-      template <- spdf_from_polygon(sp::spTransform(polygon_from_extent(template), sp::CRS("+proj=longlat +ellps=GRS80")))
-    }
-
-    mapunits <- raster::crop(mapunits, sp::spTransform(template, sp::CRS(raster::projection(mapunits))))
-  }
+  # # Crop to study area
+  # if (!is.null(template) & !is.character(template)) {
+  #   if (class(template) %in% c("RasterLayer", "RasterStack", "RasterBrick")) {
+  #     template <- spdf_from_polygon(sp::spTransform(polygon_from_extent(template), sp::CRS("+proj=longlat +ellps=GRS80")))
+  #   }
+  #
+  #   mapunits <- raster::crop(mapunits, sp::spTransform(template, sp::CRS(raster::projection(mapunits))))
+  # }
 
   # Change IDs, in case of merging later
   mapunits <- sp::spChFIDs(mapunits, as.character(paste(area, "_", row.names(mapunits@data), sep = "")))
@@ -427,10 +427,14 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
   tablesData <- tablesData[notNull]
   tablesHeads <- tablesHeads[notNull]
 
-  tables <- mapply(tablesData, tablesHeads, FUN = function(theData, theHeader) {
-    names(theData) <- names(theHeader)
-    return(theData)
-  })
+  tables <-
+    mapply(tablesData,
+      tablesHeads,
+      FUN = function(theData, theHeader) {
+        names(theData) <- names(theHeader)
+        return(theData)
+      }
+    )
 
   names(tables) <- names(tablesHeads)
 
