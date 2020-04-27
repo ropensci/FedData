@@ -168,7 +168,7 @@ unwrap_rows <- function(mat, n) {
 #' @return A list of bbox objects
 #' @export
 #' @keywords internal
-split_bbox <- function(bbox, x, y = xsize) {
+split_bbox <- function(bbox, x, y = x) {
   if (bbox[["xmin"]] > bbox[["xmax"]]) {
     x <- -1 * x
   }
@@ -210,6 +210,10 @@ split_bbox <- function(bbox, x, y = xsize) {
     dplyr::group_split() %>%
     purrr::map(as.list) %>%
     purrr::map(unlist) %>%
+    purrr::map(
+      magrittr::set_names,
+      c("xmin", "xmax", "ymin", "ymax")
+    ) %>%
     purrr::map(sf::st_bbox,
       crs = sf::st_crs(bbox)
     )

@@ -59,18 +59,16 @@ nass <-
     Color = rgb
   )
 
-
-
-usethis::use_data(nass, overwrite = TRUE, internal = TRUE)
-
-
 tablesHeaders <-
   readr::read_rds("data-raw/tablesHeaders.rds")
 
-usethis::use_data(tablesHeaders, overwrite = TRUE, internal = TRUE)
+
 
 ##### MVNP Spatial Polygon
 
 mvnp <- sf::read_sf("https://gist.githubusercontent.com/bocinsky/2081c48598de66c3b3dd377a5bb4519d/raw/707483e40e4a4f72fd3797096af1c5d2a4dfd0bb/meve.geojson")
 
+
+
+usethis::use_data(tablesHeaders, nass, overwrite = TRUE, internal = TRUE)
 usethis::use_data(mvnp, overwrite = TRUE)

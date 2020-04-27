@@ -4,7 +4,7 @@
 \alias{split_bbox}
 \title{Splits a bbox into a list of bboxes less than a certain size}
 \usage{
-split_bbox(bbox, x, y = xsize)
+split_bbox(bbox, x, y = x)
 }
 \arguments{
 \item{x}{The maximum x size of the resulting bounding boxes}

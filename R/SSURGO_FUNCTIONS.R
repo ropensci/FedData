@@ -378,7 +378,7 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
     sf::read_sf(paste0(tmpdir, "/", area, "/spatial"),
       layer = paste0("soilmu_a_", tolower(area))
     ) %>%
-    lwgeom::st_make_valid() %>%
+    sf::st_make_valid() %>%
     as("Spatial")
 
   # # Crop to study area
