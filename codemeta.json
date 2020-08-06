@@ -18,10 +18,9 @@
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.6.3",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.6.3 (2020-02-29)",
+  "runtimePlatform": "R version 4.0.2 (2020-06-22)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -471,12 +470,12 @@
   ],
   "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/master/README.md",
-  "fileSize": "1483.638KB",
-  "contIntegration": "https://travis-ci.org/ropensci/FedData",
+  "fileSize": "2215319.678KB",
+  "contIntegration": ["https://travis-ci.org/ropensci/FedData", "https://codecov.io/github/ropensci/FedData?branch=master"],
   "review": {
     "@type": "Review",
-    "url": "https://github.com/ropensci/onboarding/issues/13",
-    "provider": "http://ropensci.org"
+    "url": "https://github.com/ropensci/software-review/issues/13",
+    "provider": "https://ropensci.org"
   },
   "keywords": [
     "r",

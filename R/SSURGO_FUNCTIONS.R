@@ -270,7 +270,7 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
           suppressMessages(
             suppressWarnings(
               sf::read_sf(temp.file, crs = NA) %>%
-                dplyr::mutate(saverest = as.Date(saverest, format = "%b %d %Y")) %>%
+                dplyr::mutate(saverest = as.Date(lubridate::parse_date_time(saverest, orders = "b d Y HMOp", locale = "en_US"))) %>%
                 # sf::st_intersection(template) %>%
                 sf::st_drop_geometry()
             )
