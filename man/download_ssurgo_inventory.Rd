@@ -4,7 +4,7 @@
 \alias{download_ssurgo_inventory}
 \title{Download a zipped directory containing a shapefile of the SSURGO study areas.}
 \usage{
-download_ssurgo_inventory(raw.dir)
+download_ssurgo_inventory(raw.dir, ...)
 }
 \arguments{
 \item{raw.dir}{A character string indicating where raw downloaded files should be put.}

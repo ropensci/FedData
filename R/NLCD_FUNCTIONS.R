@@ -43,9 +43,8 @@ get_nlcd <- function(template,
                      force.redo = F) {
   extraction.dir <- normalizePath(paste0(extraction.dir, "/."), mustWork = FALSE)
 
-  if (!("sf" %in% class(template))) {
-    template %<>% sf::st_as_sf()
-  }
+
+  template %<>% template_to_sf()
 
   coverage <- paste0("NLCD_", year, "_", dataset, "_", landmass)
   source <- paste0("https://www.mrlc.gov/geoserver/mrlc_display/", coverage, "/ows")

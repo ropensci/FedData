@@ -64,21 +64,17 @@ get_ssurgo <- function(template,
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
 
-  files <- list.files(extraction.dir)
-  files <- files[grepl("csv", files)]
-  files <- files[order(files)]
-  files <- files[grepl(label, files)]
+  outfile <- paste0(extraction.dir, "/", label, "_ssurgo.gpkg")
 
-  if (!force.redo & length(files) > 0 & file.exists(paste(extraction.dir, "/", label, "_SSURGO_", "Mapunits.shp", sep = ""))) {
-    SSURGOMapunits <- rgdal::readOGR(dsn = normalizePath(extraction.dir), layer = paste0(label, "_SSURGO_", "Mapunits"), verbose = F)
+  if (!force.redo & file.exists(outfile)) {
+    SSURGOData <-
+      outfile %>%
+      sf::st_layers() %$%
+      name %>%
+      magrittr::set_names(., .) %>%
+      purrr::map(~ sf::read_sf(outfile, layer = .x))
 
-    tables <- lapply(files, function(file) {
-      suppressMessages(readr::read_csv(paste(normalizePath(extraction.dir), "/", file, sep = ""), progress = F))
-    })
-    names(tables) <- gsub(".csv", "", files)
-    names(tables) <- gsub(paste0(label, "_SSURGO_"), "", names(tables))
-
-    return(list(spatial = SSURGOMapunits, tabular = tables))
+    return(list(spatial = SSURGOData$geometry, tabular = purrr::list_modify(SSURGOData, geometry = NULL)))
   }
 
   if (class(template) == "character") {
@@ -87,88 +83,92 @@ get_ssurgo <- function(template,
       ");"
     )
     SSURGOAreas <- soils_query(q)
-
-    template.poly <- template
   } else {
-    if (class(template) %in% c("RasterLayer", "RasterStack", "RasterBrick")) {
-      template.poly <- spdf_from_polygon(sp::spTransform(polygon_from_extent(template), sp::CRS("+proj=longlat +ellps=GRS80")))
-    } else if (class(template) %in% c("SpatialPoints", "SpatialPointsDataFrame")) {
-      suppressWarnings(template.poly <- raster::buffer(polygon_from_extent(template), width = 1e-06))
-    } else {
-      template.poly <- template
-    }
+    template %<>% template_to_sf()
 
     # Get shapefile of SSURGO study areas in the template
-    SSURGOAreas <- get_ssurgo_inventory(template = template.poly, raw.dir = raw.dir)
+    SSURGOAreas <- get_ssurgo_inventory(template = template, raw.dir = raw.dir)
     # Remove SSURGO study areas that are not available
     SSURGOAreas <- SSURGOAreas[SSURGOAreas$iscomplete != 0, ]
   }
 
   # Get data for each study area
-  SSURGOData <- lapply(1:nrow(SSURGOAreas), function(i) {
-    message("(Down)Loading SSURGO data for survey area ", i, " of ", nrow(SSURGOAreas), ": ", as.character(SSURGOAreas$areasymbol[i]))
-    get_ssurgo_study_area(
-      template = template.poly,
-      area = as.character(SSURGOAreas$areasymbol[i]),
-      date = as.Date(SSURGOAreas$saverest[i], format = "%m/%d/%Y"),
-      raw.dir = raw.dir
-    )
-  })
+  SSURGOData <-
+    purrr::map2(
+      .x = SSURGOAreas$areasymbol,
+      .y = SSURGOAreas$saverest,
+      .f = function(area, date) {
+        message("(Down)Loading SSURGO data for survey area ", as.character(area))
+        get_ssurgo_study_area(
+          template = template,
+          area = as.character(area),
+          date = as.Date(date, format = "%m/%d/%Y"),
+          raw.dir = raw.dir
+        )
+      }
+    ) %>%
+    purrr::transpose()
+
 
   # Combine mapunits
-  SSURGOPolys <- lapply(SSURGOData, "[[", "spatial")
+  SSURGOData$spatial %<>%
+    do.call("rbind", .)
 
-  # Merging all SSURGO Map Unit polygons
-  message("Merging all SSURGO Map Unit polygons")
-  SSURGOPolys <- do.call("rbind", SSURGOPolys)
-
-  # Crop to area of template
-  if (!is.null(template) & !is.character(template)) {
-    message("Cropping all SSURGO Map Unit polygons to template")
-    if (class(template) %in% c("SpatialPoints", "SpatialPointsDataFrame")) {
-      SSURGOPolys <- sp::spTransform(template, sp::CRS(raster::projection(SSURGOPolys))) %over% SSURGOPolys
-      SSURGOPolys <- SpatialPointsDataFrame(template@coords, data = SSURGOPolys, proj4string = sp::CRS(raster::projection(template)))
-    } else {
-      SSURGOPolys <- raster::crop(SSURGOPolys, sp::spTransform(template.poly, sp::CRS(raster::projection(SSURGOPolys))))
-    }
+  # Crop to template
+  if (class(template) != "character") {
+    SSURGOData$spatial %<>%
+      sf::st_intersection(template %>%
+        sf::st_transform(sf::st_crs(SSURGOData$spatial)))
   }
 
-  # Combine study area data
-  SSURGOTables <- lapply(SSURGOData, "[[", "tabular")
 
-  # Merging all SSURGO data tables
-  message("Merging all SSURGO data tables")
-  tableNames <- unique(unlist(sapply(SSURGOTables, names)))
-  tableNames <- tableNames[order(tableNames)]
+  SSURGOData$tabular %>%
+    purrr::transpose() %$%
+    component
 
-  # This function takes each table name, gets that table from each study area, and binds the rows of those tables.  Finally, it
-  # removes any duplicate lines.
-  SSURGOTables <- lapply(tableNames, function(name) {
-    tables <- lapply(SSURGOTables, "[[", name)
-    tables <- do.call("rbind", tables)
-    tables <- unique(tables)
-    return(tables)
-  })
+  SSURGOData$tabular %<>%
+    purrr::transpose() %>%
+    purrr::map(function(x) {
+      x %>%
+        purrr::compact() %>%
+        purrr::discard(~ nrow(.x) == 0) %>%
+        purrr::map(function(y) {
+          if (any(names(y) == "musym")) {
+            y %<>% dplyr::mutate(musym = as.character(musym))
+          }
+          y
+        }) %>%
+        dplyr::bind_rows()
+    })
 
-  names(SSURGOTables) <- tableNames
+  # Extract only the mapunits in the study area,
+  # and iterate through the data structure
+  SSURGOData$tabular %<>%
+    extract_ssurgo_data(as.character(SSURGOData$spatial$MUKEY))
 
-  # Extract only the mapunits in the study area, and iterate through the data structure
-  SSURGOTables <- extract_ssurgo_data(tables = SSURGOTables, mapunits = as.character(unique(SSURGOPolys$MUKEY)))
+  # SSURGOData$tabular$mapunit %<>%
+  #   dplyr::mutate(mukey = as.character(mukey)) %>%
+  #   dplyr::left_join(SSURGOData$spatial %>%
+  #                      dplyr::select(MUKEY),
+  #                    by = c("mukey" = "MUKEY")) %>%
+  #   sf::st_as_sf()
 
-  # Save the mapunit polygons
-  suppressWarnings(rgdal::writeOGR(SSURGOPolys,
-    dsn = normalizePath(paste0(extraction.dir, "/.")),
-    layer = paste0(label, "_SSURGO_Mapunits"),
-    driver = "ESRI Shapefile",
-    overwrite_layer = TRUE
-  ))
+  unlink(outfile)
 
-  # Save the each data table as a csv
-  junk <- lapply(names(SSURGOTables), function(tab) {
-    readr::write_csv(SSURGOTables[[tab]], path = paste(extraction.dir, "/", label, "_SSURGO_", tab, ".csv", sep = ""))
-  })
+  SSURGOData %$%
+    c(geometry = list(spatial), tabular) %>%
+    purrr::iwalk(function(x, n) {
+      sf::write_sf(x, dsn = outfile, layer = n)
+    })
 
-  return(list(spatial = SSURGOPolys, tabular = SSURGOTables))
+  SSURGOData <-
+    outfile %>%
+    sf::st_layers() %$%
+    name %>%
+    magrittr::set_names(., .) %>%
+    purrr::map(~ sf::read_sf(outfile, layer = .x))
+
+  return(list(spatial = SSURGOData$geometry, tabular = purrr::list_modify(SSURGOData, geometry = NULL)))
 }
 
 #' Download a zipped directory containing a shapefile of the SSURGO study areas.
@@ -177,12 +177,12 @@ get_ssurgo <- function(template,
 #' @return A character string representing the full local path of the SSURGO study areas zipped directory.
 #' @export
 #' @keywords internal
-download_ssurgo_inventory <- function(raw.dir) {
+download_ssurgo_inventory <- function(raw.dir, ...) {
   # Import the shapefile of SSURGO study areas.  This is available at
   # http://soildatamart.sc.egov.usda.gov/download/StatusMaps/soilsa_a_SSURGO.zip
   url <- "http://websoilsurvey.sc.egov.usda.gov/DataAvailability/SoilDataAvailabilityShapefile.zip"
   destdir <- raw.dir
-  download_data(url = url, destdir = destdir)
+  download_data(url = url, destdir = destdir, ...)
   return(normalizePath(paste(destdir, "/SoilDataAvailabilityShapefile.zip", sep = "")))
 }
 
@@ -201,18 +201,21 @@ download_ssurgo_inventory <- function(raw.dir) {
 #' @export
 #' @keywords internal
 get_ssurgo_inventory <- function(template = NULL, raw.dir) {
-  # If there is a template, only download the areas in the template Thanks to Dylan Beaudette for this method!
   if (!is.null(template)) {
-    if (class(template) %in% c("RasterLayer", "RasterStack", "RasterBrick")) {
-      template %<>%
-        polygon_from_extent()
-    }
-
     template %<>%
-      sf::st_as_sf() %>%
+      template_to_sf() %>%
       sf::st_transform(4326)
+  }
 
-    bounds <- template %>%
+  # If there is a template, only download the areas in the template Thanks to Dylan Beaudette for this method!
+  if (!is.null(template) &&
+    httr::status_code(
+      httr::GET(
+        "https://sdmdataaccess.nrcs.usda.gov/Spatial/SDMWGS84Geographic.wfs"
+      )
+    ) == 200) {
+    bounds <-
+      template %>%
       sf::st_bbox() %>%
       sf::st_as_sfc()
 
@@ -292,7 +295,12 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
 
     utils::unzip(file, exdir = tmpdir)
 
-    SSURGOAreas <- rgdal::readOGR(normalizePath(tmpdir), layer = "soilsa_a_nrcs", verbose = FALSE)@data
+    SSURGOAreas <- sf::read_sf(normalizePath(tmpdir), layer = "soilsa_a_nrcs")
+
+    if (!is.null(template)) {
+      SSURGOAreas %<>%
+        sf::st_intersection(sf::st_transform(template, sf::st_crs(SSURGOAreas)))
+    }
 
     unlink(tmpdir, recursive = TRUE)
   }
@@ -363,65 +371,49 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
 
   utils::unzip(file, exdir = tmpdir)
 
-  # Get spatial data
-  # if (.Platform$OS.type == "windows") {
-  #   suppressWarnings(mapunits <- rgdal::readOGR(paste0(tmpdir, "/", area, "/spatial"),
-  #                                               layer = paste0("soilmu_a_", tolower(area)),
-  #                                               verbose = F))
-  # } else {
-  #   suppressWarnings(mapunits <- rgdal::readOGR(paste0(tmpdir, "/", area, "/spatial"),
-  #                                               layer = paste0("soilmu_a_", tolower(area)),
-  #                                               verbose = F))
-  # }
-
   mapunits <-
     sf::read_sf(paste0(tmpdir, "/", area, "/spatial"),
       layer = paste0("soilmu_a_", tolower(area))
     ) %>%
     sf::st_make_valid() %>%
-    as("Spatial")
-
-  # # Crop to study area
-  # if (!is.null(template) & !is.character(template)) {
-  #   if (class(template) %in% c("RasterLayer", "RasterStack", "RasterBrick")) {
-  #     template <- spdf_from_polygon(sp::spTransform(polygon_from_extent(template), sp::CRS("+proj=longlat +ellps=GRS80")))
-  #   }
-  #
-  #   mapunits <- raster::crop(mapunits, sp::spTransform(template, sp::CRS(raster::projection(mapunits))))
-  # }
-
-  # Change IDs, in case of merging later
-  mapunits <- sp::spChFIDs(mapunits, as.character(paste(area, "_", row.names(mapunits@data), sep = "")))
+    dplyr::group_by(AREASYMBOL, SPATIALVER, MUSYM, MUKEY) %>%
+    dplyr::summarise()
 
   # Read in all tables
-  if (.Platform$OS.type == "windows") {
-    files <- list.files(paste0(tmpdir, "/", area, "/tabular"), full.names = T)
-    tablesData <- lapply(files, function(file) {
-      tryCatch(return(utils::read.delim(file, header = F, sep = "|", stringsAsFactors = F)), error = function(e) {
-        return(NULL)
-      })
-    })
-    names(tablesData) <- basename(files)
-    tablesData <- tablesData[!sapply(tablesData, is.null)]
-  } else {
-    files <- list.files(paste0(tmpdir, "/", area, "/tabular"), full.names = T)
-    tablesData <- lapply(files, function(file) {
-      tryCatch(return(utils::read.delim(file, header = F, sep = "|", stringsAsFactors = F)), error = function(e) {
-        return(NULL)
-      })
-    })
-    names(tablesData) <- basename(files)
-    tablesData <- tablesData[!sapply(tablesData, is.null)]
-  }
+  tablesData <-
+    paste0(tmpdir, "/", area, "/tabular") %>%
+    list.files(full.names = T) %>%
+    magrittr::set_names(
+      .,
+      tools::file_path_sans_ext(basename(.))
+    ) %>%
+    purrr::map(
+      function(file) {
+        tryCatch(
+          return(
+            readr::read_delim(file,
+              col_names = F,
+              col_types = readr::cols(.default = readr::col_character()),
+              delim = "|"
+            ) %>%
+              readr::type_convert(col_types = readr::cols())
+          ),
+          error = function(e) {
+            return(NULL)
+          }
+        )
+      }
+    ) %>%
+    purrr::compact()
 
-  # tablesHeaders <- FedData::tablesHeaders
 
-  SSURGOTableMapping <- tablesData[["mstab.txt"]][, c(1, 5)]
-  names(SSURGOTableMapping) <- c("TABLE", "FILE")
-  SSURGOTableMapping[, "FILE"] <- paste(SSURGOTableMapping[, "FILE"], ".txt", sep = "")
+  SSURGOTableMapping <-
+    tablesData$mstab %>%
+    dplyr::select(1, 5) %>%
+    magrittr::set_names(c("TABLE", "FILE"))
 
-  tablesData <- tablesData[as.character(SSURGOTableMapping[, "FILE"])]
-  tablesHeads <- tablesHeaders[as.character(SSURGOTableMapping[, "TABLE"])]
+  tablesData <- tablesData[SSURGOTableMapping$FILE]
+  tablesHeads <- tablesHeaders[SSURGOTableMapping$TABLE]
 
   notNull <- (!sapply(tablesData, is.null) & !sapply(tablesHeads, is.null))
   tablesData <- tablesData[notNull]
@@ -438,7 +430,8 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
 
   names(tables) <- names(tablesHeads)
 
-  tables <- extract_ssurgo_data(tables = tables, mapunits = as.character(unique(mapunits$MUKEY)))
+  tables %<>%
+    extract_ssurgo_data(as.character(mapunits$MUKEY))
 
   unlink(tmpdir, recursive = TRUE)
 
@@ -457,9 +450,9 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
 #' @export
 #' @keywords internal
 extract_ssurgo_data <- function(tables, mapunits) {
-  mapping <- tables[["mdstatrshipdet"]]
+  mapping <- tables$mdstatrshipdet
   mappingGraph <- igraph::graph.edgelist(as.matrix(mapping[, c("ltabphyname", "rtabphyname")]))
-  igraph::E(mappingGraph)$mapVar <- as.character(mapping[, "ltabcolphyname"])
+  igraph::E(mappingGraph)$mapVar <- as.character(mapping$ltabcolphyname)
 
   mappingGraph <- igraph::graph.neighborhood(mappingGraph, order = max(sapply(igraph::decompose.graph(mappingGraph), igraph::diameter)) +
     1, nodes = "mapunit", mode = "out")[[1]]
@@ -469,14 +462,13 @@ extract_ssurgo_data <- function(tables, mapunits) {
   mapEdges <- cbind(igraph::get.edgelist(mappingGraph), igraph::E(mappingGraph)$mapVar)
   mapEdges <- mapEdges[match(mapHierarchy, mapEdges[, 2]), ]
 
-  tables[["mapunit"]] <- tables[["mapunit"]][tables[["mapunit"]][, "mukey"] %in% mapunits, ]
+  tables$mapunit %<>%
+    dplyr::filter(mukey %in% mapunits)
 
   for (i in 1:nrow(mapEdges)) {
     X <- mapEdges[i, ]
-    tables[[X[2]]] <- tables[[X[2]]][tables[[X[2]]][, X[3]] %in% tables[[X[1]]][, X[3]], ]
+    tables[[X[2]]] <- tables[[X[2]]][tables[[X[2]]][[X[3]]] %in% tables[[X[1]]][[X[3]]], ]
   }
-
-  tables <- tables[!sapply(tables, is.null)]
 
   return(tables)
 }

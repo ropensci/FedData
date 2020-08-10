@@ -65,97 +65,111 @@ get_nass <- function(template,
     httr::status_code() %>%
     identical(200L) %>%
     magrittr::not()) {
-    stop("No web coverage service at ", source, ". See available services at https://nassgeodata.gmu.edu/CropScapeService/wms_cdlall?service=WCS&version=2.0.0&request=GetCapabilities")
+    stop("No web coverage service at ", source, ". See available services at https://nassgeodata.gmu.edu/CropScapeService/wms_cdlall?service=WCS&version=2.0.1&request=GetCapabilities")
   }
 
-  # source %>%
-  #   httr::GET(query = list(service = "WCS",
-  #                          version = "2.0.0",
-  #                          request = "GetCapabilities"))
-  #
-  # description <-
-  #   source %>%
-  #   httr::GET(query = list(service = "WCS",
-  #                          version = "2.0.0",
-  #                          request = "DescribeCoverage",
-  #                          coverageid = layer)) %>%
-  #   httr::content(encoding = "UTF-8") %>%
-  #   xml2::as_list()
-  #
-  # origin <-
-  #   description %$%
-  #   CoverageDescriptions %$%
-  #   CoverageDescription %$%
-  #   domainSet %$%
-  #   RectifiedGrid %$%
-  #   origin %$%
-  #   Point %$%
-  #   pos[[1]] %>%
-  #   stringr::str_split(" ", simplify = TRUE) %>%
-  #   as.numeric()
 
-  origin <- c(-2356095, 3172605)
 
   template %<>%
     sf::st_transform("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m") %>%
     sf::st_bbox()
 
-  # Convert to floating grid
-  template["xmin"] <- floor((template["xmin"] - origin[[1]]) / 30)
-  template["xmax"] <- ceiling((template["xmax"] - origin[[1]]) / 30)
-  template["ymin"] <- ceiling((template["ymin"] - origin[[2]]) / -30)
-  template["ymax"] <- floor((template["ymax"] - origin[[2]]) / -30)
+  # # Convert to floating grid
+  # origin <- c(-2356095, 276915)
+  # template["xmin"] <- floor((template["xmin"] - origin[[1]]) / 30)
+  # template["xmax"] <- ceiling((template["xmax"] - origin[[1]]) / 30)
+  # template["ymin"] <- floor((template["ymin"] - origin[[2]]) / -30)
+  # template["ymax"] <- ceiling((template["ymax"] - origin[[2]]) / -30)
+  #
+  # template %<>%
+  #   split_bbox(
+  #     x = 2047 * 30,
+  #     y = 2047 * 30
+  #   )
+  #
+  # if (progress) {
+  #   pb <- progress::progress_bar$new(total = length(template))
+  # }
+  #
+  # out <-
+  #   template %>%
+  #   list() %>%
+  #   purrr::map(function(x) {
+  #     if (progress) {
+  #       pb$tick()
+  #     }
+  #
+  #     tf <- tempfile(fileext = ".tif")
+  #
+  #     response <-
+  #       x %>%
+  #       as.list() %$%
+  #       httr::GET(source,
+  #                 query = list(
+  #                   service = "wcs",
+  #                   version = "1.0.0",
+  #                   request = "getcoverage",
+  #                   coverage = layer,
+  #                   crs = "epsg:102004",
+  #                   resx = 30,
+  #                   resy = 30,
+  #                   bbox = paste0(c(xmin, ymin, xmax, ymax), collapse = ","),
+  #                   format = "gtiff"
+  #                 ),
+  #                 httr::write_disk(
+  #                   path = tf,
+  #                   overwrite = TRUE
+  #                 )
+  #       )
+  #
+  #     if (httr::headers(response)$`content-type` != "image/tiff") {
+  #       stop(response %>%
+  #              httr::content(encoding = "UTF-8") %>%
+  #              xml2::as_list() %$%
+  #              ExceptionReport$Exception$ExceptionText[[1]])
+  #     }
+  #
+  #     tf %>%
+  #       raster::raster() %>%
+  #       raster::readAll()
+  #   }) %>%
+  #   do.call(raster::merge, .) %>%
+  #   raster::as.factor()
 
-  template %<>%
-    split_bbox(
-      x = 2047,
-      y = 2047
+  tf <- tempfile(fileext = ".tif")
+
+  response <-
+    template %>%
+    as.list() %$%
+    httr::GET(source,
+      query = list(
+        service = "wcs",
+        version = "1.0.0",
+        request = "getcoverage",
+        coverage = layer,
+        crs = "epsg:102004",
+        resx = 30,
+        resy = 30,
+        bbox = paste0(c(xmin, ymin, xmax, ymax), collapse = ","),
+        format = "gtiff"
+      ),
+      httr::write_disk(
+        path = tf,
+        overwrite = TRUE
+      )
     )
 
-  if (progress) {
-    pb <- progress::progress_bar$new(total = length(template))
+  if (httr::headers(response)$`content-type` != "image/tiff") {
+    stop(response %>%
+      httr::content(encoding = "UTF-8") %>%
+      xml2::as_list() %$%
+      ExceptionReport$Exception$ExceptionText[[1]])
   }
 
   out <-
-    template %>%
-    purrr::map(function(x) {
-      if (progress) {
-        pb$tick()
-      }
-
-      tf <- tempfile(fileext = ".tif")
-
-      response <-
-        x %>%
-        as.list() %$%
-        httr::GET(source,
-          query = list(
-            service = "WCS",
-            version = "2.0.0",
-            request = "GetCoverage",
-            coverageid = layer,
-            subset = paste0("X(", xmin, ",", xmax, ")"),
-            subset = paste0("Y(", ymax, ",", ymin, ")"),
-            format = "gtiff"
-          ),
-          httr::write_disk(
-            path = tf,
-            overwrite = TRUE
-          )
-        )
-
-      if (httr::headers(response)$`content-type` != "image/tiff") {
-        stop(response %>%
-          httr::content(encoding = "UTF-8") %>%
-          xml2::as_list() %$%
-          ExceptionReport$Exception$ExceptionText[[1]])
-      }
-
-      tf %>%
-        raster::raster() %>%
-        raster::readAll()
-    }) %>%
-    do.call(raster::merge, .) %>%
+    tf %>%
+    raster::raster() %>%
+    raster::readAll() %>%
     raster::as.factor()
 
   raster::colortable(out) <- nass$Color

@@ -5,6 +5,9 @@
 * Modernized get_nhd code; now returns SF objects!
 * Updated get_daymet to pull from ORNL WCS, and fixed bug in [Issue #49](https://github.com/ropensci/FedData/issues/49)
 * Fixed issue where soils_query was only returning first SSURGO study area ([Issue #51](https://github.com/ropensci/FedData/issues/51))
+* Fixed issue where date parsing was USA-specific by leveraging `lubridate::parse_date_time` ([Issue #61](https://github.com/ropensci/FedData/issues/61))
+* Modernized get_ssurgo code; now returns SF objects!
+* get_ssurgo now saves in the [GeoPackage file format](http://www.geopackage.org)
 
 # FedData 2.5.7
 * Removing many internet resource tests from CRAN, to satisfy: 'Packages which use Internet resources should fail gracefully with an informative message if the resource is not available (and not give a check warning nor error).'

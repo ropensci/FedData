@@ -287,10 +287,18 @@ download_data <- function(url, destdir = getwd(), timestamping = T, nc = F, verb
   return(destfile)
 }
 
-#' The boundary of Mesa Verde National Park
+#' Check whether a web serive is unavailable, and stop function if necessary.
 #'
-#' A dataset containing the spatial polygon defining the boundary
-#' of Mesa Verde National Park in southwestern Colorado.
-#'
-#' @format Simple feature collection with 1 feature and 10 fields.
-"mvnp"
+#' @param x The path to the web service.
+#' @return Error if service unavailable.
+#' @export
+#' @keywords internal
+check_service <- function(x) {
+  if (x %>%
+    httr::GET() %>%
+    httr::status_code() %>%
+    identical(200L) %>%
+    magrittr::not()) {
+    stop("Web service currently unavailable: ", source)
+  }
+}
