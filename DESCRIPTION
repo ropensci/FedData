@@ -34,19 +34,17 @@ URL: https://docs.ropensci.org/FedData,
     https://github.com/ropensci/FedData
 BugReports: https://github.com/ropensci/FedData/issues
 Depends:
-    magrittr,
-    R (>= 3.2.0),
-    sf,
-    sp
+    R (>= 3.2.0)
 Imports:
     curl,
     data.table,
     devtools,
     dplyr,
     foreach,
-    Hmisc,
+    ggplot2,
     httr,
     igraph,
+    jsonlite,
     lubridate,
     lwgeom,
     magrittr,
@@ -58,6 +56,9 @@ Imports:
     readr,
     rgdal,
     rgeos,
+    s2 (>= 1.0.2),
+    sf,
+    sp,
     stringr,
     tibble,
     tidyr,

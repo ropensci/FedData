@@ -19,18 +19,18 @@ DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.596344.svg)](https://doi.org/10
 [![ROpenSci
 Status](https://badges.ropensci.org/13_status.svg)](https://github.com/ropensci/onboarding/issues/13)
 
+**FedData version 3.0 is about to be released to CRAN. There are several
+breaking changes in the FedData API from version 2.x. Please see
+\[NEWS.md\] for a list of changes.**
+
 `FedData` is an *R* package implementing functions to automate
 downloading geospatial data available from several federated data
-sources (mainly sources maintained by the US Federal government).
-
-**FedData version 2.5 will be the final minor CRAN release of FedData 2.
-FedData 3 will be released in the coming months, but some code built on
-FedData 2 will not be compatible with FedData 3.**
+sources.
 
 Currently, the package enables extraction from seven datasets:
 
 -   The [National Elevation Dataset (NED)](http://ned.usgs.gov) digital
-    elevation models (1 and 1/3 arc-second; USGS)
+    elevation models (1, 1/3, and 1/9 arc-second; USGS)
 -   The [National Hydrography Dataset (NHD)](http://nhd.usgs.gov) (USGS)
 -   The [Soil Survey Geographic (SSURGO)
     database](http://websoilsurvey.sc.egov.usda.gov/) from the National
@@ -82,22 +82,30 @@ installs of *R* on Mac OS 10.14 and Windows 10.
 
 -   From CRAN:
 
-        install.packages("FedData")
+<!-- -->
+
+    install.packages("FedData")
 
 -   Development version from GitHub:
 
-        install.packages("devtools")
-        devtools::install_github("ropensci/FedData")
+<!-- -->
+
+    install.packages("devtools")
+    devtools::install_github("ropensci/FedData")
 
 -   Linux (Ubuntu 14.04.5 or 16.04.1):
 
-    First, in terminal:
-    `bash   sudo add-apt-repository ppa:ubuntugis/ppa -y   sudo apt-get update -q   sudo apt-get install libssl-dev libcurl4-openssl-dev netcdf-bin libnetcdf-dev gdal-bin libgdal-dev`
-    Then, in R:
+First, in terminal:
 
-        update.packages("survival")
-        install.packages("devtools")
-        devtools::install_github("ropensci/FedData")
+    sudo add-apt-repository ppa:ubuntugis/ppa -y
+    sudo apt-get update -q
+    sudo apt-get install libssl-dev libcurl4-openssl-dev netcdf-bin libnetcdf-dev gdal-bin libgdal-dev
+
+Then, in R:
+
+    update.packages("survival")
+    install.packages("devtools")
+    devtools::install_github("ropensci/FedData")
 
 ### Demonstration
 
@@ -207,27 +215,11 @@ GitHub repository: <https://github.com/ropensci/FedData>.
 #### Get and plot the National Hydrography Dataset for the study area
 
     # Get the NHD (USA ONLY)
-    NHD <- get_nhd(
-      template = vepPolygon,
-      label = "VEPIIN"
-    )
-    # Plot the NED again
-    raster::plot(NED)
-    # Plot the NHD data
-    NHD %>%
-      lapply(sp::plot,
-        col = "black",
-        add = TRUE
-      )
-    #> Warning in plot.sf(X[[i]], ...): ignoring all but the first attribute
-
-    #> Warning in plot.sf(X[[i]], ...): ignoring all but the first attribute
-
-    #> Warning in plot.sf(X[[i]], ...): ignoring all but the first attribute
-
-    #> Warning in plot.sf(X[[i]], ...): ignoring all but the first attribute
-
-    #> Warning in plot.sf(X[[i]], ...): ignoring all but the first attribute
+    get_nhd(
+      template = FedData::glac,
+      label = "glac"
+    ) %>%
+      plot_nhd(template = FedData::glac)
 
 <img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
 
@@ -391,13 +383,15 @@ GitHub repository: <https://github.com/ropensci/FedData>.
 ### Acknowledgements
 
 This package is a product of SKOPE ([Synthesizing Knowledge of Past
-Environments](http://www.openskope.org)) and the Village Ecodynamics
-Project. This software is licensed under the [MIT
-license](https://opensource.org/licenses/MIT).
+Environments](http://www.openskope.org)) and the [Village Ecodynamics
+Project](http://veparchaeology.org) through grants awarded to the [Crow
+Canyon Archaeological Center](https://www.crowcanyon.org) and Washington
+State University by the National Science Foundation. This software is
+licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 FedData was reviewed for [rOpenSci](https://ropensci.org) by
 [@jooolia](https://github.com/jooolia), and was greatly improved as a
-result. [rOpenSci](https://ropensci.org) onboarding was coordinated by
+result. [rOpenSci](https://ropensci.org) on-boarding was coordinated by
 [@sckott](https://github.com/sckott).
 
 <!-- [![ropensci_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org) -->

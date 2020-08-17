@@ -122,6 +122,28 @@ read_sf_all <- function(dsn) {
     ))
 }
 
+write_sf_all <- function(x, dsn) {
+  if (is.null(names(x))) {
+    stop("'x' must be a named list.")
+  }
+
+  unlink(dsn,
+    recursive = TRUE,
+    force = TRUE
+  )
+
+  x %>%
+    purrr::iwalk(
+      ~ sf::write_sf(.x,
+        dsn = dsn,
+        layer = .y,
+        delete_layer = TRUE
+      )
+    )
+
+  return()
+}
+
 #' Get a logical vector of which elements in a vector are sequentially duplicated.
 #'
 #' @param x An vector of any type, or, if \code{rows}, a matrix.
@@ -287,7 +309,7 @@ download_data <- function(url, destdir = getwd(), timestamping = T, nc = F, verb
   return(destfile)
 }
 
-#' Check whether a web serive is unavailable, and stop function if necessary.
+#' Check whether a web service is unavailable, and stop function if necessary.
 #'
 #' @param x The path to the web service.
 #' @return Error if service unavailable.
@@ -301,4 +323,47 @@ check_service <- function(x) {
     magrittr::not()) {
     stop("Web service currently unavailable: ", source)
   }
+}
+
+#' Strip query parameters from a URL
+#'
+#' @param url The URL to be modified
+#' @return The URL without parameters
+#' @export
+#' @keywords internal
+url_base <- function(x) {
+  x %<>% httr::parse_url()
+  x$query <- list()
+  x %<>% httr::build_url()
+}
+
+#' Replace NULLs
+#'
+#' @description Replace all the empty values in a list
+#' @param x A list
+#' @param replacement Replacement value for missing values
+#' @examples
+#' list(a = NULL, b = 1, c = list(foo = NULL, bar = NULL)) %>% replace_null()
+#' @export
+
+replace_null <- function(x) {
+  is.na(x) <- x == "NULL"
+  x
+}
+
+list_to_tibble <-
+  function(x) {
+    nms <- x %>%
+      purrr::map(names) %>%
+      purrr::reduce(union)
+
+    test <- x %>%
+      purrr::transpose(.names = nms) %>%
+      tibble::as_tibble() %>%
+      dplyr::mutate(dplyr::across(dplyr::everything(), ~ replace_null(.x))) %>%
+      dplyr::mutate(dplyr::across(dplyr::everything(), ~ purrr::flatten(.x)))
+  }
+
+split_n <- function(x, n) {
+  split(x, ceiling(seq_along(x) / n))
 }

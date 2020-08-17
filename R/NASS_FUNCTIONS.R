@@ -35,7 +35,7 @@
 get_nass <- function(template,
                      label,
                      year = 2019,
-                     extraction.dir = paste0(tempdir(), "/FedData/extractions/nass/", label, "/"),
+                     extraction.dir = paste0(tempdir(), "/FedData/"),
                      raster.options = c(
                        "COMPRESS=DEFLATE",
                        "ZLEVEL=9",
@@ -54,7 +54,7 @@ get_nass <- function(template,
 
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
 
-  outfile <- paste0(extraction.dir, "/", layer, ".tif")
+  outfile <- paste0(extraction.dir, "/", label, "_", layer, "_nass.tif")
 
   if (file.exists(outfile) & !force.redo) {
     return(raster::raster(outfile))

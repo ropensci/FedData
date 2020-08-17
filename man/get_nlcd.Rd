@@ -10,7 +10,7 @@ get_nlcd(
   year = 2016,
   dataset = "Land_Cover",
   landmass = "L48",
-  extraction.dir = paste0(tempdir(), "/FedData/extractions/nlcd/", label, "/"),
+  extraction.dir = paste0(tempdir(), "/FedData/"),
   force.redo = F
 )
 }

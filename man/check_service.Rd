@@ -2,7 +2,7 @@
 % Please edit documentation in R/UTILITY_FUNCTIONS.R
 \name{check_service}
 \alias{check_service}
-\title{Check whether a web serive is unavailable, and stop function if necessary.}
+\title{Check whether a web service is unavailable, and stop function if necessary.}
 \usage{
 check_service(x)
 }
@@ -13,6 +13,6 @@ check_service(x)
 Error if service unavailable.
 }
 \description{
-Check whether a web serive is unavailable, and stop function if necessary.
+Check whether a web service is unavailable, and stop function if necessary.
 }
 \keyword{internal}

@@ -8,7 +8,7 @@ get_ssurgo(
   template,
   label,
   raw.dir = paste0(tempdir(), "/FedData/raw/ssurgo"),
-  extraction.dir = paste0(tempdir(), "/FedData/extractions/ssurgo/", label, "/"),
+  extraction.dir = paste0(tempdir(), "/FedData/"),
   force.redo = FALSE
 )
 }

@@ -56,7 +56,7 @@
 get_ssurgo <- function(template,
                        label,
                        raw.dir = paste0(tempdir(), "/FedData/raw/ssurgo"),
-                       extraction.dir = paste0(tempdir(), "/FedData/extractions/ssurgo/", label, "/"),
+                       extraction.dir = paste0(tempdir(), "/FedData/"),
                        force.redo = FALSE) {
   raw.dir <- normalizePath(paste0(raw.dir, "/."), mustWork = FALSE)
   extraction.dir <- normalizePath(paste0(extraction.dir, "/."), mustWork = FALSE)

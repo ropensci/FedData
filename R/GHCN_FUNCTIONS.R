@@ -645,7 +645,7 @@ station_to_data_frame <- function(station.data) {
     annual.records <- as.matrix(X[, 4:34])
 
     # Get the number of days per month in the records
-    n.days <- Hmisc::monthDays(as.Date(paste(X$YEAR, X$MONTH, "01", sep = "-")))
+    n.days <- lubridate::days_in_month(as.Date(paste(X$YEAR, X$MONTH, "01", sep = "-")))
 
     ## Unnwrap each row, accounting for number of days in the month
     annual.records.unwrapped <- unwrap_rows(annual.records, n.days)

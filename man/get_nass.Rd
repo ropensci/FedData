@@ -8,7 +8,7 @@ get_nass(
   template,
   label,
   year = 2019,
-  extraction.dir = paste0(tempdir(), "/FedData/extractions/nass/", label, "/"),
+  extraction.dir = paste0(tempdir(), "/FedData/"),
   raster.options = c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"),
   force.redo = FALSE,
   progress = TRUE

@@ -39,10 +39,12 @@ get_nlcd <- function(template,
                      year = 2016,
                      dataset = "Land_Cover",
                      landmass = "L48",
-                     extraction.dir = paste0(tempdir(), "/FedData/extractions/nlcd/", label, "/"),
+                     extraction.dir = paste0(
+                       tempdir(),
+                       "/FedData/"
+                     ),
                      force.redo = F) {
   extraction.dir <- normalizePath(paste0(extraction.dir, "/."), mustWork = FALSE)
-
 
   template %<>% template_to_sf()
 
@@ -51,7 +53,7 @@ get_nlcd <- function(template,
 
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
 
-  outfile <- paste0(extraction.dir, "/", coverage, ".tif")
+  outfile <- paste0(extraction.dir, "/", label, "_", coverage, "_nlcd.tif")
 
   if (file.exists(outfile) & !force.redo) {
     return(raster::raster(outfile))
