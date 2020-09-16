@@ -56,7 +56,7 @@ esri_query <-
     layer_ids %>%
       purrr::map(function(x) {
         max_count <-
-          esri_describe(url)$maxRecordCount
+          esri_describe(url)$maxRecordCount / 2
 
         ids <-
           httr::POST(
