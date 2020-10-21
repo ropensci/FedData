@@ -77,7 +77,7 @@ get_ssurgo <- function(template,
     return(list(spatial = SSURGOData$geometry, tabular = purrr::list_modify(SSURGOData, geometry = NULL)))
   }
 
-  if (class(template) == "character") {
+  if (identical(class(template), "character")) {
     q <- paste0(
       "SELECT areasymbol, saverest FROM sacatalog WHERE areasymbol IN (", paste(paste0("'", template, "'"), collapse = ","),
       ");"
@@ -88,6 +88,12 @@ get_ssurgo <- function(template,
 
     # Get shapefile of SSURGO study areas in the template
     SSURGOAreas <- get_ssurgo_inventory(template = template, raw.dir = raw.dir)
+
+    if (!any(SSURGOAreas$iscomplete)) {
+      stop("There are no complete soil surveys in your study area.")
+    }
+
+
     # Remove SSURGO study areas that are not available
     SSURGOAreas <- SSURGOAreas[SSURGOAreas$iscomplete != 0, ]
   }
@@ -115,16 +121,30 @@ get_ssurgo <- function(template,
     do.call("rbind", .)
 
   # Crop to template
-  if (class(template) != "character") {
-    SSURGOData$spatial %<>%
-      sf::st_intersection(template %>%
-        sf::st_transform(sf::st_crs(SSURGOData$spatial)))
+  if (!identical(class(template), "character")) {
+    suppressWarnings(
+      SSURGOData$spatial %<>%
+        dplyr::ungroup() %>%
+        sf::st_cast("MULTIPOLYGON") %>%
+        sf::st_cast("POLYGON")
+    )
+
+    suppressMessages(
+      suppressWarnings(
+        SSURGOData$spatial %<>%
+          dplyr::filter(
+            SSURGOData$spatial %>%
+              sf::st_intersects(
+                template %>%
+                  sf::st_transform(
+                    sf::st_crs(SSURGOData$spatial)
+                  )
+              ) %>%
+              purrr::map_lgl(~ (length(.x) > 0))
+          )
+      )
+    )
   }
-
-
-  SSURGOData$tabular %>%
-    purrr::transpose() %$%
-    component
 
   SSURGOData$tabular %<>%
     purrr::transpose() %>%
@@ -138,7 +158,8 @@ get_ssurgo <- function(template,
           }
           y
         }) %>%
-        dplyr::bind_rows()
+        dplyr::bind_rows() %>%
+        readr::type_convert(col_types = readr::cols())
     })
 
   # Extract only the mapunits in the study area,
@@ -207,7 +228,7 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
       sf::st_transform(4326)
   }
 
-  # If there is a template, only download the areas in the template Thanks to Dylan Beaudette for this method!
+  # If there is a template, only download the areas in the template. Thanks to Dylan Beaudette for this method!
   if (!is.null(template) &&
     httr::status_code(
       httr::GET(
@@ -272,7 +293,7 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
         tryCatch(
           suppressMessages(
             suppressWarnings(
-              sf::read_sf(temp.file, crs = NA) %>%
+              sf::read_sf(temp.file, drivers = "GML") %>%
                 dplyr::mutate(saverest = as.Date(lubridate::parse_date_time(saverest, orders = "b d Y HMOp", locale = "en_US"))) %>%
                 # sf::st_intersection(template) %>%
                 sf::st_drop_geometry()
@@ -311,7 +332,7 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
       "Some of the soil surveys in your area are unavailable.\n
             Soils and productivity data will have holes.\n
             Missing areas:\n",
-      as.vector(SSURGOAreas[SSURGOAreas$iscomplete == 0, ]$areasymbol), "\n\n
+      paste0(as.vector(SSURGOAreas[SSURGOAreas$iscomplete == 0, ]$areasymbol), collapse = "\n"), "\n\n
             Continuing with processing available soils.\n\n"
     )
   }
@@ -395,8 +416,7 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
               col_names = F,
               col_types = readr::cols(.default = readr::col_character()),
               delim = "|"
-            ) %>%
-              readr::type_convert(col_types = readr::cols())
+            )
           ),
           error = function(e) {
             return(NULL)

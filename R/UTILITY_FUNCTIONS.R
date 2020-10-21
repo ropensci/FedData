@@ -21,7 +21,24 @@ if (getRversion() >= "2.15.1") {
     "ExceptionReport",
     "name",
     "ServiceExceptionReport",
-    "year"
+    "year",
+    "AREASYMBOL",
+    "Area - Large Scale",
+    "Flowline - Large Scale",
+    "Line - Large Scale",
+    "MUKEY",
+    "MUSYM",
+    "NHDArea",
+    "NHDLine",
+    "NHDPoint",
+    "NHDWaterbody",
+    "Point",
+    "SPATIALVER",
+    "Waterbody - Large Scale",
+    "mukey",
+    "musym",
+    "spatial",
+    "tabular"
   ))
 }
 
@@ -341,7 +358,6 @@ url_base <- function(x) {
 #'
 #' @description Replace all the empty values in a list
 #' @param x A list
-#' @param replacement Replacement value for missing values
 #' @examples
 #' list(a = NULL, b = 1, c = list(foo = NULL, bar = NULL)) %>% replace_null()
 #' @export

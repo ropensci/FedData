@@ -7,7 +7,6 @@
 get_wbd(
   template,
   label,
-  nhdplus = FALSE,
   extraction.dir = paste0(tempdir(), "/FedData/extractions/nhd/", label, "/"),
   force.redo = FALSE
 )
@@ -27,6 +26,6 @@ A  `sf` collection of the HUC 12 regions within
 the specified \code{template}.
 }
 \description{
-\code{get_huc4} returns an `sf` collection of the HUC 12 regions within
+\code{get_wbd} returns an `sf` collection of the HUC 12 regions within
 the specified \code{template}.
 }

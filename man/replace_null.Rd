@@ -8,8 +8,6 @@ replace_null(x)
 }
 \arguments{
 \item{x}{A list}
-
-\item{replacement}{Replacement value for missing values}
 }
 \description{
 Replace all the empty values in a list

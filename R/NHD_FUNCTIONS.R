@@ -165,7 +165,7 @@ plot_nhd <-
 
 #' Download and crop the Watershed Boundary Dataset.
 #'
-#' \code{get_huc4} returns an `sf` collection of the HUC 12 regions within
+#' \code{get_wbd} returns an `sf` collection of the HUC 12 regions within
 #' the specified \code{template}.
 #'
 #' @param template A `Raster*`, `Spatial*`, or `sf` object to serve
@@ -178,7 +178,6 @@ plot_nhd <-
 #' @export
 get_wbd <- function(template,
                     label,
-                    nhdplus = FALSE,
                     extraction.dir = paste0(
                       tempdir(),
                       "/FedData/extractions/nhd/",
