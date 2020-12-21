@@ -19,6 +19,7 @@ addons:
       - libudunits2-dev
       - libproj-dev
       - libgeos-dev
+      - libgit2-dev
 
 after_success:
   - Rscript -e 'covr::codecov()'
