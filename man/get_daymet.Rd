@@ -64,17 +64,12 @@ template study area.
 }
 \examples{
 \dontrun{
-# Extract data for the Village Ecodynamics Project 'VEPIIN' study area:
-# http://village.anth.wsu.edu
-vepPolygon <- polygon_from_extent(raster::extent(672800, 740000, 4102000, 4170000),
-  proj4string = "+proj=utm +datum=NAD83 +zone=12"
-)
 
 # Get the DAYMET (North America only)
 # Returns a list of raster bricks
 DAYMET <- get_daymet(
-  template = vepPolygon,
-  label = "VEPIIN",
+  template = FedData::meve,
+  label = "meve",
   elements = c("prcp", "tmin", "tmax"),
   years = 1980:1985
 )

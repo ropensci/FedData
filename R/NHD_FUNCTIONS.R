@@ -15,12 +15,12 @@
 #' @examples
 #' # Get the NHD (USA ONLY)
 #' NHD <- get_nhd(
-#'   template = FedData::glac,
-#'   label = "glac"
+#'   template = FedData::meve,
+#'   label = "meve"
 #' )
 #' NHD
 #' NHD %>%
-#'   plot_nhd(template = FedData::glac)
+#'   plot_nhd(template = FedData::meve)
 get_nhd <-
   function(template,
            label,
@@ -95,15 +95,17 @@ get_nhd <-
     }
 
     suppressWarnings({
-      nhd_out %>%
-        purrr::map(sf::st_make_valid) %>%
-        purrr::map(
-          sf::st_intersection,
-          template %>%
-            sf::st_geometry() %>%
-            sf::st_transform(sf::st_crs(nhd_out[[1]]))
-        ) %>%
-        write_sf_all(dsn = out_dsn)
+      suppressMessages({
+        nhd_out %>%
+          purrr::map(sf::st_make_valid) %>%
+          purrr::map(
+            sf::st_intersection,
+            template %>%
+              sf::st_geometry() %>%
+              sf::st_transform(sf::st_crs(nhd_out[[1]]))
+          ) %>%
+          write_sf_all(dsn = out_dsn)
+      })
     })
 
     return(read_sf_all(out_dsn))
@@ -132,6 +134,12 @@ get_nhd <-
 plot_nhd <-
   function(x,
            template = NULL) {
+    if (!requireNamespace("ggplot2", quietly = TRUE)) {
+      stop("Package \"ggplot2\" needed for this function to work. Please install it.",
+        call. = FALSE
+      )
+    }
+
     template %<>%
       template_to_sf() %>%
       sf::st_transform(sf::st_crs(x[[1]]))

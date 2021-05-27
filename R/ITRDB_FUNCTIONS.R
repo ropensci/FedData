@@ -52,17 +52,11 @@
 #' @importFrom sf st_as_sf st_transform st_intersection
 #' @examples
 #' \dontrun{
-#' # Extract data for the Village Ecodynamics Project 'VEPIIN' study area:
-#' # http://village.anth.wsu.edu
-#' vepPolygon <- polygon_from_extent(raster::extent(672800, 740000, 4102000, 4170000),
-#'   proj4string = "+proj=utm +datum=NAD83 +zone=12"
-#' )
-#'
 #' # Get the ITRDB records
-#' ITRDB <- get_itrdb(template = vepPolygon, label = "VEPIIN", makeSpatial = T)
+#' ITRDB <- get_itrdb(template = FedData::meve, label = "meve", makeSpatial = T)
 #'
 #' # Plot the VEP polygon
-#' plot(vepPolygon)
+#' plot(meve$geometry)
 #'
 #' # Map the locations of the tree ring chronologies
 #' plot(ITRDB$metadata, pch = 1, add = T)
@@ -194,7 +188,7 @@ get_itrdb <- function(template = NULL,
 
   out <- list(metadata = data, widths = widths, depths = depths)
   if (!is.null(label)) {
-    readr::write_rds(out, path = paste0(extraction.dir, "/", label, "_ITRDB.Rds"))
+    readr::write_rds(out, file = paste0(extraction.dir, "/", label, "_ITRDB.Rds"))
   }
 
   return(out)

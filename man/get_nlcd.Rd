@@ -15,7 +15,7 @@ get_nlcd(
 )
 }
 \arguments{
-\item{template}{A Raster* or Spatial* object to serve
+\item{template}{A sf, Raster* or Spatial* object to serve
 as a template for cropping.}
 
 \item{label}{A character string naming the study area.}
@@ -41,18 +41,26 @@ A \code{RasterLayer} cropped to the bounding box of the template.
 \code{get_nlcd} returns a \code{RasterLayer} of NLCD data cropped to a given
 template study area.
 }
+\details{
+NOTE: Prior to FedData version 3.0.0, the `get_nlcd` function returned
+data in the web Mercator coordinate reference system available through
+the [MRLC web mapping services](https://www.mrlc.gov/geoserver/web/), rather
+than data in the NLCD's native projection (a flavor of North American Albers).
+This function now returns data in the original CRS.
+}
 \examples{
 \dontrun{
 # Extract data for the Mesa Verde National Park:
 
 # Get the NLCD (USA ONLY)
 # Returns a raster
-NLCD <- get_nlcd(paleocar::mvnp \%>\%
-  sf::st_as_sf(),
-label = "MVNP",
-year = 2011,
-landmass = "L48"
-)
+NLCD <-
+  get_nlcd(
+    template = FedData::meve,
+    label = "meve",
+    year = 2011,
+    landmass = "L48"
+  )
 
 # Plot with raster::plot
 plot(NLCD)

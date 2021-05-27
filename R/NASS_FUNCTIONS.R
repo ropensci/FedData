@@ -1,6 +1,6 @@
 #' Download and crop the NASS Cropland Data Layer.
 #'
-#' \code{get_nass} returns a \code{RasterLayer} of NASS Cropland Data Layer cropped to a given
+#' \code{get_nass_cdl} returns a \code{RasterLayer} of NASS Cropland Data Layer cropped to a given
 #' template study area.
 #'
 #' @param template A Raster* or Spatial* object to serve
@@ -20,34 +20,32 @@
 #' \dontrun{
 #' # Extract data for the Mesa Verde National Park:
 #'
-#' # Get the NASS (USA ONLY)
+#' # Get the NASS CDL (USA ONLY)
 #' # Returns a raster
-#' NASS <- get_nass(
-#'   template = paleocar::mvnp %>%
-#'     sf::st_as_sf(),
-#'   label = "MVNP",
-#'   year = 2011
-#' )
+#' NASS <-
+#'   get_nass_cdl(
+#'     template = FedData::meve,
+#'     label = "meve",
+#'     year = 2011
+#'   )
 #'
 #' # Plot with raster::plot
 #' plot(NASS)
 #' }
-get_nass <- function(template,
-                     label,
-                     year = 2019,
-                     extraction.dir = paste0(tempdir(), "/FedData/"),
-                     raster.options = c(
-                       "COMPRESS=DEFLATE",
-                       "ZLEVEL=9",
-                       "INTERLEAVE=BAND"
-                     ),
-                     force.redo = FALSE,
-                     progress = TRUE) {
+get_nass_cdl <- function(template,
+                         label,
+                         year = 2019,
+                         extraction.dir = paste0(tempdir(), "/FedData/"),
+                         raster.options = c(
+                           "COMPRESS=DEFLATE",
+                           "ZLEVEL=9",
+                           "INTERLEAVE=BAND"
+                         ),
+                         force.redo = FALSE,
+                         progress = TRUE) {
   extraction.dir <- normalizePath(paste0(extraction.dir, "/."), mustWork = FALSE)
 
-  if (!("sf" %in% class(template))) {
-    template %<>% sf::st_as_sf()
-  }
+  template %<>% template_to_sf()
 
   layer <- paste0("cdl_", year)
   source <- "https://nassgeodata.gmu.edu/CropScapeService/wms_cdlall"
@@ -71,87 +69,22 @@ get_nass <- function(template,
 
 
   template %<>%
-    sf::st_transform("+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m") %>%
+    sf::st_transform("+proj=aea +lat_0=23 +lon_0=-96 +lat_1=29.5 +lat_2=45.5 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs") %>%
     sf::st_bbox()
-
-  # # Convert to floating grid
-  # origin <- c(-2356095, 276915)
-  # template["xmin"] <- floor((template["xmin"] - origin[[1]]) / 30)
-  # template["xmax"] <- ceiling((template["xmax"] - origin[[1]]) / 30)
-  # template["ymin"] <- floor((template["ymin"] - origin[[2]]) / -30)
-  # template["ymax"] <- ceiling((template["ymax"] - origin[[2]]) / -30)
-  #
-  # template %<>%
-  #   split_bbox(
-  #     x = 2047 * 30,
-  #     y = 2047 * 30
-  #   )
-  #
-  # if (progress) {
-  #   pb <- progress::progress_bar$new(total = length(template))
-  # }
-  #
-  # out <-
-  #   template %>%
-  #   list() %>%
-  #   purrr::map(function(x) {
-  #     if (progress) {
-  #       pb$tick()
-  #     }
-  #
-  #     tf <- tempfile(fileext = ".tif")
-  #
-  #     response <-
-  #       x %>%
-  #       as.list() %$%
-  #       httr::GET(source,
-  #                 query = list(
-  #                   service = "wcs",
-  #                   version = "1.0.0",
-  #                   request = "getcoverage",
-  #                   coverage = layer,
-  #                   crs = "epsg:102004",
-  #                   resx = 30,
-  #                   resy = 30,
-  #                   bbox = paste0(c(xmin, ymin, xmax, ymax), collapse = ","),
-  #                   format = "gtiff"
-  #                 ),
-  #                 httr::write_disk(
-  #                   path = tf,
-  #                   overwrite = TRUE
-  #                 )
-  #       )
-  #
-  #     if (httr::headers(response)$`content-type` != "image/tiff") {
-  #       stop(response %>%
-  #              httr::content(encoding = "UTF-8") %>%
-  #              xml2::as_list() %$%
-  #              ExceptionReport$Exception$ExceptionText[[1]])
-  #     }
-  #
-  #     tf %>%
-  #       raster::raster() %>%
-  #       raster::readAll()
-  #   }) %>%
-  #   do.call(raster::merge, .) %>%
-  #   raster::as.factor()
 
   tf <- tempfile(fileext = ".tif")
 
   response <-
-    template %>%
-    as.list() %$%
-    httr::GET(source,
+    source %>%
+    httr::GET(
       query = list(
-        service = "wcs",
-        version = "1.0.0",
-        request = "getcoverage",
-        coverage = layer,
-        crs = "epsg:102004",
-        resx = 30,
-        resy = 30,
-        bbox = paste0(c(xmin, ymin, xmax, ymax), collapse = ","),
-        format = "gtiff"
+        service = "WCS",
+        version = "2.0.1",
+        request = "GetCoverage",
+        coverageid = layer,
+        subset = paste0("x(", template["xmin"], ",", template["xmax"], ")"),
+        subset = paste0("y(", template["ymin"], ",", template["ymax"], ")"),
+        format = "image/tiff"
       ),
       httr::write_disk(
         path = tf,
@@ -189,4 +122,23 @@ get_nass <- function(template,
     )
 
   return(out)
+}
+
+#' @export
+#' @rdname get_nass_cdl
+get_nass <- function(template, label, ...) {
+  deprecate_warn("3.0.0", "get_nass()", "get_nass_cdl()", details = "`get_nass()` has become `get_nass_cdl()` to clarify the dataset provided. See `?get_nass_cdl`.")
+  get_nass_cdl(template, label, ...)
+}
+
+#' @export
+#' @rdname get_nass_cdl
+get_cdl <- function(template, label, ...) {
+  get_cdl(template, label, ...)
+}
+
+#' @export
+#' @rdname get_nass_cdl
+cdl_colors <- function() {
+  nass
 }

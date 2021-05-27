@@ -42,31 +42,6 @@ if (getRversion() >= "2.15.1") {
   ))
 }
 
-#' Install and load a package.
-#'
-#' This is a convenience function that checks whether a package is installed, and if not, installs it.
-#'
-#' @param x A character string representing the name of a package.
-#' @export
-#' @keywords internal
-pkg_test <- function(x) {
-  if (grepl("/", x)) {
-    pkgName <- basename(x)
-  } else {
-    pkgName <- x
-  }
-  if (!suppressWarnings(require(pkgName, character.only = TRUE))) {
-    if (grepl("/", x)) {
-      suppressWarnings(devtools::install_github(x))
-    } else {
-      utils::install.packages(x, dependencies = TRUE, repos = "http://cran.rstudio.com")
-    }
-  }
-  if (!suppressWarnings(require(pkgName, character.only = TRUE))) {
-    stop("Package not found")
-  }
-}
-
 #' Get the rightmost 'n' characters of a character string.
 #'
 #' @param x A character string.
@@ -107,8 +82,8 @@ polygon_from_extent <- function(x, proj4string = NULL) {
 #' @export
 #' @keywords internal
 spdf_from_polygon <- function(x) {
-  IDs <- sapply((methods::slot(x, "polygons")), function(x) {
-    methods::slot(x, "ID")
+  IDs <- sapply((slot(x, "polygons")), function(x) {
+    slot(x, "ID")
   })
   df <- data.frame(rep(0, length(IDs)), row.names = IDs)
   x <- sp::SpatialPolygonsDataFrame(x, df)

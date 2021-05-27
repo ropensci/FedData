@@ -165,19 +165,18 @@
 #' @importFrom magrittr %>%
 #' @examples
 #' \dontrun{
-#' # Extract data for the Village Ecodynamics Project 'VEPIIN' study area:
-#' # http://village.anth.wsu.edu
-#' vepPolygon <- polygon_from_extent(raster::extent(672800, 740000, 4102000, 4170000),
-#'   proj4string = "+proj=utm +datum=NAD83 +zone=12"
-#' )
-#'
 #' # Get the daily GHCN data (GLOBAL)
 #' # Returns a list: the first element is the spatial locations of stations,
 #' # and the second is a list of the stations and their daily data
-#' GHCN.prcp <- get_ghcn_daily(template = vepPolygon, label = "VEPIIN", elements = c("prcp"))
+#' GHCN.prcp <-
+#'   get_ghcn_daily(
+#'     template = FedData::meve,
+#'     label = "meve",
+#'     elements = c("prcp")
+#'   )
 #'
 #' # Plot the VEP polygon
-#' plot(vepPolygon)
+#' plot(meve$geometry)
 #'
 #' # Plot the spatial locations
 #' plot(GHCN.prcp$spatial, pch = 1, add = T)
@@ -187,14 +186,14 @@
 #' # (i.e., minimum and maximum temperature for the same days)
 #' # can be standardized using standardize==T
 #' GHCN.temp <- get_ghcn_daily(
-#'   template = vepPolygon,
-#'   label = "VEPIIN",
+#'   template = FedData::meve,
+#'   label = "meve",
 #'   elements = c("tmin", "tmax"),
 #'   standardize = T
 #' )
 #'
 #' # Plot the VEP polygon
-#' plot(vepPolygon)
+#' plot(meve$geometry)
 #'
 #' # Plot the spatial locations
 #' plot(GHCN.temp$spatial, pch = 1, add = T)
@@ -618,7 +617,7 @@ get_ghcn_inventory <- function(template = NULL, elements = NULL, raw.dir) {
       }
       stations.sp <- stations.sp[stations.sp$ID %in% template, ]
     } else {
-      template <- methods::as(template, "SpatialPolygons")
+      template <- as(template, "SpatialPolygons")
       stations.sp <- stations.sp[!is.na(sp::over(stations.sp, sp::spTransform(template, sp::CRS(raster::projection(stations.sp))))), ]
     }
   }

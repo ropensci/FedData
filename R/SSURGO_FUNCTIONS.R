@@ -22,23 +22,16 @@
 #' @export
 #' @importFrom sp SpatialPointsDataFrame %over%
 #' @importFrom readr read_csv write_csv
-#' @importFrom rgeos gIntersection
 #' @examples
 #' \dontrun{
-#' # Extract data for the Village Ecodynamics Project 'VEPIIN' study area:
-#' # http://village.anth.wsu.edu
-#' vepPolygon <- polygon_from_extent(raster::extent(672800, 740000, 4102000, 4170000),
-#'   proj4string = "+proj=utm +datum=NAD83 +zone=12"
-#' )
-#'
 #' # Get the NRCS SSURGO data (USA ONLY)
-#' SSURGO.VEPIIN <- get_ssurgo(template = vepPolygon, label = "VEPIIN")
+#' SSURGO.MEVE <- get_ssurgo(template = FedData::meve, label = "meve")
 #'
 #' # Plot the VEP polygon
-#' plot(vepPolygon)
+#' plot(meve$geometry)
 #'
 #' # Plot the SSURGO mapunit polygons
-#' plot(SSURGO.VEPIIN$spatial, lwd = 0.1, add = T)
+#' plot(SSURGO.MEVE$spatial, lwd = 0.1, add = T)
 #'
 #' # Or, download by Soil Survey Area names
 #' SSURGO.areas <- get_ssurgo(template = c("CO670", "CO075"), label = "CO_TEST")
@@ -218,7 +211,6 @@ download_ssurgo_inventory <- function(raw.dir, ...) {
 #' The directory will be created if missing.
 #' @return A \code{SpatialPolygonsDataFrame} of the SSURGO study areas within
 #' the specified \code{template}.
-#' @importFrom methods as
 #' @export
 #' @keywords internal
 get_ssurgo_inventory <- function(template = NULL, raw.dir) {
@@ -392,13 +384,15 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
 
   utils::unzip(file, exdir = tmpdir)
 
-  mapunits <-
-    sf::read_sf(paste0(tmpdir, "/", area, "/spatial"),
-      layer = paste0("soilmu_a_", tolower(area))
-    ) %>%
-    sf::st_make_valid() %>%
-    dplyr::group_by(AREASYMBOL, SPATIALVER, MUSYM, MUKEY) %>%
-    dplyr::summarise()
+  suppressMessages(
+    mapunits <-
+      sf::read_sf(paste0(tmpdir, "/", area, "/spatial"),
+        layer = paste0("soilmu_a_", tolower(area))
+      ) %>%
+      sf::st_make_valid() %>%
+      dplyr::group_by(AREASYMBOL, SPATIALVER, MUSYM, MUKEY) %>%
+      dplyr::summarise()
+  )
 
   # Read in all tables
   tablesData <-

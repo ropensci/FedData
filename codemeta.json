@@ -5,8 +5,8 @@
   ],
   "@type": "SoftwareSourceCode",
   "identifier": "FedData",
-  "description": "Functions to automate downloading geospatial data\n    available from several federated data sources (mainly sources\n    maintained by the US Federal government). Currently, the package\n    enables extraction from seven datasets: The National Elevation Dataset\n    digital elevation models (1 and 1/3 arc-second; USGS); The National\n    Hydrography Dataset (USGS); The Soil Survey Geographic (SSURGO)\n    database from the National Cooperative Soil Survey (NCSS), which is\n    led by the Natural Resources Conservation Service (NRCS) under the\n    USDA; the Global Historical Climatology Network (GHCN), coordinated by\n    National Climatic Data Center at NOAA; the Daymet gridded estimates of\n    daily weather parameters for North America, version 3, available from\n    the Oak Ridge National Laboratory's Distributed Active Archive Center\n    (DAAC); the International Tree Ring Data Bank; and the National Land\n    Cover Database (NLCD).",
-  "name": "FedData: Functions to Automate Downloading Geospatial Data\n    Available from Several Federated Data Sources",
+  "description": "Functions to automate downloading geospatial data available\n    from several federated data sources (mainly sources maintained by the\n    US Federal government). Currently, the package enables extraction from\n    seven datasets: The National Elevation Dataset digital elevation\n    models (1 and 1/3 arc-second; USGS); The National Hydrography Dataset\n    (USGS); The Soil Survey Geographic (SSURGO) database from the National\n    Cooperative Soil Survey (NCSS), which is led by the Natural Resources\n    Conservation Service (NRCS) under the USDA; the Global Historical\n    Climatology Network (GHCN), coordinated by National Climatic Data\n    Center at NOAA; the Daymet gridded estimates of daily weather\n    parameters for North America, version 3, available from the Oak Ridge\n    National Laboratory's Distributed Active Archive Center (DAAC); the\n    International Tree Ring Data Bank; and the National Land Cover\n    Database (NLCD).",
+  "name": "FedData: Functions to Automate Downloading Geospatial Data Available from\n    Several Federated Data Sources",
   "codeRepository": "https://github.com/ropensci/FedData",
   "relatedLink": [
     "https://docs.ropensci.org/FedData",
@@ -20,7 +20,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.0.2 (2020-06-22)",
+  "runtimePlatform": "R version 4.1.0 (2021-05-18)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -61,14 +61,7 @@
     {
       "@type": "SoftwareApplication",
       "identifier": "codemetar",
-      "name": "codemetar",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=codemetar"
+      "name": "codemetar"
     },
     {
       "@type": "SoftwareApplication",
@@ -84,6 +77,18 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "devtools",
+      "name": "devtools",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=devtools"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "docopt",
       "name": "docopt",
       "provider": {
@@ -93,6 +98,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=docopt"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "ggplot2",
+      "name": "ggplot2",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=ggplot2"
     },
     {
       "@type": "SoftwareApplication",
@@ -188,18 +205,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "devtools",
-      "name": "devtools",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=devtools"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "dplyr",
       "name": "dplyr",
       "provider": {
@@ -221,18 +226,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=foreach"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "ggplot2",
-      "name": "ggplot2",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=ggplot2"
     },
     {
       "@type": "SoftwareApplication",
@@ -284,18 +277,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "lwgeom",
-      "name": "lwgeom",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=lwgeom"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "magrittr",
       "name": "magrittr",
       "provider": {
@@ -305,11 +286,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=magrittr"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "methods",
-      "name": "methods"
     },
     {
       "@type": "SoftwareApplication",
@@ -382,31 +358,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=rgdal"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "rgeos",
-      "name": "rgeos",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=rgeos"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "s2",
-      "name": "s2",
-      "version": ">= 1.0.2",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=s2"
     },
     {
       "@type": "SoftwareApplication",
@@ -483,7 +434,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/master/README.md",
-  "fileSize": "2115475.045KB",
+  "fileSize": "2628.435KB",
   "contIntegration": ["https://travis-ci.org/ropensci/FedData", "https://codecov.io/github/ropensci/FedData?branch=master"],
   "review": {
     "@type": "Review",

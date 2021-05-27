@@ -82,30 +82,34 @@ installs of *R* on Mac OS 10.14 and Windows 10.
 
 -   From CRAN:
 
-<!-- -->
-
-    install.packages("FedData")
+``` r
+install.packages("FedData")
+```
 
 -   Development version from GitHub:
 
-<!-- -->
-
-    install.packages("devtools")
-    devtools::install_github("ropensci/FedData")
+``` r
+install.packages("devtools")
+devtools::install_github("ropensci/FedData")
+```
 
 -   Linux (Ubuntu 14.04.5 or 16.04.1):
 
 First, in terminal:
 
-    sudo add-apt-repository ppa:ubuntugis/ppa -y
-    sudo apt-get update -q
-    sudo apt-get install libssl-dev libcurl4-openssl-dev netcdf-bin libnetcdf-dev gdal-bin libgdal-dev
+``` bash
+sudo add-apt-repository ppa:ubuntugis/ppa -y
+sudo apt-get update -q
+sudo apt-get install libssl-dev libcurl4-openssl-dev netcdf-bin libnetcdf-dev gdal-bin libgdal-dev
+```
 
 Then, in R:
 
-    update.packages("survival")
-    install.packages("devtools")
-    devtools::install_github("ropensci/FedData")
+``` r
+update.packages("survival")
+install.packages("devtools")
+devtools::install_github("ropensci/FedData")
+```
 
 ### Demonstration
 
@@ -114,269 +118,315 @@ GitHub repository: <https://github.com/ropensci/FedData>.
 
 #### Load `FedData` and define a study area
 
-    # FedData Tester
-    library(FedData)
-    library(magrittr)
+``` r
+# FedData Tester
+library(FedData)
+library(magrittr)
 
-    # Extract data for Mesa Verde National Park:
-    vepPolygon <- polygon_from_extent(raster::extent(672800, 740000, 4102000, 4170000),
-      proj4string = "+proj=utm +datum=NAD83 +zone=12"
-    )
+# FedData comes loaded with the boundary of Mesa Verde National Park, for testing
+FedData::meve
+```
 
 #### Get and plot the National Elevation Dataset for the study area
 
-    # Get the NED (USA ONLY)
-    # Returns a raster
-    NED <- get_ned(
-      template = vepPolygon,
-      label = "VEPIIN"
-    )
-    #> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
-    #> datum Unknown based on WGS84 ellipsoid in CRS definition
-    # Plot with raster::plot
-    raster::plot(NED)
+``` r
+# Get the NED (USA ONLY)
+# Returns a raster
+NED <- get_ned(
+  template = FedData::meve,
+  label = "meve"
+)
+#> Warning in if (class(x) != "extent") {: the condition has length > 1 and only
+#> the first element will be used
+#> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO", prefer_proj =
+#> prefer_proj): Discarded ellps WGS 84 in Proj4 definition: +proj=merc +a=6378137
+#> +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null
+#> +wktext +no_defs +type=crs
+#> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO", prefer_proj =
+#> prefer_proj): Discarded datum World Geodetic System 1984 in Proj4 definition
+#> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO", prefer_proj
+#> = prefer_proj): Discarded datum Unknown based on WGS84 ellipsoid in Proj4
+#> definition
+# Plot with raster::plot
+raster::plot(NED)
+```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-NED-1.png" width="100%" />
 
 #### Get and plot the Daymet dataset for the study area
 
-    # Get the DAYMET (North America only)
-    # Returns a raster
-    DAYMET <- get_daymet(
-      template = vepPolygon,
-      label = "VEPIIN",
-      elements = c("prcp", "tmax"),
-      years = 1980:1985
-    )
-    # Plot with raster::plot
-    raster::plot(DAYMET$tmax$X1985.10.23)
+``` r
+# Get the DAYMET (North America only)
+# Returns a raster
+DAYMET <- get_daymet(
+  template = FedData::meve,
+  label = "meve",
+  elements = c("prcp", "tmax"),
+  years = 1980:1985
+)
+# Plot with raster::plot
+raster::plot(DAYMET$tmax$X1985.10.23)
+```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-DAYMET-1.png" width="100%" />
 
 #### Get and plot the daily GHCN precipitation data for the study area
 
-    # Get the daily GHCN data (GLOBAL)
-    # Returns a list: the first element is the spatial locations of stations,
-    # and the second is a list of the stations and their daily data
-    GHCN.prcp <- get_ghcn_daily(
-      template = vepPolygon,
-      label = "VEPIIN",
-      elements = c("prcp")
-    )
-    #> Warning: `select_()` is deprecated as of dplyr 0.7.0.
-    #> Please use `select()` instead.
-    #> This warning is displayed once every 8 hours.
-    #> Call `lifecycle::last_warnings()` to see where this warning was generated.
-    # Plot the NED again
-    raster::plot(NED)
-    # Plot the spatial locations
-    sp::plot(GHCN.prcp$spatial,
-      pch = 1,
-      add = TRUE
-    )
-    legend("bottomleft",
-      pch = 1,
-      legend = "GHCN Precipitation Records"
-    )
+``` r
+# Get the daily GHCN data (GLOBAL)
+# Returns a list: the first element is the spatial locations of stations,
+# and the second is a list of the stations and their daily data
+GHCN.prcp <- get_ghcn_daily(
+  template = FedData::meve,
+  label = "meve",
+  elements = c("prcp")
+)
+#> Warning in if (!is.null(template) & !(class(template) %in%
+#> c("SpatialPolygonsDataFrame", : the condition has length > 1 and only the first
+#> element will be used
+#> Warning in if (class(x) != "extent") {: the condition has length > 1 and only
+#> the first element will be used
+#> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO", prefer_proj =
+#> prefer_proj): Discarded ellps WGS 84 in Proj4 definition: +proj=merc +a=6378137
+#> +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null
+#> +wktext +no_defs +type=crs
+#> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO", prefer_proj =
+#> prefer_proj): Discarded datum World Geodetic System 1984 in Proj4 definition
+#> Warning: `select_()` was deprecated in dplyr 0.7.0.
+#> Please use `select()` instead.
+#> Warning: `filter_()` was deprecated in dplyr 0.7.0.
+#> Please use `filter()` instead.
+#> See vignette('programming') for more help
+#> Warning: `funs_()` was deprecated in dplyr 0.7.0.
+#> Please use `funs()` instead.
+#> See vignette('programming') for more help
+#> Warning: `funs()` was deprecated in dplyr 0.8.0.
+#> Please use a list of either functions or lambdas: 
+#> 
+#>   # Simple named list: 
+#>   list(mean = mean, median = median)
+#> 
+#>   # Auto named with `tibble::lst()`: 
+#>   tibble::lst(mean, median)
+#> 
+#>   # Using lambdas
+#>   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+# Plot the NED again
+raster::plot(NED)
+# Plot the spatial locations
+sp::plot(GHCN.prcp$spatial,
+  pch = 1,
+  add = TRUE
+)
+legend("bottomleft",
+  pch = 1,
+  legend = "GHCN Precipitation Records"
+)
+```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-GHCN precipitation-1.png" width="100%" />
 
 #### Get and plot the daily GHCN temperature data for the study area
 
-    # Elements for which you require the same data
-    # (i.e., minimum and maximum temperature for the same days)
-    # can be standardized using standardize==T
-    GHCN.temp <- get_ghcn_daily(
-      template = vepPolygon,
-      label = "VEPIIN",
-      elements = c("tmin", "tmax"),
-      years = 1980:1985,
-      standardize = TRUE
-    )
-    #> Warning: `filter_()` is deprecated as of dplyr 0.7.0.
-    #> Please use `filter()` instead.
-    #> See vignette('programming') for more help
-    #> This warning is displayed once every 8 hours.
-    #> Call `lifecycle::last_warnings()` to see where this warning was generated.
-    # Plot the NED again
-    raster::plot(NED)
-    # Plot the spatial locations
-    sp::plot(GHCN.temp$spatial,
-      add = TRUE,
-      pch = 1
-    )
-    legend("bottomleft",
-      pch = 1,
-      legend = "GHCN Temperature Records"
-    )
+``` r
+# Elements for which you require the same data
+# (i.e., minimum and maximum temperature for the same days)
+# can be standardized using standardize==T
+GHCN.temp <- get_ghcn_daily(
+  template = FedData::meve,
+  label = "meve",
+  elements = c("tmin", "tmax"),
+  years = 1980:1985,
+  standardize = TRUE
+)
+#> Warning: `arrange_()` was deprecated in dplyr 0.7.0.
+#> Please use `arrange()` instead.
+#> See vignette('programming') for more help
+# Plot the NED again
+raster::plot(NED)
+# Plot the spatial locations
+sp::plot(GHCN.temp$spatial,
+  add = TRUE,
+  pch = 1
+)
+legend("bottomleft",
+  pch = 1,
+  legend = "GHCN Temperature Records"
+)
+```
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-GHCN temperature-1.png" width="100%" />
 
 #### Get and plot the National Hydrography Dataset for the study area
 
-    # Get the NHD (USA ONLY)
-    get_nhd(
-      template = FedData::glac,
-      label = "glac"
-    ) %>%
-      plot_nhd(template = FedData::glac)
+``` r
+# Get the NHD (USA ONLY)
+get_nhd(
+  template = FedData::meve,
+  label = "meve"
+) %>%
+  plot_nhd(template = FedData::meve)
+```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+<img src="man/figures/README-NHD-1.png" width="100%" />
 
 #### Get and plot the NRCS SSURGO data for the study area
 
-    # Get the NRCS SSURGO data (USA ONLY)
-    SSURGO.VEPIIN <- get_ssurgo(
-      template = vepPolygon,
-      label = "VEPIIN"
-    )
-    # Plot the NED again
-    raster::plot(NED)
-    # Plot the SSURGO mapunit polygons
-    plot(SSURGO.VEPIIN$spatial,
-      lwd = 0.1,
-      add = TRUE
-    )
+``` r
+# Get the NRCS SSURGO data (USA ONLY)
+SSURGO.MEVE <- get_ssurgo(
+  template = FedData::meve,
+  label = "meve"
+)
+# Plot the NED again
+raster::plot(NED)
+# Plot the SSURGO mapunit polygons
+plot(SSURGO.MEVE$spatial$geom,
+  lwd = 0.1,
+  add = TRUE
+)
+```
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+<img src="man/figures/README-SSURGO-1.png" width="100%" />
 
 #### Get and plot the NRCS SSURGO data for particular soil survey areas
 
-    # Or, download by Soil Survey Area names
-    SSURGO.areas <- get_ssurgo(
-      template = c("CO670", "CO075"),
-      label = "CO_TEST"
-    )
+``` r
+# Or, download by Soil Survey Area names
+SSURGO.areas <- get_ssurgo(
+  template = c("CO670", "CO075"),
+  label = "CO_TEST"
+)
 
-    # Let's just look at spatial data for CO675
-    SSURGO.areas.CO675 <-
-      SSURGO.areas$spatial %>%
-      dplyr::filter(AREASYMBOL == "CO075")
+# Let's just look at spatial data for CO675
+SSURGO.areas.CO675 <-
+  SSURGO.areas$spatial %>%
+  dplyr::filter(AREASYMBOL == "CO075")
 
-    # And get the NED data under them for pretty plotting
-    NED.CO675 <- get_ned(
-      template = SSURGO.areas.CO675,
-      label = "SSURGO_CO675"
-    )
-    #> Warning in if (class(x) != "extent") {: the condition has length > 1 and only
-    #> the first element will be used
-    #> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
-    #> datum Unknown based on WGS84 ellipsoid in CRS definition
+# And get the NED data under them for pretty plotting
+NED.CO675 <- get_ned(
+  template = SSURGO.areas.CO675,
+  label = "SSURGO_CO675"
+)
+#> Warning in if (class(x) != "extent") {: the condition has length > 1 and only
+#> the first element will be used
+#> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO", prefer_proj
+#> = prefer_proj): Discarded datum Unknown based on WGS84 ellipsoid in Proj4
+#> definition
 
-    # Plot the SSURGO mapunit polygons, but only for CO675
-    plot(NED.CO675)
-    plot(SSURGO.areas.CO675,
-      lwd = 0.1,
-      add = TRUE
-    )
-    #> Warning in plot.sf(SSURGO.areas.CO675, lwd = 0.1, add = TRUE): ignoring all but
-    #> the first attribute
+# Plot the SSURGO mapunit polygons, but only for CO675
+raster::plot(NED.CO675)
+plot(SSURGO.areas.CO675$geom,
+  lwd = 0.1,
+  add = TRUE
+)
+```
 
-<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
+<img src="man/figures/README-SSURGO area-1.png" width="100%" />
 
 #### Get and plot the ITRDB chronology locations in the study area
 
-    # Get the ITRDB records
-    ITRDB <- get_itrdb(
-      template = vepPolygon,
-      label = "VEPIIN",
-      recon.years = 850:2000,
-      calib.years = 1924:1983,
-      measurement.type = "Ring Width",
-      chronology.type = "ARSTND"
-    )
-    #> Warning in eval(jsub, SDenv, parent.frame()): NAs introduced by coercion
-    #> Warning: attribute variables are assumed to be spatially constant throughout all
-    #> geometries
+``` r
+# Get the ITRDB records
+# Buffer MEVE, because there aren't any chronologies in the Park
+ITRDB <- get_itrdb(
+  template = FedData::meve %>%
+    sf::st_buffer(50000),
+  label = "meve",
+  measurement.type = "Ring Width",
+  chronology.type = "Standard"
+)
+#> Warning in eval(jsub, SDenv, parent.frame()): NAs introduced by coercion
+#> Warning: attribute variables are assumed to be spatially constant throughout all
+#> geometries
 
-    # Plot the NED again
-    raster::plot(NED)
-    # Map the locations of the tree ring chronologies
-    plot(ITRDB$metadata$geometry,
-      pch = 1,
-      add = TRUE
-    )
-    legend("bottomleft",
-      pch = 1,
-      legend = "ITRDB chronologies"
-    )
+# Plot the MEVE buffer
+plot(
+  FedData::meve %>%
+    sf::st_buffer(50000) %>%
+    sf::st_transform(4326)
+)
+# Map the locations of the tree ring chronologies
+plot(ITRDB$metadata$geometry,
+  pch = 1,
+  add = TRUE
+)
+legend("bottomleft",
+  pch = 1,
+  legend = "ITRDB chronologies"
+)
+```
 
-<img src="man/figures/README-unnamed-chunk-12-1.png" width="100%" />
+<img src="man/figures/README-ITRDB-1.png" width="100%" />
 
 #### Get and plot the National Land Cover Dataset for the study area
 
-    # Get the NLCD (USA ONLY)
-    # Returns a raster
-    NLCD <- get_nlcd(
-      template = vepPolygon,
-      year = 2016,
-      dataset = "Land_Cover",
-      label = "VEPIIN"
-    )
-    #> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
-    #> ellps WGS 84 in CRS definition: +proj=merc +a=6378137 +b=6378137 +lat_ts=0
-    #> +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs
-    #> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
-    #> datum WGS_1984 in CRS definition
-    # Plot with raster::plot
-    raster::plot(NLCD)
+``` r
+# Get the NLCD (USA ONLY)
+# Returns a raster
+NLCD <- get_nlcd(
+  template = FedData::meve,
+  year = 2016,
+  dataset = "Land_Cover",
+  label = "meve"
+)
+# Plot with raster::plot
+raster::plot(NLCD)
+```
 
-<img src="man/figures/README-unnamed-chunk-13-1.png" width="100%" /><img src="man/figures/README-unnamed-chunk-13-2.png" width="100%" />
+<img src="man/figures/README-NLCD-1.png" width="100%" /><img src="man/figures/README-NLCD-2.png" width="100%" />
 
+``` r
+# You can also download the Canopy (2011 only) or impervious datasets:
+NLCD_canopy <-
+  get_nlcd(
+    template = FedData::meve,
+    year = 2016,
+    dataset = "Tree_Canopy",
+    label = "meve"
+  )
+# Plot with raster::plot
+raster::plot(NLCD_canopy)
+```
 
-    # You can also download the Canopy (2011 only) or impervious datasets:
-    NLCD_canopy <- get_nlcd(
-      template = vepPolygon,
-      year = 2011,
-      dataset = "Tree_Canopy",
-      label = "VEPIIN"
-    )
-    #> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
-    #> ellps WGS 84 in CRS definition: +proj=merc +a=6378137 +b=6378137 +lat_ts=0
-    #> +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs
+<img src="man/figures/README-NLCD-3.png" width="100%" /><img src="man/figures/README-NLCD-4.png" width="100%" />
 
-    #> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
-    #> datum WGS_1984 in CRS definition
-    # Plot with raster::plot
-    raster::plot(NLCD_canopy)
+``` r
+NLCD_impervious <- get_nlcd(
+  template = FedData::meve,
+  year = 2016,
+  dataset = "Impervious",
+  label = "meve"
+)
+# Plot with raster::plot
+raster::plot(NLCD_impervious)
+```
 
-<img src="man/figures/README-unnamed-chunk-13-3.png" width="100%" /><img src="man/figures/README-unnamed-chunk-13-4.png" width="100%" />
-
-
-    NLCD_impervious <- get_nlcd(
-      template = vepPolygon,
-      year = 2016,
-      dataset = "Impervious",
-      label = "VEPIIN"
-    )
-    #> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
-    #> ellps WGS 84 in CRS definition: +proj=merc +a=6378137 +b=6378137 +lat_ts=0
-    #> +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs
-
-    #> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO"): Discarded
-    #> datum WGS_1984 in CRS definition
-    # Plot with raster::plot
-    raster::plot(NLCD_impervious)
-
-<img src="man/figures/README-unnamed-chunk-13-5.png" width="100%" /><img src="man/figures/README-unnamed-chunk-13-6.png" width="100%" />
+<img src="man/figures/README-NLCD-5.png" width="100%" /><img src="man/figures/README-NLCD-6.png" width="100%" />
 
 #### Get and plot the NASS Cropland Data Layer for the study area
 
-    # Get the NASS (USA ONLY)
-    # Returns a raster
-    NASS <- get_nass(
-      template = vepPolygon,
-      year = 2016,
-      label = "VEPIIN"
-    )
-    # Plot with raster::plot
-    raster::plot(NASS)
+``` r
+# Get the NASS (USA ONLY)
+# Returns a raster
+NASS_CDL <- get_nass_cdl(
+  template = FedData::meve,
+  year = 2016,
+  label = "meve"
+)
+# Plot with raster::plot
+raster::plot(NASS_CDL)
+```
 
-<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" /><img src="man/figures/README-unnamed-chunk-14-2.png" width="100%" />
+<img src="man/figures/README-NASS CDL-1.png" width="100%" /><img src="man/figures/README-NASS CDL-2.png" width="100%" />
 
+``` r
+# Get the NASS CDL classification table
+raster::levels(NASS_CDL)[[1]]
 
-    # Get the NASS classification table
-    raster::levels(NASS)[[1]]
+# Also, a convenience function loading the NASS CDL categories and hex colors
+cdl_colors()
+```
 
 ------------------------------------------------------------------------
 

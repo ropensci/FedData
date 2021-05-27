@@ -43,20 +43,14 @@ in the template, and
 }
 \examples{
 \dontrun{
-# Extract data for the Village Ecodynamics Project 'VEPIIN' study area:
-# http://village.anth.wsu.edu
-vepPolygon <- polygon_from_extent(raster::extent(672800, 740000, 4102000, 4170000),
-  proj4string = "+proj=utm +datum=NAD83 +zone=12"
-)
-
 # Get the NRCS SSURGO data (USA ONLY)
-SSURGO.VEPIIN <- get_ssurgo(template = vepPolygon, label = "VEPIIN")
+SSURGO.MEVE <- get_ssurgo(template = FedData::meve, label = "meve")
 
 # Plot the VEP polygon
-plot(vepPolygon)
+plot(meve$geometry)
 
 # Plot the SSURGO mapunit polygons
-plot(SSURGO.VEPIIN$spatial, lwd = 0.1, add = T)
+plot(SSURGO.MEVE$spatial, lwd = 0.1, add = T)
 
 # Or, download by Soil Survey Area names
 SSURGO.areas <- get_ssurgo(template = c("CO670", "CO075"), label = "CO_TEST")

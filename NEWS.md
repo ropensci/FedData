@@ -1,13 +1,14 @@
 # FedData 3.0.0.9000
 * All `get_*()` functions now return `sf` or `raster` objects.
-* Updated ITRDB functions to remove data.table deps.
 * Changed `SDA_query()` to `soils_query()` to avoid namespace masking with SoilDB.
-* Added `get_nass()` to retrieve the NASS Cropland Data Layer
-* Updated get_daymet to pull from ORNL WCS, and fixed bug in [Issue #49](https://github.com/ropensci/FedData/issues/49)
-* Fixed issue where soils_query was only returning first SSURGO study area ([Issue #51](https://github.com/ropensci/FedData/issues/51))
+* Added `get_nass_cdl()` to retrieve the NASS Cropland Data Layer
+* Updated `get_daymet()` to pull from ORNL WCS, and fixed bug in [Issue #49](https://github.com/ropensci/FedData/issues/49)
+* Fixed issue where `soils_query()` was only returning first SSURGO study area ([Issue #51](https://github.com/ropensci/FedData/issues/51))
 * Fixed issue where date parsing was USA-specific by leveraging `lubridate::parse_date_time` ([Issue #61](https://github.com/ropensci/FedData/issues/61))
-* get_ssurgo now saves in the [GeoPackage file format](http://www.geopackage.org)
+* `get_ssurgo()` now saves in the [GeoPackage file format](http://www.geopackage.org)
 * `get_nhd()` now access ESRI web services. Users can optionally get data from NHDPlus.
+* `get_nlcd()` now provides data in native CRS (CONUS Albers), rather than web-mercator ([Issue #77](https://github.com/ropensci/FedData/issues/77))
+* Added Mesa Verde National Park as exemplar region, and removed use of `paleocar` package.
 
 # FedData 2.5.7
 * Removing many internet resource tests from CRAN, to satisfy: 'Packages which use Internet resources should fail gracefully with an informative message if the resource is not available (and not give a check warning nor error).'

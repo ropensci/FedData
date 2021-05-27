@@ -65,18 +65,16 @@ tablesHeaders <-
 
 
 ##### National Park Spatial Polygon
-
-# mvnp <- sf::read_sf("https://gist.githubusercontent.com/bocinsky/2081c48598de66c3b3dd377a5bb4519d/raw/707483e40e4a4f72fd3797096af1c5d2a4dfd0bb/meve.geojson")
-
-glac <-
-  "~/Downloads/NPS_-_Land_Resources_Division_Boundary_and_Tract_Data_Service-shp/" %>%
-  sf::read_sf() %>%
-  dplyr::filter(UNIT_CODE == "GLAC") %>%
-  dplyr::select(GNIS_ID, UNIT_CODE, UNIT_NAME, UNIT_TYPE, REGION) %>%
-  sf::st_transform(4326)
-
-
+meve <-
+  "https://services.arcgis.com/P3ePLMYs2RVChkJx/ArcGIS/rest/services/USA_Protected_Areas_Fee_Manager/FeatureServer/0/query" %>%
+  httr::modify_url(
+    query = list(
+      f = "json",
+      where = "Unit_Nm='Mesa Verde National Park'",
+      returnGeometry = "true"
+    )
+  ) %>%
+  sf::read_sf()
 
 usethis::use_data(tablesHeaders, nass, overwrite = TRUE, internal = TRUE)
-# usethis::use_data(mvnp, overwrite = TRUE)
-usethis::use_data(glac, overwrite = TRUE)
+usethis::use_data(meve, overwrite = TRUE)
