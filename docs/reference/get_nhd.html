@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -36,9 +40,8 @@
 
 
 <meta property="og:title" content="Download and crop the National Hydrography Dataset. — get_nhd" />
-<meta property="og:description" content="get_nhd returns a list of Spatial* objects extracted
+<meta property="og:description" content="get_nhd returns a list of `sf` objects extracted
 from the National Hydrography Dataset." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -56,7 +59,7 @@ from the National Hydrography Dataset." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -78,7 +81,7 @@ from the National Hydrography Dataset." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -91,8 +94,8 @@ from the National Hydrography Dataset." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/ropensci/FedData">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/ropensci/FedData/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -115,24 +118,24 @@ from the National Hydrography Dataset." />
     </div>
 
     <div class="ref-description">
-    <p><code>get_nhd</code> returns a list of Spatial* objects extracted
+    <p><code>get_nhd</code> returns a list of `sf` objects extracted
 from the National Hydrography Dataset.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_nhd</span>(
-  <span class='no'>template</span>,
-  <span class='no'>label</span>,
-  <span class='kw'>raw.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"/FedData/raw/nhd"</span>),
-  <span class='kw'>extraction.dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"/FedData/extractions/nhd/"</span>, <span class='no'>label</span>, <span class='st'>"/"</span>),
-  <span class='kw'>force.redo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>get_nhd</span><span class='op'>(</span>
+  <span class='va'>template</span>,
+  <span class='va'>label</span>,
+  nhdplus <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  extraction.dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"/FedData/"</span><span class='op'>)</span>,
+  force.redo <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>template</th>
-      <td><p>A Raster* or Spatial* object to serve
+      <td><p>A `Raster*`, `Spatial*`, or `sf` object to serve
 as a template for cropping.</p></td>
     </tr>
     <tr>
@@ -140,14 +143,12 @@ as a template for cropping.</p></td>
       <td><p>A character string naming the study area.</p></td>
     </tr>
     <tr>
-      <th>raw.dir</th>
-      <td><p>A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to './RAW/NHD/'.</p></td>
+      <th>nhdplus</th>
+      <td><p>Extract data from the USGS NHDPlus High Resolution service (experimental)</p></td>
     </tr>
     <tr>
       <th>extraction.dir</th>
-      <td><p>A character string indicating where the extracted and cropped NHD shapefiles should be put.
-The directory will be created if missing. Defaults to './EXTRACTIONS/NHD/'.</p></td>
+      <td><p>A character string indicating where the extracted and cropped NHD data should be put.</p></td>
     </tr>
     <tr>
       <th>force.redo</th>
@@ -157,37 +158,102 @@ The directory will be created if missing. Defaults to './EXTRACTIONS/NHD/'.</p><
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list of Spatial* objects extracted from the National Hydrography Dataset.</p>
+    <p>A list of `sf` collections extracted from the National Hydrography Dataset.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># Extract data for the Village Ecodynamics Project 'VEPIIN' study area:</span>
-<span class='co'># http://village.anth.wsu.edu</span>
-<span class='no'>vepPolygon</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='polygon_from_extent.html'>polygon_from_extent</a></span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span>(<span class='fl'>672800</span>, <span class='fl'>740000</span>, <span class='fl'>4102000</span>, <span class='fl'>4170000</span>),
-  <span class='kw'>proj4string</span> <span class='kw'>=</span> <span class='st'>"+proj=utm +datum=NAD83 +zone=12"</span>
-)
-
-<span class='co'># Get the NHD (USA ONLY)</span>
-<span class='no'>NHD</span> <span class='kw'>&lt;-</span> <span class='fu'>get_nhd</span>(<span class='kw'>template</span> <span class='kw'>=</span> <span class='no'>vepPolygon</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"VEPIIN"</span>)
-
-<span class='co'># Plot the VEP polygon</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>vepPolygon</span>)
-
-<span class='co'># Plot the NHD data</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>NHD</span>$<span class='no'>Flowline</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='no'>T</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>NHD</span>$<span class='no'>Line</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='no'>T</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>NHD</span>$<span class='no'>Area</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='no'>T</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>NHD</span>$<span class='no'>Waterbody</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='no'>T</span>)
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='co'># Get the NHD (USA ONLY)</span>
+<span class='va'>NHD</span> <span class='op'>&lt;-</span> <span class='fu'>get_nhd</span><span class='op'>(</span>
+  template <span class='op'>=</span> <span class='fu'>FedData</span><span class='fu'>::</span><span class='va'><a href='meve.html'>meve</a></span>,
+  label <span class='op'>=</span> <span class='st'>"meve"</span>
+<span class='op'>)</span>
+<span class='va'>NHD</span>
+</div><div class='output co'>#&gt; $Point
+#&gt; Simple feature collection with 2 features and 9 fields
+#&gt; Geometry type: POINT
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: -108.5456 ymin: 37.21663 xmax: -108.3579 ymax: 37.2525
+#&gt; Geodetic CRS:  WGS 84
+#&gt; <span style='color: #949494;'># A tibble: 2 x 10</span><span>
+#&gt;   OBJECTID         FDATE RESOLUTION GNIS_ID  GNIS_NAME    REACHCODE FTYPE FCODE
+#&gt;      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span>    </span><span style='text-decoration: underline;'>15</span><span>463 1</span><span style='text-decoration: underline;'>057</span><span>104</span><span style='text-decoration: underline;'>000</span><span>000          2 00179195 Rock Springs </span><span style='color: #BB0000;'>NA</span><span>          458 </span><span style='text-decoration: underline;'>45</span><span>800
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span>   </span><span style='text-decoration: underline;'>409</span><span>387 1</span><span style='text-decoration: underline;'>425</span><span>639</span><span style='text-decoration: underline;'>399</span><span>000          2 </span><span style='color: #BB0000;'>NA</span><span>       </span><span style='color: #BB0000;'>NA</span><span>           </span><span style='color: #BB0000;'>NA</span><span>          367 </span><span style='text-decoration: underline;'>36</span><span>701
+#&gt; </span><span style='color: #949494;'># … with 2 more variables: PERMANENT_IDENTIFIER &lt;chr&gt;, geom &lt;POINT [°]&gt;</span><span>
+#&gt; 
+#&gt; $Flowline
+#&gt; Simple feature collection with 403 features and 16 fields
+#&gt; Geometry type: MULTILINESTRING
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: -108.5547 ymin: 37.15643 xmax: -108.3398 ymax: 37.34939
+#&gt; Geodetic CRS:  WGS 84
+#&gt; </span><span style='color: #949494;'># A tibble: 403 x 17</span><span>
+#&gt;    OBJECTID PERMANENT_IDENTIF…      FDATE RESOLUTION GNIS_ID GNIS_NAME  LENGTHKM
+#&gt;       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>    </span><span style='text-decoration: underline;'>85</span><span>103 89636091              1.33</span><span style='color: #949494;'>e</span><span>12          2 009022… Mancos Ri…    0.042
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>   </span><span style='text-decoration: underline;'>151</span><span>209 82523310              1.60</span><span style='color: #949494;'>e</span><span>12          2 </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>            1.64 
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>   </span><span style='text-decoration: underline;'>246</span><span>493 89638649              1.33</span><span style='color: #949494;'>e</span><span>12          2 </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>            0.859
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>   </span><span style='text-decoration: underline;'>313</span><span>169 82523368              1.33</span><span style='color: #949494;'>e</span><span>12          2 </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>            3.79 
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>   </span><span style='text-decoration: underline;'>408</span><span>579 89635301              1.33</span><span style='color: #949494;'>e</span><span>12          2 </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>            0.01 
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>   </span><span style='text-decoration: underline;'>408</span><span>581 89638491              1.33</span><span style='color: #949494;'>e</span><span>12          2 </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>            0.762
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>   </span><span style='text-decoration: underline;'>408</span><span>585 89634469              1.33</span><span style='color: #949494;'>e</span><span>12          2 </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>            0.6  
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>   </span><span style='text-decoration: underline;'>474</span><span>775 82531672              1.60</span><span style='color: #949494;'>e</span><span>12          2 </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>            0.437
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>   </span><span style='text-decoration: underline;'>570</span><span>422 89634463              1.33</span><span style='color: #949494;'>e</span><span>12          2 </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>            1.32 
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span>   </span><span style='text-decoration: underline;'>570</span><span>441 89639153              1.44</span><span style='color: #949494;'>e</span><span>12          2 009022… Mancos Ri…    0.955
+#&gt; </span><span style='color: #949494;'># … with 393 more rows, and 10 more variables: REACHCODE &lt;chr&gt;, FLOWDIR &lt;int&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   WBAREA_PERMANENT_IDENTIFIER &lt;chr&gt;, FTYPE &lt;int&gt;, FCODE &lt;int&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   INNETWORK &lt;int&gt;, MAINPATH &lt;int&gt;, VISIBILITYFILTER &lt;int&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   SHAPE_Length &lt;dbl&gt;, geom &lt;MULTILINESTRING [°]&gt;</span><span>
+#&gt; 
+#&gt; $Line
+#&gt; Simple feature collection with 0 features and 11 fields
+#&gt; Bounding box:  xmin: NA ymin: NA xmax: NA ymax: NA
+#&gt; Geodetic CRS:  WGS 84
+#&gt; </span><span style='color: #949494;'># A tibble: 0 x 12</span><span>
+#&gt; </span><span style='color: #949494;'># … with 12 variables: OBJECTID &lt;int&gt;, PERMANENT_IDENTIFIER &lt;chr&gt;, FDATE &lt;dbl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   RESOLUTION &lt;int&gt;, GNIS_ID &lt;chr&gt;, GNIS_NAME &lt;chr&gt;, LENGTHKM &lt;dbl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   FTYPE &lt;int&gt;, FCODE &lt;int&gt;, VISIBILITYFILTER &lt;chr&gt;, SHAPE_Length &lt;dbl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   geom &lt;GEOMETRY [°]&gt;</span><span>
+#&gt; 
+#&gt; $Area
+#&gt; Simple feature collection with 0 features and 13 fields
+#&gt; Bounding box:  xmin: NA ymin: NA xmax: NA ymax: NA
+#&gt; Geodetic CRS:  WGS 84
+#&gt; </span><span style='color: #949494;'># A tibble: 0 x 14</span><span>
+#&gt; </span><span style='color: #949494;'># … with 14 variables: OBJECTID &lt;int&gt;, PERMANENT_IDENTIFIER &lt;chr&gt;, FDATE &lt;dbl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   RESOLUTION &lt;int&gt;, GNIS_ID &lt;chr&gt;, GNIS_NAME &lt;chr&gt;, AREASQKM &lt;dbl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   ELEVATION &lt;chr&gt;, FTYPE &lt;int&gt;, FCODE &lt;int&gt;, VISIBILITYFILTER &lt;chr&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   SHAPE_Length &lt;dbl&gt;, SHAPE_Area &lt;dbl&gt;, geom &lt;GEOMETRY [°]&gt;</span><span>
+#&gt; 
+#&gt; $Waterbody
+#&gt; Simple feature collection with 10 features and 14 fields
+#&gt; Geometry type: POLYGON
+#&gt; Dimension:     XY
+#&gt; Bounding box:  xmin: -108.5327 ymin: 37.19095 xmax: -108.4021 ymax: 37.32777
+#&gt; Geodetic CRS:  WGS 84
+#&gt; </span><span style='color: #949494;'># A tibble: 10 x 15</span><span>
+#&gt;    OBJECTID PERMANENT_IDENTIFI…      FDATE RESOLUTION GNIS_ID GNIS_NAME AREASQKM
+#&gt;       </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>                    </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span>  1</span><span style='text-decoration: underline;'>209</span><span>959 89638655               1.06</span><span style='color: #949494;'>e</span><span>12          2 </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>           0.001
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span>  2</span><span style='text-decoration: underline;'>221</span><span>612 89634565               1.06</span><span style='color: #949494;'>e</span><span>12          2 </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>           0.003
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span>  2</span><span style='text-decoration: underline;'>308</span><span>900 89638207               1.06</span><span style='color: #949494;'>e</span><span>12          2 </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>           0.001
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span>  2</span><span style='text-decoration: underline;'>638</span><span>323 89634585               1.06</span><span style='color: #949494;'>e</span><span>12          2 </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>           0.005
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span>  3</span><span style='text-decoration: underline;'>318</span><span>730 89634605               1.06</span><span style='color: #949494;'>e</span><span>12          2 </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>           0.001
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span>  3</span><span style='text-decoration: underline;'>955</span><span>305 89634591               1.06</span><span style='color: #949494;'>e</span><span>12          2 </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>           0.006
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span>  4</span><span style='text-decoration: underline;'>065</span><span>202 89634587               1.06</span><span style='color: #949494;'>e</span><span>12          2 </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>           0.006
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span>  4</span><span style='text-decoration: underline;'>395</span><span>162 89638209               1.06</span><span style='color: #949494;'>e</span><span>12          2 </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>           0.001
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span>  4</span><span style='text-decoration: underline;'>834</span><span>955 89634583               1.06</span><span style='color: #949494;'>e</span><span>12          2 </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>           0.005
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span>  5</span><span style='text-decoration: underline;'>383</span><span>409 89634589               1.06</span><span style='color: #949494;'>e</span><span>12          2 </span><span style='color: #BB0000;'>NA</span><span>      </span><span style='color: #BB0000;'>NA</span><span>           0.005
+#&gt; </span><span style='color: #949494;'># … with 8 more variables: ELEVATION &lt;chr&gt;, REACHCODE &lt;chr&gt;, FTYPE &lt;int&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   FCODE &lt;int&gt;, VISIBILITYFILTER &lt;int&gt;, SHAPE_Length &lt;dbl&gt;, SHAPE_Area &lt;dbl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   geom &lt;POLYGON [°]&gt;</span><span>
+#&gt; </div><div class='input'><span class='va'>NHD</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='plot_nhd.html'>plot_nhd</a></span><span class='op'>(</span>template <span class='op'>=</span> <span class='fu'>FedData</span><span class='fu'>::</span><span class='va'><a href='meve.html'>meve</a></span><span class='op'>)</span>
+</div><div class='img'><img src='get_nhd-1.png' alt='' width='700' height='433' /></div></span></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -198,7 +264,7 @@ The directory will be created if missing. Defaults to './EXTRACTIONS/NHD/'.</p><
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
