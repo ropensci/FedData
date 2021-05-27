@@ -374,7 +374,7 @@ NLCD <- get_nlcd(
 raster::plot(NLCD)
 ```
 
-<img src="man/figures/README-NLCD-1.png" width="100%" /><img src="man/figures/README-NLCD-2.png" width="100%" />
+<img src="man/figures/README-NLCD-2.png" width="100%" />
 
 ``` r
 # You can also download the Canopy (2011 only) or impervious datasets:
@@ -389,7 +389,7 @@ NLCD_canopy <-
 raster::plot(NLCD_canopy)
 ```
 
-<img src="man/figures/README-NLCD-3.png" width="100%" /><img src="man/figures/README-NLCD-4.png" width="100%" />
+<img src="man/figures/README-NLCD-4.png" width="100%" />
 
 ``` r
 NLCD_impervious <- get_nlcd(
@@ -402,7 +402,7 @@ NLCD_impervious <- get_nlcd(
 raster::plot(NLCD_impervious)
 ```
 
-<img src="man/figures/README-NLCD-5.png" width="100%" /><img src="man/figures/README-NLCD-6.png" width="100%" />
+<img src="man/figures/README-NLCD-6.png" width="100%" />
 
 #### Get and plot the NASS Cropland Data Layer for the study area
 
@@ -418,7 +418,7 @@ NASS_CDL <- get_nass_cdl(
 raster::plot(NASS_CDL)
 ```
 
-<img src="man/figures/README-NASS-CDL-1.png" width="100%" /><img src="man/figures/README-NASS-CDL-2.png" width="100%" />
+<img src="man/figures/README-NASS-CDL-2.png" width="100%" />
 
 ``` r
 # Get the NASS CDL classification table
