@@ -224,7 +224,7 @@ legend("bottomleft",
 )
 ```
 
-<img src="man/figures/README-GHCN precipitation-1.png" width="100%" />
+<img src="man/figures/README-GHCN-precipitation-1.png" width="100%" />
 
 #### Get and plot the daily GHCN temperature data for the study area
 
@@ -255,7 +255,7 @@ legend("bottomleft",
 )
 ```
 
-<img src="man/figures/README-GHCN temperature-1.png" width="100%" />
+<img src="man/figures/README-GHCN-temperature-1.png" width="100%" />
 
 #### Get and plot the National Hydrography Dataset for the study area
 
@@ -322,7 +322,7 @@ plot(SSURGO.areas.CO675$geom,
 )
 ```
 
-<img src="man/figures/README-SSURGO area-1.png" width="100%" />
+<img src="man/figures/README-SSURGO-area-1.png" width="100%" />
 
 #### Get and plot the ITRDB chronology locations in the study area
 
@@ -418,7 +418,7 @@ NASS_CDL <- get_nass_cdl(
 raster::plot(NASS_CDL)
 ```
 
-<img src="man/figures/README-NASS CDL-1.png" width="100%" /><img src="man/figures/README-NASS CDL-2.png" width="100%" />
+<img src="man/figures/README-NASS-CDL-1.png" width="100%" /><img src="man/figures/README-NASS-CDL-2.png" width="100%" />
 
 ``` r
 # Get the NASS CDL classification table

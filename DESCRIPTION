@@ -43,6 +43,7 @@ Imports:
     httr,
     igraph,
     jsonlite,
+    lifecycle,
     lubridate,
     magrittr,
     ncdf4,

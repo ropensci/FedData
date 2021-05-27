@@ -21,10 +21,10 @@ This is more of an example than anything
 \examples{
 # Get the NHD (USA ONLY)
 NHD <- get_nhd(
-  template = FedData::glac,
-  label = "glac"
+  template = FedData::meve,
+  label = "meve"
 )
 NHD
 NHD \%>\%
-  plot_nhd(template = FedData::glac)
+  plot_nhd(template = FedData::meve)
 }

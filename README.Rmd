@@ -117,7 +117,7 @@ raster::plot(DAYMET$tmax$X1985.10.23)
 ```
 
 #### Get and plot the daily GHCN precipitation data for the study area
-```{r GHCN precipitation, results="hide", message=FALSE}
+```{r GHCN-precipitation, results="hide", message=FALSE}
 # Get the daily GHCN data (GLOBAL)
 # Returns a list: the first element is the spatial locations of stations,
 # and the second is a list of the stations and their daily data
@@ -140,7 +140,7 @@ legend("bottomleft",
 ```
 
 #### Get and plot the daily GHCN temperature data for the study area
-```{r GHCN temperature, results="hide", message=FALSE}
+```{r GHCN-temperature, results="hide", message=FALSE}
 # Elements for which you require the same data
 # (i.e., minimum and maximum temperature for the same days)
 # can be standardized using standardize==T
@@ -191,7 +191,7 @@ plot(SSURGO.MEVE$spatial$geom,
 ```
 
 #### Get and plot the NRCS SSURGO data for particular soil survey areas
-```{r SSURGO area, results="hide", message=FALSE}
+```{r SSURGO-area, results="hide", message=FALSE}
 # Or, download by Soil Survey Area names
 SSURGO.areas <- get_ssurgo(
   template = c("CO670", "CO075"),
@@ -281,7 +281,7 @@ raster::plot(NLCD_impervious)
 ```
 
 #### Get and plot the NASS Cropland Data Layer for the study area
-```{r NASS CDL, results="hide", message=FALSE}
+```{r NASS-CDL, results="hide", message=FALSE}
 # Get the NASS (USA ONLY)
 # Returns a raster
 NASS_CDL <- get_nass_cdl(

@@ -125,12 +125,12 @@ get_nhd <-
 #' @examples
 #' # Get the NHD (USA ONLY)
 #' NHD <- get_nhd(
-#'   template = FedData::glac,
-#'   label = "glac"
+#'   template = FedData::meve,
+#'   label = "meve"
 #' )
 #' NHD
 #' NHD %>%
-#'   plot_nhd(template = FedData::glac)
+#'   plot_nhd(template = FedData::meve)
 plot_nhd <-
   function(x,
            template = NULL) {
