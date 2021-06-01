@@ -63,14 +63,14 @@ defined spatially. It relies heavily on the
 [**rgdal**](https://cran.r-project.org/package=rgdal) packages.
 
 This package has been built and tested on a source (Homebrew) install of
-*R* on macOS 10.14 (High Sierra), and has been successfully run on
-Ubuntu 14.04.5 LTS (Trusty), Ubuntu 16.04.1 LTS (Xenial) and binary
-installs of *R* on Mac OS 10.14 and Windows 10.
+*R* on macOS 11.4 (Big Sur), and has been successfully run on Ubuntu
+14.04.5 LTS (Trusty), Ubuntu 16.04.1 LTS (Xenial) and binary installs of
+*R* on Mac OS 11.4 and Windows 10.
 
 ### Development
 
--   [Kyle Bocinsky](http://bocinsky.io) - Crow Canyon Archaeological
-    Center, Cortez, CO
+-   [Kyle Bocinsky](http://bocinsky.io) - Montana Climate Office,
+    Missoula, MT
 
 ### Contributors
 
@@ -136,8 +136,6 @@ NED <- get_ned(
   template = FedData::meve,
   label = "meve"
 )
-#> Warning in if (class(x) != "extent") {: the condition has length > 1 and only
-#> the first element will be used
 #> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO", prefer_proj =
 #> prefer_proj): Discarded ellps WGS 84 in Proj4 definition: +proj=merc +a=6378137
 #> +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null
@@ -184,8 +182,6 @@ GHCN.prcp <- get_ghcn_daily(
 #> Warning in if (!is.null(template) & !(class(template) %in%
 #> c("SpatialPolygonsDataFrame", : the condition has length > 1 and only the first
 #> element will be used
-#> Warning in if (class(x) != "extent") {: the condition has length > 1 and only
-#> the first element will be used
 #> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO", prefer_proj =
 #> prefer_proj): Discarded ellps WGS 84 in Proj4 definition: +proj=merc +a=6378137
 #> +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null
@@ -308,8 +304,6 @@ NED.CO675 <- get_ned(
   template = SSURGO.areas.CO675,
   label = "SSURGO_CO675"
 )
-#> Warning in if (class(x) != "extent") {: the condition has length > 1 and only
-#> the first element will be used
 #> Warning in showSRID(uprojargs, format = "PROJ", multiline = "NO", prefer_proj
 #> = prefer_proj): Discarded datum Unknown based on WGS84 ellipsoid in Proj4
 #> definition
@@ -371,13 +365,21 @@ NLCD <- get_nlcd(
   label = "meve"
 )
 # Plot with raster::plot
-raster::plot(NLCD)
+raster::plot(NLCD, legend = TRUE)
 ```
+
+<img src="man/figures/README-NLCD-1.png" width="100%" />
+
+    #> Warning in plot.window(...): "legend" is not a graphical parameter
+    #> Warning in plot.xy(xy, type, ...): "legend" is not a graphical parameter
+    #> Warning in title(...): "legend" is not a graphical parameter
+    #> Warning in graphics::rasterImage(z, bb[1], bb[3], bb[2], bb[4], interpolate =
+    #> interpolate, : "legend" is not a graphical parameter
 
 <img src="man/figures/README-NLCD-2.png" width="100%" />
 
 ``` r
-# You can also download the Canopy (2011 only) or impervious datasets:
+# You can also download the Canopy (2011 and 2016) or impervious (2001, 2006, 2011, and 2016) datasets:
 NLCD_canopy <-
   get_nlcd(
     template = FedData::meve,
@@ -389,7 +391,7 @@ NLCD_canopy <-
 raster::plot(NLCD_canopy)
 ```
 
-<img src="man/figures/README-NLCD-4.png" width="100%" />
+<img src="man/figures/README-NLCD-3.png" width="100%" /><img src="man/figures/README-NLCD-4.png" width="100%" />
 
 ``` r
 NLCD_impervious <- get_nlcd(
@@ -402,7 +404,7 @@ NLCD_impervious <- get_nlcd(
 raster::plot(NLCD_impervious)
 ```
 
-<img src="man/figures/README-NLCD-6.png" width="100%" />
+<img src="man/figures/README-NLCD-5.png" width="100%" /><img src="man/figures/README-NLCD-6.png" width="100%" />
 
 #### Get and plot the NASS Cropland Data Layer for the study area
 
@@ -418,7 +420,7 @@ NASS_CDL <- get_nass_cdl(
 raster::plot(NASS_CDL)
 ```
 
-<img src="man/figures/README-NASS-CDL-2.png" width="100%" />
+<img src="man/figures/README-NASS-CDL-1.png" width="100%" /><img src="man/figures/README-NASS-CDL-2.png" width="100%" />
 
 ``` r
 # Get the NASS CDL classification table

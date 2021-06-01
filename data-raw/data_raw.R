@@ -62,6 +62,10 @@ nass <-
 tablesHeaders <-
   readr::read_rds("data-raw/tablesHeaders.rds")
 
+nlcd <-
+  readr::read_csv("data-raw/nlcd_rat.csv")
+
+
 
 
 ##### National Park Spatial Polygon
@@ -76,5 +80,30 @@ meve <-
   ) %>%
   sf::read_sf()
 
-usethis::use_data(tablesHeaders, nass, overwrite = TRUE, internal = TRUE)
+usethis::use_data(tablesHeaders, nass, nlcd, overwrite = TRUE, internal = TRUE)
 usethis::use_data(meve, overwrite = TRUE)
+
+# A test dataset of the raw NLCD
+httr::GET(
+  url = "https://s3-us-west-2.amazonaws.com/mrlc/NLCD_2016_Land_Cover_L48_20190424.zip",
+  httr::write_disk(
+    path = paste0(tempdir(), "/NLCD_2016.zip"),
+    overwrite = TRUE
+  ),
+  httr::progress()
+)
+
+unzip(paste0(tempdir(), "/NLCD_2016.zip"),
+  exdir = tempdir()
+)
+
+nlcd <-
+  paste0(tempdir, "/NLCD_2016_Land_Cover_L48_20190424.img") %>%
+  terra::rast() %>%
+  terra::crop(
+    .,
+    sf::st_transform(
+      meve,
+      terra::crs(.)
+    )
+  )

@@ -1,7 +1,9 @@
 #' Download and crop the National Land Cover Database.
 #'
 #' \code{get_nlcd} returns a \code{RasterLayer} of NLCD data cropped to a given
-#' template study area.
+#' template study area. \code{nlcd_colors} and \code{pal_nlcd} return the NLCD
+#' legend and color palette, as available through the
+#' [MLRC website](https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend).
 #'
 #' NOTE: Prior to FedData version 3.0.0, the `get_nlcd` function returned
 #' data in the web Mercator coordinate reference system available through
@@ -20,6 +22,7 @@
 #' Acceptable values are 'L48' (lower 48 US states, the default), 'AK' (Alaska), 'HI' (Hawaii), and 'PR' (Puerto Rico).
 #' @param extraction.dir A character string indicating where the extracted and cropped NLCD data should be put.
 #' The directory will be created if missing.
+#' @param raster.options a vector of options for raster::writeRaster.
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created?
 #' @return A \code{RasterLayer} cropped to the bounding box of the template.
 #' @export
@@ -49,6 +52,11 @@ get_nlcd <- function(template,
                      extraction.dir = paste0(
                        tempdir(),
                        "/FedData/"
+                     ),
+                     raster.options = c(
+                       "COMPRESS=DEFLATE",
+                       "ZLEVEL=9",
+                       "INTERLEAVE=BAND"
                      ),
                      force.redo = F) {
   extraction.dir <- normalizePath(paste0(extraction.dir, "/."), mustWork = FALSE)
@@ -112,6 +120,41 @@ get_nlcd <- function(template,
       )
     )
 
-  outfile %>%
-    raster::raster()
+  if (dataset == "Land_Cover") {
+    out <-
+      outfile %>%
+      raster::raster() %>%
+      raster::readAll() %>%
+      raster::as.factor()
+
+    raster::colortable(out) <- nlcd$Color
+
+    suppressWarnings(
+      levels(out) <-
+        nlcd %>%
+        as.data.frame()
+    )
+
+    out %<>%
+      raster::writeRaster(outfile,
+        datatype = "INT1U",
+        options = raster.options,
+        overwrite = T,
+        setStatistics = FALSE
+      )
+  }
+
+  return(raster::raster(outfile))
+}
+
+#' @export
+#' @rdname get_nlcd
+nlcd_colors <- function() {
+  na.omit(nlcd)
+}
+
+#' @export
+#' @rdname get_nlcd
+pal_nlcd <- function() {
+  na.omit(nlcd)
 }

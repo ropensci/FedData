@@ -67,6 +67,7 @@ Suggests:
     lintr,
     roxygen2,
     styler,
+    terra,
     testthat,
     usethis
 Remotes:

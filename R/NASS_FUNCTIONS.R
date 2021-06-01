@@ -121,7 +121,7 @@ get_nass_cdl <- function(template,
       setStatistics = FALSE
     )
 
-  return(out)
+  return(raster::raster(outfile))
 }
 
 #' @export

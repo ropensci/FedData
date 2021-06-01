@@ -2,6 +2,8 @@
 % Please edit documentation in R/NLCD_FUNCTIONS.R
 \name{get_nlcd}
 \alias{get_nlcd}
+\alias{nlcd_colors}
+\alias{pal_nlcd}
 \title{Download and crop the National Land Cover Database.}
 \usage{
 get_nlcd(
@@ -11,8 +13,13 @@ get_nlcd(
   dataset = "Land_Cover",
   landmass = "L48",
   extraction.dir = paste0(tempdir(), "/FedData/"),
+  raster.options = c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"),
   force.redo = F
 )
+
+nlcd_colors()
+
+pal_nlcd()
 }
 \arguments{
 \item{template}{A sf, Raster* or Spatial* object to serve
@@ -32,6 +39,8 @@ Acceptable values are 'L48' (lower 48 US states, the default), 'AK' (Alaska), 'H
 \item{extraction.dir}{A character string indicating where the extracted and cropped NLCD data should be put.
 The directory will be created if missing.}
 
+\item{raster.options}{a vector of options for raster::writeRaster.}
+
 \item{force.redo}{If an extraction for this template and label already exists, should a new one be created?}
 }
 \value{
@@ -39,7 +48,9 @@ A \code{RasterLayer} cropped to the bounding box of the template.
 }
 \description{
 \code{get_nlcd} returns a \code{RasterLayer} of NLCD data cropped to a given
-template study area.
+template study area. \code{nlcd_colors} and \code{pal_nlcd} return the NLCD
+legend and color palette, as available through the
+[MLRC website](https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend).
 }
 \details{
 NOTE: Prior to FedData version 3.0.0, the `get_nlcd` function returned
