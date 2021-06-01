@@ -68,7 +68,7 @@ polygon_from_extent <- function(x, proj4string = NULL) {
     proj4string <- raster::projection(x)
   }
 
-  if (class(x) != "extent") {
+  if (all(class(x) != "extent")) {
     x <- raster::extent(x)
   }
 
