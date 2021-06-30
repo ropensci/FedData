@@ -2,7 +2,7 @@
 % Please edit documentation in R/DAYMET_FUNCTIONS.R
 \name{get_daymet}
 \alias{get_daymet}
-\title{Download and crop the 1-km DAYMET daily weather dataset.}
+\title{Download and crop the 1-km DAYMET v4 daily weather dataset.}
 \usage{
 get_daymet(
   template,

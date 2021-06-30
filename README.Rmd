@@ -35,7 +35,7 @@ Currently, the package enables extraction from seven datasets:
 * The [National Hydrography Dataset (NHD)](http://nhd.usgs.gov) (USGS)
 * The [Soil Survey Geographic (SSURGO) database](http://websoilsurvey.sc.egov.usda.gov/) from the National Cooperative Soil Survey (NCSS), which is led by the Natural Resources Conservation Service (NRCS) under the USDA
 * The [Global Historical Climatology Network (GHCN)](http://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn), coordinated by National Climatic Data Center at NOAA
-* The [Daymet](https://daymet.ornl.gov/) gridded estimates of daily weather parameters for North America, version 3, available from the Oak Ridge National Laboratory's Distributed Active Archive Center (DAAC)
+* The [Daymet](https://daymet.ornl.gov/) gridded estimates of daily weather parameters for North America, version 4, available from the Oak Ridge National Laboratory's Distributed Active Archive Center (DAAC)
 * The [International Tree Ring Data Bank (ITRDB)](http://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/tree-ring), coordinated by National Climatic Data Center at NOAA
 * The [National Land Cover Database (NLCD)](https://www.mrlc.gov/)
 * The [NASS Cropland Data Layer](https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php) from the National Agricultural Statistics Service
@@ -253,31 +253,11 @@ legend("bottomleft",
 NLCD <- get_nlcd(
   template = FedData::meve,
   year = 2016,
-  dataset = "Land_Cover",
   label = "meve"
 )
+
 # Plot with raster::plot
 raster::plot(NLCD, legend = TRUE)
-
-# You can also download the Canopy (2011 and 2016) or impervious (2001, 2006, 2011, and 2016) datasets:
-NLCD_canopy <-
-  get_nlcd(
-    template = FedData::meve,
-    year = 2016,
-    dataset = "Tree_Canopy",
-    label = "meve"
-  )
-# Plot with raster::plot
-raster::plot(NLCD_canopy)
-
-NLCD_impervious <- get_nlcd(
-  template = FedData::meve,
-  year = 2016,
-  dataset = "Impervious",
-  label = "meve"
-)
-# Plot with raster::plot
-raster::plot(NLCD_impervious)
 ```
 
 #### Get and plot the NASS Cropland Data Layer for the study area

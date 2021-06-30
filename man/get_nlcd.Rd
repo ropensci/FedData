@@ -10,7 +10,6 @@ get_nlcd(
   template,
   label,
   year = 2016,
-  dataset = "Land_Cover",
   landmass = "L48",
   extraction.dir = paste0(tempdir(), "/FedData/"),
   raster.options = c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"),
@@ -28,10 +27,7 @@ as a template for cropping.}
 \item{label}{A character string naming the study area.}
 
 \item{year}{An integer representing the year of desired NLCD product.
-Acceptable values are 2016 (default), 2011, 2008 (landcover only), 2006, 2004, and 2001.}
-
-\item{dataset}{A character string representing type of the NLCD product.
-Acceptable values are 'Impervious', 'Land_Cover', 'Tree_Canopy' (2011 and 2016 only),}
+Acceptable values are 2016 (default), 2011, 2008, 2006, 2004, and 2001.}
 
 \item{landmass}{A character string representing the landmass to be extracted
 Acceptable values are 'L48' (lower 48 US states, the default), 'AK' (Alaska), 'HI' (Hawaii), and 'PR' (Puerto Rico).}
@@ -69,8 +65,7 @@ NLCD <-
   get_nlcd(
     template = FedData::meve,
     label = "meve",
-    year = 2011,
-    landmass = "L48"
+    year = 2011
   )
 
 # Plot with raster::plot

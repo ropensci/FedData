@@ -194,7 +194,7 @@ get_ssurgo <- function(template,
 download_ssurgo_inventory <- function(raw.dir, ...) {
   # Import the shapefile of SSURGO study areas.  This is available at
   # http://soildatamart.sc.egov.usda.gov/download/StatusMaps/soilsa_a_SSURGO.zip
-  url <- "http://websoilsurvey.sc.egov.usda.gov/DataAvailability/SoilDataAvailabilityShapefile.zip"
+  url <- "https://websoilsurvey.sc.egov.usda.gov/DataAvailability/SoilDataAvailabilityShapefile.zip"
   destdir <- raw.dir
   download_data(url = url, destdir = destdir, ...)
   return(normalizePath(paste(destdir, "/SoilDataAvailabilityShapefile.zip", sep = "")))
@@ -312,6 +312,7 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
 
     if (!is.null(template)) {
       SSURGOAreas %<>%
+        sf::st_make_valid() %>%
         sf::st_intersection(sf::st_transform(template, sf::st_crs(SSURGOAreas)))
     }
 

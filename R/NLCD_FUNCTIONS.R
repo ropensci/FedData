@@ -15,9 +15,7 @@
 #' as a template for cropping.
 #' @param label A character string naming the study area.
 #' @param year An integer representing the year of desired NLCD product.
-#' Acceptable values are 2016 (default), 2011, 2008 (landcover only), 2006, 2004, and 2001.
-#' @param dataset A character string representing type of the NLCD product.
-#' Acceptable values are 'Impervious', 'Land_Cover', 'Tree_Canopy' (2011 and 2016 only),
+#' Acceptable values are 2016 (default), 2011, 2008, 2006, 2004, and 2001.
 #' @param landmass A character string representing the landmass to be extracted
 #' Acceptable values are 'L48' (lower 48 US states, the default), 'AK' (Alaska), 'HI' (Hawaii), and 'PR' (Puerto Rico).
 #' @param extraction.dir A character string indicating where the extracted and cropped NLCD data should be put.
@@ -37,8 +35,7 @@
 #'   get_nlcd(
 #'     template = FedData::meve,
 #'     label = "meve",
-#'     year = 2011,
-#'     landmass = "L48"
+#'     year = 2011
 #'   )
 #'
 #' # Plot with raster::plot
@@ -47,7 +44,7 @@
 get_nlcd <- function(template,
                      label,
                      year = 2016,
-                     dataset = "Land_Cover",
+                     # dataset = "Land_Cover",
                      landmass = "L48",
                      extraction.dir = paste0(
                        tempdir(),
@@ -62,7 +59,11 @@ get_nlcd <- function(template,
   extraction.dir <- normalizePath(paste0(extraction.dir, "/."), mustWork = FALSE)
 
   template %<>% template_to_sf()
-
+  
+  dataset = "Land_Cover"
+  if(dataset == "Land_Cover")
+    dataset <- "Land_Cover_Science_product"
+  
   coverage <- paste0("NLCD_", year, "_", dataset, "_", landmass)
   source <- "https://www.mrlc.gov/geoserver/wcs"
 
@@ -96,7 +97,7 @@ get_nlcd <- function(template,
         coverageid = coverage
       )
     ) %>%
-    httr::content() %>%
+    httr::content(encoding = "UTF-8") %>%
     xml2::as_list() %$%
     CoverageDescriptions %$%
     CoverageDescription$boundedBy$Envelope %>%
