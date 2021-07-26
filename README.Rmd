@@ -252,7 +252,7 @@ legend("bottomleft",
 # Returns a raster
 NLCD <- get_nlcd(
   template = FedData::meve,
-  year = 2016,
+  year = 2011,
   label = "meve"
 )
 
