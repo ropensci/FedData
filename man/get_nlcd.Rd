@@ -9,7 +9,8 @@
 get_nlcd(
   template,
   label,
-  year = 2016,
+  year = 2019,
+  dataset = c("landcover", "impervious", "canopy"),
   landmass = "L48",
   extraction.dir = paste0(tempdir(), "/FedData/"),
   raster.options = c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"),
@@ -27,7 +28,9 @@ as a template for cropping.}
 \item{label}{A character string naming the study area.}
 
 \item{year}{An integer representing the year of desired NLCD product.
-Acceptable values are 2016 (default), 2011, 2008, 2006, 2004, and 2001.}
+Acceptable values are 2019 (default), 2016, 2011, 2008, 2006, 2004, and 2001.}
+
+\item{dataset}{A character string representing type of the NLCD product. Acceptable values are 'landcover' (default), 'impervious', and 'canopy'. As of February 7, 2018, the canopy data for 2006 are not available through the National Map Staged}
 
 \item{landmass}{A character string representing the landmass to be extracted
 Acceptable values are 'L48' (lower 48 US states, the default), 'AK' (Alaska), 'HI' (Hawaii), and 'PR' (Puerto Rico).}
@@ -49,11 +52,12 @@ legend and color palette, as available through the
 [MLRC website](https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend).
 }
 \details{
-NOTE: Prior to FedData version 3.0.0, the `get_nlcd` function returned
+NOTE: As of FedData version 3.0.0.9000, the `get_nlcd` function returns
 data in the web Mercator coordinate reference system available through
 the [MRLC web mapping services](https://www.mrlc.gov/geoserver/web/), rather
 than data in the NLCD's native projection (a flavor of North American Albers).
-This function now returns data in the original CRS.
+Until the MRLC web services return data in the original projection, these
+data will not be identical to the original NLCD projection.
 }
 \examples{
 \dontrun{
@@ -65,7 +69,7 @@ NLCD <-
   get_nlcd(
     template = FedData::meve,
     label = "meve",
-    year = 2011
+    year = 2016
   )
 
 # Plot with raster::plot
