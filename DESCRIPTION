@@ -3,7 +3,7 @@ Package: FedData
 Title: Functions to Automate Downloading Geospatial Data Available from
     Several Federated Data Sources
 Version: 3.0.0.9000
-Date: 2020-04-09
+Date: 2021-07-28
 Authors@R: 
     c(person(given = c("R.", "Kyle"),
              family = "Bocinsky",
@@ -30,7 +30,7 @@ Description: Functions to automate downloading geospatial data available
     International Tree Ring Data Bank; and the National Land Cover
     Database (NLCD).
 License: MIT + file LICENSE
-URL: https://docs.ropensci.org/FedData,
+URL: https://docs.ropensci.org/FedData/,
     https://github.com/ropensci/FedData
 BugReports: https://github.com/ropensci/FedData/issues
 Depends:
@@ -39,14 +39,13 @@ Imports:
     curl,
     data.table,
     dplyr,
-    foreach,
     httr,
     igraph,
     jsonlite,
     lifecycle,
     lubridate,
     magrittr,
-    ncdf4,
+    methods,
     progress,
     purrr,
     raster,
@@ -55,6 +54,7 @@ Imports:
     sf,
     sp,
     stringr,
+    terra,
     tibble,
     tidyr,
     xml2
@@ -67,11 +67,8 @@ Suggests:
     lintr,
     roxygen2,
     styler,
-    terra,
     testthat,
     usethis
-Remotes:
-    lorenzwalthert/precommit
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no

@@ -1,8 +1,8 @@
 ## Note to CRAN maintainer
 
 ## Test environments
-* local OS X install, R 3.5.3
-* ubuntu 14.04.5 (on travis-ci), R 3.5.3
+* local macOS install, R 4.1.0  (2021-05-18)
+* ubuntu 14.04.5 (on Docker), R 3.5.3
 * win-builder (devel and release)
 
 ## R CMD check results

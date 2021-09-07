@@ -32,6 +32,7 @@ A list of `sf` collections extracted from the National Hydrography Dataset.
 from the National Hydrography Dataset.
 }
 \examples{
+\dontrun{
 # Get the NHD (USA ONLY)
 NHD <- get_nhd(
   template = FedData::meve,
@@ -40,4 +41,5 @@ NHD <- get_nhd(
 NHD
 NHD \%>\%
   plot_nhd(template = FedData::meve)
+  }
 }

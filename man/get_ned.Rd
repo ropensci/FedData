@@ -10,7 +10,7 @@ get_ned(
   res = "1",
   raw.dir = paste0(tempdir(), "/FedData/raw/ned"),
   extraction.dir = paste0(tempdir(), "/FedData/extractions/ned/", label, "/"),
-  raster.options = c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"),
+  raster.options = c("COMPRESS=DEFLATE", "ZLEVEL=9"),
   force.redo = F
 )
 }

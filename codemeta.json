@@ -10,7 +10,8 @@
   "codeRepository": "https://github.com/ropensci/FedData",
   "relatedLink": [
     "https://docs.ropensci.org/FedData",
-    "https://CRAN.R-project.org/package=FedData"
+    "https://CRAN.R-project.org/package=FedData",
+    "https://docs.ropensci.org/FedData/"
   ],
   "issueTracker": "https://github.com/ropensci/FedData/issues",
   "license": "https://spdx.org/licenses/MIT",
@@ -20,7 +21,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.1.0 (2021-05-18)",
+  "runtimePlatform": "R version 4.1.1 (2021-08-10)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -149,18 +150,6 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "terra",
-      "name": "terra",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=terra"
-    },
-    {
-      "@type": "SoftwareApplication",
       "identifier": "testthat",
       "name": "testthat",
       "provider": {
@@ -226,18 +215,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=dplyr"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "foreach",
-      "name": "foreach",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=foreach"
     },
     {
       "@type": "SoftwareApplication",
@@ -313,15 +290,8 @@
     },
     {
       "@type": "SoftwareApplication",
-      "identifier": "ncdf4",
-      "name": "ncdf4",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=ncdf4"
+      "identifier": "methods",
+      "name": "methods"
     },
     {
       "@type": "SoftwareApplication",
@@ -421,6 +391,18 @@
     },
     {
       "@type": "SoftwareApplication",
+      "identifier": "terra",
+      "name": "terra",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=terra"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "tibble",
       "name": "tibble",
       "provider": {
@@ -458,7 +440,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/master/README.md",
-  "fileSize": "3156.955KB",
+  "fileSize": "838.088KB",
   "contIntegration": ["https://travis-ci.org/ropensci/FedData", "https://codecov.io/github/ropensci/FedData?branch=master"],
   "review": {
     "@type": "Review",

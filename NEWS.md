@@ -7,8 +7,9 @@
 * Fixed issue where date parsing was USA-specific by leveraging `lubridate::parse_date_time` ([Issue #61](https://github.com/ropensci/FedData/issues/61))
 * `get_ssurgo()` now saves in the [GeoPackage file format](http://www.geopackage.org)
 * `get_nhd()` now access ESRI web services. Users can optionally get data from NHDPlus.
-* `get_nlcd()` now provides data in native CRS (CONUS Albers), rather than web-mercator ([Issue #77](https://github.com/ropensci/FedData/issues/77))
+* `get_nlcd()` now provides data in native CRS (CONUS Albers), rather than web-mercator ([Issue #77](https://github.com/ropensci/FedData/issues/77)) by pulling from self-hosted Cloud-Optimized GeoTiffs.
 * Added Mesa Verde National Park as exemplar region, and removed use of `paleocar` package.
+* `get_ned()` now pulls from USGS NED Cloud-Optimized GeoTiffs available at [https://prd-tnm.s3.amazonaws.com/index.html?prefix=StagedProducts/Elevation/](https://prd-tnm.s3.amazonaws.com/index.html?prefix=StagedProducts/Elevation/).
 
 # FedData 2.5.7
 * Removing many internet resource tests from CRAN, to satisfy: 'Packages which use Internet resources should fail gracefully with an informative message if the resource is not available (and not give a check warning nor error).'

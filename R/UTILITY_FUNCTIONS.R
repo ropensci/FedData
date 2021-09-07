@@ -84,8 +84,8 @@ polygon_from_extent <- function(x, proj4string = NULL) {
 #' @export
 #' @keywords internal
 spdf_from_polygon <- function(x) {
-  IDs <- sapply((slot(x, "polygons")), function(x) {
-    slot(x, "ID")
+  IDs <- sapply((methods::slot(x, "polygons")), function(x) {
+    methods::slot(x, "ID")
   })
   df <- data.frame(rep(0, length(IDs)), row.names = IDs)
   x <- sp::SpatialPolygonsDataFrame(x, df)

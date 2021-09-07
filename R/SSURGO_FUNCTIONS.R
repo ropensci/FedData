@@ -67,7 +67,8 @@ get_ssurgo <- function(template,
       magrittr::set_names(., .) %>%
       purrr::map(~ sf::read_sf(outfile, layer = .x))
 
-    return(list(spatial = SSURGOData$geometry, tabular = purrr::list_modify(SSURGOData, geometry = NULL)))
+    return(list(spatial = SSURGOData$geometry, 
+                tabular = purrr::list_modify(SSURGOData, geometry = NULL)))
   }
 
   if (identical(class(template), "character")) {
@@ -80,9 +81,10 @@ get_ssurgo <- function(template,
     template %<>% template_to_sf()
 
     # Get shapefile of SSURGO study areas in the template
-    SSURGOAreas <- get_ssurgo_inventory(template = template, raw.dir = raw.dir)
+    SSURGOAreas <- 
+      get_ssurgo_inventory(template = template, raw.dir = raw.dir)
 
-    if (!any(SSURGOAreas$iscomplete)) {
+    if (!any(SSURGOAreas$iscomplete == 1)) {
       stop("There are no complete soil surveys in your study area.")
     }
 
@@ -241,7 +243,7 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
         cells.dim = c(360, 180)
       ) %>%
         # sp::SpatialGrid(proj4string=CRS("+proj=longlat +datum=WGS84")) %>%
-        as("SpatialPolygons") %>%
+        methods::as("SpatialPolygons") %>%
         sf::st_as_sfc() %>%
         sf::st_set_crs(4326)
 

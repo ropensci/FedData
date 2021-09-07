@@ -19,6 +19,7 @@ A [ggplot2] panel of plots
 This is more of an example than anything
 }
 \examples{
+\dontrun{
 # Get the NHD (USA ONLY)
 NHD <- get_nhd(
   template = FedData::meve,
@@ -27,4 +28,5 @@ NHD <- get_nhd(
 NHD
 NHD \%>\%
   plot_nhd(template = FedData::meve)
+  }
 }

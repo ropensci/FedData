@@ -13,6 +13,7 @@
 #' @param raster.options a vector of options for raster::writeRaster.
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created?
 #' @param progress Draw a progress bar when downloading?
+#' @param ... Other parameters passed on to [get_nass_cdl].
 #' @return A \code{RasterLayer} cropped to the bounding box of the template.
 #' @export
 #' @importFrom magrittr %>%

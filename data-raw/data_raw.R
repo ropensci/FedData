@@ -78,7 +78,8 @@ meve <-
       returnGeometry = "true"
     )
   ) %>%
-  sf::read_sf()
+  sf::read_sf() %>%
+  sf::st_transform(4326)
 
 usethis::use_data(tablesHeaders, nass, nlcd, overwrite = TRUE, internal = TRUE)
 usethis::use_data(meve, overwrite = TRUE)

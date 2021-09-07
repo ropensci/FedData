@@ -13,6 +13,7 @@
 #' @importFrom magrittr %>% %<>%
 #' @export
 #' @examples
+#' \dontrun{
 #' # Get the NHD (USA ONLY)
 #' NHD <- get_nhd(
 #'   template = FedData::meve,
@@ -21,6 +22,7 @@
 #' NHD
 #' NHD %>%
 #'   plot_nhd(template = FedData::meve)
+#'   }
 get_nhd <-
   function(template,
            label,
@@ -123,6 +125,7 @@ get_nhd <-
 #' @importFrom magrittr %>% %<>%
 #' @export
 #' @examples
+#' \dontrun{
 #' # Get the NHD (USA ONLY)
 #' NHD <- get_nhd(
 #'   template = FedData::meve,
@@ -131,6 +134,7 @@ get_nhd <-
 #' NHD
 #' NHD %>%
 #'   plot_nhd(template = FedData::meve)
+#'   }
 plot_nhd <-
   function(x,
            template = NULL) {
