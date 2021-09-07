@@ -30,7 +30,7 @@ as a template for cropping.}
 \item{year}{An integer representing the year of desired NLCD product.
 Acceptable values are 2019 (default), 2016, 2011, 2008, 2006, 2004, and 2001.}
 
-\item{dataset}{A character string representing type of the NLCD product. 
+\item{dataset}{A character string representing type of the NLCD product.
 Acceptable values are 'landcover' (default), 'impervious', and 'canopy'.}
 
 \item{landmass}{A character string representing the landmass to be extracted

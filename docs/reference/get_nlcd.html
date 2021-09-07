@@ -41,7 +41,9 @@
 
 <meta property="og:title" content="Download and crop the National Land Cover Database. — get_nlcd" />
 <meta property="og:description" content="get_nlcd returns a RasterLayer of NLCD data cropped to a given
-template study area." />
+template study area. nlcd_colors and pal_nlcd return the NLCD
+legend and color palette, as available through the
+[MLRC website](https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend)." />
 
 
 
@@ -119,18 +121,25 @@ template study area." />
 
     <div class="ref-description">
     <p><code>get_nlcd</code> returns a <code>RasterLayer</code> of NLCD data cropped to a given
-template study area.</p>
+template study area. <code>nlcd_colors</code> and <code>pal_nlcd</code> return the NLCD
+legend and color palette, as available through the
+[MLRC website](https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend).</p>
     </div>
 
     <pre class="usage"><span class='fu'>get_nlcd</span><span class='op'>(</span>
   <span class='va'>template</span>,
   <span class='va'>label</span>,
-  year <span class='op'>=</span> <span class='fl'>2016</span>,
-  dataset <span class='op'>=</span> <span class='st'>"Land_Cover"</span>,
+  year <span class='op'>=</span> <span class='fl'>2019</span>,
+  dataset <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"landcover"</span>, <span class='st'>"impervious"</span>, <span class='st'>"canopy"</span><span class='op'>)</span>,
   landmass <span class='op'>=</span> <span class='st'>"L48"</span>,
   extraction.dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"/FedData/"</span><span class='op'>)</span>,
+  raster.options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"COMPRESS=DEFLATE"</span>, <span class='st'>"ZLEVEL=9"</span><span class='op'>)</span>,
   force.redo <span class='op'>=</span> <span class='cn'>F</span>
-<span class='op'>)</span></pre>
+<span class='op'>)</span>
+
+<span class='fu'>nlcd_colors</span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='fu'>pal_nlcd</span><span class='op'>(</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,26 +156,33 @@ as a template for cropping.</p></td>
     <tr>
       <th>year</th>
       <td><p>An integer representing the year of desired NLCD product.
-Acceptable values are 2016 (default), 2011, 2008 (landcover only), 2006, 2004, and 2001.</p></td>
+Acceptable values are 2019 (default), 2016, 2011, 2008, 2006, 2004, and 2001.</p></td>
     </tr>
     <tr>
       <th>dataset</th>
-      <td><p>A character string representing type of the NLCD product.
-Acceptable values are 'Impervious', 'Land_Cover', 'Tree_Canopy' (2011 and 2016 only),</p></td>
+      <td><p>A character string representing type of the NLCD product. 
+Acceptable values are 'landcover' (default), 'impervious', and 'canopy'.</p></td>
     </tr>
     <tr>
       <th>landmass</th>
       <td><p>A character string representing the landmass to be extracted
-Acceptable values are 'L48' (lower 48 US states, the default), 'AK' (Alaska), 'HI' (Hawaii), and 'PR' (Puerto Rico).</p></td>
+Acceptable values are 'L48' (lower 48 US states, the default),
+'AK' (Alaska, 2011 and 2016 only), 'HI' (Hawaii, 2001 only), and
+'PR' (Puerto Rico, 2001 only).</p></td>
     </tr>
     <tr>
       <th>extraction.dir</th>
-      <td><p>A character string indicating where the extracted and cropped NLCD data should be put.
-The directory will be created if missing.</p></td>
+      <td><p>A character string indicating where the extracted
+and cropped NLCD data should be put. The directory will be created if missing.</p></td>
+    </tr>
+    <tr>
+      <th>raster.options</th>
+      <td><p>a vector of options for raster::writeRaster.</p></td>
     </tr>
     <tr>
       <th>force.redo</th>
-      <td><p>If an extraction for this template and label already exists, should a new one be created?</p></td>
+      <td><p>If an extraction for this template and label already exists,
+should a new one be created?</p></td>
     </tr>
     </table>
 
@@ -175,11 +191,14 @@ The directory will be created if missing.</p></td>
     <p>A <code>RasterLayer</code> cropped to the bounding box of the template.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>NOTE: Prior to FedData version 3.0.0, the `get_nlcd` function returned
+    <p>NOTE: Prior to FedData version 3.0.0.9000, the `get_nlcd` function returned
 data in the web Mercator coordinate reference system available through
 the [MRLC web mapping services](https://www.mrlc.gov/geoserver/web/), rather
 than data in the NLCD's native projection (a flavor of North American Albers).
-This function now returns data in the original CRS.</p>
+Until the MRLC web services return data in the original projection, these
+data are being served from a Google Cloud bucket of pre-processed cloud-optimized
+GeoTIFFs. The script used to prepare the GeoTIFFs is available at
+[https://github.com/bocinsky/feddata-nlcd](https://github.com/bocinsky/feddata-nlcd).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
@@ -191,8 +210,7 @@ This function now returns data in the original CRS.</p>
   <span class='fu'>get_nlcd</span><span class='op'>(</span>
     template <span class='op'>=</span> <span class='fu'>FedData</span><span class='fu'>::</span><span class='va'><a href='meve.html'>meve</a></span>,
     label <span class='op'>=</span> <span class='st'>"meve"</span>,
-    year <span class='op'>=</span> <span class='fl'>2011</span>,
-    landmass <span class='op'>=</span> <span class='st'>"L48"</span>
+    year <span class='op'>=</span> <span class='fl'>2016</span>
   <span class='op'>)</span>
 
 <span class='co'># Plot with raster::plot</span>

@@ -245,7 +245,7 @@ NLCD <- get_nlcd(
 )
 
 # Plot with raster::plot
-raster::plot(NLCD, legend = TRUE)
+raster::plot(NLCD)
 ```
 
 #### Get and plot the NASS Cropland Data Layer for the study area

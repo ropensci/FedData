@@ -65,6 +65,7 @@ Suggests:
     docopt,
     ggplot2,
     lintr,
+    pkgdown,
     roxygen2,
     styler,
     testthat,

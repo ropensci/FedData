@@ -19,7 +19,7 @@
 #' @param label A character string naming the study area.
 #' @param year An integer representing the year of desired NLCD product.
 #' Acceptable values are 2019 (default), 2016, 2011, 2008, 2006, 2004, and 2001.
-#' @param dataset A character string representing type of the NLCD product. 
+#' @param dataset A character string representing type of the NLCD product.
 #' Acceptable values are 'landcover' (default), 'impervious', and 'canopy'.
 #' @param landmass A character string representing the landmass to be extracted
 #' Acceptable values are 'L48' (lower 48 US states, the default),
@@ -69,9 +69,10 @@ get_nlcd <- function(template,
 
   dataset <- match.arg(dataset)
   dataset <- switch(dataset,
-                    landcover = "Land_Cover_Science_Product",
-                    impervious = "Impervious",
-                    canopy = "Tree_Canopy")
+    landcover = "Land_Cover",
+    impervious = "Impervious",
+    canopy = "Tree_Canopy"
+  )
 
   coverage <- paste0("NLCD_", year, "_", dataset, "_", landmass)
   source <- "https://www.mrlc.gov/geoserver/wcs"
