@@ -30,7 +30,7 @@ sources.
 Currently, the package enables extraction from seven datasets:
 
 -   The [National Elevation Dataset (NED)](https://ned.usgs.gov) digital
-    elevation models (1, 1/3, and 1/9 arc-second; USGS)
+    elevation models (1 and 1/3 arc-second; USGS)
 -   The [National Hydrography Dataset (NHD)](https://nhd.usgs.gov)
     (USGS)
 -   The [Soil Survey Geographic (SSURGO)
@@ -75,6 +75,8 @@ Windows 10.
 ### Contributors
 
 -   Dylan Beaudette - USDA-NRCS Soil Survey Office, Sonora, CA
+-   Jeffrey Hollister - US EPA Atlantic Ecology Division, Narragansett,
+    RI
 -   Scott Chamberlain - ROpenSci and Museum of Paleontology at UC
     Berkeley
 
@@ -160,23 +162,6 @@ GHCN.prcp <- get_ghcn_daily(
 #> element will be used
 #> Warning: `select_()` was deprecated in dplyr 0.7.0.
 #> Please use `select()` instead.
-#> Warning: `filter_()` was deprecated in dplyr 0.7.0.
-#> Please use `filter()` instead.
-#> See vignette('programming') for more help
-#> Warning: `funs_()` was deprecated in dplyr 0.7.0.
-#> Please use `funs()` instead.
-#> See vignette('programming') for more help
-#> Warning: `funs()` was deprecated in dplyr 0.8.0.
-#> Please use a list of either functions or lambdas: 
-#> 
-#>   # Simple named list: 
-#>   list(mean = mean, median = median)
-#> 
-#>   # Auto named with `tibble::lst()`: 
-#>   tibble::lst(mean, median)
-#> 
-#>   # Using lambdas
-#>   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
 # Plot the NED again
 raster::plot(NED)
 # Plot the spatial locations
@@ -205,9 +190,6 @@ GHCN.temp <- get_ghcn_daily(
   years = 1980:1985,
   standardize = TRUE
 )
-#> Warning: `arrange_()` was deprecated in dplyr 0.7.0.
-#> Please use `arrange()` instead.
-#> See vignette('programming') for more help
 # Plot the NED again
 raster::plot(NED)
 # Plot the spatial locations

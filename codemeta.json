@@ -464,7 +464,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/master/README.md",
-  "fileSize": "1312.615KB",
+  "fileSize": "1312.031KB",
   "contIntegration": ["https://travis-ci.org/ropensci/FedData", "https://codecov.io/github/ropensci/FedData?branch=master"],
   "review": {
     "@type": "Review",
