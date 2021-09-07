@@ -19,10 +19,8 @@
 #' @param label A character string naming the study area.
 #' @param year An integer representing the year of desired NLCD product.
 #' Acceptable values are 2019 (default), 2016, 2011, 2008, 2006, 2004, and 2001.
-#' @param dataset A character string representing the dataset requires.
-#' Acceptable values are 'Land_Cover' (the National Land Cover Database
-#' core dataset, default), 'Impervious' (urban percent developed imperviousness),
-#' and 'Impervious_Descriptor' (a categorical impervious surface descriptor).
+#' @param dataset A character string representing type of the NLCD product. 
+#' Acceptable values are 'landcover' (default), 'impervious', and 'canopy'.
 #' @param landmass A character string representing the landmass to be extracted
 #' Acceptable values are 'L48' (lower 48 US states, the default),
 #' 'AK' (Alaska, 2011 and 2016 only), 'HI' (Hawaii, 2001 only), and
@@ -54,7 +52,7 @@
 get_nlcd <- function(template,
                      label,
                      year = 2019,
-                     dataset = "Land_Cover",
+                     dataset = c("landcover", "impervious", "canopy"),
                      landmass = "L48",
                      extraction.dir = paste0(
                        tempdir(),
@@ -66,6 +64,17 @@ get_nlcd <- function(template,
                      ),
                      force.redo = F) {
   extraction.dir <- normalizePath(paste0(extraction.dir, "/."), mustWork = FALSE)
+
+  template %<>% template_to_sf()
+
+  dataset <- match.arg(dataset)
+  dataset <- switch(dataset,
+                    landcover = "Land_Cover_Science_Product",
+                    impervious = "Impervious",
+                    canopy = "Tree_Canopy")
+
+  coverage <- paste0("NLCD_", year, "_", dataset, "_", landmass)
+  source <- "https://www.mrlc.gov/geoserver/wcs"
 
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
 

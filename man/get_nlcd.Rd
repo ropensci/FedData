@@ -10,7 +10,7 @@ get_nlcd(
   template,
   label,
   year = 2019,
-  dataset = "Land_Cover",
+  dataset = c("landcover", "impervious", "canopy"),
   landmass = "L48",
   extraction.dir = paste0(tempdir(), "/FedData/"),
   raster.options = c("COMPRESS=DEFLATE", "ZLEVEL=9"),
@@ -30,10 +30,8 @@ as a template for cropping.}
 \item{year}{An integer representing the year of desired NLCD product.
 Acceptable values are 2019 (default), 2016, 2011, 2008, 2006, 2004, and 2001.}
 
-\item{dataset}{A character string representing the dataset requires.
-Acceptable values are 'Land_Cover' (the National Land Cover Database
-core dataset, default), 'Impervious' (urban percent developed imperviousness),
-and 'Impervious_Descriptor' (a categorical impervious surface descriptor).}
+\item{dataset}{A character string representing type of the NLCD product. 
+Acceptable values are 'landcover' (default), 'impervious', and 'canopy'.}
 
 \item{landmass}{A character string representing the landmass to be extracted
 Acceptable values are 'L48' (lower 48 US states, the default),
