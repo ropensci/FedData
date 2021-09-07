@@ -20,7 +20,8 @@
 #' @param year An integer representing the year of desired NLCD product.
 #' Acceptable values are 2019 (default), 2016, 2011, 2008, 2006, 2004, and 2001.
 #' @param dataset A character string representing type of the NLCD product.
-#' Acceptable values are 'landcover' (default), 'impervious', and 'canopy'.
+#' Acceptable values are 'landcover' (default), 'impervious', and
+#' 'canopy' (2016 and 2011, L48 only).
 #' @param landmass A character string representing the landmass to be extracted
 #' Acceptable values are 'L48' (lower 48 US states, the default),
 #' 'AK' (Alaska, 2011 and 2016 only), 'HI' (Hawaii, 2001 only), and
@@ -63,7 +64,8 @@ get_nlcd <- function(template,
                        "ZLEVEL=9"
                      ),
                      force.redo = F) {
-  extraction.dir <- normalizePath(paste0(extraction.dir, "/."), mustWork = FALSE)
+  extraction.dir <-
+    normalizePath(paste0(extraction.dir, "/."), mustWork = FALSE)
 
   template %<>% template_to_sf()
 
@@ -74,12 +76,13 @@ get_nlcd <- function(template,
     canopy = "Tree_Canopy"
   )
 
-  coverage <- paste0("NLCD_", year, "_", dataset, "_", landmass)
-  source <- "https://www.mrlc.gov/geoserver/wcs"
+  # coverage <- paste0("NLCD_", year, "_", dataset, "_", landmass)
+  # source <- "https://www.mrlc.gov/geoserver/wcs"
 
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
 
-  outfile <- paste0(extraction.dir, "/", label, "_NLCD_", dataset, "_", year, ".tif")
+  outfile <-
+    paste0(extraction.dir, "/", label, "_NLCD_", dataset, "_", year, ".tif")
 
   if (file.exists(outfile) & !force.redo) {
     return(raster::raster(outfile))
@@ -117,6 +120,9 @@ get_nlcd <- function(template,
       overwrite = TRUE
     )
 
+  ## This code uses the (oft-changing) MRLC web services.
+  ## Once these settle down, I may return to accessing them. Until that time,
+  ## We are using self-hosted cloud-optimized geotiffs, accessed above.
   # if (source %>%
   #   httr::GET() %>%
   #   httr::status_code() %>%

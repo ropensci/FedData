@@ -31,7 +31,8 @@ as a template for cropping.}
 Acceptable values are 2019 (default), 2016, 2011, 2008, 2006, 2004, and 2001.}
 
 \item{dataset}{A character string representing type of the NLCD product.
-Acceptable values are 'landcover' (default), 'impervious', and 'canopy'.}
+Acceptable values are 'landcover' (default), 'impervious', and
+'canopy' (2016 and 2011, L48 only).}
 
 \item{landmass}{A character string representing the landmass to be extracted
 Acceptable values are 'L48' (lower 48 US states, the default),
