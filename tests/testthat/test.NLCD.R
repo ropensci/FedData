@@ -4,14 +4,14 @@ context("National Land Cover Dataset tests")
 
 # test_that("The NLCD web coverage service is available at the correct URL", {
 #   skip_on_cran()
-#   
+#
 #   year <- 2016
 #   dataset <- "Land_Cover"
 #   landmass <- "L48"
-#   
+#
 #   coverage <- paste0("NLCD_", year, "_", dataset, "_", landmass)
 #   source <- "https://www.mrlc.gov/geoserver/wcs"
-#   
+#
 #   source %>%
 #     httr::modify_url(
 #       query = list(
@@ -21,7 +21,7 @@ context("National Land Cover Dataset tests")
 #         coverageid = coverage
 #       )
 #     )
-#   
+#
 #   cat(
 #     source %>%
 #       httr::modify_url(
@@ -36,7 +36,7 @@ context("National Land Cover Dataset tests")
 #       httr::status_code(),
 #     "\n"
 #   )
-#   
+#
 #   expect_true(
 #     source %>%
 #       httr::modify_url(
@@ -57,20 +57,22 @@ test_that(
   "The NLCD COG provides the same data as a raw download",
   {
     skip_on_cran()
-    
+
     ## Raw NLCD (Puerto Rico, 2001)
     raw_zip <- tempfile(fileext = ".zip")
     raw_tmp <- tempfile()
     "https://s3-us-west-2.amazonaws.com/mrlc/PR_landcover_wimperv_10-28-08_se5.zip" %>%
-      httr::GET(httr::progress(), httr::write_disk(raw_zip, overwrite=TRUE))
+      httr::GET(httr::progress(), httr::write_disk(raw_zip, overwrite = TRUE))
     unzip(raw_zip, exdir = raw_tmp)
-    raw <- raster::raster(paste0(raw_tmp,"/pr_landcover_wimperv_10-28-08_se5.img"))
-    feddata <- 
-      FedData::get_nlcd(template = raster::raster(raw),
-                        label = "PR",
-                        year = 2001,
-                        landmass = "PR")
-    
+    raw <- raster::raster(paste0(raw_tmp, "/pr_landcover_wimperv_10-28-08_se5.img"))
+    feddata <-
+      FedData::get_nlcd(
+        template = raster::raster(raw),
+        label = "PR",
+        year = 2001,
+        landmass = "PR"
+      )
+
     expect_true(
       all((feddata - raw)[] == 0)
     )

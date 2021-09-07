@@ -67,8 +67,10 @@ get_ssurgo <- function(template,
       magrittr::set_names(., .) %>%
       purrr::map(~ sf::read_sf(outfile, layer = .x))
 
-    return(list(spatial = SSURGOData$geometry, 
-                tabular = purrr::list_modify(SSURGOData, geometry = NULL)))
+    return(list(
+      spatial = SSURGOData$geometry,
+      tabular = purrr::list_modify(SSURGOData, geometry = NULL)
+    ))
   }
 
   if (identical(class(template), "character")) {
@@ -81,7 +83,7 @@ get_ssurgo <- function(template,
     template %<>% template_to_sf()
 
     # Get shapefile of SSURGO study areas in the template
-    SSURGOAreas <- 
+    SSURGOAreas <-
       get_ssurgo_inventory(template = template, raw.dir = raw.dir)
 
     if (!any(SSURGOAreas$iscomplete == 1)) {

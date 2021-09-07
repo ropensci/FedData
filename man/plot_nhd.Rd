@@ -28,5 +28,5 @@ NHD <- get_nhd(
 NHD
 NHD \%>\%
   plot_nhd(template = FedData::meve)
-  }
+}
 }

@@ -11,7 +11,7 @@
 #' than data in the NLCD's native projection (a flavor of North American Albers).
 #' Until the MRLC web services return data in the original projection, these
 #' data are being served from a Google Cloud bucket of pre-processed cloud-optimized
-#' GeoTIFFs. The script used to prepare the GeoTIFFs is available at 
+#' GeoTIFFs. The script used to prepare the GeoTIFFs is available at
 #' [https://github.com/bocinsky/feddata-nlcd](https://github.com/bocinsky/feddata-nlcd).
 #'
 #' @param template A sf, Raster* or Spatial* object to serve
@@ -20,17 +20,17 @@
 #' @param year An integer representing the year of desired NLCD product.
 #' Acceptable values are 2019 (default), 2016, 2011, 2008, 2006, 2004, and 2001.
 #' @param dataset A character string representing the dataset requires.
-#' Acceptable values are 'Land_Cover' (the National Land Cover Database 
+#' Acceptable values are 'Land_Cover' (the National Land Cover Database
 #' core dataset, default), 'Impervious' (urban percent developed imperviousness),
 #' and 'Impervious_Descriptor' (a categorical impervious surface descriptor).
 #' @param landmass A character string representing the landmass to be extracted
-#' Acceptable values are 'L48' (lower 48 US states, the default), 
-#' 'AK' (Alaska, 2011 and 2016 only), 'HI' (Hawaii, 2001 only), and 
+#' Acceptable values are 'L48' (lower 48 US states, the default),
+#' 'AK' (Alaska, 2011 and 2016 only), 'HI' (Hawaii, 2001 only), and
 #' 'PR' (Puerto Rico, 2001 only).
-#' @param extraction.dir A character string indicating where the extracted 
+#' @param extraction.dir A character string indicating where the extracted
 #' and cropped NLCD data should be put. The directory will be created if missing.
 #' @param raster.options a vector of options for raster::writeRaster.
-#' @param force.redo If an extraction for this template and label already exists, 
+#' @param force.redo If an extraction for this template and label already exists,
 #' should a new one be created?
 #' @return A \code{RasterLayer} cropped to the bounding box of the template.
 #' @export
@@ -66,44 +66,47 @@ get_nlcd <- function(template,
                      ),
                      force.redo = F) {
   extraction.dir <- normalizePath(paste0(extraction.dir, "/."), mustWork = FALSE)
-  
+
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
-  
+
   outfile <- paste0(extraction.dir, "/", label, "_NLCD_", dataset, "_", year, ".tif")
-  
+
   if (file.exists(outfile) & !force.redo) {
     return(raster::raster(outfile))
   }
-  
+
   source <- "https://storage.googleapis.com/feddata-r/nlcd/"
-  file <- paste0(year, "_", dataset, "_", landmass,".tif")
-  
+  file <- paste0(year, "_", dataset, "_", landmass, ".tif")
+
   path <- paste0(source, file)
-  
-  if(path %>%
-     httr::HEAD() %>%
-     httr::status_code() %>%
-     identical(200L) %>%
-     magrittr::not()){
-    stop("NLCD data are not available for dataset '", dataset,"', year '",year,
-         "', and landmass '",landmass,
-         "'. Please see available datasets at https://www.mrlc.gov/data.")
+
+  if (path %>%
+    httr::HEAD() %>%
+    httr::status_code() %>%
+    identical(200L) %>%
+    magrittr::not()) {
+    stop(
+      "NLCD data are not available for dataset '", dataset, "', year '", year,
+      "', and landmass '", landmass,
+      "'. Please see available datasets at https://www.mrlc.gov/data."
+    )
   }
-  
-  template %<>% 
+
+  template %<>%
     template_to_sf()
-  
+
   out <-
     paste0("/vsicurl/", path) %>%
     terra::rast() %>%
     terra::crop(.,
-                sf::st_transform(template, sf::st_crs(terra::crs(.))),
-                snap = "out",
-                filename  = outfile,
-                datatype = "INT1U",
-                gdal = raster.options,
-                overwrite = TRUE)
-  
+      sf::st_transform(template, sf::st_crs(terra::crs(.))),
+      snap = "out",
+      filename  = outfile,
+      datatype = "INT1U",
+      gdal = raster.options,
+      overwrite = TRUE
+    )
+
   # if (source %>%
   #   httr::GET() %>%
   #   httr::status_code() %>%
@@ -111,12 +114,12 @@ get_nlcd <- function(template,
   #   magrittr::not()) {
   #   stop("No web coverage service at ", source, ". See available services at https://www.mrlc.gov/geoserver/ows?service=WCS&version=2.0.1&request=GetCapabilities")
   # }
-  # 
+  #
   #   template %<>%
   #     # sf::st_transform("+proj=aea +lat_0=23 +lon_0=-96 +lat_1=29.5 +lat_2=45.5 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs") %>%
   #     sf::st_transform(3857) %>%
   #     sf::st_bbox()
-  # 
+  #
   #   axis_labels <-
   #     source %>%
   #     httr::GET(
@@ -134,7 +137,7 @@ get_nlcd <- function(template,
   #     attr("axisLabels") %>%
   #     stringr::str_split(" ") %>%
   #     unlist()
-  # 
+  #
   #   source %>%
   #     httr::GET(
   #       query = list(
@@ -150,22 +153,22 @@ get_nlcd <- function(template,
   #         overwrite = TRUE
   #       )
   #     )
-  # 
+  #
   #   if (dataset == "Land_Cover") {
   #     out <-
   #       outfile %>%
   #       raster::raster() %>%
   #       raster::readAll() %>%
   #       raster::as.factor()
-  # 
+  #
   #     raster::colortable(out) <- nlcd$Color
-  # 
+  #
   #     suppressWarnings(
   #       levels(out) <-
   #         nlcd %>%
   #         as.data.frame()
   #     )
-  # 
+  #
   #     out %<>%
   #       raster::writeRaster(outfile,
   #         datatype = "INT1U",
@@ -174,7 +177,7 @@ get_nlcd <- function(template,
   #         setStatistics = FALSE
   #       )
   #   }
-  
+
   return(raster::raster(outfile))
 }
 

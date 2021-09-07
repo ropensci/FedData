@@ -22,7 +22,7 @@
 #' NHD
 #' NHD %>%
 #'   plot_nhd(template = FedData::meve)
-#'   }
+#' }
 get_nhd <-
   function(template,
            label,
@@ -134,7 +134,7 @@ get_nhd <-
 #' NHD
 #' NHD %>%
 #'   plot_nhd(template = FedData::meve)
-#'   }
+#' }
 plot_nhd <-
   function(x,
            template = NULL) {

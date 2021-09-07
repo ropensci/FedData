@@ -31,21 +31,21 @@ as a template for cropping.}
 Acceptable values are 2019 (default), 2016, 2011, 2008, 2006, 2004, and 2001.}
 
 \item{dataset}{A character string representing the dataset requires.
-Acceptable values are 'Land_Cover' (the National Land Cover Database 
+Acceptable values are 'Land_Cover' (the National Land Cover Database
 core dataset, default), 'Impervious' (urban percent developed imperviousness),
 and 'Impervious_Descriptor' (a categorical impervious surface descriptor).}
 
 \item{landmass}{A character string representing the landmass to be extracted
-Acceptable values are 'L48' (lower 48 US states, the default), 
-'AK' (Alaska, 2011 and 2016 only), 'HI' (Hawaii, 2001 only), and 
+Acceptable values are 'L48' (lower 48 US states, the default),
+'AK' (Alaska, 2011 and 2016 only), 'HI' (Hawaii, 2001 only), and
 'PR' (Puerto Rico, 2001 only).}
 
-\item{extraction.dir}{A character string indicating where the extracted 
+\item{extraction.dir}{A character string indicating where the extracted
 and cropped NLCD data should be put. The directory will be created if missing.}
 
 \item{raster.options}{a vector of options for raster::writeRaster.}
 
-\item{force.redo}{If an extraction for this template and label already exists, 
+\item{force.redo}{If an extraction for this template and label already exists,
 should a new one be created?}
 }
 \value{
@@ -64,7 +64,7 @@ the [MRLC web mapping services](https://www.mrlc.gov/geoserver/web/), rather
 than data in the NLCD's native projection (a flavor of North American Albers).
 Until the MRLC web services return data in the original projection, these
 data are being served from a Google Cloud bucket of pre-processed cloud-optimized
-GeoTIFFs. The script used to prepare the GeoTIFFs is available at 
+GeoTIFFs. The script used to prepare the GeoTIFFs is available at
 [https://github.com/bocinsky/feddata-nlcd](https://github.com/bocinsky/feddata-nlcd).
 }
 \examples{
