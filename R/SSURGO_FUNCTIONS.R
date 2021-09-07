@@ -384,8 +384,8 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
   file <- download_ssurgo_study_area(area = area, date = date, raw.dir = raw.dir)
 
   utils::unzip(file, exdir = tmpdir)
-
-  suppressMessages(
+  suppressMessages({
+    if(sf::sf_use_s2()){invisible(capture.output(sf::sf_use_s2(FALSE)))}
     mapunits <-
       sf::read_sf(paste0(tmpdir, "/", area, "/spatial"),
         layer = paste0("soilmu_a_", tolower(area))
@@ -393,7 +393,8 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
       sf::st_make_valid() %>%
       dplyr::group_by(AREASYMBOL, SPATIALVER, MUSYM, MUKEY) %>%
       dplyr::summarise()
-  )
+    if(!sf::sf_use_s2()){invisible(capture.output(sf::sf_use_s2(TRUE)))}
+  })
 
   # Read in all tables
   tablesData <-
