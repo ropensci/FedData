@@ -151,7 +151,7 @@ get_ned_tile <- function(template = NULL, res = "1", tileNorthing, tileWesting, 
   tileNorthing <- formatC(tileNorthing, width = 2, format = "d", flag = "0")
 
   url <- paste0(
-    "/vsicurl/https://prd-tnm.s3.amazonaws.com/StagedProducts/Elevation/", res, "/TIFF/n", tileNorthing, "w", tileWesting, "/USGS_", res, "_n", tileNorthing, "w", tileWesting,
+    "/vsicurl/https://prd-tnm.s3.amazonaws.com/index.html?prefix=StagedProducts/Elevation/", res, "/TIFF/current/n", tileNorthing, "w", tileWesting, "/USGS_", res, "_n", tileNorthing, "w", tileWesting,
     ".tif"
   )
 
