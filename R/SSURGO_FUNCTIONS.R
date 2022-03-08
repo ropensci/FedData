@@ -386,7 +386,7 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
   }
 
   file <- download_ssurgo_study_area(area = area, date = date, raw.dir = raw.dir)
-
+  
   utils::unzip(file, exdir = tmpdir)
   suppressMessages({
     mapunits <-
@@ -395,7 +395,7 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
       ) %>%
       sf::st_make_valid()
   })
-
+  
   # Read in all tables
   tablesData <-
     paste0(tmpdir, "/", area, "/tabular") %>%
@@ -406,6 +406,11 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
     ) %>%
     purrr::map(
       function(file) {
+        # Hack to bypass one line file bug in readr::read_delim 
+        if(length(readLines(file)) == 1){
+          write("\n", file, append = TRUE)
+        }
+        
         tryCatch(
           return(
             readr::read_delim(file,
