@@ -223,15 +223,20 @@ get_ghcn_daily <- function(template = NULL,
 
   message("(Down)Loading GHCN station inventory.")
   if (!force.redo & file.exists(paste0(extraction.dir, "/", label, "_GHCN_stations.shp"))) {
-    stations.sp <- rgdal::readOGR(dsn = extraction.dir, layer = paste0(label, "_GHCN_stations"), verbose = F)
+    stations.sp <-
+      sf::read_sf(extraction.dir, layer = paste0(label, "_GHCN_stations")) %>%
+      methods::as("Spatial")
   } else {
     stations.sp <- get_ghcn_inventory(template = template, raw.dir = raw.dir)
-    suppressWarnings(rgdal::writeOGR(stations.sp,
-      dsn = normalizePath(paste0(extraction.dir, "/.")),
-      layer = paste0(label, "_GHCN_stations"),
-      driver = "ESRI Shapefile",
-      overwrite_layer = TRUE
-    ))
+
+    stations.sp %>%
+      sf::st_as_sf() %>%
+      sf::write_sf(file.path(
+        normalizePath(paste0(extraction.dir, "/.")),
+        paste0(label, "_GHCN_stations.shp")
+      ),
+      delete_dsn = TRUE
+      )
   }
 
   # If the user didn't specify target elements, get them all.
@@ -572,7 +577,7 @@ get_ghcn_daily_station <- function(ID,
 #' @export
 #' @keywords internal
 get_ghcn_inventory <- function(template = NULL, elements = NULL, raw.dir) {
-  if (!is.null(template) & !(class(template) %in% c("SpatialPolygonsDataFrame", "SpatialPolygons", "character"))) {
+  if (!is.null(template) & !inherits(template, c("SpatialPolygonsDataFrame", "SpatialPolygons", "character"))) {
     template <- polygon_from_extent(template)
   }
 
@@ -631,7 +636,7 @@ get_ghcn_inventory <- function(template = NULL, elements = NULL, raw.dir) {
   }
 
   if (!is.null(template)) {
-    if (class(template) == "character") {
+    if (inherits(template, "character")) {
       missing.stations <- setdiff(template, unique(stations.sp$ID))
       if (length(missing.stations) > 0) {
         warning("Stations not available: ", paste(missing.stations, collapse = ", "))

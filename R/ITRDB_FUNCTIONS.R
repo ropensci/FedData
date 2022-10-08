@@ -215,10 +215,14 @@ download_itrdb <- function(raw.dir = paste0(tempdir(), "/FedData/raw/itrdb"), fo
   hand <- curl::new_handle()
   curl::handle_setopt(hand, .list = opts)
 
-  url <- "ftp://ftp.ncdc.noaa.gov/pub/data/paleo/treering/chronologies/"
-  filenames <- readLines(curl::curl(url, handle = hand))
-  filenames <- paste(url, filenames, sep = "")
-  filenames <- filenames[grep("*.zip", filenames)]
+  url <- "https://www.ncei.noaa.gov/pub/data/paleo/treering/chronologies/"
+  filenames <-
+    httr::GET(url) %>%
+    httr::content() %>%
+    xml2::as_list() %>%
+    unlist() %>%
+    stringr::str_subset(".zip") %>%
+    paste0(url, .)
 
   for (file in filenames) {
     download_data(url = file, destdir = raw.dir)

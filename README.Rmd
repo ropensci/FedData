@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 [![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.596344.svg)](https://doi.org/10.5281/zenodo.596344)
 [![ROpenSci Status](https://badges.ropensci.org/13_status.svg)](https://github.com/ropensci/software-review/issues/13)
 
-**FedData version 3.0 is about to be released to CRAN. There are several breaking changes in the FedData API from version 2.x. Please see [NEWS.md] for a list of changes.**
+**FedData version 3.0 is hopefully soon to be released to CRAN. There are several breaking changes in the FedData API from version 2.x. Please see [NEWS.md] for a list of changes.**
 
 `FedData` is an *R* package implementing functions to automate downloading geospatial data available from several federated data sources.
 
@@ -34,13 +34,13 @@ Currently, the package enables extraction from seven datasets:
 * The [National Elevation Dataset (NED)](https://ned.usgs.gov) digital elevation models (1 and 1/3 arc-second; USGS)
 * The [National Hydrography Dataset (NHD)](https://nhd.usgs.gov) (USGS)
 * The [Soil Survey Geographic (SSURGO) database](https://websoilsurvey.sc.egov.usda.gov/) from the National Cooperative Soil Survey (NCSS), which is led by the Natural Resources Conservation Service (NRCS) under the USDA
-* The [Global Historical Climatology Network (GHCN)](https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn), coordinated by National Climatic Data Center at NOAA
+* The [Global Historical Climatology Network (GHCN)](https://www.ncei.noaa.gov/products/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn), coordinated by National Climatic Data Center at NOAA
 * The [Daymet](https://daymet.ornl.gov/) gridded estimates of daily weather parameters for North America, version 4, available from the Oak Ridge National Laboratory's Distributed Active Archive Center (DAAC)
-* The [International Tree Ring Data Bank (ITRDB)](https://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/tree-ring), coordinated by National Climatic Data Center at NOAA
+* The [International Tree Ring Data Bank (ITRDB)](https://www.ncei.noaa.gov/products/paleoclimatology/tree-ring), coordinated by National Climatic Data Center at NOAA
 * The [National Land Cover Database (NLCD)](https://www.mrlc.gov/)
 * The [NASS Cropland Data Layer](https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php) from the National Agricultural Statistics Service
 
-This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the [**sf**](https://cran.r-project.org/package=sf) and [**raster**](https://cran.r-project.org/package=raster) packages.
+This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the [**sf**](https://cran.r-project.org/package=sf) and [**terra**](https://cran.r-project.org/package=terra) packages.
 
 This package has been built and tested on a binary install of *R* on macOS 11.5 (Big Sur), and has been successfully run on Ubuntu via [rocker/geospatial](https://hub.docker.com/r/rocker/geospatial) and on Windows 10.
 

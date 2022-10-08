@@ -2,8 +2,8 @@ Type: Package
 Package: FedData
 Title: Functions to Automate Downloading Geospatial Data Available from
     Several Federated Data Sources
-Version: 3.0.0.9000
-Date: 2022-03-08
+Version: 3.0.0
+Date: 2022-10-06
 Authors@R: 
     c(person(given = c("R.", "Kyle"),
              family = "Bocinsky",
@@ -39,6 +39,7 @@ License: MIT + file LICENSE
 URL: https://docs.ropensci.org/FedData/,
     https://github.com/ropensci/FedData
 BugReports: https://github.com/ropensci/FedData/issues
+SystemRequirements: GDAL (>= 3.0.0)
 Depends:
     R (>= 3.2.0)
 Imports:
@@ -56,29 +57,18 @@ Imports:
     purrr,
     raster,
     readr,
-    rgdal,
-    sf,
+    sf (>= 1.0),
     sp,
     stringr,
-    terra,
+    terra (>= 1.0),
     tibble,
     tidyr,
     xml2
-Suggests: 
-    codemetar,
-    covr,
-    devtools,
-    docopt,
-    ggplot2,
-    lintr,
-    pkgdown,
-    precommit,
-    roxygen2,
-    styler,
-    testthat,
-    usethis
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
 Repository: CRAN
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1
+Suggests: 
+    ggplot2,
+    testthat

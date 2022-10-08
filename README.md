@@ -19,9 +19,9 @@ DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.596344.svg)](https://doi.org/10
 [![ROpenSci
 Status](https://badges.ropensci.org/13_status.svg)](https://github.com/ropensci/software-review/issues/13)
 
-**FedData version 3.0 is about to be released to CRAN. There are several
-breaking changes in the FedData API from version 2.x. Please see
-\[NEWS.md\] for a list of changes.**
+**FedData version 3.0 is hopefully soon to be released to CRAN. There
+are several breaking changes in the FedData API from version 2.x. Please
+see \[NEWS.md\] for a list of changes.**
 
 `FedData` is an *R* package implementing functions to automate
 downloading geospatial data available from several federated data
@@ -29,28 +29,27 @@ sources.
 
 Currently, the package enables extraction from seven datasets:
 
--   The [National Elevation Dataset (NED)](https://ned.usgs.gov) digital
-    elevation models (1 and 1/3 arc-second; USGS)
--   The [National Hydrography Dataset (NHD)](https://nhd.usgs.gov)
-    (USGS)
--   The [Soil Survey Geographic (SSURGO)
-    database](https://websoilsurvey.sc.egov.usda.gov/) from the National
-    Cooperative Soil Survey (NCSS), which is led by the Natural
-    Resources Conservation Service (NRCS) under the USDA
--   The [Global Historical Climatology Network
-    (GHCN)](https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn),
-    coordinated by National Climatic Data Center at NOAA
--   The [Daymet](https://daymet.ornl.gov/) gridded estimates of daily
-    weather parameters for North America, version 4, available from the
-    Oak Ridge National Laboratory’s Distributed Active Archive Center
-    (DAAC)
--   The [International Tree Ring Data Bank
-    (ITRDB)](https://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/tree-ring),
-    coordinated by National Climatic Data Center at NOAA
--   The [National Land Cover Database (NLCD)](https://www.mrlc.gov/)
--   The [NASS Cropland Data
-    Layer](https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php)
-    from the National Agricultural Statistics Service
+- The [National Elevation Dataset (NED)](https://ned.usgs.gov) digital
+  elevation models (1 and 1/3 arc-second; USGS)
+- The [National Hydrography Dataset (NHD)](https://nhd.usgs.gov) (USGS)
+- The [Soil Survey Geographic (SSURGO)
+  database](https://websoilsurvey.sc.egov.usda.gov/) from the National
+  Cooperative Soil Survey (NCSS), which is led by the Natural Resources
+  Conservation Service (NRCS) under the USDA
+- The [Global Historical Climatology Network
+  (GHCN)](https://www.ncei.noaa.gov/products/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn),
+  coordinated by National Climatic Data Center at NOAA
+- The [Daymet](https://daymet.ornl.gov/) gridded estimates of daily
+  weather parameters for North America, version 4, available from the
+  Oak Ridge National Laboratory’s Distributed Active Archive Center
+  (DAAC)
+- The [International Tree Ring Data Bank
+  (ITRDB)](https://www.ncei.noaa.gov/products/paleoclimatology/tree-ring),
+  coordinated by National Climatic Data Center at NOAA
+- The [National Land Cover Database (NLCD)](https://www.mrlc.gov/)
+- The [NASS Cropland Data
+  Layer](https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php)
+  from the National Agricultural Statistics Service
 
 This package is designed with the large-scale geographic information
 system (GIS) use-case in mind: cases where the use of dynamic
@@ -60,7 +59,7 @@ otherwise spatially-defined datasets; additionally, it can preprocess
 those datasets by extracting data within an area of interest (AoI),
 defined spatially. It relies heavily on the
 [**sf**](https://cran.r-project.org/package=sf) and
-[**raster**](https://cran.r-project.org/package=raster) packages.
+[**terra**](https://cran.r-project.org/package=terra) packages.
 
 This package has been built and tested on a binary install of *R* on
 macOS 11.5 (Big Sur), and has been successfully run on Ubuntu via
@@ -69,34 +68,32 @@ Windows 10.
 
 ### Development
 
--   [Kyle Bocinsky](https://www.bocinsky.io) - Montana Climate Office,
-    Missoula, MT
+- [Kyle Bocinsky](https://www.bocinsky.io) - Montana Climate Office,
+  Missoula, MT
 
 ### Contributors
 
--   Dylan Beaudette - USDA-NRCS Soil Survey Office, Sonora, CA
--   Jeffrey Hollister - US EPA Atlantic Ecology Division, Narragansett,
-    RI
--   Scott Chamberlain - ROpenSci and Museum of Paleontology at UC
-    Berkeley
+- Dylan Beaudette - USDA-NRCS Soil Survey Office, Sonora, CA
+- Jeffrey Hollister - US EPA Atlantic Ecology Division, Narragansett, RI
+- Scott Chamberlain - ROpenSci and Museum of Paleontology at UC Berkeley
 
 ### Install `FedData`
 
--   From CRAN:
+- From CRAN:
 
 ``` r
 install.packages("FedData")
 ```
 
--   Development version from GitHub:
+- Development version from GitHub:
 
 ``` r
 install.packages("devtools")
 devtools::install_github("ropensci/FedData")
 ```
 
--   Linux: Follow instructions for installing `sf` available at
-    <https://r-spatial.github.io/sf/>.
+- Linux: Follow instructions for installing `sf` available at
+  <https://r-spatial.github.io/sf/>.
 
 ### Demonstration
 
@@ -157,11 +154,37 @@ GHCN.prcp <- get_ghcn_daily(
   label = "meve",
   elements = c("prcp")
 )
-#> Warning in if (!is.null(template) & !(class(template) %in%
-#> c("SpatialPolygonsDataFrame", : the condition has length > 1 and only the first
-#> element will be used
 #> Warning: `select_()` was deprecated in dplyr 0.7.0.
 #> Please use `select()` instead.
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+#> Warning in CPL_write_ogr(obj, dsn, layer, driver,
+#> as.character(dataset_options), : GDAL Error 1: /private/var/folders/ys/
+#> 7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/RtmpzRr2wz/FedData/extractions/ghcn/meve/
+#> meve_GHCN_stations.shp does not appear to be a file or directory.
+#> Warning: `filter_()` was deprecated in dplyr 0.7.0.
+#> Please use `filter()` instead.
+#> See vignette('programming') for more help
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+#> Warning: `funs_()` was deprecated in dplyr 0.7.0.
+#> Please use `funs()` instead.
+#> See vignette('programming') for more help
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+#> Warning: `funs()` was deprecated in dplyr 0.8.0.
+#> Please use a list of either functions or lambdas: 
+#> 
+#>   # Simple named list: 
+#>   list(mean = mean, median = median)
+#> 
+#>   # Auto named with `tibble::lst()`: 
+#>   tibble::lst(mean, median)
+#> 
+#>   # Using lambdas
+#>   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 # Plot the NED again
 raster::plot(NED)
 # Plot the spatial locations
@@ -190,6 +213,11 @@ GHCN.temp <- get_ghcn_daily(
   years = 1980:1985,
   standardize = TRUE
 )
+#> Warning: `arrange_()` was deprecated in dplyr 0.7.0.
+#> Please use `arrange()` instead.
+#> See vignette('programming') for more help
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 # Plot the NED again
 raster::plot(NED)
 # Plot the spatial locations
@@ -245,19 +273,6 @@ SSURGO.areas <- get_ssurgo(
   template = c("CO670", "CO075"),
   label = "CO_TEST"
 )
-#> Warning: One or more parsing issues, see `problems()` for details
-
-#> Warning: One or more parsing issues, see `problems()` for details
-
-#> Warning: One or more parsing issues, see `problems()` for details
-
-#> Warning: One or more parsing issues, see `problems()` for details
-
-#> Warning: One or more parsing issues, see `problems()` for details
-
-#> Warning: One or more parsing issues, see `problems()` for details
-
-#> Warning: One or more parsing issues, see `problems()` for details
 
 # Let's just look at spatial data for CO675
 SSURGO.areas.CO675 <-
@@ -330,7 +345,7 @@ NLCD <- get_nlcd(
 raster::plot(NLCD)
 ```
 
-<img src="man/figures/README-NLCD-1.png" width="100%" /><img src="man/figures/README-NLCD-2.png" width="100%" />
+<img src="man/figures/README-NLCD-1.png" width="100%" />
 
 #### Get and plot the NASS Cropland Data Layer for the study area
 
@@ -346,9 +361,10 @@ NASS_CDL <- get_nass_cdl(
 raster::plot(NASS_CDL)
 ```
 
-<img src="man/figures/README-NASS-CDL-1.png" width="100%" /><img src="man/figures/README-NASS-CDL-2.png" width="100%" />
+<img src="man/figures/README-NASS-CDL-1.png" width="100%" />
 
 ``` r
+
 # Get the NASS CDL classification table
 raster::levels(NASS_CDL)[[1]]
 
