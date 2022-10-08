@@ -42,8 +42,6 @@ Currently, the package enables extraction from seven datasets:
 
 This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the [**sf**](https://cran.r-project.org/package=sf) and [**terra**](https://cran.r-project.org/package=terra) packages.
 
-This package has been built and tested on a binary install of *R* on macOS 11.5 (Big Sur), and has been successfully run on Ubuntu via [rocker/geospatial](https://hub.docker.com/r/rocker/geospatial) and on Windows 10.
-
 ### Development
 + [Kyle Bocinsky](https://www.bocinsky.io) - Montana Climate Office, Missoula, MT
 

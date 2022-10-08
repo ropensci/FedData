@@ -61,11 +61,6 @@ defined spatially. It relies heavily on the
 [**sf**](https://cran.r-project.org/package=sf) and
 [**terra**](https://cran.r-project.org/package=terra) packages.
 
-This package has been built and tested on a binary install of *R* on
-macOS 11.5 (Big Sur), and has been successfully run on Ubuntu via
-[rocker/geospatial](https://hub.docker.com/r/rocker/geospatial) and on
-Windows 10.
-
 ### Development
 
 - [Kyle Bocinsky](https://www.bocinsky.io) - Montana Climate Office,
@@ -160,7 +155,7 @@ GHCN.prcp <- get_ghcn_daily(
 #> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 #> Warning in CPL_write_ogr(obj, dsn, layer, driver,
 #> as.character(dataset_options), : GDAL Error 1: /private/var/folders/ys/
-#> 7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/RtmpzRr2wz/FedData/extractions/ghcn/meve/
+#> 7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/Rtmp6XU4Vg/FedData/extractions/ghcn/meve/
 #> meve_GHCN_stations.shp does not appear to be a file or directory.
 #> Warning: `filter_()` was deprecated in dplyr 0.7.0.
 #> Please use `filter()` instead.
