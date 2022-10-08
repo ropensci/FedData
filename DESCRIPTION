@@ -70,5 +70,6 @@ NeedsCompilation: no
 Repository: CRAN
 RoxygenNote: 7.2.1
 Suggests: 
+    covr,
     ggplot2,
     testthat

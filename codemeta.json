@@ -65,6 +65,18 @@
   "softwareSuggestions": [
     {
       "@type": "SoftwareApplication",
+      "identifier": "covr",
+      "name": "covr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=covr"
+    },
+    {
+      "@type": "SoftwareApplication",
       "identifier": "ggplot2",
       "name": "ggplot2",
       "provider": {
@@ -344,10 +356,10 @@
     },
     "SystemRequirements": "GDAL (>= 3.0.0)"
   },
-  "fileSize": "1380.2KB",
+  "fileSize": "1380.012KB",
   "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/master/README.md",
-  "contIntegration": ["https://travis-ci.org/ropensci/FedData", "https://codecov.io/github/ropensci/FedData?branch=master"],
+  "contIntegration": ["https://github.com/ropensci/FedData/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/ropensci/FedData?branch=master"],
   "developmentStatus": "https://www.repostatus.org/#active",
   "review": {
     "@type": "Review",

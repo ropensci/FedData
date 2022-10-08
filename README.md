@@ -10,18 +10,17 @@ version](https://www.r-pkg.org/badges/version/FedData)](https://cran.r-project.o
 month](https://cranlogs.r-pkg.org/badges/FedData)](https://github.com/r-hub/cranlogs.app)
 [![CRAN
 downloads](https://cranlogs.r-pkg.org/badges/grand-total/FedData)](https://github.com/r-hub/cranlogs.app)
-[![Build
-Status](https://api.travis-ci.org/ropensci/FedData.png)](https://travis-ci.org/ropensci/FedData)
-[![Coverage
-Status](https://img.shields.io/codecov/c/github/ropensci/FedData/master.svg)](https://codecov.io/github/ropensci/FedData?branch=master)
+[![R-CMD-check](https://github.com/ropensci/FedData/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/FedData/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/ropensci/FedData/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ropensci/FedData?branch=master)
 [![Zenodo
 DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.596344.svg)](https://doi.org/10.5281/zenodo.596344)
 [![ROpenSci
 Status](https://badges.ropensci.org/13_status.svg)](https://github.com/ropensci/software-review/issues/13)
 
-**FedData version 3.0 is hopefully soon to be released to CRAN. There
-are several breaking changes in the FedData API from version 2.x. Please
-see \[NEWS.md\] for a list of changes.**
+**FedData version 3.0 has been released to CRAN! There are several
+breaking changes in the FedData API from version 2.x. Please see
+\[NEWS.md\] for a list of changes.**
 
 `FedData` is an *R* package implementing functions to automate
 downloading geospatial data available from several federated data
@@ -155,7 +154,7 @@ GHCN.prcp <- get_ghcn_daily(
 #> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 #> Warning in CPL_write_ogr(obj, dsn, layer, driver,
 #> as.character(dataset_options), : GDAL Error 1: /private/var/folders/ys/
-#> 7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/Rtmp6XU4Vg/FedData/extractions/ghcn/meve/
+#> 7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/RtmptN8tJ0/FedData/extractions/ghcn/meve/
 #> meve_GHCN_stations.shp does not appear to be a file or directory.
 #> Warning: `filter_()` was deprecated in dplyr 0.7.0.
 #> Please use `filter()` instead.

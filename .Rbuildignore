@@ -16,3 +16,4 @@
 ^_pkgdown\.yml$
 ^\.pre-commit-config\.yaml$
 ^codemeta\.json$
+^\.github$
