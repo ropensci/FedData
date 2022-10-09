@@ -9,6 +9,8 @@
 /docs/RAW/*
 /FedData Test
 /FedData Test/*
+/revdep
+/revdep/*
 
 # Mac trash files
 .DS_Store

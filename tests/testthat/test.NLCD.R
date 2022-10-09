@@ -67,7 +67,7 @@ test_that(
     raw <- raster::raster(paste0(raw_tmp, "/pr_landcover_wimperv_10-28-08_se5.img"))
     feddata <-
       FedData::get_nlcd(
-        template = raster::raster(raw),
+        template = raw,
         label = "PR",
         year = 2001,
         landmass = "PR"

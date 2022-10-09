@@ -30,13 +30,15 @@ Currently, the package enables extraction from seven datasets:
 
 - The [National Elevation Dataset (NED)](https://ned.usgs.gov) digital
   elevation models (1 and 1/3 arc-second; USGS)
-- The [National Hydrography Dataset (NHD)](https://nhd.usgs.gov) (USGS)
+- The [National Hydrography Dataset
+  (NHD)](https://www.usgs.gov/national-hydrography/national-hydrography-dataset)
+  (USGS)
 - The [Soil Survey Geographic (SSURGO)
   database](https://websoilsurvey.sc.egov.usda.gov/) from the National
   Cooperative Soil Survey (NCSS), which is led by the Natural Resources
   Conservation Service (NRCS) under the USDA
 - The [Global Historical Climatology Network
-  (GHCN)](https://www.ncei.noaa.gov/products/land-based-station-data/land-based-datasets/global-historical-climatology-network-ghcn),
+  (GHCN)](https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily),
   coordinated by National Climatic Data Center at NOAA
 - The [Daymet](https://daymet.ornl.gov/) gridded estimates of daily
   weather parameters for North America, version 4, available from the
@@ -149,36 +151,33 @@ GHCN.prcp <- get_ghcn_daily(
   elements = c("prcp")
 )
 #> Warning: `select_()` was deprecated in dplyr 0.7.0.
-#> Please use `select()` instead.
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+#> ℹ Please use `select()` instead.
+#> ℹ The deprecated feature was likely used in the dplyr package.
+#>   Please report the issue at <]8;;https://github.com/tidyverse/dplyr/issueshttps://github.com/tidyverse/dplyr/issues]8;;>.
 #> Warning in CPL_write_ogr(obj, dsn, layer, driver,
 #> as.character(dataset_options), : GDAL Error 1: /private/var/folders/ys/
-#> 7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/RtmptN8tJ0/FedData/extractions/ghcn/meve/
+#> 7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/Rtmp5iX7lU/FedData/extractions/ghcn/meve/
 #> meve_GHCN_stations.shp does not appear to be a file or directory.
 #> Warning: `filter_()` was deprecated in dplyr 0.7.0.
-#> Please use `filter()` instead.
-#> See vignette('programming') for more help
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+#> ℹ Please use `filter()` instead.
+#> ℹ See vignette('programming') for more help
+#> ℹ The deprecated feature was likely used in the dplyr package.
+#>   Please report the issue at <]8;;https://github.com/tidyverse/dplyr/issueshttps://github.com/tidyverse/dplyr/issues]8;;>.
 #> Warning: `funs_()` was deprecated in dplyr 0.7.0.
-#> Please use `funs()` instead.
-#> See vignette('programming') for more help
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+#> ℹ Please use `funs()` instead.
+#> ℹ See vignette('programming') for more help
+#> ℹ The deprecated feature was likely used in the dplyr package.
+#>   Please report the issue at <]8;;https://github.com/tidyverse/dplyr/issueshttps://github.com/tidyverse/dplyr/issues]8;;>.
 #> Warning: `funs()` was deprecated in dplyr 0.8.0.
-#> Please use a list of either functions or lambdas: 
+#> ℹ Please use a list of either functions or lambdas:
 #> 
-#>   # Simple named list: 
-#>   list(mean = mean, median = median)
+#> # Simple named list: list(mean = mean, median = median)
 #> 
-#>   # Auto named with `tibble::lst()`: 
-#>   tibble::lst(mean, median)
+#> # Auto named with `tibble::lst()`: tibble::lst(mean, median)
 #> 
-#>   # Using lambdas
-#>   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+#> # Using lambdas list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
+#> ℹ The deprecated feature was likely used in the dplyr package.
+#>   Please report the issue at <]8;;https://github.com/tidyverse/dplyr/issueshttps://github.com/tidyverse/dplyr/issues]8;;>.
 # Plot the NED again
 raster::plot(NED)
 # Plot the spatial locations
@@ -208,10 +207,10 @@ GHCN.temp <- get_ghcn_daily(
   standardize = TRUE
 )
 #> Warning: `arrange_()` was deprecated in dplyr 0.7.0.
-#> Please use `arrange()` instead.
-#> See vignette('programming') for more help
-#> This warning is displayed once every 8 hours.
-#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+#> ℹ Please use `arrange()` instead.
+#> ℹ See vignette('programming') for more help
+#> ℹ The deprecated feature was likely used in the dplyr package.
+#>   Please report the issue at <]8;;https://github.com/tidyverse/dplyr/issueshttps://github.com/tidyverse/dplyr/issues]8;;>.
 # Plot the NED again
 raster::plot(NED)
 # Plot the spatial locations
