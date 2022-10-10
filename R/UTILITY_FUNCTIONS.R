@@ -93,7 +93,14 @@ spdf_from_polygon <- function(x) {
 }
 
 template_to_sf <- function(template) {
-  if (length(intersect(class(template), c("RasterLayer", "RasterStack", "RasterBrick", "Extent"))) > 0) {
+  if (inherits(template, c(
+    "RasterLayer",
+    "RasterStack",
+    "RasterBrick",
+    "Extent",
+    "SpatRaster",
+    "SpatVector"
+  ))) {
     template %<>%
       sf::st_bbox() %>%
       sf::st_as_sfc()

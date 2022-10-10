@@ -64,7 +64,7 @@ test_that(
     "https://s3-us-west-2.amazonaws.com/mrlc/PR_landcover_wimperv_10-28-08_se5.zip" %>%
       httr::GET(httr::progress(), httr::write_disk(raw_zip, overwrite = TRUE))
     unzip(raw_zip, exdir = raw_tmp)
-    raw <- raster::raster(paste0(raw_tmp, "/pr_landcover_wimperv_10-28-08_se5.img"))
+    raw <- terra::rast(paste0(raw_tmp, "/pr_landcover_wimperv_10-28-08_se5.img"))
     feddata <-
       FedData::get_nlcd(
         template = raw,
