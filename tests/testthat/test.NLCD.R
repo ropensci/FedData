@@ -73,6 +73,9 @@ test_that(
         landmass = "PR"
       )
 
+    raw %<>%
+      raster::raster()
+
     expect_true(
       all((feddata - raw)[] == 0)
     )
