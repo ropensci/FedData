@@ -258,57 +258,63 @@ split_bbox <- function(bbox, x, y = x) {
 #' @return A character string of the file path to the downloaded file.
 #' @export
 #' @keywords internal
-download_data <- function(url, destdir = getwd(), timestamping = TRUE, nc = FALSE, verbose = FALSE, progress = FALSE) {
-  destdir <- normalizePath(paste0(destdir, "/."))
-  destfile <- paste0(destdir, "/", basename(url))
-  temp.file <- paste0(tempdir(), "/", basename(url))
+download_data <-
+  function(url,
+           destdir = getwd(),
+           timestamping = TRUE,
+           nc = FALSE,
+           verbose = FALSE,
+           progress = FALSE) {
+    destdir <- normalizePath(paste0(destdir, "/."))
+    destfile <- paste0(destdir, "/", basename(url))
+    temp.file <- paste0(tempdir(), "/", basename(url))
 
-  if (nc & file.exists(destfile)) {
-    message("Local file exists. Returning.")
-    return(destfile)
-  } else if (timestamping & file.exists(destfile)) {
-    message("Downloading file (if necessary): ", url)
-    opts <- list(
-      verbose = verbose, noprogress = !progress, fresh_connect = TRUE, ftp_use_epsv = FALSE, forbid_reuse = TRUE,
-      timecondition = TRUE, timevalue = base::file.info(destfile)$mtime
-    )
-    hand <- curl::new_handle()
-    curl::handle_setopt(hand, .list = opts)
-    tryCatch(status <- curl::curl_fetch_disk(url, path = temp.file, handle = hand),
-      error = function(e) {
-        message(
-          "Download of ",
-          url, " failed. Reverting to already cached file."
-        )
-        return(destfile)
+    if (nc & file.exists(destfile)) {
+      message("Local file exists. Returning.")
+      return(destfile)
+    } else if (timestamping & file.exists(destfile)) {
+      message("Downloading file (if necessary): ", url)
+      opts <- list(
+        verbose = verbose, noprogress = !progress, fresh_connect = TRUE, ftp_use_epsv = FALSE, forbid_reuse = TRUE,
+        timecondition = TRUE, timevalue = base::file.info(destfile)$mtime
+      )
+      hand <- curl::new_handle()
+      curl::handle_setopt(hand, .list = opts)
+      tryCatch(status <- curl::curl_fetch_disk(url, path = temp.file, handle = hand),
+        error = function(e) {
+          message(
+            "Download of ",
+            url, " failed. Reverting to already cached file."
+          )
+          return(destfile)
+        }
+      )
+
+      if (file.info(temp.file)$size > 0) {
+        file.copy(temp.file, destfile, overwrite = T)
       }
-    )
-
-    if (file.info(temp.file)$size > 0) {
-      file.copy(temp.file, destfile, overwrite = T)
+      return(destfile)
+    } else {
+      message("Downloading file: ", url)
+      opts <- list(
+        verbose = verbose,
+        noprogress = !progress,
+        fresh_connect = TRUE,
+        ftp_use_epsv = FALSE,
+        forbid_reuse = TRUE
+      )
+      hand <- curl::new_handle()
+      curl::handle_setopt(hand, .list = opts)
+      tryCatch(status <- curl::curl_fetch_disk(url,
+        path = destfile,
+        handle = hand
+      ),
+      error = function(e) stop("Download of ", url, " failed!")
+      )
+      return(destfile)
     }
     return(destfile)
-  } else {
-    message("Downloading file: ", url)
-    opts <- list(
-      verbose = verbose,
-      noprogress = !progress,
-      fresh_connect = TRUE,
-      ftp_use_epsv = FALSE,
-      forbid_reuse = TRUE
-    )
-    hand <- curl::new_handle()
-    curl::handle_setopt(hand, .list = opts)
-    tryCatch(status <- curl::curl_fetch_disk(url,
-      path = destfile,
-      handle = hand
-    ),
-    error = function(e) stop("Download of ", url, " failed!")
-    )
-    return(destfile)
   }
-  return(destfile)
-}
 
 #' Check whether a web service is unavailable, and stop function if necessary.
 #'

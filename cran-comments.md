@@ -1,7 +1,7 @@
 # CRAN comments
 
-This is a major release from FedData v2.5.7 to FedData v3.0.0. 
-Please see NEWS.md for release details.
+This is a major release from FedData v2.5.7 to FedData v3.0.0.
+Please see NEWS.md for release details, including breaking changes.
 
 ---
 
@@ -35,14 +35,6 @@ Please see NEWS.md for release details.
 
 `rhub::check_for_cran()` result:
 
-**Test environment:** Windows Server 2022, R-release, 32/64 bit
-
-**0 errors ✔ | 0 warnings ✔ | 0 notes ✔ **
-
----
-
-`rhub::check_for_cran()` result:
-
 **Test environment:** Windows Server 2022, R-devel, 64 bit
 
 **0 errors ✔ | 0 warnings ✔ | 1 note ✖ **
@@ -55,6 +47,18 @@ Please see NEWS.md for release details.
 
 `rhub::check_for_cran()` result:
 
+**Test environment:** Ubuntu Linux 20.04.1 LTS, R-release, GCC
+
+**0 errors ✔ | 0 warnings ✔ | 1 note ✖ **
+
+- checking HTML version of manual ...
+  - NOTE: Skipping checking HTML validation: no command 'tidy' found
+  - Explanation: As noted in an [r-source check](https://github.com/wch/r-source/blob/trunk/src/library/tools/R/check.R), this seems like an issue related to macOS's old version of HTML Tidy and not related to the package being checked.
+  
+---
+
+`rhub::check_for_cran()` result:
+
 **Test environment:** Fedora Linux, R-devel, clang, gfortran
 
 **0 errors ✔ | 0 warnings ✔ | 1 note ✖ **
@@ -62,11 +66,3 @@ Please see NEWS.md for release details.
 - checking HTML version of manual ...
   - NOTE: Skipping checking HTML validation: no command 'tidy' found
   - Explanation: As noted in an [r-source check](https://github.com/wch/r-source/blob/trunk/src/library/tools/R/check.R), this seems like an issue related to macOS's old version of HTML Tidy and not related to the package being checked.
-
----
-
-`rhub::check(platform = 'debian-gcc-devel')` result:
-
-**Test environment:** Debian Linux, R-devel, GCC
-
-**0 errors ✔ | 0 warnings ✔ | 0 notes ✔ **
