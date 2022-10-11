@@ -15,7 +15,7 @@ Please see NEWS.md for release details, including breaking changes.
 
 ---
 
-## GitHub Actions result:
+## GitHub Actions results:
 
 **Test environments:** 
 
@@ -33,6 +33,8 @@ Please see NEWS.md for release details, including breaking changes.
 
 ---
 
+## R-hub check results:
+
 `rhub::check_for_cran()` result:
 
 **Test environment:** Windows Server 2022, R-devel, 64 bit
@@ -49,12 +51,8 @@ Please see NEWS.md for release details, including breaking changes.
 
 **Test environment:** Ubuntu Linux 20.04.1 LTS, R-release, GCC
 
-**0 errors ✔ | 0 warnings ✔ | 1 note ✖ **
+**0 errors ✔ | 0 warnings ✔ | 0 notes ✖ **
 
-- checking HTML version of manual ...
-  - NOTE: Skipping checking HTML validation: no command 'tidy' found
-  - Explanation: As noted in an [r-source check](https://github.com/wch/r-source/blob/trunk/src/library/tools/R/check.R), this seems like an issue related to macOS's old version of HTML Tidy and not related to the package being checked.
-  
 ---
 
 `rhub::check_for_cran()` result:
@@ -63,6 +61,28 @@ Please see NEWS.md for release details, including breaking changes.
 
 **0 errors ✔ | 0 warnings ✔ | 1 note ✖ **
 
-- checking HTML version of manual ...
+- checking HTML version of manual ... 
   - NOTE: Skipping checking HTML validation: no command 'tidy' found
-  - Explanation: As noted in an [r-source check](https://github.com/wch/r-source/blob/trunk/src/library/tools/R/check.R), this seems like an issue related to macOS's old version of HTML Tidy and not related to the package being checked.
+  - Explanation: The note about HTML validation only occurs on 
+  the Fedora dev install and does not seem critical. 
+  The HTML version of the manual is able to be validated on other platforms.
+
+---
+
+## win-builder results
+
+`devtools::check_win_devel()` result:
+
+**Test environment:** x86_64-w64-mingw32 (64-bit)
+
+**0 errors ✔ | 0 warnings ✔ | 0 notes ✖ **
+
+---
+
+## revdepcheck results
+
+We checked one reverse dependencies, comparing R CMD check results across 
+CRAN and dev versions of this package.
+
+ * We saw 0 new problems
+ * We failed to check 0 packages
