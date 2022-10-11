@@ -202,7 +202,7 @@ get_daymet <- function(template,
       raster::writeRaster(x,
         paste0(extraction.dir, "/", label, "_", i, "_", tempo, ".tif"),
         options = raster.options,
-        overwrite = T,
+        overwrite = TRUE,
         setStatistics = FALSE
       )
     })

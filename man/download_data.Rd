@@ -7,10 +7,10 @@
 download_data(
   url,
   destdir = getwd(),
-  timestamping = T,
-  nc = F,
-  verbose = F,
-  progress = F
+  timestamping = TRUE,
+  nc = FALSE,
+  verbose = FALSE,
+  progress = FALSE
 )
 }
 \arguments{

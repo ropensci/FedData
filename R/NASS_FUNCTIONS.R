@@ -118,7 +118,7 @@ get_nass_cdl <- function(template,
     raster::writeRaster(outfile,
       datatype = "INT1U",
       options = raster.options,
-      overwrite = T,
+      overwrite = TRUE,
       setStatistics = FALSE
     )
 

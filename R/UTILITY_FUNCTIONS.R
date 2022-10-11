@@ -258,7 +258,7 @@ split_bbox <- function(bbox, x, y = x) {
 #' @return A character string of the file path to the downloaded file.
 #' @export
 #' @keywords internal
-download_data <- function(url, destdir = getwd(), timestamping = T, nc = F, verbose = F, progress = F) {
+download_data <- function(url, destdir = getwd(), timestamping = TRUE, nc = FALSE, verbose = FALSE, progress = FALSE) {
   destdir <- normalizePath(paste0(destdir, "/."))
   destfile <- paste0(destdir, "/", basename(url))
   temp.file <- paste0(tempdir(), "/", basename(url))
