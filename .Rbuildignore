@@ -18,3 +18,4 @@
 ^codemeta\.json$
 ^\.github$
 ^revdep$
+^CRAN-SUBMISSION$

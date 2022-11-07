@@ -14,7 +14,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.2.1 (2022-06-23)",
+  "runtimePlatform": "R version 4.2.2 (2022-10-31)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -258,6 +258,18 @@
     },
     "15": {
       "@type": "SoftwareApplication",
+      "identifier": "rgdal",
+      "name": "rgdal",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rgdal"
+    },
+    "16": {
+      "@type": "SoftwareApplication",
       "identifier": "readr",
       "name": "readr",
       "provider": {
@@ -268,7 +280,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=readr"
     },
-    "16": {
+    "17": {
       "@type": "SoftwareApplication",
       "identifier": "sf",
       "name": "sf",
@@ -281,7 +293,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=sf"
     },
-    "17": {
+    "18": {
       "@type": "SoftwareApplication",
       "identifier": "sp",
       "name": "sp",
@@ -293,7 +305,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=sp"
     },
-    "18": {
+    "19": {
       "@type": "SoftwareApplication",
       "identifier": "stringr",
       "name": "stringr",
@@ -305,7 +317,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=stringr"
     },
-    "19": {
+    "20": {
       "@type": "SoftwareApplication",
       "identifier": "terra",
       "name": "terra",
@@ -318,7 +330,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=terra"
     },
-    "20": {
+    "21": {
       "@type": "SoftwareApplication",
       "identifier": "tibble",
       "name": "tibble",
@@ -330,7 +342,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tibble"
     },
-    "21": {
+    "22": {
       "@type": "SoftwareApplication",
       "identifier": "tidyr",
       "name": "tidyr",
@@ -342,7 +354,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyr"
     },
-    "22": {
+    "23": {
       "@type": "SoftwareApplication",
       "identifier": "xml2",
       "name": "xml2",
@@ -356,7 +368,7 @@
     },
     "SystemRequirements": "GDAL (>= 3.0.0)"
   },
-  "fileSize": "1380.012KB",
+  "fileSize": "1380.62KB",
   "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/master/README.md",
   "contIntegration": ["https://github.com/ropensci/FedData/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/ropensci/FedData?branch=master"],

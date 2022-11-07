@@ -63,7 +63,7 @@ get_nlcd <- function(template,
                        "COMPRESS=DEFLATE",
                        "ZLEVEL=9"
                      ),
-                     force.redo = F) {
+                     force.redo = FALSE) {
   extraction.dir <-
     normalizePath(paste0(extraction.dir, "/."), mustWork = FALSE)
 
@@ -105,8 +105,8 @@ get_nlcd <- function(template,
     )
   }
 
-  template %<>%
-    template_to_sf()
+  # template %<>%
+  #   template_to_sf()
 
   out <-
     paste0("/vsicurl/", path) %>%
@@ -114,7 +114,7 @@ get_nlcd <- function(template,
     terra::crop(.,
       sf::st_transform(template, sf::st_crs(terra::crs(.))),
       snap = "out",
-      filename  = outfile,
+      filename = outfile,
       datatype = "INT1U",
       gdal = raster.options,
       overwrite = TRUE
