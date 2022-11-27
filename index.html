@@ -196,7 +196,7 @@
 <span><span class="co">#&gt;   Please report the issue at &lt;]8;;https://github.com/tidyverse/dplyr/issueshttps://github.com/tidyverse/dplyr/issues]8;;&gt;.</span></span>
 <span><span class="co">#&gt; Warning in CPL_write_ogr(obj, dsn, layer, driver,</span></span>
 <span><span class="co">#&gt; as.character(dataset_options), : GDAL Error 1: /private/var/folders/ys/</span></span>
-<span><span class="co">#&gt; 7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/RtmpqudkYk/FedData/extractions/ghcn/meve/</span></span>
+<span><span class="co">#&gt; 7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/RtmpcJyagw/FedData/extractions/ghcn/meve/</span></span>
 <span><span class="co">#&gt; meve_GHCN_stations.shp does not appear to be a file or directory.</span></span>
 <span><span class="co">#&gt; Warning: `filter_()` was deprecated in dplyr 0.7.0.</span></span>
 <span><span class="co">#&gt; ℹ Please use `filter()` instead.</span></span>
@@ -390,9 +390,24 @@
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Get the NASS CDL classification table</span></span>
 <span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">NASS_CDL</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="co">#&gt; NULL</span></span>
 <span></span>
 <span><span class="co"># Also, a convenience function loading the NASS CDL categories and hex colors</span></span>
-<span><span class="fu"><a href="reference/get_nass_cdl.html">cdl_colors</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="reference/get_nass_cdl.html">cdl_colors</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 256 × 3</span></span>
+<span><span class="co">#&gt;       ID `Land Cover` Color    </span></span>
+<span><span class="co">#&gt;    &lt;int&gt; &lt;fct&gt;        &lt;chr&gt;    </span></span>
+<span><span class="co">#&gt;  1     0 Background   #00000000</span></span>
+<span><span class="co">#&gt;  2     1 Corn         #FFD300FF</span></span>
+<span><span class="co">#&gt;  3     2 Cotton       #FF2626FF</span></span>
+<span><span class="co">#&gt;  4     3 Rice         #00A8E4FF</span></span>
+<span><span class="co">#&gt;  5     4 Sorghum      #FF9E0BFF</span></span>
+<span><span class="co">#&gt;  6     5 Soybeans     #267000FF</span></span>
+<span><span class="co">#&gt;  7     6 Sunflower    #FFFF00FF</span></span>
+<span><span class="co">#&gt;  8     7 &lt;NA&gt;         #000000FF</span></span>
+<span><span class="co">#&gt;  9     8 &lt;NA&gt;         #000000FF</span></span>
+<span><span class="co">#&gt; 10     9 &lt;NA&gt;         #000000FF</span></span>
+<span><span class="co">#&gt; # … with 246 more rows</span></span></code></pre></div>
 <hr>
 </div>
 </div>
