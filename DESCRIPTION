@@ -2,7 +2,7 @@ Type: Package
 Package: FedData
 Title: Functions to Automate Downloading Geospatial Data Available from
     Several Federated Data Sources
-Version: 3.0.1.9999
+Version: 3.0.1
 Date: 2022-11-27
 Authors@R: 
     c(person(given = c("R.", "Kyle"),
@@ -72,4 +72,7 @@ RoxygenNote: 7.2.2
 Suggests: 
     covr,
     ggplot2,
-    testthat
+    testthat,
+    rgdal,
+    ncdf4,
+    usethis

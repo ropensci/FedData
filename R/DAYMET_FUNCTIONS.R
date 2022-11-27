@@ -74,6 +74,12 @@ get_daymet <- function(template,
                        ),
                        force.redo = FALSE,
                        progress = TRUE) {
+  if (!requireNamespace("ncdf4", quietly = TRUE)) {
+    stop("Package \"ncdf4\" needed for this function to work. Please install it.",
+      call. = FALSE
+    )
+  }
+
   extraction.dir %<>%
     paste0("/") %>%
     normalizePath(mustWork = FALSE) %T>%

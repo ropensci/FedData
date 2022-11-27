@@ -92,25 +92,26 @@ spdf_from_polygon <- function(x) {
   return(x)
 }
 
-template_to_sf <- function(template) {
-  if (inherits(template, c(
-    "RasterLayer",
-    "RasterStack",
-    "RasterBrick",
-    "Extent",
-    "SpatRaster",
-    "SpatVector"
-  ))) {
+template_to_sf <-
+  function(template) {
+    if (inherits(template, c(
+      "RasterLayer",
+      "RasterStack",
+      "RasterBrick",
+      "Extent",
+      "SpatRaster",
+      "SpatVector"
+    ))) {
+      template %<>%
+        sf::st_bbox() %>%
+        sf::st_as_sfc()
+    }
+
     template %<>%
-      sf::st_bbox() %>%
-      sf::st_as_sfc()
+      sf::st_as_sf()
+
+    return(template)
   }
-
-  template %<>%
-    sf::st_as_sf()
-
-  return(template)
-}
 
 read_sf_all <- function(dsn) {
   dsn %>%
@@ -305,11 +306,12 @@ download_data <-
       )
       hand <- curl::new_handle()
       curl::handle_setopt(hand, .list = opts)
-      tryCatch(status <- curl::curl_fetch_disk(url,
-        path = destfile,
-        handle = hand
-      ),
-      error = function(e) stop("Download of ", url, " failed!")
+      tryCatch(
+        status <- curl::curl_fetch_disk(url,
+          path = destfile,
+          handle = hand
+        ),
+        error = function(e) stop("Download of ", url, " failed!")
       )
       return(destfile)
     }
