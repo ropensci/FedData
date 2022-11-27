@@ -14,7 +14,7 @@ get_nlcd(
   landmass = "L48",
   extraction.dir = paste0(tempdir(), "/FedData/"),
   raster.options = c("COMPRESS=DEFLATE", "ZLEVEL=9"),
-  force.redo = F
+  force.redo = FALSE
 )
 
 nlcd_colors()

@@ -13,7 +13,7 @@ get_daymet(
   tempo = "day",
   extraction.dir = paste0(tempdir(), "/FedData/extractions/daymet/", label, "/"),
   raster.options = c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"),
-  force.redo = F,
+  force.redo = FALSE,
   progress = TRUE
 )
 }
