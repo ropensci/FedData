@@ -156,7 +156,7 @@ GHCN.prcp <- get_ghcn_daily(
 #>   Please report the issue at <]8;;https://github.com/tidyverse/dplyr/issueshttps://github.com/tidyverse/dplyr/issues]8;;>.
 #> Warning in CPL_write_ogr(obj, dsn, layer, driver,
 #> as.character(dataset_options), : GDAL Error 1: /private/var/folders/ys/
-#> 7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/RtmpqudkYk/FedData/extractions/ghcn/meve/
+#> 7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/RtmpcJyagw/FedData/extractions/ghcn/meve/
 #> meve_GHCN_stations.shp does not appear to be a file or directory.
 #> Warning: `filter_()` was deprecated in dplyr 0.7.0.
 #> ℹ Please use `filter()` instead.
@@ -360,9 +360,24 @@ raster::plot(NASS_CDL)
 
 # Get the NASS CDL classification table
 raster::levels(NASS_CDL)[[1]]
+#> NULL
 
 # Also, a convenience function loading the NASS CDL categories and hex colors
 cdl_colors()
+#> # A tibble: 256 × 3
+#>       ID `Land Cover` Color    
+#>    <int> <fct>        <chr>    
+#>  1     0 Background   #00000000
+#>  2     1 Corn         #FFD300FF
+#>  3     2 Cotton       #FF2626FF
+#>  4     3 Rice         #00A8E4FF
+#>  5     4 Sorghum      #FF9E0BFF
+#>  6     5 Soybeans     #267000FF
+#>  7     6 Sunflower    #FFFF00FF
+#>  8     7 <NA>         #000000FF
+#>  9     8 <NA>         #000000FF
+#> 10     9 <NA>         #000000FF
+#> # … with 246 more rows
 ```
 
 ------------------------------------------------------------------------

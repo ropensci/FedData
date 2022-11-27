@@ -56,7 +56,21 @@ get_nass_cdl <- function(template,
   outfile <- paste0(extraction.dir, "/", label, "_", layer, "_nass.tif")
 
   if (file.exists(outfile) & !force.redo) {
-    return(raster::raster(outfile))
+    out <-
+      terra::rast(outfile)
+
+    outrast <-
+      raster::raster(out)
+
+    suppressWarnings(
+      levels(outrast) <-
+        levels(out)[[1]] %>%
+        dplyr::select(ID = value, `Land Cover`)
+    )
+    raster::colortable(outrast) <-
+      nass$Color
+
+    return(outrast)
   }
 
   if (source %>%
@@ -115,14 +129,35 @@ get_nass_cdl <- function(template,
   )
 
   out %<>%
-    raster::writeRaster(outfile,
-      datatype = "INT1U",
-      options = raster.options,
+    terra::rast()
+
+  levels(out) <- dplyr::select(nass, ID, `Land Cover`)
+  terra::coltab(out) <- nass$Color
+
+  out %>%
+    terra::writeRaster(
+      filename = outfile,
       overwrite = TRUE,
-      setStatistics = FALSE
+      datatype = "INT1U",
+      gdal = raster.options
     )
 
-  return(raster::raster(outfile))
+
+  out <-
+    terra::rast(outfile)
+
+  outrast <-
+    raster::raster(out)
+
+  suppressWarnings(
+    levels(outrast) <-
+      levels(out)[[1]] %>%
+      dplyr::select(ID = value, `Land Cover`)
+  )
+  raster::colortable(outrast) <-
+    nass$Color
+
+  return(outrast)
 }
 
 #' @export

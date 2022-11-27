@@ -258,6 +258,9 @@ NASS_CDL <- get_nass_cdl(
 )
 # Plot with raster::plot
 raster::plot(NASS_CDL)
+```
+
+```{r NASS-CDL-examples, message=FALSE}
 
 # Get the NASS CDL classification table
 raster::levels(NASS_CDL)[[1]]
