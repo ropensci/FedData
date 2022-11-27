@@ -40,7 +40,10 @@ if (getRversion() >= "2.15.1") {
     "spatial",
     "tabular",
     "CoverageDescriptions",
-    "CoverageDescription"
+    "CoverageDescription",
+    "value",
+    "Land Cover",
+    "ID"
   ))
 }
 
