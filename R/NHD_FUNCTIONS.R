@@ -99,6 +99,7 @@ get_nhd <-
     suppressWarnings({
       suppressMessages({
         nhd_out %>%
+          purrr::compact() %>%
           purrr::map(sf::st_make_valid) %>%
           purrr::map(
             sf::st_intersection,

@@ -70,7 +70,13 @@ esri_query <-
             encoding = "UTF-8"
           ) %>%
           jsonlite::fromJSON() %>%
-          magrittr::extract2("objectIds") %>%
+          magrittr::extract2("objectIds")
+
+        if (is.null(ids)) {
+          return(NULL)
+        }
+
+        ids %<>%
           split_n(max_count)
 
         ids %>%
