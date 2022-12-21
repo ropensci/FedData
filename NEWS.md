@@ -1,6 +1,6 @@
 # FedData 3.0.2
 
--   Removed `rgdal` soft dependency in `get_nlcd()` and instead require `raster` >= 3.6.3.
+-   Removed `rgdal` dependency throughout and instead require `raster` >= 3.6.3.
 
 # FedData 3.0.1
 
