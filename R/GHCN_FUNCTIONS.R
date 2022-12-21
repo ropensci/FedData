@@ -223,26 +223,25 @@ get_ghcn_daily <- function(template = NULL,
 
   message("(Down)Loading GHCN station inventory.")
   if (!force.redo & file.exists(paste0(extraction.dir, "/", label, "_GHCN_stations.shp"))) {
-    stations.sp <-
-      sf::read_sf(extraction.dir, layer = paste0(label, "_GHCN_stations")) %>%
-      methods::as("Spatial")
+    stations.sf <-
+      sf::read_sf(extraction.dir, layer = paste0(label, "_GHCN_stations"))
   } else {
-    stations.sp <- get_ghcn_inventory(template = template, raw.dir = raw.dir)
+    stations.sf <- get_ghcn_inventory(template = template, raw.dir = raw.dir)
 
-    stations.sp %>%
-      sf::st_as_sf() %>%
-      sf::write_sf(file.path(
-        normalizePath(paste0(extraction.dir, "/.")),
-        paste0(label, "_GHCN_stations.shp")
-      ),
-      delete_dsn = TRUE
+    stations.sf %>%
+      sf::write_sf(
+        file.path(
+          normalizePath(paste0(extraction.dir, "/.")),
+          paste0(label, "_GHCN_stations.shp")
+        ),
+        delete_dsn = TRUE
       )
   }
 
   # If the user didn't specify target elements, get them all.
   if (!is.null(elements)) {
-    stations.sp <- stations.sp[stations.sp@data[, "ELEMENT"] %in% toupper(elements), ]
-    missing.elements <- setdiff(toupper(elements), unique(stations.sp$ELEMENT))
+    stations.sf <- stations.sf[stations.sf$ELEMENT %in% toupper(elements), ]
+    missing.elements <- setdiff(toupper(elements), unique(stations.sf$ELEMENT))
     if (length(missing.elements) == length(elements)) {
       stop("No elements available from included stations during given years.")
     }
@@ -250,23 +249,26 @@ get_ghcn_daily <- function(template = NULL,
       warning("Elements not available: ", paste(missing.elements, collapse = ", "))
     }
   }
-  elements <- unique(stations.sp$ELEMENT)
+  elements <- unique(stations.sf$ELEMENT)
 
   if (standardize) {
-    stations.sp.splits <- split(as.character(stations.sp$ELEMENT), f = stations.sp$ID, drop = T)
-    stations.sp.splits.all <- sapply(stations.sp.splits, function(x) {
+    stations.sf.splits <- split(as.character(stations.sf$ELEMENT),
+      f = stations.sf$ID,
+      drop = T
+    )
+    stations.sf.splits.all <- sapply(stations.sf.splits, function(x) {
       all(sapply(toupper(elements), function(y) {
         y %in% x
       }))
     })
-    stations.sp <- stations.sp[stations.sp$ID %in% names(stations.sp.splits.all)[stations.sp.splits.all], ]
+    stations.sf <- stations.sf[stations.sf$ID %in% names(stations.sf.splits.all)[stations.sf.splits.all], ]
   }
 
   if (!is.null(years)) {
-    stations.sp <- stations.sp[stations.sp$YEAR_START <= min(years) & stations.sp$YEAR_END >= max(years), ]
+    stations.sf <- stations.sf[stations.sf$YEAR_START <= min(years) & stations.sf$YEAR_END >= max(years), ]
   }
 
-  stations.sp <- stations.sp[!duplicated(stations.sp@data[, c("ID", "LATITUDE", "LONGITUDE")]), c("ID", "NAME")]
+  stations.sf <- stations.sf[!duplicated(stations.sf[, c("ID", "LATITUDE", "LONGITUDE")]), c("ID", "NAME")]
 
   if (!force.redo) {
     daily <- tryCatch(lapply(elements, function(element) {
@@ -280,21 +282,21 @@ get_ghcn_daily <- function(template = NULL,
     if (!is.null(daily)) {
       names(daily) <- elements
 
-      daily <- lapply(as.character(stations.sp$ID), function(station) {
+      daily <- lapply(as.character(stations.sf$ID), function(station) {
         stationDaily <- tryCatch(lapply(daily, "[[", station), error = function(e) {
           return(NULL)
         })
         stationDaily <- stationDaily[!sapply(stationDaily, is.null)]
         return(stationDaily)
       })
-      names(daily) <- as.character(stations.sp$ID)
+      names(daily) <- as.character(stations.sf$ID)
       daily <- daily[!sapply(daily, is.null)]
 
-      return(list(spatial = stations.sp, tabular = daily))
+      return(list(spatial = stations.sf, tabular = daily))
     }
   }
 
-  daily <- lapply(stations.sp$ID, function(station) {
+  daily <- lapply(stations.sf$ID, function(station) {
     message("(Down)Loading GHCN station data for station ", as.character(station))
     tryCatch(station <- get_ghcn_daily_station(
       ID = station, elements = elements, years = years, raw.dir = raw.dir, standardize = standardize,
@@ -305,7 +307,7 @@ get_ghcn_daily <- function(template = NULL,
     })
     return(station)
   })
-  names(daily) <- stations.sp$ID
+  names(daily) <- stations.sf$ID
 
   daily <- daily[(lapply(daily, names) %>% sapply(length)) <= length(elements) & (lapply(daily, names) %>% sapply(length)) >
     0]
@@ -322,7 +324,7 @@ get_ghcn_daily <- function(template = NULL,
   })
 
 
-  return(list(spatial = stations.sp, tabular = daily))
+  return(list(spatial = stations.sf, tabular = daily))
 }
 
 #' Download the daily data for a GHCN weather station.
@@ -520,7 +522,7 @@ get_ghcn_daily_station <- function(ID,
     elements <- unique(daily$ELEMENT)
   }
   elements <- toupper(elements)
-  daily %<>% dplyr::filter_(~ ELEMENT %in% elements)
+  daily %<>% dplyr::filter(ELEMENT %in% elements)
   missing.elements <- setdiff(toupper(elements), unique(daily$ELEMENT))
   if (length(missing.elements) > 0) {
     warning("Elements not available: ", paste(missing.elements, collapse = ", "))
@@ -528,20 +530,26 @@ get_ghcn_daily_station <- function(ID,
 
   # If the user didn't specify target elements, get them all.
   if (!is.null(years)) {
-    daily %<>% dplyr::filter_(~ YEAR %in% years)
+    daily %<>% dplyr::filter(YEAR %in% years)
   }
 
-  daily %<>% dplyr::mutate_all(dplyr::funs_(quote(ifelse(. == -9999, NA, .))))
+  daily %<>%
+    dplyr::mutate(
+      dplyr::across(
+        dplyr::everything(),
+        ~ dplyr::na_if(.x, -9999)
+      )
+    )
 
   ## Separate by element
   out.list <- lapply(elements, function(element) {
-    return(daily %>% dplyr::filter_(~ ELEMENT == element) %>% dplyr::select_(quote(-ELEMENT)))
+    return(daily %>% dplyr::filter(ELEMENT == element) %>% dplyr::select(-ELEMENT))
   })
 
   ## If standardize, select only common year/month/day, and make NA if both not present
   if (standardize) {
     yearMonths <- lapply(out.list, function(element) {
-      element %<>% dplyr::arrange_(~YEAR, ~MONTH)
+      element %<>% dplyr::arrange(YEAR, MONTH)
       return(paste("Y", element[["YEAR"]], "M", element[["MONTH"]], sep = ""))
     })
 
@@ -578,7 +586,10 @@ get_ghcn_daily_station <- function(ID,
 #' @keywords internal
 get_ghcn_inventory <- function(template = NULL, elements = NULL, raw.dir) {
   if (!is.null(template) & !inherits(template, c("SpatialPolygonsDataFrame", "SpatialPolygons", "character"))) {
-    template <- polygon_from_extent(template)
+    template %<>%
+      template_to_sf() %>%
+      sf::st_transform(4326) %>%
+      polygon_from_extent()
   }
 
   # GHCN files are fixed-width. The numbers here refer to those column widths.
@@ -613,42 +624,58 @@ get_ghcn_inventory <- function(template = NULL, elements = NULL, raw.dir) {
         )
       ),
       col_types = "cdddc"
+    ) %>%
+    sf::st_as_sf(
+      coords = c("LONGITUDE", "LATITUDE"),
+      crs = 4326
     )
-
-  # Convert to SPDF
-  stations.sp <-
-    sp::SpatialPointsDataFrame(
-      coords = station.inventory %>%
-        dplyr::select_(~LONGITUDE, ~LATITUDE),
-      data = station.inventory %>%
-        dplyr::left_join(stations %>%
-          dplyr::select_("ID", "NAME"), by = "ID") %>%
-        dplyr::select_(
-          "ID", "NAME", "LATITUDE", "LONGITUDE",
-          "ELEMENT", "YEAR_START", "YEAR_END"
-        ) %>%
-        as.data.frame(),
-      proj4string = sp::CRS("+proj=longlat +datum=WGS84")
-    )
-
-  if (!is.null(elements)) {
-    stations.sp <- stations.sp[stations.sp$ELEMENT %in% toupper(elements), ]
-  }
 
   if (!is.null(template)) {
     if (inherits(template, "character")) {
-      missing.stations <- setdiff(template, unique(stations.sp$ID))
+      missing.stations <- setdiff(template, unique(stations$ID))
       if (length(missing.stations) > 0) {
         warning("Stations not available: ", paste(missing.stations, collapse = ", "))
       }
-      stations.sp <- stations.sp[stations.sp$ID %in% template, ]
+
+      stations %<>%
+        dplyr::filter(ID %in% template)
     } else {
-      template <- methods::as(template, "SpatialPolygons")
-      stations.sp <- stations.sp[!is.na(sp::over(stations.sp, sp::spTransform(template, sp::CRS(raster::projection(stations.sp))))), ]
+      stations %<>%
+        sf::st_intersection(template)
     }
   }
 
-  return(stations.sp)
+  # Convert to SF
+  stations.sf <-
+    stations %>%
+    dplyr::select(ID, NAME) %>%
+    dplyr::left_join(station.inventory,
+      by = "ID"
+    )
+
+
+  # # Convert to SPDF
+  # stations.sp <-
+  #   sp::SpatialPointsDataFrame(
+  #     coords = station.inventory %>%
+  #       dplyr::select_(~LONGITUDE, ~LATITUDE),
+  #     data = station.inventory %>%
+  #       dplyr::left_join(stations %>%
+  #         dplyr::select_("ID", "NAME"), by = "ID") %>%
+  #       dplyr::select_(
+  #         "ID", "NAME", "LATITUDE", "LONGITUDE",
+  #         "ELEMENT", "YEAR_START", "YEAR_END"
+  #       ) %>%
+  #       as.data.frame(),
+  #     proj4string = sp::CRS("+proj=longlat +datum=WGS84")
+  #   )
+
+  if (!is.null(elements)) {
+    stations.sf %<>%
+      dplyr::filter(ELEMENT %in% toupper(elements))
+  }
+
+  return(stations.sf)
 }
 
 #' Convert a list of station data to a single data frame.

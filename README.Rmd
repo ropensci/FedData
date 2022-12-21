@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 [![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.596344.svg)](https://doi.org/10.5281/zenodo.596344)
 [![ROpenSci Status](https://badges.ropensci.org/13_status.svg)](https://github.com/ropensci/software-review/issues/13)
 
-**FedData version 3.0 has been released to CRAN! There are several breaking changes in the FedData API from version 2.x. Please see [NEWS.md] for a list of changes.**
+**FedData version 3.0 has been released to CRAN! There are several breaking changes in the FedData API from version 2.x. Please see [NEWS.md](NEWS.md) for a list of changes.**
 
 `FedData` is an *R* package implementing functions to automate downloading geospatial data available from several federated data sources.
 

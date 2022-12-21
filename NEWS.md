@@ -1,3 +1,7 @@
+# FedData 3.0.2
+
+-   Removed `rgdal` soft dependency in `get_nlcd()` and instead require `raster` >= 3.6.3.
+
 # FedData 3.0.1
 
 -   Updated `get_nlcd()` to read CRS data correctly [Issue #91](https://github.com/ropensci/FedData/issues/91) by requiring `rgdal` be installed.

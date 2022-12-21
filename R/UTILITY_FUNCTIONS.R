@@ -43,7 +43,11 @@ if (getRversion() >= "2.15.1") {
     "CoverageDescription",
     "value",
     "Land Cover",
-    "ID"
+    "ID",
+    "YEAR",
+    "ELEMENT",
+    "MONTH",
+    "NAME"
   ))
 }
 
@@ -67,17 +71,16 @@ substr_right <- function(x, n) {
 #' @export
 #' @keywords internal
 polygon_from_extent <- function(x, proj4string = NULL) {
-  if (is.null(proj4string)) {
-    proj4string <- raster::projection(x)
-  }
+  x %<>%
+    template_to_sf() %>%
+    sf::st_bbox() %>%
+    sf::st_as_sfc()
 
-  if (all(class(x) != "extent")) {
-    x <- raster::extent(x)
+  if (!is.null(proj4string)) {
+    x %<>%
+      sf::st_transform(proj4string)
   }
-
-  extent.matrix <- rbind(c(x@xmin, x@ymin), c(x@xmin, x@ymax), c(x@xmax, x@ymax), c(x@xmax, x@ymin), c(x@xmin, x@ymin)) # clockwise, 5 points to close it
-  extent.SP <- sp::SpatialPolygons(list(sp::Polygons(list(sp::Polygon(extent.matrix)), "extent")), proj4string = sp::CRS(proj4string))
-  return(extent.SP)
+  return(x)
 }
 
 #' Turn a SpatialPolygons object into a SpatialPolygonsDataFrame.

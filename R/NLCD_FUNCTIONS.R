@@ -64,12 +64,6 @@ get_nlcd <- function(template,
                        "ZLEVEL=9"
                      ),
                      force.redo = FALSE) {
-  if (!requireNamespace("rgdal", quietly = TRUE)) {
-    stop("Package \"rgdal\" needed for this function to work. Please install it.",
-      call. = FALSE
-    )
-  }
-
   extraction.dir <-
     normalizePath(paste0(extraction.dir, "/."), mustWork = FALSE)
 

@@ -2,8 +2,8 @@ Type: Package
 Package: FedData
 Title: Functions to Automate Downloading Geospatial Data Available from
     Several Federated Data Sources
-Version: 3.0.1
-Date: 2022-11-27
+Version: 3.0.2
+Date: 2022-12-19
 Authors@R: 
     c(person(given = c("R.", "Kyle"),
              family = "Bocinsky",
@@ -44,35 +44,34 @@ Depends:
     R (>= 3.2.0)
 Imports:
     curl,
+    httr,
     data.table,
     dplyr,
-    httr,
+    tibble,
+    tidyr,
+    stringr,
     igraph,
     jsonlite,
+    xml2,
     lifecycle,
     lubridate,
     magrittr,
     methods,
     progress,
     purrr,
-    raster,
     readr,
-    sf (>= 1.0),
-    sp,
-    stringr,
     terra (>= 1.0),
-    tibble,
-    tidyr,
-    xml2
+    raster (>= 3.6.3),
+    sf (>= 1.0),
+    sp
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
 Repository: CRAN
-RoxygenNote: 7.2.2
+RoxygenNote: 7.2.3
 Suggests: 
     covr,
     ggplot2,
     testthat,
-    rgdal,
     ncdf4,
     usethis

@@ -62,11 +62,6 @@ get_nass_cdl <- function(template,
     outrast <-
       raster::raster(out)
 
-    suppressWarnings(
-      levels(outrast) <-
-        levels(out)[[1]] %>%
-        dplyr::select(ID = value, `Land Cover`)
-    )
     raster::colortable(outrast) <-
       nass$Color
 
@@ -116,20 +111,8 @@ get_nass_cdl <- function(template,
 
   out <-
     tf %>%
-    raster::raster() %>%
-    raster::readAll() %>%
-    raster::as.factor()
-
-  raster::colortable(out) <- nass$Color
-
-  suppressWarnings(
-    levels(out) <-
-      nass %>%
-      as.data.frame()
-  )
-
-  out %<>%
-    terra::rast()
+    terra::rast() %>%
+    terra::as.factor()
 
   levels(out) <- dplyr::select(nass, ID, `Land Cover`)
   terra::coltab(out) <- nass$Color
@@ -149,11 +132,6 @@ get_nass_cdl <- function(template,
   outrast <-
     raster::raster(out)
 
-  suppressWarnings(
-    levels(outrast) <-
-      levels(out)[[1]] %>%
-      dplyr::select(ID = value, `Land Cover`)
-  )
   raster::colortable(outrast) <-
     nass$Color
 
