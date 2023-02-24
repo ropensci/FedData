@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 [![CRAN version](https://www.r-pkg.org/badges/version/FedData)](https://cran.r-project.org/package=FedData)
 [![CRAN downloads per month](https://cranlogs.r-pkg.org/badges/FedData)](https://github.com/r-hub/cranlogs.app)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/grand-total/FedData)](https://github.com/r-hub/cranlogs.app)
-[![R-CMD-check](https://github.com/ropensci/FedData/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/FedData/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/ropensci/FedData/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/ropensci/FedData/actions/workflows/check-standard.yaml)
 [![Codecov test coverage](https://codecov.io/gh/ropensci/FedData/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ropensci/FedData?branch=master)
 [![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.596344.svg)](https://doi.org/10.5281/zenodo.596344)
 [![ROpenSci Status](https://badges.ropensci.org/13_status.svg)](https://github.com/ropensci/software-review/issues/13)
@@ -261,7 +261,6 @@ raster::plot(NASS_CDL)
 ```
 
 ```{r NASS-CDL-examples, message=FALSE}
-
 # Get the NASS CDL classification table
 raster::levels(NASS_CDL)[[1]]
 
@@ -272,7 +271,7 @@ cdl_colors()
 -----------
 
 ### Acknowledgements
-This package is a product of SKOPE ([Synthesizing Knowledge of Past Environments](https://www.openskope.org/)) and the [Village Ecodynamics Project](https://crowcanyon.github.io/veparchaeology/) through grants awarded to the [Crow Canyon Archaeological Center](https://www.crowcanyon.org) and Washington State University by the National Science Foundation. This software is licensed under the [MIT license](https://opensource.org/licenses/MIT). Continuing development is supported by the [Montana Climate Office](https://climate.umt.edu).
+This package is a product of SKOPE ([Synthesizing Knowledge of Past Environments](https://www.openskope.org/)) and the [Village Ecodynamics Project](https://crowcanyon.github.io/veparchaeology/) through grants awarded to the [Crow Canyon Archaeological Center](https://www.crowcanyon.org) and Washington State University by the National Science Foundation. This software is licensed under the [MIT license](https://opensource.org/license/mit/). Continuing development is supported by the [Montana Climate Office](https://climate.umt.edu).
 
 FedData was reviewed for [rOpenSci](https://ropensci.org) by [\@jooolia](https://github.com/jooolia), and was greatly improved as a result. [rOpenSci](https://ropensci.org) on-boarding was coordinated by [\@sckott](https://github.com/sckott).
 

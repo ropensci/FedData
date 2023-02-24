@@ -1,5 +1,6 @@
 library(FedData)
 library(httr)
+library(magrittr)
 context("National Land Cover Dataset tests")
 
 test_that("The NLCD web coverage service is available at the correct URL", {

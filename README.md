@@ -10,7 +10,7 @@ version](https://www.r-pkg.org/badges/version/FedData)](https://cran.r-project.o
 month](https://cranlogs.r-pkg.org/badges/FedData)](https://github.com/r-hub/cranlogs.app)
 [![CRAN
 downloads](https://cranlogs.r-pkg.org/badges/grand-total/FedData)](https://github.com/r-hub/cranlogs.app)
-[![R-CMD-check](https://github.com/ropensci/FedData/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/FedData/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/ropensci/FedData/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/ropensci/FedData/actions/workflows/check-standard.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/ropensci/FedData/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ropensci/FedData?branch=master)
 [![Zenodo
@@ -150,11 +150,11 @@ GHCN.prcp <- get_ghcn_daily(
   label = "meve",
   elements = c("prcp")
 )
-#> Warning: attribute variables are assumed to be spatially constant throughout all
-#> geometries
+#> Warning: attribute variables are assumed to be spatially constant throughout
+#> all geometries
 #> Warning in CPL_write_ogr(obj, dsn, layer, driver,
-#> as.character(dataset_options), : GDAL Error
-#> 1: /private/var/folders/ys/7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/Rtmprn5BVC/FedData/extractions/ghcn/meve/meve_GHCN_stations.shp
+#> as.character(dataset_options), : GDAL Error 1:
+#> /private/var/folders/ys/7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/RtmpKOk9vZ/FedData/extractions/ghcn/meve/meve_GHCN_stations.shp
 #> does not appear to be a file or directory.
 # Plot the NED again
 raster::plot(NED)
@@ -163,8 +163,8 @@ sp::plot(GHCN.prcp$spatial,
   pch = 1,
   add = TRUE
 )
-#> Warning in plot.sf(GHCN.prcp$spatial, pch = 1, add = TRUE): ignoring all but the
-#> first attribute
+#> Warning in plot.sf(GHCN.prcp$spatial, pch = 1, add = TRUE): ignoring all but
+#> the first attribute
 legend("bottomleft",
   pch = 1,
   legend = "GHCN Precipitation Records"
@@ -193,8 +193,8 @@ sp::plot(GHCN.temp$spatial,
   add = TRUE,
   pch = 1
 )
-#> Warning in plot.sf(GHCN.temp$spatial, add = TRUE, pch = 1): ignoring all but the
-#> first attribute
+#> Warning in plot.sf(GHCN.temp$spatial, add = TRUE, pch = 1): ignoring all but
+#> the first attribute
 legend("bottomleft",
   pch = 1,
   legend = "GHCN Temperature Records"
@@ -278,8 +278,8 @@ ITRDB <- get_itrdb(
   chronology.type = "Standard"
 )
 #> Warning in eval(jsub, SDenv, parent.frame()): NAs introduced by coercion
-#> Warning: attribute variables are assumed to be spatially constant throughout all
-#> geometries
+#> Warning: attribute variables are assumed to be spatially constant throughout
+#> all geometries
 
 # Plot the MEVE buffer
 plot(
@@ -334,7 +334,6 @@ raster::plot(NASS_CDL)
 <img src="man/figures/README-NASS-CDL-1.png" width="100%" /><img src="man/figures/README-NASS-CDL-2.png" width="100%" />
 
 ``` r
-
 # Get the NASS CDL classification table
 raster::levels(NASS_CDL)[[1]]
 #>      ID                  Land Cover
@@ -623,7 +622,7 @@ Project](https://crowcanyon.github.io/veparchaeology/) through grants
 awarded to the [Crow Canyon Archaeological
 Center](https://www.crowcanyon.org) and Washington State University by
 the National Science Foundation. This software is licensed under the
-[MIT license](https://opensource.org/licenses/MIT). Continuing
+[MIT license](https://opensource.org/license/mit/). Continuing
 development is supported by the [Montana Climate
 Office](https://climate.umt.edu).
 
