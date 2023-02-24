@@ -6,7 +6,7 @@ editor_options:
 
 # CRAN comments
 
-This is a patch release from FedData v3.0.0 to FedData v3.0.1. Please
+This is a patch release from FedData v3.0.2 to FedData v3.0.3. Please
 see NEWS.md for release details.
 
 ------------------------------------------------------------------------
@@ -15,7 +15,7 @@ see NEWS.md for release details.
 
 `devtools::check()` result:
 
-**Test environment:** local MacOS Version 13.0.1 install, R 4.2.2
+**Test environment:** local MacOS Version 13.2.1 install, R 4.2.2
 
 **0 errors ✔ \| 0 warnings ✔ \| 0 notes ✔**
 

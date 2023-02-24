@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/ropensci/FedData",
   "issueTracker": "https://github.com/ropensci/FedData/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "3.0.2",
+  "version": "3.0.1",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -381,7 +381,7 @@
     },
     "SystemRequirements": "GDAL (>= 3.0.0)"
   },
-  "fileSize": "1355.159KB",
+  "fileSize": "1355.06KB",
   "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/master/README.md",
   "contIntegration": ["https://github.com/ropensci/FedData/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/ropensci/FedData?branch=master"],

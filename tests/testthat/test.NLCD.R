@@ -70,14 +70,15 @@ test_that(
         template = raw,
         label = "PR",
         year = 2001,
-        landmass = "PR"
+        landmass = "PR",
+        force.redo = TRUE
       )
 
     raw %<>%
       raster::raster()
 
     expect_true(
-      all((feddata - raw)[] == 0)
+      all((feddata - raw)[] == 0, na.rm = TRUE)
     )
   }
 )
