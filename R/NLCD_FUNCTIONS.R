@@ -138,7 +138,7 @@ get_nlcd <- function(template,
   }
 
 
-  if (wcs == "cog") {
+  if (src == "cog") {
     source <- "https://storage.googleapis.com/feddata-r/nlcd/"
     file <- paste0(year, "_", dataset, "_", landmass, ".tif")
 
