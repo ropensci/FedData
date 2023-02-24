@@ -27,13 +27,9 @@ see NEWS.md for release details.
 
 -   macOS-latest, R release
 -   windows-latest, R release
--   windows-latest, R 3.6
 -   ubuntu-latest, R devel
 -   ubuntu-latest, R release
--   ubuntu-latest, R 4.1.3
--   ubuntu-latest, R 4.0.5
--   ubuntu-latest, R 3.6.3
--   ubuntu-latest, R 3.5.3
+-   ubuntu-latest, R oldrel-1
 
 **0 errors ✔ \| 0 warnings ✔ \| 0 notes ✔**
 
