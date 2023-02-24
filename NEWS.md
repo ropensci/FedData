@@ -1,10 +1,7 @@
-# FedData 3.0.3
-
--   Switched back to using the Web Coverave Service for the NLCD, as it is now providing data in the native CRS.
-
 # FedData 3.0.2
 
 -   Removed `rgdal` dependency throughout and instead require `raster` >= 3.6.3.
+-   Switched back to using the Web Coverave Service for the NLCD, as it is now providing data in the native CRS.
 
 # FedData 3.0.1
 

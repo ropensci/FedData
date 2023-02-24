@@ -6,7 +6,7 @@ editor_options:
 
 # CRAN comments
 
-This is a patch release from FedData v3.0.2 to FedData v3.0.3. Please
+This is a patch release from FedData v3.0.1 to FedData v3.0.2. Please
 see NEWS.md for release details.
 
 ------------------------------------------------------------------------
