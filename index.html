@@ -190,11 +190,11 @@
 <span>  label <span class="op">=</span> <span class="st">"meve"</span>,</span>
 <span>  elements <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"prcp"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant throughout all</span></span>
-<span><span class="co">#&gt; geometries</span></span>
+<span><span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant throughout</span></span>
+<span><span class="co">#&gt; all geometries</span></span>
 <span><span class="co">#&gt; Warning in CPL_write_ogr(obj, dsn, layer, driver,</span></span>
-<span><span class="co">#&gt; as.character(dataset_options), : GDAL Error</span></span>
-<span><span class="co">#&gt; 1: /private/var/folders/ys/7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/Rtmprn5BVC/FedData/extractions/ghcn/meve/meve_GHCN_stations.shp</span></span>
+<span><span class="co">#&gt; as.character(dataset_options), : GDAL Error 1:</span></span>
+<span><span class="co">#&gt; /private/var/folders/ys/7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/RtmpKOk9vZ/FedData/extractions/ghcn/meve/meve_GHCN_stations.shp</span></span>
 <span><span class="co">#&gt; does not appear to be a file or directory.</span></span>
 <span><span class="co"># Plot the NED again</span></span>
 <span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">NED</span><span class="op">)</span></span>
@@ -203,8 +203,8 @@
 <span>  pch <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  add <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in plot.sf(GHCN.prcp$spatial, pch = 1, add = TRUE): ignoring all but the</span></span>
-<span><span class="co">#&gt; first attribute</span></span>
+<span><span class="co">#&gt; Warning in plot.sf(GHCN.prcp$spatial, pch = 1, add = TRUE): ignoring all but</span></span>
+<span><span class="co">#&gt; the first attribute</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"bottomleft"</span>,</span>
 <span>  pch <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  legend <span class="op">=</span> <span class="st">"GHCN Precipitation Records"</span></span>
@@ -232,8 +232,8 @@
 <span>  add <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  pch <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in plot.sf(GHCN.temp$spatial, add = TRUE, pch = 1): ignoring all but the</span></span>
-<span><span class="co">#&gt; first attribute</span></span>
+<span><span class="co">#&gt; Warning in plot.sf(GHCN.temp$spatial, add = TRUE, pch = 1): ignoring all but</span></span>
+<span><span class="co">#&gt; the first attribute</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"bottomleft"</span>,</span>
 <span>  pch <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  legend <span class="op">=</span> <span class="st">"GHCN Temperature Records"</span></span>
@@ -313,8 +313,8 @@
 <span>  chronology.type <span class="op">=</span> <span class="st">"Standard"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in eval(jsub, SDenv, parent.frame()): NAs introduced by coercion</span></span>
-<span><span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant throughout all</span></span>
-<span><span class="co">#&gt; geometries</span></span>
+<span><span class="co">#&gt; Warning: attribute variables are assumed to be spatially constant throughout</span></span>
+<span><span class="co">#&gt; all geometries</span></span>
 <span></span>
 <span><span class="co"># Plot the MEVE buffer</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
@@ -364,8 +364,7 @@
 <span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">NASS_CDL</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-NASS-CDL-1.png" width="100%"><img src="reference/figures/README-NASS-CDL-2.png" width="100%"></p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="co"># Get the NASS CDL classification table</span></span>
+<code class="sourceCode R"><span><span class="co"># Get the NASS CDL classification table</span></span>
 <span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">NASS_CDL</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="co">#&gt;      ID                  Land Cover</span></span>
 <span><span class="co">#&gt; 1     0                  Background</span></span>
@@ -647,7 +646,7 @@
 <div class="section level3">
 <h3 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
 </h3>
-<p>This package is a product of SKOPE (<a href="https://www.openskope.org/" class="external-link">Synthesizing Knowledge of Past Environments</a>) and the <a href="https://crowcanyon.github.io/veparchaeology/" class="external-link">Village Ecodynamics Project</a> through grants awarded to the <a href="https://www.crowcanyon.org" class="external-link">Crow Canyon Archaeological Center</a> and Washington State University by the National Science Foundation. This software is licensed under the <a href="https://opensource.org/licenses/MIT" class="external-link">MIT license</a>. Continuing development is supported by the <a href="https://climate.umt.edu" class="external-link">Montana Climate Office</a>.</p>
+<p>This package is a product of SKOPE (<a href="https://www.openskope.org/" class="external-link">Synthesizing Knowledge of Past Environments</a>) and the <a href="https://crowcanyon.github.io/veparchaeology/" class="external-link">Village Ecodynamics Project</a> through grants awarded to the <a href="https://www.crowcanyon.org" class="external-link">Crow Canyon Archaeological Center</a> and Washington State University by the National Science Foundation. This software is licensed under the <a href="https://opensource.org/license/mit/" class="external-link">MIT license</a>. Continuing development is supported by the <a href="https://climate.umt.edu" class="external-link">Montana Climate Office</a>.</p>
 <p>FedData was reviewed for <a href="https://ropensci.org" class="external-link">rOpenSci</a> by <a href="https://github.com/jooolia" class="external-link">@jooolia</a>, and was greatly improved as a result. <a href="https://ropensci.org" class="external-link">rOpenSci</a> on-boarding was coordinated by <a href="https://github.com/sckott" class="external-link">@sckott</a>.</p>
 <!-- [![ropensci_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org) -->
 </div>
@@ -696,7 +695,7 @@
 <li><a href="https://cran.r-project.org/package=FedData" class="external-link"><img src="https://www.r-pkg.org/badges/version/FedData" alt="CRAN version"></a></li>
 <li><a href="https://github.com/r-hub/cranlogs.app" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/FedData" alt="CRAN downloads per month"></a></li>
 <li><a href="https://github.com/r-hub/cranlogs.app" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/FedData" alt="CRAN downloads"></a></li>
-<li><a href="https://github.com/ropensci/FedData/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/ropensci/FedData/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/ropensci/FedData/actions/workflows/check-standard.yaml" class="external-link"><img src="https://github.com/ropensci/FedData/actions/workflows/check-standard.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://app.codecov.io/gh/ropensci/FedData?branch=master" class="external-link"><img src="https://codecov.io/gh/ropensci/FedData/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://doi.org/10.5281/zenodo.596344" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.596344.svg" alt="Zenodo DOI"></a></li>
 <li><a href="https://github.com/ropensci/software-review/issues/13" class="external-link"><img src="https://badges.ropensci.org/13_status.svg" alt="ROpenSci Status"></a></li>
