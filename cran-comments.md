@@ -87,11 +87,15 @@ servers outside the USA.
 
 **0 errors ✔ \| 0 warnings ✔ \| 1 note ✖**
 
-- NOTE: Found the following (possibly) invalid URLs: URL:
-    <https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily>
-    From: README.md Status: Error Message: Empty reply from server URL:
-    <https://www.ncei.noaa.gov/products/paleoclimatology/tree-ring>
-    From: README.md Status: Error Message: Empty reply from server
+- NOTE: Found the following (possibly) invalid URLs:
+  - URL: https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily
+    - From: README.md
+    - Status: Error
+    - Message: Empty reply from server
+  - URL: https://www.ncei.noaa.gov/products/paleoclimatology/tree-ring
+    - From: README.md
+    - Status: Error
+    - Message: Empty reply from server
 - Explanation: Manually accessed each URL, 
 and confirmed a http 200 status for each. Possibly due to check 
 server outside USA trying to access USA .gov URLs.
