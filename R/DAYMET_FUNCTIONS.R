@@ -205,12 +205,12 @@ get_daymet <- function(template,
 
   out %>%
     purrr::iwalk(function(x, i) {
-      raster::writeRaster(x,
-        paste0(extraction.dir, "/", label, "_", i, "_", tempo, ".tif"),
-        options = raster.options,
-        overwrite = TRUE,
-        setStatistics = FALSE
-      )
+      terra::rast(x) %>%
+        terra::writeRaster(
+          filename = paste0(extraction.dir, "/", label, "_", i, "_", tempo, ".tif"),
+          gdal = raster.options,
+          overwrite = TRUE
+        )
     })
 
   return(out)

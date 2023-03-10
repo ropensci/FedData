@@ -114,9 +114,8 @@ get_ned <- function(template,
       snap = "out",
       filename = paste(extraction.dir, "/", label, "_NED_", res, ".tif", sep = ""),
       datatype = "FLT4S",
-      options = raster.options,
-      overwrite = T,
-      setStatistics = FALSE
+      gdal = raster.options,
+      overwrite = T
     )
 }
 
