@@ -38,7 +38,7 @@ get_ned <- function(template,
                       "COMPRESS=DEFLATE",
                       "ZLEVEL=9"
                     ),
-                    force.redo = F) {
+                    force.redo = FALSE) {
   extraction.dir <- normalizePath(extraction.dir, mustWork = FALSE)
 
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
@@ -112,6 +112,7 @@ get_ned <- function(template,
   }
 
   tiles %>%
+    terra::rast() %>%
     terra::crop(.,
       sf::st_transform(template, sf::st_crs(raster::crs(.))),
       snap = "out",
