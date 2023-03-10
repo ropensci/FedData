@@ -1,3 +1,12 @@
+# FedData 3.0.3
+
+-   Updated `get_nhd()` to correctly access the extraction.dir if it already exists [Issue #95](https://github.com/ropensci/FedData/issues/95). `get_nhd()` and `get_ned()`
+now both use `file.path()` in constructing file outputs.
+-   Updated `get_daymet()` to use `terra` for writing raster data, in response to
+[Issue #96](https://github.com/ropensci/FedData/issues/95). All functions in 
+`FedData` now use `terra` for writing.
+-   Cleaned up documentation.
+
 # FedData 3.0.2
 
 -   Removed `rgdal` dependency throughout and instead require `raster` >= 3.6.3.

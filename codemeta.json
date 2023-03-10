@@ -381,10 +381,10 @@
     },
     "SystemRequirements": "GDAL (>= 3.0.0)"
   },
-  "fileSize": "1355.042KB",
+  "fileSize": "1684.015KB",
   "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/master/README.md",
-  "contIntegration": ["https://github.com/ropensci/FedData/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/ropensci/FedData?branch=master"],
+  "contIntegration": ["https://github.com/ropensci/FedData/actions/workflows/check-standard.yaml", "https://app.codecov.io/gh/ropensci/FedData?branch=master"],
   "developmentStatus": "https://www.repostatus.org/#active",
   "review": {
     "@type": "Review",

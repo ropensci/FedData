@@ -6,15 +6,13 @@ editor_options:
 
 # CRAN comments
 
-This is a patch release from FedData v3.0.1 to FedData v3.0.2. Please
+This is a patch release from FedData v3.0.2 to FedData v3.0.3. Please
 see NEWS.md for release details. 
 
-Resubmission from 2023-02-23. Fixed by updating URLs:
-Found the following (possibly) invalid URLs:
-   URL: https://opensource.org/licenses/MIT (moved to https://opensource.org/license/mit/)
-     From: README.md
-     Status: 301
-     Message: Moved Permanently
+Please note that in recent CRAN submissions, CRAN maintainers have been 
+seeing URL check issues in checks by servers hosted outside the USA. This is
+likely due to US Government servers not "liking" automated checking from
+servers outside the USA.
 
 ------------------------------------------------------------------------
 
