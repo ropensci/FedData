@@ -55,7 +55,7 @@ If template is not provided, returns the entire NED tile.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_ned_tile</span><span class="op">(</span>template <span class="op">=</span> <span class="cn">NULL</span>, res <span class="op">=</span> <span class="st">"1"</span>, <span class="va">tileNorthing</span>, <span class="va">tileWesting</span>, <span class="va">raw.dir</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_ned_tile</span><span class="op">(</span>template <span class="op">=</span> <span class="cn">NULL</span>, res <span class="op">=</span> <span class="st">"1"</span>, <span class="va">tileNorthing</span>, <span class="va">tileWesting</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -78,11 +78,6 @@ be downloaded.</p></dd>
 <dt>tileWesting</dt>
 <dd><p>An integer representing the westing (longitude, in degrees west of the prime meridian) of the northwest corner of the tile to
 be downloaded.</p></dd>
-
-
-<dt>raw.dir</dt>
-<dd><p>A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to './RAW/NED/'.</p></dd>
 
 </dl></div>
     <div id="value">

@@ -10,7 +10,7 @@ get_ned(
   res = "1",
   extraction.dir = file.path(tempdir(), "FedData", "extractions", "ned", label),
   raster.options = c("COMPRESS=DEFLATE", "ZLEVEL=9"),
-  force.redo = F
+  force.redo = FALSE
 )
 }
 \arguments{
