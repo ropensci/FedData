@@ -2,8 +2,8 @@ Type: Package
 Package: FedData
 Title: Functions to Automate Downloading Geospatial Data Available from
     Several Federated Data Sources
-Version: 3.0.2
-Date: 2023-02-23
+Version: 3.0.3
+Date: 2023-03-10
 Authors@R: 
     c(person(given = c("R.", "Kyle"),
              family = "Bocinsky",

@@ -93,7 +93,8 @@ servers outside the USA.
     <https://www.ncei.noaa.gov/products/paleoclimatology/tree-ring>
     From: README.md Status: Error Message: Empty reply from server
 - Explanation: Manually accessed each URL, 
-and confirmed a http 200 status for each.
+and confirmed a http 200 status for each. Possibly due to check 
+server outside USA trying to access USA .gov URLs.
 
 ------------------------------------------------------------------------
 

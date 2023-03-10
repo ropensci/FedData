@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/ropensci/FedData",
   "issueTracker": "https://github.com/ropensci/FedData/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
