@@ -10,7 +10,7 @@
 #' Acceptable values are 2007--the last year.
 #' @param extraction.dir A character string indicating where the extracted and cropped NASS data should be put.
 #' The directory will be created if missing.
-#' @param raster.options a vector of options for raster::writeRaster.
+#' @param raster.options a vector of options for terra::writeRaster.
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created?
 #' @param progress Draw a progress bar when downloading?
 #' @param ... Other parameters passed on to [get_nass_cdl].

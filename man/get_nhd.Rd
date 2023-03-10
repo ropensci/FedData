@@ -8,7 +8,7 @@ get_nhd(
   template,
   label,
   nhdplus = FALSE,
-  extraction.dir = paste0(tempdir(), "/FedData/"),
+  extraction.dir = file.path(tempdir(), "FedData", "extractions", "nhd", label),
   force.redo = FALSE
 )
 }

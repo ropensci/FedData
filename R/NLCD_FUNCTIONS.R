@@ -19,7 +19,7 @@
 #' 'PR' (Puerto Rico, 2001 only).
 #' @param extraction.dir A character string indicating where the extracted
 #' and cropped NLCD data should be put. The directory will be created if missing.
-#' @param raster.options a vector of options for raster::writeRaster.
+#' @param raster.options a vector of options for terra::writeRaster.
 #' @param force.redo If an extraction for this template and label already exists,
 #' should a new one be created?
 #' @return A \code{RasterLayer} cropped to the bounding box of the template.

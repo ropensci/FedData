@@ -42,7 +42,7 @@ Acceptable values are 'L48' (lower 48 US states, the default),
 \item{extraction.dir}{A character string indicating where the extracted
 and cropped NLCD data should be put. The directory will be created if missing.}
 
-\item{raster.options}{a vector of options for raster::writeRaster.}
+\item{raster.options}{a vector of options for terra::writeRaster.}
 
 \item{force.redo}{If an extraction for this template and label already exists,
 should a new one be created?}

@@ -4,7 +4,7 @@
 \alias{get_ned_tile}
 \title{Load and crop tile from the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.}
 \usage{
-get_ned_tile(template = NULL, res = "1", tileNorthing, tileWesting, raw.dir)
+get_ned_tile(template = NULL, res = "1", tileNorthing, tileWesting)
 }
 \arguments{
 \item{template}{A Raster* or Spatial* object to serve
@@ -18,9 +18,6 @@ be downloaded.}
 
 \item{tileWesting}{An integer representing the westing (longitude, in degrees west of the prime meridian) of the northwest corner of the tile to
 be downloaded.}
-
-\item{raw.dir}{A character string indicating where raw downloaded files should be put.
-The directory will be created if missing. Defaults to './RAW/NED/'.}
 }
 \value{
 A \code{RasterLayer} cropped within the specified \code{template}.

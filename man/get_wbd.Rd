@@ -7,7 +7,7 @@
 get_wbd(
   template,
   label,
-  extraction.dir = paste0(tempdir(), "/FedData/extractions/nhd/", label, "/"),
+  extraction.dir = file.path(tempdir(), "FedData", "extractions", "nhd", label),
   force.redo = FALSE
 )
 }

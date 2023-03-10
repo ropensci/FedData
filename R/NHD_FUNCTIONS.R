@@ -27,19 +27,23 @@ get_nhd <-
   function(template,
            label,
            nhdplus = FALSE,
-           extraction.dir = paste0(
+           extraction.dir = file.path(
              tempdir(),
-             "/FedData/"
+             "FedData",
+             "extractions",
+             "nhd",
+             label
            ),
            force.redo = FALSE) {
     extraction.dir <-
-      normalizePath(paste0(extraction.dir, "/"),
+      normalizePath(extraction.dir,
         mustWork = FALSE
       )
 
     dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
+    out_file <- paste0(label, "_nhd.gpkg")
 
-    out_dsn <- paste0(extraction.dir, label, "_nhd.gpkg")
+    out_dsn <- file.path(extraction.dir, out_file)
 
     if (!force.redo & file.exists(out_dsn)) {
       return(read_sf_all(out_dsn))
@@ -191,20 +195,23 @@ plot_nhd <-
 #' @export
 get_wbd <- function(template,
                     label,
-                    extraction.dir = paste0(
+                    extraction.dir = file.path(
                       tempdir(),
-                      "/FedData/extractions/nhd/",
-                      label, "/"
+                      "FedData",
+                      "extractions",
+                      "nhd",
+                      label
                     ),
                     force.redo = FALSE) {
   extraction.dir <-
-    normalizePath(paste0(extraction.dir, "/"),
+    normalizePath(extraction.dir,
       mustWork = FALSE
     )
 
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
 
-  out_dsn <- paste0(extraction.dir, label, "_nhd_wbd.gpkg")
+  out_file <- paste0(label, "_nhd_wbd.gpkg")
+  out_dsn <- file.path(extraction.dir, out_file)
 
   if (!force.redo & file.exists(out_dsn)) {
     return(read_sf_all(out_dsn))
