@@ -1,3 +1,10 @@
+# FedData 3.0.4
+
+-   Updated `get_ghcn_daily()` and related functions to use https addresses 
+instead of the legacy ftp server [Issue #99](https://github.com/ropensci/FedData/issues/99).
+-   Updated `get_nhd()` to gracefully handle situations where no point data (or any NHD data) are available within an area of interest, using solution offered in [Issue #98](https://github.com/ropensci/FedData/issues/98).
+-   Updated `get_nhd()` to handle some strange geometries present in the NHD [Issue #98](https://github.com/ropensci/FedData/issues/98).
+
 # FedData 3.0.3
 
 -   Updated `get_nhd()` to correctly access the extraction.dir if it already exists [Issue #95](https://github.com/ropensci/FedData/issues/95). `get_nhd()` and `get_ned()`

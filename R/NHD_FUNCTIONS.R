@@ -100,6 +100,10 @@ get_nhd <-
         )
     }
 
+    null_elements <- purrr::map_lgl(nhd_out, is.null)
+    if (all(null_elements)) stop("No NHD data present within template.")
+    nhd_for_crs <- nhd_out[!null_elements][[1]]
+
     suppressWarnings({
       suppressMessages({
         nhd_out %>%
@@ -109,7 +113,7 @@ get_nhd <-
             sf::st_intersection,
             template %>%
               sf::st_geometry() %>%
-              sf::st_transform(sf::st_crs(nhd_out[[1]]))
+              sf::st_transform(sf::st_crs(nhd_for_crs))
           ) %>%
           write_sf_all(dsn = out_dsn)
       })

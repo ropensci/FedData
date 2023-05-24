@@ -338,7 +338,7 @@ get_ghcn_daily <- function(template = NULL,
 download_ghcn_daily_station <- function(ID, raw.dir, force.redo = F) {
   dir.create(raw.dir, recursive = T, showWarnings = F)
 
-  url <- paste("ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/all/", ID, ".dly", sep = "")
+  url <- paste("https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/", ID, ".dly", sep = "")
   if (!force.redo) {
     download_data(url = url, destdir = raw.dir, timestamping = T)
   } else {
@@ -594,7 +594,7 @@ get_ghcn_inventory <- function(template = NULL, elements = NULL, raw.dir) {
 
   # GHCN files are fixed-width. The numbers here refer to those column widths.
   station.inventory <-
-    readr::read_fwf("ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt",
+    readr::read_fwf("https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt",
       readr::fwf_positions(
         start = c(1, 13, 22, 32, 37, 42),
         end = c(11, 20, 30, 35, 40, 45),
@@ -611,7 +611,7 @@ get_ghcn_inventory <- function(template = NULL, elements = NULL, raw.dir) {
     )
 
   stations <-
-    readr::read_fwf("ftp://ftp.ncdc.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt",
+    readr::read_fwf("https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt",
       readr::fwf_positions(
         start = c(1, 13, 22, 32, 42),
         end = c(11, 20, 30, 38, 72),

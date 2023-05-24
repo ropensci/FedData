@@ -2,8 +2,8 @@ Type: Package
 Package: FedData
 Title: Functions to Automate Downloading Geospatial Data Available from
     Several Federated Data Sources
-Version: 3.0.3
-Date: 2023-03-10
+Version: 3.0.4
+Date: 2023-05-24
 Authors@R: 
     c(person(given = c("R.", "Kyle"),
              family = "Bocinsky",
@@ -74,4 +74,5 @@ Suggests:
     ggplot2,
     testthat,
     ncdf4,
-    usethis
+    usethis,
+    styler

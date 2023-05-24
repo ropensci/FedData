@@ -16,6 +16,11 @@ esri_describe <-
     description
   }
 
+is_sfc <-
+  function(x) {
+    inherits(x, "sfc")
+  }
+
 esri_query <-
   function(url,
            layers = NULL,
@@ -80,7 +85,7 @@ esri_query <-
           split_n(max_count)
 
         ids %>%
-          purrr::map(function(i) {
+          purrr::map_dfr(function(i) {
             httr::POST(
               url = paste0(url, x, "/query"),
               body = list(
@@ -94,8 +99,15 @@ esri_query <-
                 as = "text",
                 encoding = "UTF-8"
               ) %>%
-              sf::read_sf()
+              sf::read_sf() %>%
+              sf::st_zm() %>%
+              sf::st_transform(4326) %>%
+              dplyr::mutate(dplyr::across(!dplyr::where(is_sfc), as.character))
           }) %>%
-          do.call("rbind", .)
+          tibble::as_tibble() %>%
+          {
+            suppressMessages(readr::type_convert(., guess_integer = TRUE))
+          } %>%
+          sf::st_as_sf()
       })
   }
