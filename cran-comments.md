@@ -6,7 +6,7 @@ editor_options:
 
 # CRAN comments
 
-This is a patch release from FedData v3.0.2 to FedData v3.0.3. Please
+This is a patch release from FedData v3.0.3 to FedData v3.0.4. Please
 see NEWS.md for release details. 
 
 Please note that in recent CRAN submissions, CRAN maintainers have been 
@@ -20,7 +20,7 @@ servers outside the USA.
 
 `devtools::check()` result:
 
-**Test environment:** local MacOS Version 13.2.1 install, R 4.2.2
+**Test environment:** local MacOS Version 13.4 install, R 4.3.0 (2023-04-21)
 
 **0 errors ✔ \| 0 warnings ✔ \| 0 notes ✔**
 
@@ -46,7 +46,15 @@ servers outside the USA.
 
 **Test environment:** Windows Server 2022, R-devel, 64 bit
 
-**0 errors ✔ \| 0 warnings ✔ \| 1 note ✖**
+**0 errors ✔ \| 0 warnings ✔ \| 2 notes ✖**
+
+-   checking for non-standard things in the check directory ...
+    -   NOTE: Found the following files/directories:
+        ''NULL''
+    -   Explanation: I was unable to locate a file called "NULL" 
+        in the check directory, and only R-hub checks are throwing this
+        note. Related to [R-hub issue #560](https://github.com/r-hub/rhub/issues/560) 
+        and can probably be ignored.
 
 -   checking for detritus in the temp directory ...
     -   NOTE: Found the following files/directories:
@@ -61,8 +69,14 @@ servers outside the USA.
 
 **Test environment:** Ubuntu Linux 20.04.1 LTS, R-release, GCC
 
-**0 errors ✔ \| 0 warnings ✔ \| 0 notes ✖**
+**0 errors ✔ \| 0 warnings ✔ \| 1 notes ✖**
 
+-   checking HTML version of manual ...
+    -   NOTE: Skipping checking HTML validation: no command 'tidy' found
+    -   Explanation: The note about HTML validation only occurs on the
+        Fedora dev install and does not seem critical. The HTML version
+        of the manual is able to be validated on other platforms.
+        
 ------------------------------------------------------------------------
 
 `rhub::check_for_cran()` result:
@@ -104,7 +118,7 @@ server outside USA trying to access USA .gov URLs.
 
 ## revdepcheck results
 
-We checked one reverse dependencies, comparing R CMD check results
+We checked one reverse dependency, comparing R CMD check results
 across CRAN and dev versions of this package.
 
 -   We saw 0 new problems
