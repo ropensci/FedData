@@ -154,7 +154,7 @@ GHCN.prcp <- get_ghcn_daily(
 #> all geometries
 #> Warning in CPL_write_ogr(obj, dsn, layer, driver,
 #> as.character(dataset_options), : GDAL Error 1:
-#> /private/var/folders/ys/7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/Rtmpk0KLpf/FedData/extractions/ghcn/meve/meve_GHCN_stations.shp
+#> /private/var/folders/ys/7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/RtmpGwfFJu/FedData/extractions/ghcn/meve/meve_GHCN_stations.shp
 #> does not appear to be a file or directory.
 # Plot the NED again
 raster::plot(NED)
@@ -624,7 +624,7 @@ Center](https://www.crowcanyon.org) and Washington State University by
 the National Science Foundation. This software is licensed under the
 [MIT license](https://opensource.org/license/mit/). Continuing
 development is supported by the [Montana Climate
-Office](https://climate.umt.edu).
+Office](https://www.umt.edu/climate/).
 
 FedData was reviewed for [rOpenSci](https://ropensci.org) by
 [@jooolia](https://github.com/jooolia), and was greatly improved as a
