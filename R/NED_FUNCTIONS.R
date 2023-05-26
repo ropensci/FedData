@@ -120,7 +120,8 @@ get_ned <- function(template,
       datatype = "FLT4S",
       gdal = raster.options,
       overwrite = T
-    )
+    ) %>%
+    raster::raster()
 }
 
 #' Load and crop tile from the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.

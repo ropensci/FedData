@@ -536,7 +536,7 @@ get_ghcn_daily_station <- function(ID,
   daily %<>%
     dplyr::mutate(
       dplyr::across(
-        dplyr::everything(),
+        dplyr::where(is.numeric),
         ~ dplyr::na_if(.x, -9999)
       )
     )
