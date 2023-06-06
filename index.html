@@ -95,6 +95,7 @@
 <li>The <a href="https://www.mrlc.gov/" class="external-link">National Land Cover Database (NLCD)</a>
 </li>
 <li>The <a href="https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php" class="external-link">NASS Cropland Data Layer</a> from the National Agricultural Statistics Service</li>
+<li>The <a href="https://www.usgs.gov/programs/gap-analysis-project/science/pad-us-data-overview" class="external-link">PAD-US</a> dataset of protected area boundaries from the USGS</li>
 </ul>
 <p>This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the <a href="https://cran.r-project.org/package=sf" class="external-link"><strong>sf</strong></a> and <a href="https://cran.r-project.org/package=terra" class="external-link"><strong>terra</strong></a> packages.</p>
 <div class="section level3">
@@ -194,7 +195,7 @@
 <span><span class="co">#&gt; all geometries</span></span>
 <span><span class="co">#&gt; Warning in CPL_write_ogr(obj, dsn, layer, driver,</span></span>
 <span><span class="co">#&gt; as.character(dataset_options), : GDAL Error 1:</span></span>
-<span><span class="co">#&gt; /private/var/folders/ys/7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/Rtmp8poFxi/FedData/extractions/ghcn/meve/meve_GHCN_stations.shp</span></span>
+<span><span class="co">#&gt; /private/var/folders/ys/7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/RtmpKx9ckK/FedData/extractions/ghcn/meve/meve_GHCN_stations.shp</span></span>
 <span><span class="co">#&gt; does not appear to be a file or directory.</span></span>
 <span><span class="co"># Plot the NED again</span></span>
 <span><span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">NED</span><span class="op">)</span></span>
@@ -640,6 +641,34 @@
 <span><span class="co">#&gt;  9     8 &lt;NA&gt;         #000000FF</span></span>
 <span><span class="co">#&gt; 10     9 &lt;NA&gt;         #000000FF</span></span>
 <span><span class="co">#&gt; # ℹ 246 more rows</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="get-and-plot-the-usgs-pad-us-dataset-for-the-study-area">Get and plot the USGS PAD-US dataset for the study area<a class="anchor" aria-label="anchor" href="#get-and-plot-the-usgs-pad-us-dataset-for-the-study-area"></a>
+</h4>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Get the PAD-US data (USA ONLY)</span></span>
+<span><span class="va">PADUS</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_padus.html">get_padus</a></span><span class="op">(</span></span>
+<span>  template <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/geos_unary.html" class="external-link">st_buffer</a></span><span class="op">(</span><span class="fu">FedData</span><span class="fu">::</span><span class="va"><a href="reference/meve.html">meve</a></span>, <span class="fl">1000</span><span class="op">)</span>,</span>
+<span>  label <span class="op">=</span> <span class="st">"meve"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mapview</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mapview/man/mapView.html" class="external-link">mapview</a></span><span class="op">(</span></span>
+<span>  <span class="va">PADUS</span><span class="op">$</span><span class="va">Fee_Manager</span>,</span>
+<span>  layer.name <span class="op">=</span> <span class="st">"Unit Name"</span>,</span>
+<span>  zcol <span class="op">=</span> <span class="st">"Unit_Nm"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Optionally, specify your unit names</span></span>
+<span><span class="va">PADUS_meve_ute</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_padus.html">get_padus</a></span><span class="op">(</span></span>
+<span>  template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Mesa Verde National Park"</span>, <span class="st">"Ute Mountain Reservation"</span><span class="op">)</span>,</span>
+<span>  label <span class="op">=</span> <span class="st">"meve_ute"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">mapview</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/mapview/man/mapView.html" class="external-link">mapview</a></span><span class="op">(</span></span>
+<span>  <span class="va">PADUS_meve_ute</span><span class="op">$</span><span class="va">Fee_Manager</span>,</span>
+<span>  layer.name <span class="op">=</span> <span class="st">"Unit Name"</span>,</span>
+<span>  zcol <span class="op">=</span> <span class="st">"Unit_Nm"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <hr>
 </div>
 </div>
