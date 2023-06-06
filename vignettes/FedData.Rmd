@@ -241,7 +241,7 @@ NLCD <- get_nlcd(
 
 NLCD <- raster::as.factor(NLCD)
 NLCD@data@attributes[[1]] <- as.data.frame(nlcd_colors())
-raster::colortable(NLCD) <- levels(NLCD)[[1]] %>%
+raster::colortable(NLCD) <- NLCD@data@attributes[[1]] %>%
   dplyr::left_join(nlcd_colors()) %$%
   Color
 
