@@ -77,4 +77,8 @@ Suggests:
     ncdf4,
     usethis,
     styler,
-    mapview
+    mapview,
+    knitr,
+    rmarkdown,
+    leaflet
+VignetteBuilder: knitr
