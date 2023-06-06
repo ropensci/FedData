@@ -1,5 +1,5 @@
 # FedData 3.0.5
-
+-   Updated `get_nlcd()` to fix bug [Issue #101](https://github.com/ropensci/FedData/issues/99)in tree canopy data, whose URL changed.
 -   Updated `get_ghcn_daily()` to respond to slightly different file formatting on https server [Issue #99](https://github.com/ropensci/FedData/issues/99).
 -   Updated `get_ned()` to return a RasterLayer.
 
