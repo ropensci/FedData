@@ -79,8 +79,15 @@ get_nlcd <- function(template,
   src <- "wcs"
 
   if (src == "wcs") {
-    coverage <- paste0("NLCD_", year, "_", dataset, "_", landmass)
-    source <- paste0("https://www.mrlc.gov/geoserver/mrlc_download/", coverage, "/wcs")
+    if (dataset == "Tree_Canopy" & landmass == "L48") {
+      # Because MRLC did an update, and of course they didn't use the same naming convention
+      coverage <- paste0("nlcd_tcc_conus_", year, "_v2021-4")
+      source <- paste0("https://www.mrlc.gov/geoserver/mrlc_download/", coverage, "/wcs")
+    } else {
+      coverage <- paste0("NLCD_", year, "_", dataset, "_", landmass)
+      source <- paste0("https://www.mrlc.gov/geoserver/mrlc_download/", coverage, "/wcs")
+    }
+
 
 
     # This code uses the (oft-changing) MRLC web services.
