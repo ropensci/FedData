@@ -24,8 +24,8 @@ get_cdl(template, label, ...)
 cdl_colors()
 }
 \arguments{
-\item{template}{A Raster* or Spatial* object to serve
-as a template for cropping.}
+\item{template}{An \code{\link[sf:sf]{sf}}, \code{\link[sp:Spatial-class]{Spatial*}},
+or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping.}
 
 \item{label}{A character string naming the study area.}
 
@@ -41,7 +41,7 @@ The directory will be created if missing.}
 
 \item{progress}{Draw a progress bar when downloading?}
 
-\item{...}{Other parameters passed on to [get_nass_cdl].}
+\item{...}{Other parameters passed on to \link{get_nass_cdl}.}
 }
 \value{
 A \code{RasterLayer} cropped to the bounding box of the template.

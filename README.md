@@ -51,6 +51,9 @@ Currently, the package enables extraction from seven datasets:
 - The [NASS Cropland Data
   Layer](https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php)
   from the National Agricultural Statistics Service
+- The
+  [PAD-US](https://www.usgs.gov/programs/gap-analysis-project/science/pad-us-data-overview)
+  dataset of protected area boundaries from the USGS
 
 This package is designed with the large-scale geographic information
 system (GIS) use-case in mind: cases where the use of dynamic
@@ -154,7 +157,7 @@ GHCN.prcp <- get_ghcn_daily(
 #> all geometries
 #> Warning in CPL_write_ogr(obj, dsn, layer, driver,
 #> as.character(dataset_options), : GDAL Error 1:
-#> /private/var/folders/ys/7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/Rtmp8poFxi/FedData/extractions/ghcn/meve/meve_GHCN_stations.shp
+#> /private/var/folders/ys/7l0z3wlx7z14qxn9v0m9ckhw0000gq/T/RtmpKx9ckK/FedData/extractions/ghcn/meve/meve_GHCN_stations.shp
 #> does not appear to be a file or directory.
 # Plot the NED again
 raster::plot(NED)
@@ -610,6 +613,34 @@ cdl_colors()
 #>  9     8 <NA>         #000000FF
 #> 10     9 <NA>         #000000FF
 #> # ℹ 246 more rows
+```
+
+#### Get and plot the USGS PAD-US dataset for the study area
+
+``` r
+# Get the PAD-US data (USA ONLY)
+PADUS <- get_padus(
+  template = sf::st_buffer(FedData::meve, 1000),
+  label = "meve"
+)
+
+mapview::mapview(
+  PADUS$Fee_Manager,
+  layer.name = "Unit Name",
+  zcol = "Unit_Nm"
+)
+
+# Optionally, specify your unit names
+PADUS_meve_ute <- get_padus(
+  template = c("Mesa Verde National Park", "Ute Mountain Reservation"),
+  label = "meve_ute"
+)
+
+mapview::mapview(
+  PADUS_meve_ute$Fee_Manager,
+  layer.name = "Unit Name",
+  zcol = "Unit_Nm"
+)
 ```
 
 ------------------------------------------------------------------------

@@ -7,8 +7,9 @@
 get_ned_tile(template = NULL, res = "1", tileNorthing, tileWesting)
 }
 \arguments{
-\item{template}{A Raster* or Spatial* object to serve
-as a template for cropping. If missing, entire tile is returned.}
+\item{template}{An \code{\link[sf:sf]{sf}}, \code{\link[sp:Spatial-class]{Spatial*}},
+or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping.
+If missing, entire tile is returned.}
 
 \item{res}{A character string representing the desired resolution of the NED. '1'
 indicates the 1 arc-second NED (the default), while '13' indicates the 1/3 arc-second dataset.}

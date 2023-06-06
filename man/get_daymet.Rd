@@ -18,8 +18,8 @@ get_daymet(
 )
 }
 \arguments{
-\item{template}{A Raster* or Spatial* object to serve
-as a template for cropping.}
+\item{template}{An \code{\link[sf:sf]{sf}}, \code{\link[sp:Spatial-class]{Spatial*}},
+or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping.}
 
 \item{label}{A character string naming the study area.}
 

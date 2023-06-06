@@ -134,6 +134,18 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=styler"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "mapview",
+      "name": "mapview",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=mapview"
     }
   ],
   "softwareRequirements": {
@@ -393,7 +405,7 @@
     },
     "SystemRequirements": "GDAL (>= 3.0.0)"
   },
-  "fileSize": "1684.208KB",
+  "fileSize": "1377.656KB",
   "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/master/README.md",
   "contIntegration": ["https://github.com/ropensci/FedData/actions/workflows/check-standard.yaml", "https://app.codecov.io/gh/ropensci/FedData?branch=master"],

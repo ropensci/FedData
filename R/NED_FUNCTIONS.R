@@ -3,8 +3,8 @@
 #' \code{get_ned} returns a \code{RasterLayer} of elevation data cropped to a given
 #' template study area.
 #'
-#' @param template A Raster* or Spatial* object to serve
-#' as a template for cropping.
+#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
+#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping.
 #' @param label A character string naming the study area.
 #' @param res A character string representing the desired resolution of the NED. '1'
 #' indicates the 1 arc-second NED (the default), while '13' indicates the 1/3 arc-second dataset.
@@ -129,8 +129,9 @@ get_ned <- function(template,
 #' \code{get_ned_tile} returns a \code{RasterLayer} cropped within the specified \code{template}.
 #' If template is not provided, returns the entire NED tile.
 #'
-#' @param template A Raster* or Spatial* object to serve
-#' as a template for cropping. If missing, entire tile is returned.
+#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
+#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping.
+#' If missing, entire tile is returned.
 #' @param res A character string representing the desired resolution of the NED. '1'
 #' indicates the 1 arc-second NED (the default), while '13' indicates the 1/3 arc-second dataset.
 #' @param tileNorthing An integer representing the northing (latitude, in degrees north of the equator) of the northwest corner of the tile to

@@ -7,13 +7,13 @@
 plot_nhd(x, template = NULL)
 }
 \arguments{
-\item{x}{The result of [get_nhd].}
+\item{x}{The result of \link{get_nhd}.}
 
-\item{template}{template A `Raster*`, `Spatial*`, or `sf` object to serve
-as a template for cropping.}
+\item{template}{An \code{\link[sf:sf]{sf}}, \code{\link[sp:Spatial-class]{Spatial*}},
+or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping.}
 }
 \value{
-A [ggplot2] panel of plots
+A \code{ggplot2} panel of plots
 }
 \description{
 This is more of an example than anything

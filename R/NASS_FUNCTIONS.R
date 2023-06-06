@@ -3,8 +3,8 @@
 #' \code{get_nass_cdl} returns a \code{RasterLayer} of NASS Cropland Data Layer cropped to a given
 #' template study area.
 #'
-#' @param template A Raster* or Spatial* object to serve
-#' as a template for cropping.
+#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
+#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping.
 #' @param label A character string naming the study area.
 #' @param year An integer representing the year of desired NASS Cropland Data Layer product.
 #' Acceptable values are 2007--the last year.

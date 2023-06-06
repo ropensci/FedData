@@ -3,7 +3,7 @@ Package: FedData
 Title: Functions to Automate Downloading Geospatial Data Available from
     Several Federated Data Sources
 Version: 3.0.4
-Date: 2023-05-24
+Date: 2023-06-05
 Authors@R: 
     c(person(given = c("R.", "Kyle"),
              family = "Bocinsky",
@@ -68,6 +68,7 @@ Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
 Repository: CRAN
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Suggests: 
     covr,
@@ -75,4 +76,5 @@ Suggests:
     testthat,
     ncdf4,
     usethis,
-    styler
+    styler,
+    mapview

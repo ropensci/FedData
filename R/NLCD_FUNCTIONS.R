@@ -5,8 +5,8 @@
 #' legend and color palette, as available through the
 #' [MLRC website](https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend).
 #'
-#' @param template A sf, Raster* or Spatial* object to serve
-#' as a template for cropping.
+#' @param template An [`Simple Feature`][sf::sf], [`Spatial*`][sp::Spatial],
+#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping.
 #' @param label A character string naming the study area.
 #' @param year An integer representing the year of desired NLCD product.
 #' Acceptable values are 2019 (default), 2016, 2011, 2008, 2006, 2004, and 2001.

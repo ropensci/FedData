@@ -12,8 +12,8 @@ get_wbd(
 )
 }
 \arguments{
-\item{template}{A `Raster*`, `Spatial*`, or `sf` object to serve
-as a template for cropping.}
+\item{template}{An \code{\link[sf:sf]{sf}}, \code{\link[sp:Spatial-class]{Spatial*}},
+or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping.}
 
 \item{label}{A character string naming the study area.}
 
@@ -22,10 +22,10 @@ as a template for cropping.}
 \item{force.redo}{If an extraction for this template and label already exists, should a new one be created?}
 }
 \value{
-A  `sf` collection of the HUC 12 regions within
+A  \code{sf} collection of the HUC 12 regions within
 the specified \code{template}.
 }
 \description{
-\code{get_wbd} returns an `sf` collection of the HUC 12 regions within
+\code{get_wbd} returns an \code{sf} collection of the HUC 12 regions within
 the specified \code{template}.
 }

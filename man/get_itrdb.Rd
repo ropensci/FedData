@@ -20,8 +20,8 @@ get_itrdb(
 )
 }
 \arguments{
-\item{template}{A Raster* or Spatial* object to serve
-as a template for selecting chronologies. If missing,
+\item{template}{An \code{\link[sf:sf]{sf}}, \code{\link[sp:Spatial-class]{Spatial*}},
+or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping. If missing,
 all available global chronologies are returned.}
 
 \item{label}{A character string naming the study area.}

@@ -130,27 +130,26 @@ read_sf_all <- function(dsn) {
     ))
 }
 
-write_sf_all <- function(x, dsn) {
-  if (is.null(names(x))) {
-    stop("'x' must be a named list.")
-  }
+write_sf_all <-
+  function(x, dsn) {
+    if (is.null(names(x))) {
+      stop("'x' must be a named list.")
+    }
 
-  unlink(dsn,
-    recursive = TRUE,
-    force = TRUE
-  )
-
-  x %>%
-    purrr::iwalk(
-      ~ sf::write_sf(.x,
-        dsn = dsn,
-        layer = .y,
-        delete_layer = TRUE
-      )
+    unlink(dsn,
+      recursive = TRUE,
+      force = TRUE
     )
 
-  return()
-}
+    x %>%
+      purrr::iwalk(
+        ~ sf::write_sf(.x,
+          dsn = dsn,
+          layer = .y,
+          delete_layer = TRUE
+        )
+      )
+  }
 
 #' Get a logical vector of which elements in a vector are sequentially duplicated.
 #'

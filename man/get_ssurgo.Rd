@@ -13,8 +13,9 @@ get_ssurgo(
 )
 }
 \arguments{
-\item{template}{A Raster* or Spatial* object to serve
-as a template for cropping; optionally, a vector of area names [e.g., c('IN087','IN088')] may be provided.}
+\item{template}{An \code{\link[sf:sf]{sf}}, \code{\link[sp:Spatial-class]{Spatial*}},
+or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping.
+Optionally, a vector of area names, e.g., \code{c('IN087','IN088')} may be provided.}
 
 \item{label}{A character string naming the study area.}
 

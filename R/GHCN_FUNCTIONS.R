@@ -2,16 +2,16 @@
 
 #' Download and crop the Global Historical Climate Network-Daily data.
 #'
-#' \code{get_ghcn_daily} returns a named list of length 2:
+#' `get_ghcn_daily` returns a named list of length 2:
 #' \enumerate{
-#' \item 'spatial': A \code{SpatialPointsDataFrame} of the locations of GHCN weather stations
+#' \item 'spatial': A [SpatialPointsDataFrame()] of the locations of GHCN weather stations
 #' in the template, and
-#' \item 'tabular': A named list of \code{\link{data.frame}s} with the daily weather data for each station.
+#' \item 'tabular': A named list of type [data.frame()] with the daily weather data for each station.
 #' The name of each list item is the station ID.
 #' }
 #'
-#' @param template A Raster* or Spatial* object to serve
-#' as a template for cropping. Alternatively, a character vector providing GHCN station IDs. If missing, all stations
+#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
+#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping. Alternatively, a character vector providing GHCN station IDs. If missing, all stations
 #' will be downloaded!
 #' @param label A character string naming the study area.
 #' @param elements A character vector of elements to extract.\cr
@@ -98,9 +98,9 @@
 #' and # corresponds to a code for soil depth.\cr
 #' See SN*# for ground cover and depth codes. \cr
 #' TAVG = Average temperature (tenths of degrees C)
-#' [Note that TAVG from source 'S' corresponds
+#' (Note that TAVG from source 'S' corresponds
 #' to an average for the period ending at
-#' 2400 UTC rather than local midnight]\cr
+#' 2400 UTC rather than local midnight)\cr
 #' THIC = Thickness of ice on water (tenths of mm)\cr
 #' TOBS = Temperature at the time of observation (tenths of degrees C)\cr
 #' TSUN = Daily total sunshine (minutes)\cr
@@ -439,9 +439,9 @@ download_ghcn_daily_station <- function(ID, raw.dir, force.redo = F) {
 #' and # corresponds to a code for soil depth.\cr
 #' See SN*# for ground cover and depth codes. \cr
 #' TAVG = Average temperature (tenths of degrees C)
-#' [Note that TAVG from source 'S' corresponds
+#' (Note that TAVG from source 'S' corresponds
 #' to an average for the period ending at
-#' 2400 UTC rather than local midnight]\cr
+#' 2400 UTC rather than local midnight)\cr
 #' THIC = Thickness of ice on water (tenths of mm)\cr
 #' TOBS = Temperature at the time of observation (tenths of degrees C)\cr
 #' TSUN = Daily total sunshine (minutes)\cr
@@ -574,8 +574,8 @@ get_ghcn_daily_station <- function(ID,
 #' Stations with multiple elements will have multiple points. This allows for easy mapping of stations
 #' by element availability.
 #'
-#' @param template A Raster* or Spatial* object to serve
-#' as a template for cropping.
+#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
+#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping.
 #' @param elements A character vector of elements to extract.
 #' Common elements include 'tmin', 'tmax', and 'prcp'.
 #' @param raw.dir A character string indicating where raw downloaded files should be put.

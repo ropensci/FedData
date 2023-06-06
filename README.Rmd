@@ -39,6 +39,8 @@ Currently, the package enables extraction from seven datasets:
 * The [International Tree Ring Data Bank (ITRDB)](https://www.ncei.noaa.gov/products/paleoclimatology/tree-ring), coordinated by National Climatic Data Center at NOAA
 * The [National Land Cover Database (NLCD)](https://www.mrlc.gov/)
 * The [NASS Cropland Data Layer](https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php) from the National Agricultural Statistics Service
+* The [PAD-US](https://www.usgs.gov/programs/gap-analysis-project/science/pad-us-data-overview) dataset of 
+protected area boundaries from the USGS
 
 This package is designed with the large-scale geographic information system (GIS) use-case in mind: cases where the use of dynamic web-services is impractical due to the scale (spatial and/or temporal) of analysis. It functions primarily as a means of downloading tiled or otherwise spatially-defined datasets; additionally, it can preprocess those datasets by extracting data within an area of interest (AoI), defined spatially. It relies heavily on the [**sf**](https://cran.r-project.org/package=sf) and [**terra**](https://cran.r-project.org/package=terra) packages.
 
@@ -266,6 +268,33 @@ raster::levels(NASS_CDL)[[1]]
 
 # Also, a convenience function loading the NASS CDL categories and hex colors
 cdl_colors()
+```
+
+#### Get and plot the USGS PAD-US dataset for the study area
+```{r PADUS, results="hide", message=FALSE, warning=FALSE}
+# Get the PAD-US data (USA ONLY)
+PADUS <- get_padus(
+  template = sf::st_buffer(FedData::meve, 1000),
+  label = "meve"
+)
+
+mapview::mapview(
+  PADUS$Fee_Manager,
+  layer.name = "Unit Name",
+  zcol = "Unit_Nm"
+)
+
+# Optionally, specify your unit names
+PADUS_meve_ute <- get_padus(
+  template = c("Mesa Verde National Park", "Ute Mountain Reservation"),
+  label = "meve_ute"
+)
+
+mapview::mapview(
+  PADUS_meve_ute$Fee_Manager,
+  layer.name = "Unit Name",
+  zcol = "Unit_Nm"
+)
 ```
 
 -----------

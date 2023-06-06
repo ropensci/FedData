@@ -22,8 +22,8 @@ nlcd_colors()
 pal_nlcd()
 }
 \arguments{
-\item{template}{A sf, Raster* or Spatial* object to serve
-as a template for cropping.}
+\item{template}{An \code{\link[sf:sf]{Simple Feature}}, \code{\link[sp:Spatial-class]{Spatial*}},
+or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping.}
 
 \item{label}{A character string naming the study area.}
 
@@ -54,7 +54,7 @@ A \code{RasterLayer} cropped to the bounding box of the template.
 \code{get_nlcd} returns a \code{RasterLayer} of NLCD data cropped to a given
 template study area. \code{nlcd_colors} and \code{pal_nlcd} return the NLCD
 legend and color palette, as available through the
-[MLRC website](https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend).
+\href{https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend}{MLRC website}.
 }
 \examples{
 \dontrun{

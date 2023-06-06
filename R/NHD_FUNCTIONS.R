@@ -3,8 +3,8 @@
 #' \code{get_nhd} returns a list of `sf` objects extracted
 #' from the National Hydrography Dataset.
 #'
-#' @param template A `Raster*`, `Spatial*`, or `sf` object to serve
-#' as a template for cropping.
+#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
+#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping.
 #' @param label A character string naming the study area.
 #' @param nhdplus Extract data from the USGS NHDPlus High Resolution service (experimental)
 #' @param extraction.dir A character string indicating where the extracted and cropped NHD data should be put.
@@ -128,9 +128,9 @@ get_nhd <-
 #' This is more of an example than anything
 #'
 #' @param x The result of [get_nhd].
-#' @param template template A `Raster*`, `Spatial*`, or `sf` object to serve
-#' as a template for cropping.
-#' @return A [ggplot2] panel of plots
+#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
+#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping.
+#' @return A `ggplot2` panel of plots
 #' @importFrom magrittr %>% %<>%
 #' @export
 #' @examples
@@ -189,8 +189,8 @@ plot_nhd <-
 #' \code{get_wbd} returns an `sf` collection of the HUC 12 regions within
 #' the specified \code{template}.
 #'
-#' @param template A `Raster*`, `Spatial*`, or `sf` object to serve
-#' as a template for cropping.
+#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
+#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping.
 #' @param label A character string naming the study area.
 #' @param extraction.dir A character string indicating where the extracted and cropped NHD data should be put.
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created?

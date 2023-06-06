@@ -3,8 +3,8 @@
 #' \code{get_daymet} returns a \code{RasterBrick} of weather data cropped to a given
 #' template study area.
 #'
-#' @param template A Raster* or Spatial* object to serve
-#' as a template for cropping.
+#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
+#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping.
 #' @param label A character string naming the study area.
 #' @param elements A character vector of elements to extract.\cr
 #' The available elements are:\cr

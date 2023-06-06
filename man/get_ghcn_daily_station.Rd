@@ -59,7 +59,7 @@ FRTH = Thickness of frozen ground layer (cm)\cr
 GAHT = Difference between river and gauge height (cm)\cr
 MDEV = Multiday evaporation total (tenths of mm; use with DAEV)\cr
 MDPR = Multiday precipitation total (tenths of mm; use with DAPR and
-                                     DWPR, if available)\cr
+DWPR, if available)\cr
 MDSF = Multiday snowfall total \cr
 MDTN = Multiday minimum temperature (tenths of degrees C; use with DATN)\cr
 MDTX = Multiday maximum temperature (tenths of degrees C; use with DATX)\cr
@@ -71,7 +71,7 @@ MXPN = Daily maximum temperature of water in an evaporation pan
 PGTM = Peak gust time (hours and minutes, i.e., HHMM)\cr
 PSUN = Daily percent of possible sunshine (percent)\cr
 SN*# = Minimum soil temperature (tenths of degrees C)
-  where * corresponds to a code
+where * corresponds to a code
 for ground cover and # corresponds to a code for soil
 depth.\cr
 \cr
@@ -96,13 +96,13 @@ Depth codes include the following:\cr
 7 = 180 cm\cr
 \cr
 SX*# = Maximum soil temperature (tenths of degrees C)
-  where * corresponds to a code for ground cover
+where * corresponds to a code for ground cover
 and # corresponds to a code for soil depth.\cr
 See SN*# for ground cover and depth codes. \cr
 TAVG = Average temperature (tenths of degrees C)
-[Note that TAVG from source 'S' corresponds
+(Note that TAVG from source 'S' corresponds
 to an average for the period ending at
-2400 UTC rather than local midnight]\cr
+2400 UTC rather than local midnight)\cr
 THIC = Thickness of ice on water (tenths of mm)\cr
 TOBS = Temperature at the time of observation (tenths of degrees C)\cr
 TSUN = Daily total sunshine (minutes)\cr
@@ -122,10 +122,10 @@ WSFG = Peak gust wind speed (tenths of meters per second)\cr
 WSFI = Highest instantaneous wind speed (tenths of meters per second)\cr
 WSFM = Fastest mile wind speed (tenths of meters per second)\cr
 WT** = Weather Type where ** has one of the following values:\cr
-  \cr
+\cr
 01 = Fog, ice fog, or freezing fog (may include heavy fog)\cr
 02 = Heavy fog or heaving freezing fog (not always
-                                        distinguished from fog)\cr
+distinguished from fog)\cr
 03 = Thunder\cr
 04 = Ice pellets, sleet, snow pellets, or small hail \cr
 05 = Hail (may include small hail)\cr

@@ -8,8 +8,8 @@
 #' \item 'depths': A matrix of tree-ring sample depths.
 #' }
 #'
-#' @param template A Raster* or Spatial* object to serve
-#' as a template for selecting chronologies. If missing,
+#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
+#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping. If missing,
 #' all available global chronologies are returned.
 #' @param label A character string naming the study area.
 #' @param recon.years A numeric vector of years over which reconstructions are needed;
