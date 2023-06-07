@@ -2,6 +2,8 @@
 title: "Introduction to FedData"
 output: 
   minidown::mini_document:
+    framework: mini
+    theme: default
     toc: false
 vignette: >
   %\VignetteIndexEntry{Introduction to FedData}
