@@ -1,10 +1,13 @@
 ---
 title: "Introduction to FedData"
 output: 
-  rmarkdown::html_document:
+  minidown::mini_document:
     toc: true
     toc_float: true
-    theme: 'default'
+vignette: >
+  %\VignetteIndexEntry{Introduction to FedData}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}
