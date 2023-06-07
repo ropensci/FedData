@@ -1,12 +1,15 @@
 ---
 title: "Introduction to FedData"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_document:
+    self_contained: false
+    toc: true
+    toc_float: true
+    theme: 'default'
 vignette: >
   %\VignetteIndexEntry{Introduction to FedData}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  chunk_output_type: console
 ---
 
 ```{r, include = FALSE}
