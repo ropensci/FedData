@@ -227,12 +227,12 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
 
   # If there is a template, only download the areas in the template. Thanks to Dylan Beaudette for this method!
   if (
-    !is.null(template) # &&
-    # httr::status_code(
-    #   httr::GET(
-    #     "https://sdmdataaccess.nrcs.usda.gov/Spatial/SDMWGS84Geographic.wfs"
-    #   )
-    # ) == 200
+    !is.null(template) &&
+      httr::status_code(
+        httr::GET(
+          "https://sdmdataaccess.nrcs.usda.gov/Spatial/SDMWGS84Geographic.wfs"
+        )
+      ) == 200
   ) {
     bounds <-
       template %>%
