@@ -263,7 +263,7 @@ NASS_CDL <- get_nass_cdl(
   label = "meve"
 )
 
-levels(NASS_CDL)[[1]] %<>%
+NASS_CDL@data@attributes[[1]] %<>%
   dplyr::filter(ID %in% NASS_CDL[])
 
 plot_map(NASS_CDL,
