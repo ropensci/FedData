@@ -2,8 +2,7 @@
 title: "Introduction to FedData"
 output: 
   minidown::mini_document:
-    toc: true
-    toc_float: true
+    toc: false
 vignette: >
   %\VignetteIndexEntry{Introduction to FedData}
   %\VignetteEngine{knitr::rmarkdown}
@@ -35,6 +34,8 @@ mapviewOptions(
   basemaps = c(),
   homebutton = FALSE,
   query.position = "topright",
+  query.digits = 2,
+  query.prefix = "",
   legend.pos = "bottomright"
 )
 

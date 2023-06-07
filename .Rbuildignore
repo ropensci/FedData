@@ -20,3 +20,5 @@
 ^revdep$
 ^CRAN-SUBMISSION$
 ^\.DS_Store$
+^doc$
+^Meta$

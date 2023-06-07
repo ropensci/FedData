@@ -80,5 +80,6 @@ Suggests:
     mapview,
     knitr,
     rmarkdown,
-    leaflet
+    leaflet,
+    minidown
 VignetteBuilder: knitr
