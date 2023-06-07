@@ -229,8 +229,9 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
   if (
     !is.null(template) &&
       httr::status_code(
-        httr::GET(
-          "https://sdmdataaccess.nrcs.usda.gov/Spatial/SDMWGS84Geographic.wfs"
+        httr::RETRY(
+          verb = "GET",
+          url = "https://sdmdataaccess.nrcs.usda.gov/Spatial/SDMWGS84Geographic.wfs"
         )
       ) == 200
   ) {
@@ -274,7 +275,9 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
 
         temp.file <- paste0(tempdir(), "/soils.gml")
 
-        httr::GET("https://sdmdataaccess.nrcs.usda.gov/Spatial/SDMWGS84Geographic.wfs",
+        httr::RETRY(
+          verb = "GET",
+          url = "https://sdmdataaccess.nrcs.usda.gov/Spatial/SDMWGS84Geographic.wfs",
           query = list(
             Service = "WFS",
             Version = "1.1.0",

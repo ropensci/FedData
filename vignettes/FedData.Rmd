@@ -2,27 +2,23 @@
 title: "Introduction to FedData"
 output: 
   rmarkdown::html_document:
-    self_contained: false
     toc: true
     toc_float: true
     theme: 'default'
-vignette: >
-  %\VignetteIndexEntry{Introduction to FedData}
-  %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  out.width = "100%"
 )
 ```
 
 `FedData` is a package for downloading data from federated (usually US Federal) data sets, using a consistent, spatial-first API. In this vignette, you'll learn how to load the `FedData` package, download data for an "template" area of interest, and make simple web maps using the [`mapview`](https://r-spatial.github.io/mapview/) package.
 
 #### Load `FedData` and define a study area
-```{r setup, results="hide", message=FALSE}
+```{r setup, message=FALSE}
 # Load FedData and magrittr
 library(FedData)
 library(magrittr)
@@ -32,7 +28,12 @@ if (!require("mapview")) {
   install.packages("mapview")
 }
 library(mapview)
-mapviewOptions(basemaps = c())
+mapviewOptions(
+  basemaps = c(),
+  homebutton = FALSE,
+  query.position = "topright",
+  legend.pos = "bottomright"
+)
 
 # Create a nice mapview template
 plot_map <-
@@ -72,7 +73,7 @@ plot_map(FedData::meve,
 ```
 
 #### Get and plot the National Elevation Dataset for the study area
-```{r NED, results="hide", message=FALSE}
+```{r NED, message=FALSE}
 # Get the NED (USA ONLY)
 # Returns a raster
 NED <- get_ned(
@@ -87,7 +88,7 @@ plot_map(NED,
 ```
 
 #### Get and plot the Daymet dataset for the study area
-```{r DAYMET, results="hide", message=FALSE, warning=FALSE}
+```{r DAYMET, message=FALSE, warning=FALSE}
 # Get the DAYMET (North America only)
 # Returns a raster
 DAYMET <- get_daymet(
@@ -104,7 +105,7 @@ plot_map(DAYMET$tmax$X1985.10.23,
 ```
 
 #### Get and plot the daily GHCN precipitation data for the study area
-```{r GHCN-precipitation, results="hide", message=FALSE}
+```{r GHCN-precipitation, message=FALSE}
 # Get the daily GHCN data (GLOBAL)
 # Returns a list: the first element is the spatial locations of stations,
 # and the second is a list of the stations and their daily data
@@ -122,7 +123,7 @@ plot_map(GHCN.prcp$spatial,
 ```
 
 #### Get and plot the daily GHCN temperature data for the study area
-```{r GHCN-temperature, results="hide", message=FALSE}
+```{r GHCN-temperature, message=FALSE}
 # Elements for which you require the same data
 # (i.e., minimum and maximum temperature for the same days)
 # can be standardized using standardize==T
@@ -142,7 +143,7 @@ plot_map(GHCN.temp$spatial,
 ```
 
 #### Get and plot the National Hydrography Dataset for the study area
-```{r NHD, results="hide", message=FALSE}
+```{r NHD, message=FALSE}
 # Get the NHD (USA ONLY)
 NHD <-
   get_nhd(
@@ -159,7 +160,7 @@ NHD[purrr::map_lgl(NHD, ~ (nrow(.x) != 0))] %>%
 ```
 
 #### Get and plot the NRCS SSURGO data for the study area
-```{r SSURGO, results="hide", message=FALSE, warning=FALSE}
+```{r SSURGO, message=FALSE, warning=FALSE}
 # Get the NRCS SSURGO data (USA ONLY)
 SSURGO.MEVE <- get_ssurgo(
   template = FedData::meve,
@@ -180,7 +181,7 @@ SSURGO.MEVE$spatial %>%
 ```
 
 #### Get and plot the NRCS SSURGO data for particular soil survey areas
-```{r SSURGO-area, results="hide", message=FALSE}
+```{r SSURGO-area, message=FALSE}
 # Or, download by Soil Survey Area names
 SSURGO.areas <- get_ssurgo(
   template = c("CO670"),
@@ -202,7 +203,7 @@ SSURGO.areas$spatial %>%
 ```
 
 #### Get and plot the ITRDB chronology locations in the study area
-```{r ITRDB, results="hide", message=FALSE}
+```{r ITRDB, message=FALSE}
 # Get the ITRDB records
 # Buffer MEVE, because there aren't any chronologies in the Park
 ITRDB <-
@@ -233,7 +234,7 @@ plot_map(ITRDB$metadata,
 ```
 
 #### Get and plot the National Land Cover Dataset for the study area
-```{r NLCD, results="hide", message=FALSE}
+```{r NLCD, message=FALSE}
 # Get the NLCD (USA ONLY)
 # Returns a raster
 NLCD <- get_nlcd(
@@ -252,12 +253,13 @@ raster::colortable(NLCD) <- NLCD@data@attributes[[1]] %>%
 plot_map(NLCD,
   col.regions = raster::colortable(NLCD),
   att = "Class",
-  layer.name = "Landcover Class"
+  layer.name = "Landcover Class",
+  label = FALSE
 )
 ```
 
 #### Get and plot the NASS Cropland Data Layer for the study area
-```{r NASS-CDL, results="hide", message=FALSE}
+```{r NASS-CDL, message=FALSE}
 # Get the NASS (USA ONLY)
 # Returns a raster
 NASS_CDL <- get_nass_cdl(
@@ -277,20 +279,21 @@ plot_map(NASS_CDL,
     "#C6D69EFF", "#E8FFBFFF", "#7EB1B1FF", "#7EB2B2FF", "#D69EBCFF"
   ),
   att = "Land Cover",
-  layer.name = "Landcover Class"
+  layer.name = "Landcover Class",
+  label = FALSE
 )
 ```
 
 
 #### Get and plot the USGS PAD-US dataset for the study area
-```{r PADUS, results="hide", message=FALSE, warning=FALSE}
+```{r PADUS, message=FALSE, warning=FALSE}
 # Get the PAD-US data (USA ONLY)
 PADUS <- get_padus(
   template = sf::st_buffer(FedData::meve, 1000),
   label = "meve"
 )
 
-mapview::mapview(
+plot_map(
   PADUS$Fee_Manager,
   layer.name = "Unit Name",
   zcol = "Unit_Nm"
@@ -302,7 +305,7 @@ PADUS_meve_ute <- get_padus(
   label = "meve_ute"
 )
 
-mapview::mapview(
+plot_map(
   PADUS_meve_ute$Fee_Manager,
   layer.name = "Unit Name",
   zcol = "Unit_Nm"
