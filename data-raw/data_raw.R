@@ -70,15 +70,14 @@ nlcd <-
 
 ##### National Park Spatial Polygon
 meve <-
-  "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Protected_Areas_Federal_Management_Agency/FeatureServer/0/query" %>%
-  httr::modify_url(
-    query = list(
-      f = "json",
-      where = "Unit_Nm='Mesa Verde National Park'",
-      returnGeometry = "true"
-    )
-  ) %>%
-  sf::read_sf() %>%
+  FedData::get_padus(
+    template = "Mesa Verde National Park",
+    label = "meve",
+    layer = "Proclamation_and_Other_Planning_Boundaries",
+    force.redo = TRUE
+  ) %$%
+  Proclamation_and_Other_Planning_Boundaries %>%
+  sf::st_geometry() %>%
   sf::st_transform(4326)
 
 usethis::use_data(tablesHeaders, nass, nlcd, overwrite = TRUE, internal = TRUE)
