@@ -17,7 +17,7 @@
 #' Optionally, a vector of unit names, e.g., `c('Mesa Verde National Park','Ute Mountain Reservation')` may be provided.
 #' @param label A character string naming the study area.
 #' @param layer A character vector containing one or more PAD-US Layers.
-#' By default, all layers are downloaded.
+#' By default, the **Manager_Name** layer is downloaded.
 #' \itemize{
 #' \item **Protection_Status_by_GAP_Status_Code**: [PAD-US 3.0 Protection Status by GAP Status Code](https://usgs.maps.arcgis.com/home/item.html?id=b7a09e6c95a846fe82970c70195a2739) — Service representing a measure of management intent to permanently protect biodiversity. GAP 1&2 areas are primarily managed for biodiversity, GAP 3 are managed for multiple uses including conservation and extraction, GAP 4 no known mandate for biodiversity protection. GAP Status Codes 1-3 are displayed, GAP 4 areas included but not displayed.
 #' \item **Public_Access**: [PAD-US 3.0 Public Access](https://usgs.maps.arcgis.com/home/item.html?id=3687ff551d7e4f0992f08419c2b29dd5) — Service representing general level of public access permitted in the area - Open, Restricted (permit, seasonal), Closed. Public Access Unknown areas not displayed. Use to show general categories of public access (however, not all areas have been locally reviewed).
@@ -48,16 +48,16 @@ get_padus <-
   function(template,
            label,
            layer = c(
-             "Protection_Status_by_GAP_Status_Code",
-             "Public_Access",
-             "Fee_Manager",
-             "Manager_Name",
-             "Manager_Type",
-             "Federal_Fee_Managers_Authoritative",
-             "Federal_Management_Agencies",
-             "Protection_Mechanism_Category",
-             "Proclamation_and_Other_Planning_Boundaries",
-             "Fee_Topology_Overlaps"
+             # "Protection_Status_by_GAP_Status_Code",
+             # "Public_Access",
+             # "Fee_Manager",
+             "Manager_Name" # ,
+             # "Manager_Type",
+             # "Federal_Fee_Managers_Authoritative",
+             # "Federal_Management_Agencies",
+             # "Protection_Mechanism_Category",
+             # "Proclamation_and_Other_Planning_Boundaries",
+             # "Fee_Topology_Overlaps"
            ),
            extraction.dir = file.path(
              tempdir(),
@@ -142,6 +142,8 @@ get_padus <-
       purrr::map(sf::st_make_valid)
 
     if (!inherits(template, "character")) {
+      sf_state <- sf::sf_use_s2()
+      suppressMessages(sf_use_s2(FALSE))
       suppressWarnings({
         suppressMessages({
           padus_out %<>%
@@ -153,6 +155,7 @@ get_padus <-
             )
         })
       })
+      suppressMessages(sf_use_s2(sf_state))
     }
 
     write_sf_all(padus_out, dsn = out_dsn)

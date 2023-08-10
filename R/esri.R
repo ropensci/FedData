@@ -7,11 +7,7 @@ esri_describe <-
         task =
           paste0("describe the NHD dataset at:\n", url)
       ) %>%
-      httr::content(
-        as = "text",
-        encoding = "UTF-8"
-      ) %>%
-      jsonlite::fromJSON()
+      httr::content(simplifyVector = TRUE)
 
     description
   }
@@ -70,11 +66,7 @@ esri_query <-
               returnIdsOnly = TRUE
             )
           ) %>%
-          httr::content(
-            as = "text",
-            encoding = "UTF-8"
-          ) %>%
-          jsonlite::fromJSON() %>%
+          httr::content(simplifyVector = TRUE) %>%
           magrittr::extract2("objectIds")
 
         if (is.null(ids)) {
@@ -164,13 +156,10 @@ esri_feature_query <-
               returnIdsOnly = TRUE
             )
           ) %>%
-          httr::content(
-            as = "text",
-            encoding = "UTF-8"
-          ) %>%
-          jsonlite::fromJSON() %>%
-          magrittr::extract2("properties") %>%
-          magrittr::extract2("objectIds")
+          httr::content() %$%
+          properties %$%
+          objectIds %>%
+          unlist()
 
         if (is.null(ids) || !length(ids)) {
           return(NULL)

@@ -1,10 +1,10 @@
 #' Download and crop the 1-km DAYMET v4 daily weather dataset.
 #'
-#' \code{get_daymet} returns a \code{RasterBrick} of weather data cropped to a given
+#' \code{get_daymet} returns a [`SpatRaster`][terra::SpatRaster] of weather data cropped to a given
 #' template study area.
 #'
-#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
-#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping.
+#' @param template An [`Simple Feature`][sf::sf]
+#' or [`SpatRaster`][terra::SpatRaster] object to serve as a template for cropping.
 #' @param label A character string naming the study area.
 #' @param elements A character vector of elements to extract.\cr
 #' The available elements are:\cr
@@ -26,11 +26,11 @@
 #' ann = Annual summary data\cr
 #' @param extraction.dir A character string indicating where the extracted and cropped DEM should be put.
 #' Defaults to a temporary directory.
-#' @param raster.options a vector of options for raster::writeRaster.
+#' @param raster.options a vector of GDAL options passed to [terra::writeRaster].
 #' @param force.redo If an extraction for this template and label already exists in extraction.dir,
 #' should a new one be created?
 #' @param progress Draw a progress bar when downloading?
-#' @return A named list of \code{RasterBrick}s of weather data cropped to the extent of the template.
+#' @return A named list of `SpatRaster`s of weather data cropped to the extent of the template.
 #' @importFrom magrittr %>% %$% %<>% %T>%
 #' @export
 #' @examples
@@ -45,7 +45,7 @@
 #'   years = 1980:1985
 #' )
 #'
-#' # Plot with raster::plot
+#' # Plot with terra::plot
 #' plot(DAYMET$tmin$X1985.10.23)
 #' }
 get_daymet <- function(template,
@@ -62,11 +62,13 @@ get_daymet <- function(template,
                        years = 1980:(lubridate::year(Sys.time()) - 1),
                        region = "na",
                        tempo = "day",
-                       extraction.dir =
-                         paste0(
-                           tempdir(), "/FedData/extractions/daymet/",
-                           label, "/"
-                         ),
+                       extraction.dir = file.path(
+                         tempdir(),
+                         "FedData",
+                         "extractions",
+                         "daymet",
+                         label
+                       ),
                        raster.options = c(
                          "COMPRESS=DEFLATE",
                          "ZLEVEL=9",
@@ -157,8 +159,7 @@ get_daymet <- function(template,
     out.files %>%
       purrr::map(function(x) {
         x %>%
-          raster::brick() %>%
-          raster::readAll()
+          terra::rast()
       }) %>%
       magrittr::set_names(elements)
   }
@@ -188,24 +189,26 @@ get_daymet <- function(template,
             tempo = tempo
           )
         }) %>%
-        raster::stack()
+        terra::rast()
     }) %>%
     purrr::map(function(x) {
       t_bb <-
         template_bbox %>%
         sf::st_as_sfc() %>%
         sf::st_transform(
-          raster::projection(x)
+          terra::crs(x)
         ) %>%
         sf::st_as_sf()
 
       x %>%
-        raster::crop(t_bb, snap = "out")
+        terra::crop(t_bb, snap = "out")
     })
 
   out %>%
     purrr::iwalk(function(x, i) {
-      terra::rast(x) %>%
+      x %>%
+        magrittr::set_names(terra::time(x)) %T>%
+        terra::set.values() %>%
         terra::writeRaster(
           filename = paste0(extraction.dir, "/", label, "_", i, "_", tempo, ".tif"),
           gdal = raster.options,
@@ -213,7 +216,14 @@ get_daymet <- function(template,
         )
     })
 
-  return(out)
+  return(
+    out.files %>%
+      purrr::map(function(x) {
+        x %>%
+          terra::rast()
+      }) %>%
+      magrittr::set_names(elements)
+  )
 }
 
 #' Download the 1-km DAYMET daily weather dataset for a region as a netcdf.
@@ -329,18 +339,6 @@ download_daymet_thredds <-
         ServiceExceptionReport$ServiceException[[1]])
     }
 
-    suppressWarnings(
-      out <-
-        tf %>%
-        raster::stack()
-    )
-
-    raster::projection(out) <-
-      "+proj=lcc +lat_1=25 +lat_2=60 +lat_0=42.5 +lon_0=-100 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs"
-
-    out %<>%
-      raster::setExtent((sf::st_bbox(out) * 1000)[c("xmin", "xmax", "ymin", "ymax")])
-
-    out %>%
-      raster::readAll()
+    tf %>%
+      terra::rast()
   }

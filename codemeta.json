@@ -8,13 +8,13 @@
   "codeRepository": "https://github.com/ropensci/FedData",
   "issueTracker": "https://github.com/ropensci/FedData/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "3.0.4.9000",
+  "version": "4.0.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.3.0 (2023-04-21)",
+  "runtimePlatform": "R version 4.3.1 (2023-06-16)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -229,18 +229,6 @@
     },
     "4": {
       "@type": "SoftwareApplication",
-      "identifier": "data.table",
-      "name": "data.table",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=data.table"
-    },
-    "5": {
-      "@type": "SoftwareApplication",
       "identifier": "dplyr",
       "name": "dplyr",
       "provider": {
@@ -251,7 +239,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=dplyr"
     },
-    "6": {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "tibble",
       "name": "tibble",
@@ -263,7 +251,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tibble"
     },
-    "7": {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "tidyr",
       "name": "tidyr",
@@ -275,7 +263,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyr"
     },
-    "8": {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "stringr",
       "name": "stringr",
@@ -287,7 +275,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=stringr"
     },
-    "9": {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "igraph",
       "name": "igraph",
@@ -299,7 +287,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=igraph"
     },
-    "10": {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "jsonlite",
       "name": "jsonlite",
@@ -311,7 +299,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=jsonlite"
     },
-    "11": {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "xml2",
       "name": "xml2",
@@ -323,7 +311,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=xml2"
     },
-    "12": {
+    "11": {
       "@type": "SoftwareApplication",
       "identifier": "lifecycle",
       "name": "lifecycle",
@@ -335,7 +323,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=lifecycle"
     },
-    "13": {
+    "12": {
       "@type": "SoftwareApplication",
       "identifier": "lubridate",
       "name": "lubridate",
@@ -347,7 +335,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=lubridate"
     },
-    "14": {
+    "13": {
       "@type": "SoftwareApplication",
       "identifier": "magrittr",
       "name": "magrittr",
@@ -359,12 +347,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=magrittr"
     },
-    "15": {
+    "14": {
       "@type": "SoftwareApplication",
       "identifier": "methods",
       "name": "methods"
     },
-    "16": {
+    "15": {
       "@type": "SoftwareApplication",
       "identifier": "progress",
       "name": "progress",
@@ -376,7 +364,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=progress"
     },
-    "17": {
+    "16": {
       "@type": "SoftwareApplication",
       "identifier": "purrr",
       "name": "purrr",
@@ -388,7 +376,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=purrr"
     },
-    "18": {
+    "17": {
       "@type": "SoftwareApplication",
       "identifier": "readr",
       "name": "readr",
@@ -400,7 +388,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=readr"
     },
-    "19": {
+    "18": {
       "@type": "SoftwareApplication",
       "identifier": "terra",
       "name": "terra",
@@ -413,20 +401,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=terra"
     },
-    "20": {
-      "@type": "SoftwareApplication",
-      "identifier": "raster",
-      "name": "raster",
-      "version": ">= 3.6.3",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=raster"
-    },
-    "21": {
+    "19": {
       "@type": "SoftwareApplication",
       "identifier": "sf",
       "name": "sf",
@@ -439,21 +414,9 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=sf"
     },
-    "22": {
-      "@type": "SoftwareApplication",
-      "identifier": "sp",
-      "name": "sp",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=sp"
-    },
     "SystemRequirements": "GDAL (>= 3.0.0)"
   },
-  "fileSize": "1395.76KB",
+  "fileSize": "1365.403KB",
   "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/master/README.md",
   "contIntegration": ["https://github.com/ropensci/FedData/actions/workflows/check-standard.yaml", "https://app.codecov.io/gh/ropensci/FedData?branch=master"],

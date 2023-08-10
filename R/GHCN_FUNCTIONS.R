@@ -690,30 +690,27 @@ get_ghcn_inventory <- function(template = NULL, elements = NULL, raw.dir) {
 #' @export
 #' @keywords internal
 station_to_data_frame <- function(station.data) {
-  data.list <- lapply(1:length(station.data), function(i) {
-    X <- station.data[[i]]
-
-    # Get just the climate info
-    annual.records <- as.matrix(X[, 4:34])
-
-    # Get the number of days per month in the records
-    n.days <- lubridate::days_in_month(as.Date(paste(X$YEAR, X$MONTH, "01", sep = "-")))
-
-    ## Unnwrap each row, accounting for number of days in the month
-    annual.records.unwrapped <- unwrap_rows(annual.records, n.days)
-
-    dates <- as.Date(unlist(mapply(FUN = function(days, dates) {
-      paste(dates, days, sep = "-")
-    }, sapply(n.days, function(x) {
-      1:x
-    }), paste(X$YEAR, X$MONTH, sep = "-"))))
-
-    annual.records.unwrapped <- data.table::data.table(dates, annual.records.unwrapped)
-    names(annual.records.unwrapped) <- c("DATE", names(station.data)[i])
-    data.table::setkey(annual.records.unwrapped, "DATE")
-
-    return(annual.records.unwrapped)
-  })
-
-  return(Reduce(function(x, y) merge(x, y, all = TRUE), data.list))
+  station.data %>%
+    dplyr::bind_rows(.id = "ELEMENT") %>%
+    dplyr::mutate(ELEMENT = factor(ELEMENT,
+      levels = names(station.data),
+      ordered = TRUE
+    )) %>%
+    tidyr::pivot_longer(
+      !c(
+        ELEMENT,
+        STATION,
+        YEAR,
+        MONTH
+      ),
+      names_to = "DAY"
+    ) %>%
+    na.omit() %>%
+    dplyr::mutate(DATE = lubridate::as_date(paste0(YEAR, MONTH, stringr::str_remove(DAY, "D")))) %>%
+    dplyr::select(STATION, DATE, ELEMENT, value) %>%
+    tidyr::pivot_wider(
+      names_from = "ELEMENT",
+      values_from = "value"
+    ) %>%
+    dplyr::select(!STATION)
 }

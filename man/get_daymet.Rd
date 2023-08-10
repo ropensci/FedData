@@ -11,15 +11,15 @@ get_daymet(
   years = 1980:(lubridate::year(Sys.time()) - 1),
   region = "na",
   tempo = "day",
-  extraction.dir = paste0(tempdir(), "/FedData/extractions/daymet/", label, "/"),
+  extraction.dir = file.path(tempdir(), "FedData", "extractions", "daymet", label),
   raster.options = c("COMPRESS=DEFLATE", "ZLEVEL=9", "INTERLEAVE=BAND"),
   force.redo = FALSE,
   progress = TRUE
 )
 }
 \arguments{
-\item{template}{An \code{\link[sf:sf]{sf}}, \code{\link[sp:Spatial-class]{Spatial*}},
-or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping.}
+\item{template}{An \code{\link[sf:sf]{Simple Feature}}
+or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.}
 
 \item{label}{A character string naming the study area.}
 
@@ -48,7 +48,7 @@ ann = Annual summary data\cr}
 \item{extraction.dir}{A character string indicating where the extracted and cropped DEM should be put.
 Defaults to a temporary directory.}
 
-\item{raster.options}{a vector of options for raster::writeRaster.}
+\item{raster.options}{a vector of GDAL options passed to \link[terra:writeRaster]{terra::writeRaster}.}
 
 \item{force.redo}{If an extraction for this template and label already exists in extraction.dir,
 should a new one be created?}
@@ -56,10 +56,10 @@ should a new one be created?}
 \item{progress}{Draw a progress bar when downloading?}
 }
 \value{
-A named list of \code{RasterBrick}s of weather data cropped to the extent of the template.
+A named list of \code{SpatRaster}s of weather data cropped to the extent of the template.
 }
 \description{
-\code{get_daymet} returns a \code{RasterBrick} of weather data cropped to a given
+\code{get_daymet} returns a \code{\link[terra:SpatRaster-class]{SpatRaster}} of weather data cropped to a given
 template study area.
 }
 \examples{
@@ -74,7 +74,7 @@ DAYMET <- get_daymet(
   years = 1980:1985
 )
 
-# Plot with raster::plot
+# Plot with terra::plot
 plot(DAYMET$tmin$X1985.10.23)
 }
 }

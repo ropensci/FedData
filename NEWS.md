@@ -1,10 +1,12 @@
 # FedData (development version)
+
+# FedData 4.0.0
 -   Updated the [README](README.md) and moved examples to a [vignette]()
 -   Added the [PAD-US dataset](https://www.usgs.gov/programs/gap-analysis-project/science/pad-us-data-overview)
 in response to [Issue #100](https://github.com/ropensci/FedData/issues/100).
 -   Updated `get_nlcd()` to fix bug [Issue #101](https://github.com/ropensci/FedData/issues/101) in tree canopy data, whose URL changed.
 -   Updated `get_ghcn_daily()` to respond to slightly different file formatting on https server [Issue #99](https://github.com/ropensci/FedData/issues/99).
--   Updated `get_ned()` to return a RasterLayer.
+-   Removed dependencies on `sp` and `raster`. All functions now return either `sf` or `terra` objects.
 
 
 # FedData 3.0.4

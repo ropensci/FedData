@@ -74,7 +74,7 @@ A named list containing the 'metadata', 'widths', and 'depths' data.
 \description{
 \code{get_itrdb} returns a named list of length 3:
 \enumerate{
-\item 'metadata': A data.table or \code{SpatialPointsDataFrame} (if \code{makeSpatial==TRUE}) of the locations
+\item 'metadata': A data frame or \code{SpatialPointsDataFrame} (if \code{makeSpatial==TRUE}) of the locations
 and names of extracted ITRDB chronologies,
 \item 'widths': A matrix of tree-ring widths/densities given user selection, and
 \item 'depths': A matrix of tree-ring sample depths.

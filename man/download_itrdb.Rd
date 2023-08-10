@@ -16,7 +16,7 @@ The directory will be created if missing. Defaults to './RAW/ITRDB/'.}
 \item{force.redo}{If a download already exists, should a new one be created? Defaults to FALSE.}
 }
 \value{
-A data.table containing all of the ITRDB data.
+A data frame containing all of the ITRDB data.
 }
 \description{
 Downloads and parses the latest zipped (numbered) version of the ITRDB.

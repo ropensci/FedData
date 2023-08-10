@@ -1,12 +1,12 @@
 #' Download and crop the National Land Cover Database.
 #'
-#' \code{get_nlcd} returns a \code{RasterLayer} of NLCD data cropped to a given
+#' \code{get_nlcd} returns a [`SpatRaster`][terra::SpatRaster] of NLCD data cropped to a given
 #' template study area. \code{nlcd_colors} and \code{pal_nlcd} return the NLCD
 #' legend and color palette, as available through the
 #' [MLRC website](https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend).
 #'
-#' @param template An [`Simple Feature`][sf::sf], [`Spatial*`][sp::Spatial],
-#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping.
+#' @param template An [`Simple Feature`][sf::sf]
+#' or [`terra`][terra::SpatRaster] object to serve as a template for cropping.
 #' @param label A character string naming the study area.
 #' @param year An integer representing the year of desired NLCD product.
 #' Acceptable values are 2019 (default), 2016, 2011, 2008, 2006, 2004, and 2001.
@@ -19,7 +19,7 @@
 #' 'PR' (Puerto Rico, 2001 only).
 #' @param extraction.dir A character string indicating where the extracted
 #' and cropped NLCD data should be put. The directory will be created if missing.
-#' @param raster.options a vector of options for terra::writeRaster.
+#' @param raster.options a vector of GDAL options passed to [terra::writeRaster].
 #' @param force.redo If an extraction for this template and label already exists,
 #' should a new one be created?
 #' @return A \code{RasterLayer} cropped to the bounding box of the template.
@@ -44,11 +44,14 @@
 get_nlcd <- function(template,
                      label,
                      year = 2019,
-                     dataset = c("landcover", "impervious", "canopy"),
+                     dataset = "landcover",
                      landmass = "L48",
-                     extraction.dir = paste0(
+                     extraction.dir = file.path(
                        tempdir(),
-                       "/FedData/"
+                       "FedData",
+                       "extractions",
+                       "nlcd",
+                       label
                      ),
                      raster.options = c(
                        "COMPRESS=DEFLATE",
@@ -73,7 +76,7 @@ get_nlcd <- function(template,
     paste0(extraction.dir, "/", label, "_NLCD_", dataset, "_", year, ".tif")
 
   if (file.exists(outfile) & !force.redo) {
-    return(raster::raster(outfile))
+    return(terra::rast(outfile))
   }
 
   src <- "wcs"
@@ -182,20 +185,17 @@ get_nlcd <- function(template,
   if (dataset == "Land_Cover") {
     out <-
       outfile %>%
-      raster::raster() %>%
-      raster::readAll() %>%
-      raster::as.factor()
-
-    raster::colortable(out) <- nlcd$Color
-
-    suppressWarnings(
-      levels(out) <-
-        nlcd %>%
-        as.data.frame()
-    )
-
-    out %>%
       terra::rast() %>%
+      terra::as.factor()
+
+    # raster::colortable(out) <- nlcd$Color
+
+    levels(out) <-
+      nlcd %>%
+      as.data.frame()
+
+    out %T>%
+      terra::set.values() %>%
       terra::writeRaster(outfile,
         datatype = "INT1U",
         gdal = raster.options,
@@ -203,7 +203,7 @@ get_nlcd <- function(template,
       )
   }
 
-  return(raster::raster(outfile))
+  return(terra::rast(outfile))
 }
 
 #' @export

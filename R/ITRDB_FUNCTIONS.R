@@ -2,7 +2,7 @@
 #'
 #' \code{get_itrdb} returns a named list of length 3:
 #' \enumerate{
-#' \item 'metadata': A data.table or \code{SpatialPointsDataFrame} (if \code{makeSpatial==TRUE}) of the locations
+#' \item 'metadata': A data frame or \code{SpatialPointsDataFrame} (if \code{makeSpatial==TRUE}) of the locations
 #' and names of extracted ITRDB chronologies,
 #' \item 'widths': A matrix of tree-ring widths/densities given user selection, and
 #' \item 'depths': A matrix of tree-ring sample depths.
@@ -48,7 +48,6 @@
 #' @param force.redo If an extraction already exists, should a new one be created? Defaults to FALSE.
 #' @return A named list containing the 'metadata', 'widths', and 'depths' data.
 #' @export
-#' @importFrom data.table :=
 #' @importFrom sf st_as_sf st_transform st_intersection
 #' @examples
 #' \dontrun{
@@ -205,7 +204,7 @@ get_itrdb <- function(template = NULL,
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing. Defaults to './RAW/ITRDB/'.
 #' @param force.redo If a download already exists, should a new one be created? Defaults to FALSE.
-#' @return A data.table containing all of the ITRDB data.
+#' @return A data frame containing all of the ITRDB data.
 #' @export
 #' @keywords internal
 download_itrdb <- function(raw.dir = paste0(tempdir(), "/FedData/raw/itrdb"), force.redo = FALSE) {
@@ -276,22 +275,23 @@ download_itrdb <- function(raw.dir = paste0(tempdir(), "/FedData/raw/itrdb"), fo
     ## Nulling out to appease R CMD CHECK
     LAT <- LON <- START <- END <- data <- NULL
 
-    itrdb.metadata <- data.table::rbindlist(lapply(all.data, "[[", "meta"))
-    itrdb.data <- lapply(all.data, "[[", "data")
-    itrdb.metadata[, `:=`(data, itrdb.data)]
-
-    # Change latitude and longitude to numeric
-    itrdb.metadata[, `:=`(LAT, as.numeric(as.character(LAT)))]
-    itrdb.metadata[, `:=`(LON, as.numeric(as.character(LON)))]
-
-    # remove records with unknown locations
-    itrdb.metadata <- itrdb.metadata[!is.na(LAT) & !is.na(LON), ]
-
-    # or unknown years
-    itrdb.metadata <- itrdb.metadata[!is.na(START) & !is.na(END), ]
-
-    # or nonsense years (There are ~50 weird ones)
-    itrdb.metadata <- itrdb.metadata[START <= as.numeric(format(Sys.time(), "%Y")) & END <= as.numeric(format(Sys.time(), "%Y"))]
+    itrdb.metadata <-
+      all.data %>%
+      purrr::map(`[[`, "meta") %>%
+      # purrr::map(tibble::as_tibble) %>%
+      purrr::map_dfr(~ dplyr::mutate(.x, dplyr::across(dplyr::everything(), as.character))) %>%
+      tibble::as_tibble() %>%
+      readr::type_convert() %>%
+      dplyr::mutate(data = lapply(all.data, "[[", "data")) %>%
+      # remove records with unknown locations and unknown years
+      dplyr::filter(
+        !is.na(LAT),
+        !is.na(LON),
+        !is.na(START),
+        !is.na(END),
+        START <= as.numeric(format(Sys.time(), "%Y")),
+        END <= as.numeric(format(Sys.time(), "%Y"))
+      )
 
     readr::write_rds(itrdb.metadata, paste(raw.dir, "/ITRDB_", version, ".Rds", sep = ""))
   }
@@ -785,8 +785,6 @@ read_crn_data <- function(file, SCHWEINGRUBER) {
 
     seq.series <- seq_len(nseries)
     crn.mat[, "WIDTH"] <- crn.mat[, "WIDTH"] / 1000
-    # dt.widths <- data.table::data.table(t(crn.mat[,'WIDTH',drop=F])) dt.depths <-
-    # data.table::data.table(t(crn.mat[,'DEPTH',drop=F])) output <- list(WIDTH=dt.widths,DEPTH=dt.depths)
 
     return(data.frame(crn.mat))
   } else {
@@ -866,8 +864,6 @@ read_crn_data <- function(file, SCHWEINGRUBER) {
 
       seq.series <- seq_len(nseries)
       crn.mat[, "WIDTH"] <- crn.mat[, "WIDTH"] / 1000
-      # dt.widths <- data.table::data.table(t(crn.mat[,'WIDTH',drop=F])) dt.depths <-
-      # data.table::data.table(t(crn.mat[,'DEPTH',drop=F])) output <- list(WIDTH=dt.widths,DEPTH=dt.depths)
       return(data.frame(crn.mat))
     })
 

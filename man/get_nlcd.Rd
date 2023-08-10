@@ -10,9 +10,9 @@ get_nlcd(
   template,
   label,
   year = 2019,
-  dataset = c("landcover", "impervious", "canopy"),
+  dataset = "landcover",
   landmass = "L48",
-  extraction.dir = paste0(tempdir(), "/FedData/"),
+  extraction.dir = file.path(tempdir(), "FedData", "extractions", "nlcd", label),
   raster.options = c("COMPRESS=DEFLATE", "ZLEVEL=9"),
   force.redo = FALSE
 )
@@ -22,8 +22,8 @@ nlcd_colors()
 pal_nlcd()
 }
 \arguments{
-\item{template}{An \code{\link[sf:sf]{Simple Feature}}, \code{\link[sp:Spatial-class]{Spatial*}},
-or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping.}
+\item{template}{An \code{\link[sf:sf]{Simple Feature}}
+or \code{\link[terra:SpatRaster-class]{terra}} object to serve as a template for cropping.}
 
 \item{label}{A character string naming the study area.}
 
@@ -42,7 +42,7 @@ Acceptable values are 'L48' (lower 48 US states, the default),
 \item{extraction.dir}{A character string indicating where the extracted
 and cropped NLCD data should be put. The directory will be created if missing.}
 
-\item{raster.options}{a vector of options for terra::writeRaster.}
+\item{raster.options}{a vector of GDAL options passed to \link[terra:writeRaster]{terra::writeRaster}.}
 
 \item{force.redo}{If an extraction for this template and label already exists,
 should a new one be created?}
@@ -51,7 +51,7 @@ should a new one be created?}
 A \code{RasterLayer} cropped to the bounding box of the template.
 }
 \description{
-\code{get_nlcd} returns a \code{RasterLayer} of NLCD data cropped to a given
+\code{get_nlcd} returns a \code{\link[terra:SpatRaster-class]{SpatRaster}} of NLCD data cropped to a given
 template study area. \code{nlcd_colors} and \code{pal_nlcd} return the NLCD
 legend and color palette, as available through the
 \href{https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend}{MLRC website}.
