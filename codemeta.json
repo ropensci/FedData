@@ -289,18 +289,6 @@
     },
     "9": {
       "@type": "SoftwareApplication",
-      "identifier": "jsonlite",
-      "name": "jsonlite",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=jsonlite"
-    },
-    "10": {
-      "@type": "SoftwareApplication",
       "identifier": "xml2",
       "name": "xml2",
       "provider": {
@@ -311,7 +299,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=xml2"
     },
-    "11": {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "lifecycle",
       "name": "lifecycle",
@@ -323,7 +311,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=lifecycle"
     },
-    "12": {
+    "11": {
       "@type": "SoftwareApplication",
       "identifier": "lubridate",
       "name": "lubridate",
@@ -335,7 +323,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=lubridate"
     },
-    "13": {
+    "12": {
       "@type": "SoftwareApplication",
       "identifier": "magrittr",
       "name": "magrittr",
@@ -347,12 +335,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=magrittr"
     },
-    "14": {
+    "13": {
       "@type": "SoftwareApplication",
       "identifier": "methods",
       "name": "methods"
     },
-    "15": {
+    "14": {
       "@type": "SoftwareApplication",
       "identifier": "progress",
       "name": "progress",
@@ -364,7 +352,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=progress"
     },
-    "16": {
+    "15": {
       "@type": "SoftwareApplication",
       "identifier": "purrr",
       "name": "purrr",
@@ -376,7 +364,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=purrr"
     },
-    "17": {
+    "16": {
       "@type": "SoftwareApplication",
       "identifier": "readr",
       "name": "readr",
@@ -388,7 +376,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=readr"
     },
-    "18": {
+    "17": {
       "@type": "SoftwareApplication",
       "identifier": "terra",
       "name": "terra",
@@ -401,7 +389,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=terra"
     },
-    "19": {
+    "18": {
       "@type": "SoftwareApplication",
       "identifier": "sf",
       "name": "sf",
@@ -416,7 +404,7 @@
     },
     "SystemRequirements": "GDAL (>= 3.0.0)"
   },
-  "fileSize": "1365.403KB",
+  "fileSize": "1365.033KB",
   "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/master/README.md",
   "contIntegration": ["https://github.com/ropensci/FedData/actions/workflows/check-standard.yaml", "https://app.codecov.io/gh/ropensci/FedData?branch=master"],

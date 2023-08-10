@@ -50,7 +50,6 @@ Imports:
     tidyr,
     stringr,
     igraph,
-    jsonlite,
     xml2,
     lifecycle,
     lubridate,
