@@ -63,7 +63,13 @@ get_nlcd <- function(template,
 
   template %<>% template_to_sf()
 
-  dataset <- match.arg(dataset)
+  dataset <- match.arg(dataset,
+    choices = c(
+      "landcover",
+      "impervious",
+      "canopy"
+    )
+  )
   dataset <- switch(dataset,
     landcover = "Land_Cover",
     impervious = "Impervious",

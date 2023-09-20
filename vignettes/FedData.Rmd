@@ -273,6 +273,27 @@ NLCD <- get_nlcd(
 )
 
 plot(NLCD)
+
+# Also get the impervious or canopy datasets
+NLCD_impervious <-
+  get_nlcd(
+    template = FedData::meve,
+    year = 2011,
+    label = "meve",
+    dataset = "impervious"
+  )
+
+plot(NLCD_impervious)
+
+NLCD_canopy <-
+  get_nlcd(
+    template = FedData::meve,
+    year = 2011,
+    label = "meve",
+    dataset = "canopy"
+  )
+
+plot(NLCD_canopy)
 ```
 
 ### USDA NASS Cropland Data Layer
