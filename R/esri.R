@@ -61,7 +61,7 @@ esri_query <-
 
         ids <-
           httr::POST(
-            url = paste0(url, x, "/query"),
+            url = file.path(url, x, "query"),
             body = c(query,
               returnIdsOnly = TRUE
             )
@@ -79,7 +79,7 @@ esri_query <-
         ids %>%
           purrr::map_dfr(function(i) {
             httr::POST(
-              url = paste0(url, x, "/query"),
+              url = file.path(url, x, "query"),
               body = list(
                 where = "1=1",
                 outFields = "*",
@@ -151,7 +151,7 @@ esri_feature_query <-
 
         ids <-
           httr::POST(
-            url = paste0(url, x, "/query"),
+            url = file.path(url, x, "query"),
             body = c(query,
               returnIdsOnly = TRUE
             )
@@ -174,7 +174,7 @@ esri_feature_query <-
         ids %>%
           purrr::map_dfr(function(i) {
             httr::POST(
-              url = paste0(url, x, "/query"),
+              url = file.path(url, x, "query"),
               body = list(
                 where = "1=1",
                 outFields = "*",
