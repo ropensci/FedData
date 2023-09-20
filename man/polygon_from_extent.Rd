@@ -7,13 +7,12 @@
 polygon_from_extent(x, proj4string = NULL)
 }
 \arguments{
-\item{x}{An \code{\link{extent}} object, or an object from which an extent object can be retrieved.}
+\item{x}{An object from which an bounding box object can be retrieved.}
 
-\item{proj4string}{A PROJ.4 formatted string defining the required projection. If NULL,
-the function will attempt to get the projection from x using \code{\link{projection}}}
+\item{proj4string}{A PROJ.4 formatted string defining the required projection.}
 }
 \value{
-A SpatialPolygons object.
+A \code{\link[sf:sf]{Simple Feature}} object.
 }
 \description{
 Turn an extent object into a polygon

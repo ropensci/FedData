@@ -13,8 +13,8 @@ get_padus(
 )
 }
 \arguments{
-\item{template}{An \code{\link[sf:sf]{sf}}, \code{\link[sp:Spatial-class]{Spatial*}},
-or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping.
+\item{template}{An \code{\link[sf:sf]{Simple Feature}}
+or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.
 Optionally, a vector of unit names, e.g., \code{c('Mesa Verde National Park','Ute Mountain Reservation')} may be provided.}
 
 \item{label}{A character string naming the study area.}

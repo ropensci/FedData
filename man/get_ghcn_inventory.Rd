@@ -7,8 +7,8 @@
 get_ghcn_inventory(template = NULL, elements = NULL, raw.dir)
 }
 \arguments{
-\item{template}{An \code{\link[sf:sf]{sf}}, \code{\link[sp:Spatial-class]{Spatial*}},
-or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping.}
+\item{template}{An \code{\link[sf:sf]{Simple Feature}}
+or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.}
 
 \item{elements}{A character vector of elements to extract.
 Common elements include 'tmin', 'tmax', and 'prcp'.}
@@ -17,7 +17,7 @@ Common elements include 'tmin', 'tmax', and 'prcp'.}
 The directory will be created if missing.}
 }
 \value{
-A \code{SpatialPolygonsDataFrame} of the GHCN stations within
+A \code{\link[sf:sf]{Simple Feature}} of the GHCN stations within
 the specified \code{template}
 }
 \description{

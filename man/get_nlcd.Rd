@@ -69,7 +69,7 @@ NLCD <-
     year = 2016
   )
 
-# Plot with raster::plot
+# Plot with terra::plot
 plot(NLCD)
 }
 }

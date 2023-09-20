@@ -7,8 +7,8 @@
 get_ssurgo_study_area(template = NULL, area, date, raw.dir)
 }
 \arguments{
-\item{template}{An \code{\link[sf:sf]{sf}}, \code{\link[sp:Spatial-class]{Spatial*}},
-or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping.
+\item{template}{An \code{\link[sf:sf]{Simple Feature}}
+or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.
 If missing, whose study area is returned}
 
 \item{area}{A character string indicating the SSURGO study area to be downloaded.}
@@ -26,7 +26,7 @@ the specified \code{template}.
 \description{
 \code{get_ssurgo_study_area} returns a named list of length 2:
 \enumerate{
-\item 'spatial': A \code{SpatialPolygonsDataFrame} of soil mapunits
+\item 'spatial': A \code{\link[sf:sf]{Simple Feature}} of soil mapunits
 in the template, and
 \item 'tabular': A named list of \code{\link{data.frame}s} with the SSURGO tabular data.
 }

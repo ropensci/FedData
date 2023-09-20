@@ -5,13 +5,13 @@
 #'
 #' \code{get_ssurgo} returns a named list of length 2:
 #' \enumerate{
-#' \item 'spatial': A \code{SpatialPolygonsDataFrame} of soil mapunits
+#' \item 'spatial': A [`Simple Feature`][sf::sf] of soil mapunits
 #' in the template, and
 #' \item 'tabular': A named list of \code{\link{data.frame}s} with the SSURGO tabular data.
 #' }
 #'
-#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
-#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping.
+#' @param template An [`Simple Feature`][sf::sf]
+#' or [`SpatRaster`][terra::SpatRaster] object to serve as a template for cropping.
 #' Optionally, a vector of area names, e.g., `c('IN087','IN088')` may be provided.
 #' @param label A character string naming the study area.
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
@@ -21,7 +21,6 @@
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created? Defaults to FALSE.
 #' @return A named list containing the 'spatial' and 'tabular' data.
 #' @export
-#' @importFrom sp SpatialPointsDataFrame %over%
 #' @importFrom readr read_csv write_csv
 #' @examples
 #' \dontrun{
@@ -210,8 +209,8 @@ download_ssurgo_inventory <- function(raw.dir, ...) {
 #' \code{get_ssurgo_inventory} returns a \code{SpatialPolygonsDataFrame} of the SSURGO study areas within
 #' the specified \code{template}. If template is not provided, returns the entire SSURGO inventory of study areas.
 #'
-#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
-#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping.
+#' @param template An [`Simple Feature`][sf::sf]
+#' or [`SpatRaster`][terra::SpatRaster] object to serve as a template for cropping.
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing.
 #' @return A \code{SpatialPolygonsDataFrame} of the SSURGO study areas within
@@ -243,16 +242,6 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
     # Only download 1 square degree at a time to avoid oversized AOI error
     if ((sf::st_bbox(template)[["xmax"]] - sf::st_bbox(template)[["xmin"]]) > 1 |
       (sf::st_bbox(template)[["ymax"]] - sf::st_bbox(template)[["ymin"]]) > 1) {
-      grid <- sp::GridTopology(
-        cellcentre.offset = c(-179.5, -89.5),
-        cellsize = c(1, 1),
-        cells.dim = c(360, 180)
-      ) %>%
-        # sp::SpatialGrid(proj4string=CRS("+proj=longlat +datum=WGS84")) %>%
-        methods::as("SpatialPolygons") %>%
-        sf::st_as_sfc() %>%
-        sf::st_set_crs(4326)
-
       bounds %<>%
         sf::st_intersection(grid)
     }
@@ -368,13 +357,13 @@ download_ssurgo_study_area <- function(area, date, raw.dir) {
 #'
 #' \code{get_ssurgo_study_area} returns a named list of length 2:
 #' \enumerate{
-#' \item 'spatial': A \code{SpatialPolygonsDataFrame} of soil mapunits
+#' \item 'spatial': A [`Simple Feature`][sf::sf] of soil mapunits
 #' in the template, and
 #' \item 'tabular': A named list of \code{\link{data.frame}s} with the SSURGO tabular data.
 #' }
 #'
-#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
-#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping.
+#' @param template An [`Simple Feature`][sf::sf]
+#' or [`SpatRaster`][terra::SpatRaster] object to serve as a template for cropping.
 #' If missing, whose study area is returned
 #' @param area A character string indicating the SSURGO study area to be downloaded.
 #' @param date A character string indicating the date of the most recent update to the SSURGO

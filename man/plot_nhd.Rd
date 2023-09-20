@@ -9,8 +9,8 @@ plot_nhd(x, template = NULL)
 \arguments{
 \item{x}{The result of \link{get_nhd}.}
 
-\item{template}{An \code{\link[sf:sf]{sf}}, \code{\link[sp:Spatial-class]{Spatial*}},
-or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping.}
+\item{template}{An \code{\link[sf:sf]{Simple Feature}}
+or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.}
 }
 \value{
 A \code{ggplot2} panel of plots

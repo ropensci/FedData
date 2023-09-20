@@ -1,6 +1,6 @@
 #' Download and crop the PAD-US Dataset.
 #'
-#' \code{get_padus} returns a list of `sf` objects extracted
+#' `get_padus` returns a list of `sf` objects extracted
 #' from the PAD-US Dataset. Data are retrieved directly from
 #' [PAD-US ArcGIS Web Services](https://www.usgs.gov/programs/gap-analysis-project/science/pad-us-web-services).
 #'
@@ -12,8 +12,8 @@
 #' directly by managing agencies, coordinated through the Federal Geographic
 #' Data Committee Federal Lands Working Group.
 #'
-#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
-#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping.
+#' @param template An [`Simple Feature`][sf::sf]
+#' or [`SpatRaster`][terra::SpatRaster] object to serve as a template for cropping.
 #' Optionally, a vector of unit names, e.g., `c('Mesa Verde National Park','Ute Mountain Reservation')` may be provided.
 #' @param label A character string naming the study area.
 #' @param layer A character vector containing one or more PAD-US Layers.

@@ -20,8 +20,9 @@ get_itrdb(
 )
 }
 \arguments{
-\item{template}{An \code{\link[sf:sf]{sf}}, \code{\link[sp:Spatial-class]{Spatial*}},
-or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping. If missing,
+\item{template}{An \code{\link[sf:sf]{Simple Feature}}
+or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.
+If missing,
 all available global chronologies are returned.}
 
 \item{label}{A character string naming the study area.}
@@ -74,7 +75,7 @@ A named list containing the 'metadata', 'widths', and 'depths' data.
 \description{
 \code{get_itrdb} returns a named list of length 3:
 \enumerate{
-\item 'metadata': A data frame or \code{SpatialPointsDataFrame} (if \code{makeSpatial==TRUE}) of the locations
+\item 'metadata': A data frame or \code{\link[sf:sf]{Simple Feature}} (if \code{makeSpatial==TRUE}) of the locations
 and names of extracted ITRDB chronologies,
 \item 'widths': A matrix of tree-ring widths/densities given user selection, and
 \item 'depths': A matrix of tree-ring sample depths.

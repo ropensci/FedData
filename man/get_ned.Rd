@@ -14,8 +14,8 @@ get_ned(
 )
 }
 \arguments{
-\item{template}{An \code{\link[sf:sf]{sf}}, \code{\link[sp:Spatial-class]{Spatial*}},
-or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping.}
+\item{template}{An \code{\link[sf:sf]{Simple Feature}}
+or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.}
 
 \item{label}{A character string naming the study area.}
 
@@ -25,24 +25,28 @@ indicates the 1 arc-second NED (the default), while '13' indicates the 1/3 arc-s
 \item{extraction.dir}{A character string indicating where the extracted and cropped DEM should be put.
 The directory will be created if missing.}
 
-\item{raster.options}{a vector of options for terra::writeRaster.}
+\item{raster.options}{a vector of GDAL options passed to \link[terra:writeRaster]{terra::writeRaster}.}
 
 \item{force.redo}{If an extraction for this template and label already exists, should a new one be created?}
 }
 \value{
-A \code{RasterLayer} DEM cropped to the extent of the template.
+A \code{SpatRaster} DEM cropped to the extent of the template.
 }
 \description{
-\code{get_ned} returns a \code{RasterLayer} of elevation data cropped to a given
+\code{get_ned} returns a \code{SpatRaster} of elevation data cropped to a given
 template study area.
 }
 \examples{
 \dontrun{
 # Get the NED (USA ONLY)
-# Returns a raster
-NED <- get_ned(template = FedData::meve, label = "meve")
+# Returns a `SpatRaster`
+NED <-
+  get_ned(
+    template = FedData::meve,
+    label = "meve"
+  )
 
-# Plot with raster::plot
+# Plot with terra::plot
 plot(NED)
 }
 }

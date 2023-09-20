@@ -85,8 +85,7 @@ meve <-
   sf::st_geometry() %>%
   sf::st_transform(4326)
 
-usethis::use_data(tablesHeaders, nass, nlcd, overwrite = TRUE, internal = TRUE)
-usethis::use_data(meve, overwrite = TRUE)
+
 
 # A test dataset of the raw NLCD
 # httr::GET(
@@ -112,3 +111,17 @@ usethis::use_data(meve, overwrite = TRUE)
 #       terra::crs(.)
 #     )
 #   )
+
+## A 1x1 degree grid
+# grid <- sp::GridTopology(
+#   cellcentre.offset = c(-179.5, -89.5),
+#   cellsize = c(1, 1),
+#   cells.dim = c(360, 180)
+# ) %>%
+#   # sp::SpatialGrid(proj4string=CRS("+proj=longlat +datum=WGS84")) %>%
+#   methods::as("SpatialPolygons") %>%
+#   sf::st_as_sfc() %>%
+#   sf::st_set_crs(4326)
+
+usethis::use_data(tablesHeaders, nass, nlcd, grid, overwrite = TRUE, internal = TRUE)
+usethis::use_data(meve, overwrite = TRUE)

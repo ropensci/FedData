@@ -38,7 +38,7 @@
 #'     year = 2016
 #'   )
 #'
-#' # Plot with raster::plot
+#' # Plot with terra::plot
 #' plot(NLCD)
 #' }
 get_nlcd <- function(template,
@@ -193,8 +193,6 @@ get_nlcd <- function(template,
       outfile %>%
       terra::rast() %>%
       terra::as.factor()
-
-    # raster::colortable(out) <- nlcd$Color
 
     levels(out) <-
       nlcd_colors() %>%

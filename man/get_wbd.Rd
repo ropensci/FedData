@@ -12,8 +12,8 @@ get_wbd(
 )
 }
 \arguments{
-\item{template}{An \code{\link[sf:sf]{sf}}, \code{\link[sp:Spatial-class]{Spatial*}},
-or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping.}
+\item{template}{An \code{\link[sf:sf]{Simple Feature}}
+or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.}
 
 \item{label}{A character string naming the study area.}
 
@@ -26,6 +26,6 @@ A  \code{sf} collection of the HUC 12 regions within
 the specified \code{template}.
 }
 \description{
-\code{get_wbd} returns an \code{sf} collection of the HUC 12 regions within
+\code{get_wbd} returns an \code{\link[sf:sf]{Simple Feature}} collection of the HUC 12 regions within
 the specified \code{template}.
 }

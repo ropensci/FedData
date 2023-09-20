@@ -1,5 +1,4 @@
 library(FedData)
-library(raster)
 context("Utility tests")
 
 test_that("substr_right returns correct strings", {

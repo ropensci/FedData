@@ -182,18 +182,6 @@
         "url": "https://cran.r-project.org"
       },
       "sameAs": "https://CRAN.R-project.org/package=leaflet"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "minidown",
-      "name": "minidown",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=minidown"
     }
   ],
   "softwareRequirements": {
@@ -337,11 +325,6 @@
     },
     "13": {
       "@type": "SoftwareApplication",
-      "identifier": "methods",
-      "name": "methods"
-    },
-    "14": {
-      "@type": "SoftwareApplication",
       "identifier": "progress",
       "name": "progress",
       "provider": {
@@ -352,7 +335,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=progress"
     },
-    "15": {
+    "14": {
       "@type": "SoftwareApplication",
       "identifier": "purrr",
       "name": "purrr",
@@ -364,7 +347,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=purrr"
     },
-    "16": {
+    "15": {
       "@type": "SoftwareApplication",
       "identifier": "readr",
       "name": "readr",
@@ -376,7 +359,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=readr"
     },
-    "17": {
+    "16": {
       "@type": "SoftwareApplication",
       "identifier": "terra",
       "name": "terra",
@@ -389,7 +372,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=terra"
     },
-    "18": {
+    "17": {
       "@type": "SoftwareApplication",
       "identifier": "sf",
       "name": "sf",
@@ -404,7 +387,7 @@
     },
     "SystemRequirements": "GDAL (>= 3.0.0)"
   },
-  "fileSize": "1364.122KB",
+  "fileSize": "1501.929KB",
   "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/master/README.md",
   "contIntegration": ["https://github.com/ropensci/FedData/actions/workflows/check-standard.yaml", "https://app.codecov.io/gh/ropensci/FedData?branch=master"],

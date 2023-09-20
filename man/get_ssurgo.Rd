@@ -13,8 +13,8 @@ get_ssurgo(
 )
 }
 \arguments{
-\item{template}{An \code{\link[sf:sf]{sf}}, \code{\link[sp:Spatial-class]{Spatial*}},
-or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping.
+\item{template}{An \code{\link[sf:sf]{Simple Feature}}
+or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.
 Optionally, a vector of area names, e.g., \code{c('IN087','IN088')} may be provided.}
 
 \item{label}{A character string naming the study area.}
@@ -37,7 +37,7 @@ as well as merging their tabular data.
 \details{
 \code{get_ssurgo} returns a named list of length 2:
 \enumerate{
-\item 'spatial': A \code{SpatialPolygonsDataFrame} of soil mapunits
+\item 'spatial': A \code{\link[sf:sf]{Simple Feature}} of soil mapunits
 in the template, and
 \item 'tabular': A named list of \code{\link{data.frame}s} with the SSURGO tabular data.
 }

@@ -6,7 +6,7 @@ editor_options:
 
 # CRAN comments
 
-This is a patch release from FedData v3.0.3 to FedData v3.0.4. Please
+This is a major release from FedData v3.0.4 to FedData v4.0.0. Please
 see NEWS.md for release details. 
 
 Please note that in recent CRAN submissions, CRAN maintainers have been 
@@ -20,7 +20,7 @@ servers outside the USA.
 
 `devtools::check()` result:
 
-**Test environment:** local MacOS Version 13.4 install, R 4.3.0 (2023-04-21)
+**Test environment:** local MacOS Version 13.5.2 install, R 4.3.1 (2023-06-16)
 
 **0 errors ✔ \| 0 warnings ✔ \| 0 notes ✔**
 

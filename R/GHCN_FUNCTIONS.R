@@ -4,14 +4,15 @@
 #'
 #' `get_ghcn_daily` returns a named list of length 2:
 #' \enumerate{
-#' \item 'spatial': A [SpatialPointsDataFrame()] of the locations of GHCN weather stations
+#' \item 'spatial': A [`Simple Feature`][sf::sf] of the locations of GHCN weather stations
 #' in the template, and
 #' \item 'tabular': A named list of type [data.frame()] with the daily weather data for each station.
 #' The name of each list item is the station ID.
 #' }
 #'
-#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
-#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping. Alternatively, a character vector providing GHCN station IDs. If missing, all stations
+#' @param template An [`Simple Feature`][sf::sf]
+#' or [`SpatRaster`][terra::SpatRaster] object to serve as a template for cropping.
+#' Alternatively, a character vector providing GHCN station IDs. If missing, all stations
 #' will be downloaded!
 #' @param label A character string naming the study area.
 #' @param elements A character vector of elements to extract.\cr
@@ -574,14 +575,14 @@ get_ghcn_daily_station <- function(ID,
 #' Stations with multiple elements will have multiple points. This allows for easy mapping of stations
 #' by element availability.
 #'
-#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
-#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping.
+#' @param template An [`Simple Feature`][sf::sf]
+#' or [`SpatRaster`][terra::SpatRaster] object to serve as a template for cropping.
 #' @param elements A character vector of elements to extract.
 #' Common elements include 'tmin', 'tmax', and 'prcp'.
 #' @param raw.dir A character string indicating where raw downloaded files should be put.
 #' The directory will be created if missing.
-#' @return A \code{SpatialPolygonsDataFrame} of the GHCN stations within
-#' the specified \code{template}
+#' @return A [`Simple Feature`][sf::sf] of the GHCN stations within
+#' the specified `template`
 #' @export
 #' @keywords internal
 get_ghcn_inventory <- function(template = NULL, elements = NULL, raw.dir) {
@@ -653,23 +654,6 @@ get_ghcn_inventory <- function(template = NULL, elements = NULL, raw.dir) {
       by = "ID"
     )
 
-
-  # # Convert to SPDF
-  # stations.sp <-
-  #   sp::SpatialPointsDataFrame(
-  #     coords = station.inventory %>%
-  #       dplyr::select_(~LONGITUDE, ~LATITUDE),
-  #     data = station.inventory %>%
-  #       dplyr::left_join(stations %>%
-  #         dplyr::select_("ID", "NAME"), by = "ID") %>%
-  #       dplyr::select_(
-  #         "ID", "NAME", "LATITUDE", "LONGITUDE",
-  #         "ELEMENT", "YEAR_START", "YEAR_END"
-  #       ) %>%
-  #       as.data.frame(),
-  #     proj4string = sp::CRS("+proj=longlat +datum=WGS84")
-  #   )
-
   if (!is.null(elements)) {
     stations.sf %<>%
       dplyr::filter(ELEMENT %in% toupper(elements))
@@ -705,7 +689,7 @@ station_to_data_frame <- function(station.data) {
       ),
       names_to = "DAY"
     ) %>%
-    na.omit() %>%
+    stats::na.omit() %>%
     dplyr::mutate(DATE = lubridate::as_date(paste0(YEAR, MONTH, stringr::str_remove(DAY, "D")))) %>%
     dplyr::select(STATION, DATE, ELEMENT, value) %>%
     tidyr::pivot_wider(

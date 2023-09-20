@@ -2,14 +2,15 @@
 #'
 #' \code{get_itrdb} returns a named list of length 3:
 #' \enumerate{
-#' \item 'metadata': A data frame or \code{SpatialPointsDataFrame} (if \code{makeSpatial==TRUE}) of the locations
+#' \item 'metadata': A data frame or [`Simple Feature`][sf::sf] (if \code{makeSpatial==TRUE}) of the locations
 #' and names of extracted ITRDB chronologies,
 #' \item 'widths': A matrix of tree-ring widths/densities given user selection, and
 #' \item 'depths': A matrix of tree-ring sample depths.
 #' }
 #'
-#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
-#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping. If missing,
+#' @param template An [`Simple Feature`][sf::sf]
+#' or [`SpatRaster`][terra::SpatRaster] object to serve as a template for cropping.
+#' If missing,
 #' all available global chronologies are returned.
 #' @param label A character string naming the study area.
 #' @param recon.years A numeric vector of years over which reconstructions are needed;

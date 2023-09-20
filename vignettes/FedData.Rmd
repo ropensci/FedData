@@ -33,6 +33,7 @@ library(terra)
 if (!require("mapview")) {
   install.packages("mapview")
 }
+
 library(mapview)
 mapviewOptions(
   basemaps = c(),
@@ -48,7 +49,7 @@ plot_map <-
   function(x, ...) {
     if (inherits(x, "SpatRaster")) {
       x %<>%
-        raster::raster()
+        as("Raster")
     }
 
     bounds <-
@@ -100,7 +101,7 @@ NED <- get_ned(
 
 plot_map(NED,
   layer.name = "NED Elevation (m)",
-  maxpixels = raster::ncell(NED)
+  maxpixels = terra::ncell(NED)
 )
 ```
 

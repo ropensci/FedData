@@ -54,7 +54,6 @@ Imports:
     lifecycle,
     lubridate,
     magrittr,
-    methods,
     progress,
     purrr,
     readr,
@@ -76,6 +75,5 @@ Suggests:
     mapview,
     knitr,
     rmarkdown,
-    leaflet,
-    minidown
+    leaflet
 VignetteBuilder: knitr

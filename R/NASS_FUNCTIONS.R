@@ -1,10 +1,10 @@
 #' Download and crop the NASS Cropland Data Layer.
 #'
-#' \code{get_nass_cdl} returns a \code{RasterLayer} of NASS Cropland Data Layer cropped to a given
+#' `get_nass_cdl` returns a [`SpatRaster`][terra::SpatRaster] of NASS Cropland Data Layer cropped to a given
 #' template study area.
 #'
-#' @param template An [`sf`][sf::sf], [`Spatial*`][sp::Spatial],
-#' or [`Raster*`][raster::Raster-classes] object to serve as a template for cropping.
+#' @param template An [`Simple Feature`][sf::sf]
+#' or [`SpatRaster`][terra::SpatRaster] object to serve as a template for cropping.
 #' @param label A character string naming the study area.
 #' @param year An integer representing the year of desired NASS Cropland Data Layer product.
 #' Acceptable values are 2007--the last year.
@@ -14,7 +14,7 @@
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created?
 #' @param progress Draw a progress bar when downloading?
 #' @param ... Other parameters passed on to [get_nass_cdl].
-#' @return A \code{RasterLayer} cropped to the bounding box of the template.
+#' @return A [`SpatRaster`][terra::SpatRaster] cropped to the bounding box of the template.
 #' @export
 #' @importFrom magrittr %>%
 #' @examples
@@ -30,7 +30,7 @@
 #'     year = 2011
 #'   )
 #'
-#' # Plot with raster::plot
+#' # Plot with terra::plot
 #' plot(NASS)
 #' }
 get_nass_cdl <- function(template,

@@ -16,8 +16,9 @@ get_ghcn_daily(
 )
 }
 \arguments{
-\item{template}{An \code{\link[sf:sf]{sf}}, \code{\link[sp:Spatial-class]{Spatial*}},
-or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping. Alternatively, a character vector providing GHCN station IDs. If missing, all stations
+\item{template}{An \code{\link[sf:sf]{Simple Feature}}
+or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.
+Alternatively, a character vector providing GHCN station IDs. If missing, all stations
 will be downloaded!}
 
 \item{label}{A character string naming the study area.}
@@ -179,7 +180,7 @@ A named list containing the 'spatial' and 'tabular' data.
 \description{
 \code{get_ghcn_daily} returns a named list of length 2:
 \enumerate{
-\item 'spatial': A \code{\link[=SpatialPointsDataFrame]{SpatialPointsDataFrame()}} of the locations of GHCN weather stations
+\item 'spatial': A \code{\link[sf:sf]{Simple Feature}} of the locations of GHCN weather stations
 in the template, and
 \item 'tabular': A named list of type \code{\link[=data.frame]{data.frame()}} with the daily weather data for each station.
 The name of each list item is the station ID.

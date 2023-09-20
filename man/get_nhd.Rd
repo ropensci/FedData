@@ -13,8 +13,8 @@ get_nhd(
 )
 }
 \arguments{
-\item{template}{An \code{\link[sf:sf]{sf}}, \code{\link[sp:Spatial-class]{Spatial*}},
-or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template for cropping.}
+\item{template}{An \code{\link[sf:sf]{Simple Feature}}
+or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.}
 
 \item{label}{A character string naming the study area.}
 
@@ -28,7 +28,7 @@ or \code{\link[raster:Raster-classes]{Raster*}} object to serve as a template fo
 A list of \code{sf} collections extracted from the National Hydrography Dataset.
 }
 \description{
-\code{get_nhd} returns a list of \code{sf} objects extracted
+\code{get_nhd} returns a list of \code{\link[sf:sf]{Simple Feature}} objects extracted
 from the National Hydrography Dataset.
 }
 \examples{
