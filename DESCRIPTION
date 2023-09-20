@@ -3,7 +3,7 @@ Package: FedData
 Title: Functions to Automate Downloading Geospatial Data Available from
     Several Federated Data Sources
 Version: 4.0.0
-Date: 2023-08-03
+Date: 2023-09-20
 Authors@R: 
     c(person(given = c("R.", "Kyle"),
              family = "Bocinsky",
@@ -59,8 +59,7 @@ Imports:
     purrr,
     readr,
     terra (>= 1.0),
-    sf (>= 1.0),
-    raster
+    sf (>= 1.0)
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
