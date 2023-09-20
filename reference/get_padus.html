@@ -19,7 +19,7 @@ PAD-US ArcGIS Web Services."><!-- mathjax --><script src="https://cdnjs.cloudfla
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FedData</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">3.0.4.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.0.0</span>
       </span>
     </div>
 
@@ -63,10 +63,7 @@ from the PAD-US Dataset. Data are retrieved directly from
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_padus</span><span class="op">(</span></span>
 <span>  <span class="va">template</span>,</span>
 <span>  <span class="va">label</span>,</span>
-<span>  layer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Protection_Status_by_GAP_Status_Code"</span>, <span class="st">"Public_Access"</span>, <span class="st">"Fee_Manager"</span>,</span>
-<span>    <span class="st">"Manager_Name"</span>, <span class="st">"Manager_Type"</span>, <span class="st">"Federal_Fee_Managers_Authoritative"</span>,</span>
-<span>    <span class="st">"Federal_Management_Agencies"</span>, <span class="st">"Protection_Mechanism_Category"</span>,</span>
-<span>    <span class="st">"Proclamation_and_Other_Planning_Boundaries"</span>, <span class="st">"Fee_Topology_Overlaps"</span><span class="op">)</span>,</span>
+<span>  layer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Manager_Name"</span><span class="op">)</span>,</span>
 <span>  extraction.dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"FedData"</span>, <span class="st">"extractions"</span>, <span class="st">"padus"</span>, <span class="va">label</span><span class="op">)</span>,</span>
 <span>  force.redo <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -86,7 +83,7 @@ Optionally, a vector of unit names, e.g., <code>c('Mesa Verde National Park','Ut
 
 <dt>layer</dt>
 <dd><p>A character vector containing one or more PAD-US Layers.
-By default, all layers are downloaded.</p><ul><li><p><strong>Protection_Status_by_GAP_Status_Code</strong>: <a href="https://usgs.maps.arcgis.com/home/item.html?id=b7a09e6c95a846fe82970c70195a2739" class="external-link">PAD-US 3.0 Protection Status by GAP Status Code</a> — Service representing a measure of management intent to permanently protect biodiversity. GAP 1&amp;2 areas are primarily managed for biodiversity, GAP 3 are managed for multiple uses including conservation and extraction, GAP 4 no known mandate for biodiversity protection. GAP Status Codes 1-3 are displayed, GAP 4 areas included but not displayed.</p></li>
+By default, the <strong>Manager_Name</strong> layer is downloaded.</p><ul><li><p><strong>Protection_Status_by_GAP_Status_Code</strong>: <a href="https://usgs.maps.arcgis.com/home/item.html?id=b7a09e6c95a846fe82970c70195a2739" class="external-link">PAD-US 3.0 Protection Status by GAP Status Code</a> — Service representing a measure of management intent to permanently protect biodiversity. GAP 1&amp;2 areas are primarily managed for biodiversity, GAP 3 are managed for multiple uses including conservation and extraction, GAP 4 no known mandate for biodiversity protection. GAP Status Codes 1-3 are displayed, GAP 4 areas included but not displayed.</p></li>
 <li><p><strong>Public_Access</strong>: <a href="https://usgs.maps.arcgis.com/home/item.html?id=3687ff551d7e4f0992f08419c2b29dd5" class="external-link">PAD-US 3.0 Public Access</a> — Service representing general level of public access permitted in the area - Open, Restricted (permit, seasonal), Closed. Public Access Unknown areas not displayed. Use to show general categories of public access (however, not all areas have been locally reviewed).</p></li>
 <li><p><strong>Fee_Manager</strong>: <a href="https://usgs.maps.arcgis.com/home/item.html?id=0739a72a622443c98253d766c5416fc5" class="external-link">PAD-US 3.0 Fee Manager</a> — Manager or administrative agency names standardized nationally. Use for categorization by manager name, with detailed federal managers and generic state/local/other managers. Where available this layer includes fee simple parcels from the Fee feature class plus DOD and Tribal areas from the Proclamation feature class.</p></li>
 <li><p><strong>Manager_Name</strong>: <a href="https://usgs.maps.arcgis.com/home/item.html?id=ff6f75a7f4b148cb97e9d755299edded" class="external-link">PAD-US 3.0 Manager Name</a> — Service representing coarse level land manager description from "Agency Type" Domain, "Manager Type" Field (for example, Federal, Tribal, State, Local Gov, Private). Use for broad categorization of manager levels, for general depictions of who manages what areas.</p></li>
