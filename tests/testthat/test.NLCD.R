@@ -75,9 +75,6 @@ test_that(
         force.redo = TRUE
       )
 
-    raw %<>%
-      raster::raster()
-
     expect_true(
       all((feddata - raw)[] == 0, na.rm = TRUE)
     )
