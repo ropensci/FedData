@@ -43,24 +43,24 @@ get_ned <- function(template,
 
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
 
-  out_file <- paste0(label, "_NED_", res, ".tif")
+  outfile <-
+    paste0(extraction.dir, "/", label, "_NED_", res, ".tif")
 
-  if (file.exists(file.path(extraction.dir, out_file)) & !force.redo) {
-    extracted.DEM <- raster::raster(file.path(extraction.dir, out_file))
-    return(extracted.DEM)
+  if (file.exists(outfile) & !force.redo) {
+    return(terra::rast(outfile))
   }
 
   template %<>%
     template_to_sf() %>%
     sf::st_transform(4326)
 
-  extent.latlon <- raster::extent(template)
+  extent.latlon <- sf::st_bbox(template)
 
   # Open USGS NED download service.
   # NED tiles are labeled by their northwest corner.
   # Thus, coordinate 36.42N, -105.71W is in grid n37w106
-  wests <- seq(ceiling(abs(extent.latlon@xmax)), ceiling(abs(extent.latlon@xmin)))
-  norths <- seq(ceiling(abs(extent.latlon@ymin)), ceiling(abs(extent.latlon@ymax)))
+  wests <- seq(ceiling(abs(extent.latlon["xmax"])), ceiling(abs(extent.latlon["xmin"])))
+  norths <- seq(ceiling(abs(extent.latlon["ymin"])), ceiling(abs(extent.latlon["ymax"])))
 
   tilesLocations <- as.matrix(expand.grid(norths, wests, stringsAsFactors = FALSE))
 
@@ -96,7 +96,6 @@ get_ned <- function(template,
   }
   tiles <- tiles[which(!sapply(tiles, is.null))]
 
-
   # Mosaic all tiles
   if (length(tiles) > 1) {
     message("Mosaicking NED tiles.")
@@ -116,12 +115,11 @@ get_ned <- function(template,
     terra::crop(.,
       sf::st_transform(template, sf::st_crs(raster::crs(.))),
       snap = "out",
-      filename = file.path(extraction.dir, out_file),
+      filename = outfile,
       datatype = "FLT4S",
       gdal = raster.options,
       overwrite = T
-    ) %>%
-    raster::raster()
+    )
 }
 
 #' Load and crop tile from the 1 (~30 meter) or 1/3 (~10 meter) arc-second National Elevation Dataset.

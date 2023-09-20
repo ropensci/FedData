@@ -7,10 +7,7 @@
 get_padus(
   template,
   label,
-  layer = c("Protection_Status_by_GAP_Status_Code", "Public_Access", "Fee_Manager",
-    "Manager_Name", "Manager_Type", "Federal_Fee_Managers_Authoritative",
-    "Federal_Management_Agencies", "Protection_Mechanism_Category",
-    "Proclamation_and_Other_Planning_Boundaries", "Fee_Topology_Overlaps"),
+  layer = c("Manager_Name"),
   extraction.dir = file.path(tempdir(), "FedData", "extractions", "padus", label),
   force.redo = FALSE
 )
@@ -23,7 +20,7 @@ Optionally, a vector of unit names, e.g., \code{c('Mesa Verde National Park','Ut
 \item{label}{A character string naming the study area.}
 
 \item{layer}{A character vector containing one or more PAD-US Layers.
-By default, all layers are downloaded.
+By default, the \strong{Manager_Name} layer is downloaded.
 \itemize{
 \item \strong{Protection_Status_by_GAP_Status_Code}: \href{https://usgs.maps.arcgis.com/home/item.html?id=b7a09e6c95a846fe82970c70195a2739}{PAD-US 3.0 Protection Status by GAP Status Code} — Service representing a measure of management intent to permanently protect biodiversity. GAP 1&2 areas are primarily managed for biodiversity, GAP 3 are managed for multiple uses including conservation and extraction, GAP 4 no known mandate for biodiversity protection. GAP Status Codes 1-3 are displayed, GAP 4 areas included but not displayed.
 \item \strong{Public_Access}: \href{https://usgs.maps.arcgis.com/home/item.html?id=3687ff551d7e4f0992f08419c2b29dd5}{PAD-US 3.0 Public Access} — Service representing general level of public access permitted in the area - Open, Restricted (permit, seasonal), Closed. Public Access Unknown areas not displayed. Use to show general categories of public access (however, not all areas have been locally reviewed).

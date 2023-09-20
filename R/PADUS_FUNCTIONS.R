@@ -143,7 +143,7 @@ get_padus <-
 
     if (!inherits(template, "character")) {
       sf_state <- sf::sf_use_s2()
-      suppressMessages(sf_use_s2(FALSE))
+      suppressMessages(sf::sf_use_s2(FALSE))
       suppressWarnings({
         suppressMessages({
           padus_out %<>%
@@ -155,7 +155,7 @@ get_padus <-
             )
         })
       })
-      suppressMessages(sf_use_s2(sf_state))
+      suppressMessages(sf::sf_use_s2(sf_state))
     }
 
     write_sf_all(padus_out, dsn = out_dsn)

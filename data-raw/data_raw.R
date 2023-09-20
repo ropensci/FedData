@@ -53,11 +53,16 @@ nass <-
   foreign::read.dbf(paste0(tempdir(), "/ESRI_attribute_files/ArcGIS10.7.0_2019_30m_cdls.img.vat.dbf")) %>%
   tibble::as_tibble() %>%
   dplyr::mutate(rgb = rgb(red = RED, green = GREEN, blue = BLUE, alpha = OPACITY, maxColorValue = 255)) %>%
-  dplyr::select(
+  dplyr::transmute(
     ID = VALUE,
-    `Land Cover` = CLASS_NAME,
+    Class = as.character(CLASS_NAME),
     Color = rgb
-  )
+  ) %>%
+  dplyr::mutate(
+    Class = ifelse(ID == 131, "Barren (2)", Class),
+    Class = ifelse(ID == 152, "Shrubland (2)", Class)
+  ) %>%
+  dplyr::filter(!is.na(Class))
 
 tablesHeaders <-
   readr::read_rds("data-raw/tablesHeaders.rds")
@@ -84,26 +89,26 @@ usethis::use_data(tablesHeaders, nass, nlcd, overwrite = TRUE, internal = TRUE)
 usethis::use_data(meve, overwrite = TRUE)
 
 # A test dataset of the raw NLCD
-httr::GET(
-  url = "https://s3-us-west-2.amazonaws.com/mrlc/NLCD_2016_Land_Cover_L48_20190424.zip",
-  httr::write_disk(
-    path = paste0(tempdir(), "/NLCD_2016.zip"),
-    overwrite = TRUE
-  ),
-  httr::progress()
-)
-
-unzip(paste0(tempdir(), "/NLCD_2016.zip"),
-  exdir = tempdir()
-)
-
-nlcd <-
-  paste0(tempdir, "/NLCD_2016_Land_Cover_L48_20190424.img") %>%
-  terra::rast() %>%
-  terra::crop(
-    .,
-    sf::st_transform(
-      meve,
-      terra::crs(.)
-    )
-  )
+# httr::GET(
+#   url = "https://s3-us-west-2.amazonaws.com/mrlc/NLCD_2016_Land_Cover_L48_20190424.zip",
+#   httr::write_disk(
+#     path = paste0(tempdir(), "/NLCD_2016.zip"),
+#     overwrite = TRUE
+#   ),
+#   httr::progress()
+# )
+#
+# unzip(paste0(tempdir(), "/NLCD_2016.zip"),
+#   exdir = tempdir()
+# )
+#
+# nlcd <-
+#   paste0(tempdir, "/NLCD_2016_Land_Cover_L48_20190424.img") %>%
+#   terra::rast() %>%
+#   terra::crop(
+#     .,
+#     sf::st_transform(
+#       meve,
+#       terra::crs(.)
+#     )
+#   )

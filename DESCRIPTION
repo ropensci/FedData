@@ -59,7 +59,8 @@ Imports:
     purrr,
     readr,
     terra (>= 1.0),
-    sf (>= 1.0)
+    sf (>= 1.0),
+    raster
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no

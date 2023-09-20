@@ -191,8 +191,12 @@ get_nlcd <- function(template,
     # raster::colortable(out) <- nlcd$Color
 
     levels(out) <-
-      nlcd %>%
+      nlcd_colors() %>%
       as.data.frame()
+
+    terra::coltab(out) %<>%
+      magrittr::extract2(1) %>%
+      dplyr::filter(value %in% nlcd_colors()$ID)
 
     out %T>%
       terra::set.values() %>%

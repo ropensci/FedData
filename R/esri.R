@@ -66,7 +66,7 @@ esri_query <-
               returnIdsOnly = TRUE
             )
           ) %>%
-          httr::content(simplifyVector = TRUE) %>%
+          httr::content(type = "application/json", simplifyVector = TRUE) %>%
           magrittr::extract2("objectIds")
 
         if (is.null(ids)) {
@@ -156,7 +156,10 @@ esri_feature_query <-
               returnIdsOnly = TRUE
             )
           ) %>%
-          httr::content() %$%
+          httr::content(
+            type = "application/json",
+            simplifyVector = TRUE
+          ) %$%
           properties %$%
           objectIds %>%
           unlist()
