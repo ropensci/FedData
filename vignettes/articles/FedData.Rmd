@@ -138,6 +138,7 @@ GHCN.prcp$spatial %>%
   dplyr::mutate(label = paste0(ID, ": ", NAME)) %>%
   plot_map(
     label = "label",
+    layer.name = "GHCN_prcp",
     legend = FALSE
   )
 ```
@@ -159,6 +160,7 @@ GHCN.temp$spatial %>%
   dplyr::mutate(label = paste0(ID, ": ", NAME)) %>%
   plot_map(
     label = "label",
+    layer.name = "GHCN_temp",
     legend = FALSE
   )
 ```
