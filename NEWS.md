@@ -1,7 +1,7 @@
 # FedData (development version)
 
 # FedData 4.0.0
--   Updated the [README](README.md) and moved examples to a [vignette]()
+-   Updated the [README](README.md) and moved examples to an article
 -   Added the [PAD-US dataset](https://www.usgs.gov/programs/gap-analysis-project/science/pad-us-data-overview)
 in response to [Issue #100](https://github.com/ropensci/FedData/issues/100).
 -   Updated `get_nlcd()` to fix bug [Issue #101](https://github.com/ropensci/FedData/issues/101) in tree canopy data, whose URL changed.
