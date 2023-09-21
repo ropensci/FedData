@@ -3,7 +3,7 @@
 #' \code{get_nlcd} returns a [`SpatRaster`][terra::SpatRaster] of NLCD data cropped to a given
 #' template study area. \code{nlcd_colors} and \code{pal_nlcd} return the NLCD
 #' legend and color palette, as available through the
-#' [MLRC website](https://www.mrlc.gov/data/legends/national-land-cover-database-2016-nlcd2016-legend).
+#' [MLRC website](https://www.mrlc.gov/data/legends/national-land-cover-database-class-legend-and-description).
 #'
 #' @param template An [`Simple Feature`][sf::sf]
 #' or [`terra`][terra::SpatRaster] object to serve as a template for cropping.

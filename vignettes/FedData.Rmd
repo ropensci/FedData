@@ -280,7 +280,7 @@ NLCD_impervious <-
   get_nlcd(
     template = FedData::meve,
     year = 2011,
-    label = "meve",
+    label = "meve_impervious",
     dataset = "impervious"
   )
 
@@ -290,7 +290,7 @@ NLCD_canopy <-
   get_nlcd(
     template = FedData::meve,
     year = 2011,
-    label = "meve",
+    label = "meve_canopy",
     dataset = "canopy"
   )
 

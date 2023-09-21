@@ -332,7 +332,7 @@ check_service <- function(x) {
 
 #' Strip query parameters from a URL
 #'
-#' @param url The URL to be modified
+#' @param x The URL to be modified
 #' @return The URL without parameters
 #' @export
 #' @keywords internal

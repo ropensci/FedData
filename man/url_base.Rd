@@ -7,7 +7,7 @@
 url_base(x)
 }
 \arguments{
-\item{url}{The URL to be modified}
+\item{x}{The URL to be modified}
 }
 \value{
 The URL without parameters

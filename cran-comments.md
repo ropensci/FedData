@@ -22,7 +22,14 @@ servers outside the USA.
 
 **Test environment:** local MacOS Version 13.5.2 install, R 4.3.1 (2023-06-16)
 
-**0 errors ✔ \| 0 warnings ✔ \| 0 notes ✔**
+**0 errors ✔ \| 0 warnings ✔ \| 1 note ✖**
+
+-  checking installed package size ...
+    - NOTE: installed size is 41.5Mb
+        - sub-directories of 1Mb or more: doc  39.7Mb
+    - Explanation: This is an inconsistent note across platforms, 
+    but the cause is that one of the package vignettes is sizable, as it 
+    contains many interactive html maps.
 
 ------------------------------------------------------------------------
 

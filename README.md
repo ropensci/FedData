@@ -97,11 +97,10 @@ This package is a product of SKOPE ([Synthesizing Knowledge of Past
 Environments](https://www.openskope.org/)) and the [Village Ecodynamics
 Project](https://crowcanyon.github.io/veparchaeology/) through grants
 awarded to the [Crow Canyon Archaeological
-Center](https://www.crowcanyon.org) and Washington State University by
-the National Science Foundation. This software is licensed under the
-[MIT license](https://opensource.org/license/mit/). Continuing
-development is supported by the [Montana Climate
-Office](https://www.umt.edu/climate/).
+Center](https://crowcanyon.org/) and Washington State University by the
+National Science Foundation. This software is licensed under the [MIT
+license](https://opensource.org/license/mit/). Continuing development is
+supported by the [Montana Climate Office](https://www.umt.edu/climate/).
 
 FedData was reviewed for [rOpenSci](https://ropensci.org) by
 [@jooolia](https://github.com/jooolia), and was greatly improved as a
