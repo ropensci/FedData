@@ -204,12 +204,25 @@ get_ghcn_daily <- function(template = NULL,
                            label = NULL,
                            elements = NULL,
                            years = NULL,
-                           raw.dir = paste0(tempdir(), "/FedData/raw/ghcn"),
-                           extraction.dir = paste0(tempdir(), "/FedData/extractions/ghcn/", label, "/"),
+                           raw.dir =
+                             file.path(
+                               tempdir(),
+                               "FedData",
+                               "raw",
+                               "ghcn"
+                             ),
+                           extraction.dir =
+                             file.path(
+                               tempdir(),
+                               "FedData",
+                               "extractions",
+                               "ned",
+                               label
+                             ),
                            standardize = F,
                            force.redo = F) {
-  raw.dir <- normalizePath(paste0(raw.dir, "/."), mustWork = FALSE)
-  extraction.dir <- normalizePath(paste0(extraction.dir, "/."), mustWork = FALSE)
+  # raw.dir <- normalizePath(paste0(raw.dir, "/."), mustWork = FALSE)
+  # extraction.dir <- normalizePath(paste0(extraction.dir, "/."), mustWork = FALSE)
 
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
   dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
@@ -223,21 +236,25 @@ get_ghcn_daily <- function(template = NULL,
   }
 
   message("(Down)Loading GHCN station inventory.")
-  if (!force.redo & file.exists(paste0(extraction.dir, "/", label, "_GHCN_stations.shp"))) {
+  raw_inventory <-
+    file.path(
+      extraction.dir,
+      paste0(label, "_GHCN_stations.fgb")
+    )
+  if (force.redo | !file.exists(raw_inventory)) {
+    unlink(raw_inventory, force = TRUE)
+
     stations.sf <-
-      sf::read_sf(extraction.dir, layer = paste0(label, "_GHCN_stations"))
-  } else {
-    stations.sf <- get_ghcn_inventory(template = template, raw.dir = raw.dir)
+      get_ghcn_inventory(template = template, raw.dir = raw.dir)
 
     stations.sf %>%
       sf::write_sf(
-        file.path(
-          normalizePath(paste0(extraction.dir, "/.")),
-          paste0(label, "_GHCN_stations.shp")
-        ),
-        delete_dsn = TRUE
+        dsn = raw_inventory
       )
   }
+
+  stations.sf <-
+    sf::read_sf(raw_inventory)
 
   # If the user didn't specify target elements, get them all.
   if (!is.null(elements)) {
@@ -641,8 +658,10 @@ get_ghcn_inventory <- function(template = NULL, elements = NULL, raw.dir) {
       stations %<>%
         dplyr::filter(ID %in% template)
     } else {
-      stations %<>%
-        sf::st_intersection(template)
+      suppressWarnings(
+        stations %<>%
+          sf::st_intersection(template)
+      )
     }
   }
 

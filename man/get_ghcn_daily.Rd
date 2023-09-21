@@ -9,8 +9,8 @@ get_ghcn_daily(
   label = NULL,
   elements = NULL,
   years = NULL,
-  raw.dir = paste0(tempdir(), "/FedData/raw/ghcn"),
-  extraction.dir = paste0(tempdir(), "/FedData/extractions/ghcn/", label, "/"),
+  raw.dir = file.path(tempdir(), "FedData", "raw", "ghcn"),
+  extraction.dir = file.path(tempdir(), "FedData", "extractions", "ned", label),
   standardize = F,
   force.redo = F
 )
