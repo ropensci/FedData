@@ -61,6 +61,8 @@ get_nlcd <- function(template,
   extraction.dir <-
     normalizePath(paste0(extraction.dir, "/."), mustWork = FALSE)
 
+  tmp <- tempfile(fileext = ".tif")
+
   template %<>% template_to_sf()
 
   dataset <- match.arg(dataset,
@@ -147,7 +149,7 @@ get_nlcd <- function(template,
           subset = paste0(axis_labels[[2]], "(", template["ymin"], ",", template["ymax"], ")")
         ),
         httr::write_disk(
-          path = outfile,
+          path = tmp,
           overwrite = TRUE
         )
       )
@@ -190,12 +192,9 @@ get_nlcd <- function(template,
 
   if (dataset == "Land_Cover") {
     out <-
-      outfile %>%
+      tmp %>%
       terra::rast() %>%
       terra::as.factor()
-
-    out %T>%
-      terra::set.values()
 
     levels(out) <-
       nlcd_colors() %>%
@@ -205,13 +204,17 @@ get_nlcd <- function(template,
       magrittr::extract2(1) %>%
       dplyr::filter(value %in% nlcd_colors()$ID)
 
-    file.remove(outfile)
-
     terra::writeRaster(
       x = out,
       filename = outfile,
       datatype = "INT1U",
       gdal = raster.options,
+      overwrite = TRUE
+    )
+  } else {
+    file.copy(
+      from = tmp,
+      to = outfile,
       overwrite = TRUE
     )
   }
