@@ -205,14 +205,15 @@ get_nlcd <- function(template,
       magrittr::extract2(1) %>%
       dplyr::filter(value %in% nlcd_colors()$ID)
 
-    unlink(outfile)
+    file.remove(outfile)
 
-    out %>%
-      terra::writeRaster(outfile,
-        datatype = "INT1U",
-        gdal = raster.options,
-        overwrite = TRUE
-      )
+    terra::writeRaster(
+      x = out,
+      filename = outfile,
+      datatype = "INT1U",
+      gdal = raster.options,
+      overwrite = TRUE
+    )
   }
 
   return(terra::rast(outfile))
