@@ -71,8 +71,7 @@ test_that(
         template = raw,
         label = basename(tempfile()),
         year = 2001,
-        landmass = "PR",
-        force.redo = TRUE
+        landmass = "PR"
       )
 
     expect_true(
