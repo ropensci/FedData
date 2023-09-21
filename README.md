@@ -91,6 +91,11 @@ devtools::install_github("ropensci/FedData")
   <https://r-spatial.github.io/sf/>, then install either from CRAN or
   GitHub.
 
+### Getting Started
+
+Check out our [Getting Started
+article](https://docs.ropensci.org/FedData/articles/FedData.html).
+
 ### Acknowledgements
 
 This package is a product of SKOPE ([Synthesizing Knowledge of Past

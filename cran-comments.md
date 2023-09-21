@@ -20,16 +20,9 @@ servers outside the USA.
 
 `devtools::check()` result:
 
-**Test environment:** local MacOS Version 13.5.2 install, R 4.3.1 (2023-06-16)
+**Test environment:** aarch64-apple-darwin20 (64-bit), R 4.3.1 (2023-06-16)
 
-**0 errors ✔ \| 0 warnings ✔ \| 1 note ✖**
-
--  checking installed package size ...
-    - NOTE: installed size is 41.5Mb
-        - sub-directories of 1Mb or more: doc  39.7Mb
-    - Explanation: This is an inconsistent note across platforms, 
-    but the cause is that one of the package vignettes is sizable, as it 
-    contains many interactive html maps.
+**0 errors ✔ \| 0 warnings ✔ \| 0 notes ✔**
 
 ------------------------------------------------------------------------
 
@@ -51,7 +44,7 @@ servers outside the USA.
 
 `rhub::check_for_cran()` result:
 
-**Test environment:** Windows Server 2022, R-devel, 64 bit
+**Test environment:** x86_64-w64-mingw32, R Under development (unstable) (2023-07-21 r84722 ucrt)
 
 **0 errors ✔ \| 0 warnings ✔ \| 2 notes ✖**
 

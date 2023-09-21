@@ -75,5 +75,5 @@ Suggests:
     mapview,
     knitr,
     rmarkdown,
-    leaflet
-VignetteBuilder: knitr
+    leaflet,
+    rmapshaper

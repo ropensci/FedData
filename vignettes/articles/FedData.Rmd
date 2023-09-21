@@ -39,7 +39,10 @@ mapviewOptions(
   query.position = "topright",
   query.digits = 2,
   query.prefix = "",
-  legend.pos = "bottomright"
+  legend.pos = "bottomright",
+  platform = "leaflet",
+  fgb = TRUE,
+  georaster = TRUE
 )
 
 # Create a nice mapview template
@@ -196,6 +199,7 @@ SSURGO.MEVE <- get_ssurgo(
 )
 
 SSURGO.MEVE$spatial %>%
+  rmapshaper::ms_simplify() %>%
   dplyr::left_join(
     SSURGO.MEVE$tabular$mapunit %>%
       dplyr::mutate(mukey = as.character(mukey)),
@@ -217,6 +221,7 @@ SSURGO.areas <- get_ssurgo(
 )
 
 SSURGO.areas$spatial %>%
+  rmapshaper::ms_simplify() %>%
   dplyr::left_join(
     SSURGO.areas$tabular$muaggatt %>%
       dplyr::mutate(mukey = as.character(mukey)),
@@ -307,7 +312,6 @@ NASS_CDL <- get_nass_cdl(
 
 plot(NASS_CDL)
 ```
-
 
 ### USGS PAD-US
 ```{r PADUS, message=FALSE, warning=FALSE}
