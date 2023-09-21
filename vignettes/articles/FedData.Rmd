@@ -134,11 +134,12 @@ GHCN.prcp <- get_ghcn_daily(
   elements = c("prcp")
 )
 
-plot_map(GHCN.prcp$spatial,
-  label = GHCN.prcp$spatial %$%
-    paste0(ID, ": ", NAME),
-  legend = FALSE
-)
+GHCN.prcp$spatial %>%
+  dplyr::mutate(label = paste0(ID, ": ", NAME)) %>%
+  plot_map(
+    label = "label",
+    legend = FALSE
+  )
 ```
 
 #### Standardized data
@@ -154,11 +155,12 @@ GHCN.temp <- get_ghcn_daily(
   standardize = TRUE
 )
 
-plot_map(GHCN.temp$spatial,
-  label = GHCN.temp$spatial %$%
-    paste0(ID, ": ", NAME),
-  legend = FALSE
-)
+GHCN.temp$spatial %>%
+  dplyr::mutate(label = paste0(ID, ": ", NAME)) %>%
+  plot_map(
+    label = "label",
+    legend = FALSE
+  )
 ```
 
 ### USGS National Hydrography Dataset
