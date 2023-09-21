@@ -6,10 +6,8 @@ output:
     toc: true
     toc_depth: 4
     toc_float: true
-vignette: >
-  %\VignetteIndexEntry{Introduction to FedData}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r, include = FALSE}
@@ -225,7 +223,7 @@ SSURGO.areas$spatial %>%
     by = c("MUKEY" = "mukey")
   ) %>%
   dplyr::mutate(label = paste0(MUKEY, ": ", muname)) %>%
-  mapview::mapview(
+  plot_map(
     zcol = "brockdepmin",
     layer.name = "Minimum Bedrock Depth (cm)",
     label = "label"

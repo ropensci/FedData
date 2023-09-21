@@ -194,6 +194,9 @@ get_nlcd <- function(template,
       terra::rast() %>%
       terra::as.factor()
 
+    out %T>%
+      terra::set.values()
+
     levels(out) <-
       nlcd_colors() %>%
       as.data.frame()
@@ -202,8 +205,9 @@ get_nlcd <- function(template,
       magrittr::extract2(1) %>%
       dplyr::filter(value %in% nlcd_colors()$ID)
 
-    out %T>%
-      terra::set.values() %>%
+    unlink(outfile)
+
+    out %>%
       terra::writeRaster(outfile,
         datatype = "INT1U",
         gdal = raster.options,
