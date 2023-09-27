@@ -54,8 +54,8 @@ get_nhd <-
 
     if (nhdplus) {
       nhd_out <-
-        "https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/" %>%
         esri_query(
+          url = "https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer",
           geom = template,
           layers = c(
             "NHDPoint",
@@ -80,8 +80,8 @@ get_nhd <-
         )
     } else {
       nhd_out <-
-        "https://hydro.nationalmap.gov/arcgis/rest/services/nhd/MapServer/" %>%
         esri_query(
+          url = "https://hydro.nationalmap.gov/arcgis/rest/services/nhd/MapServer",
           geom = template,
           layers = c(
             "Point",

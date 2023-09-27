@@ -171,7 +171,8 @@ GHCN.temp$spatial %>%
 NHD <-
   get_nhd(
     template = FedData::meve,
-    label = "meve"
+    label = "meve",
+    force.redo = TRUE
   )
 
 # FedData comes with a simple plotting function for NHD data
