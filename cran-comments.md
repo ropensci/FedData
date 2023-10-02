@@ -44,7 +44,7 @@ servers outside the USA.
 
 `rhub::check_for_cran()` result:
 
-**Test environment:** x86_64-w64-mingw32, R Under development (unstable) (2023-07-21 r84722 ucrt)
+**Test environment:** Windows Server 2022, R-devel, 64 bit
 
 **0 errors ✔ \| 0 warnings ✔ \| 2 notes ✖**
 
@@ -97,7 +97,7 @@ servers outside the USA.
 
 `devtools::check_win_devel()` result:
 
-**Test environment:** x86_64-w64-mingw32 (64-bit)
+**Test environment:** Windows Server 2022, R-devel, 64 bit
 
 **0 errors ✔ \| 0 warnings ✔ \| 1 note ✖**
 
