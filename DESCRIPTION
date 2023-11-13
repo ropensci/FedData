@@ -8,7 +8,8 @@ Authors@R:
     c(person(given = c("R.", "Kyle"),
              family = "Bocinsky",
              role = c("aut", "cre", "cph"),
-             email = "bocinsky@gmail.com"),
+             email = "bocinsky@gmail.com",
+             comment = c(ORCID = "0000-0003-1862-3428")),
       person(given = "Dylan",
              family = "Beaudette",
              role = "ctb"),
@@ -24,17 +25,19 @@ Authors@R:
 Description: Functions to automate downloading geospatial data available
     from several federated data sources (mainly sources maintained by the
     US Federal government). Currently, the package enables extraction from
-    seven datasets: The National Elevation Dataset digital elevation
+    nine datasets: The National Elevation Dataset digital elevation
     models (1 and 1/3 arc-second; USGS); The National Hydrography Dataset
     (USGS); The Soil Survey Geographic (SSURGO) database from the National
     Cooperative Soil Survey (NCSS), which is led by the Natural Resources
     Conservation Service (NRCS) under the USDA; the Global Historical
     Climatology Network (GHCN), coordinated by National Climatic Data
     Center at NOAA; the Daymet gridded estimates of daily weather
-    parameters for North America, version 3, available from the Oak Ridge
+    parameters for North America, version 4, available from the Oak Ridge
     National Laboratory's Distributed Active Archive Center (DAAC); the
-    International Tree Ring Data Bank; and the National Land Cover
-    Database (NLCD).
+    International Tree Ring Data Bank; the National Land Cover
+    Database (NLCD); the Cropland Data Layer from the National Agricultural 
+    Statistics Service; and the PAD-US dataset of protected area boundaries 
+    from the USGS.
 License: MIT + file LICENSE
 URL: https://docs.ropensci.org/FedData/,
     https://github.com/ropensci/FedData

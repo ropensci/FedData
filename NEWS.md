@@ -1,5 +1,6 @@
 # FedData (development version)
 - Updated `get_nlcd()` to inlcude the 2021 NLCD as the default, in response to [Issue #105](https://github.com/ropensci/FedData/issues/105).
+- Updated outdated package description
 
 # FedData 4.0.0
 -   Updated the [README](README.md) and moved examples to an article
