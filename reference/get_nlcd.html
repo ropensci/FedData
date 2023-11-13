@@ -20,7 +20,7 @@ MLRC website."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/li
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FedData</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">4.0.1</span>
       </span>
     </div>
 
@@ -65,7 +65,7 @@ legend and color palette, as available through the
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_nlcd</span><span class="op">(</span></span>
 <span>  <span class="va">template</span>,</span>
 <span>  <span class="va">label</span>,</span>
-<span>  year <span class="op">=</span> <span class="fl">2019</span>,</span>
+<span>  year <span class="op">=</span> <span class="fl">2021</span>,</span>
 <span>  dataset <span class="op">=</span> <span class="st">"landcover"</span>,</span>
 <span>  landmass <span class="op">=</span> <span class="st">"L48"</span>,</span>
 <span>  extraction.dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"FedData"</span>, <span class="st">"extractions"</span>, <span class="st">"nlcd"</span>, <span class="va">label</span><span class="op">)</span>,</span>
@@ -91,13 +91,13 @@ or <code><a href="https://rdrr.io/pkg/terra/man/SpatRaster-class.html" class="ex
 
 <dt>year</dt>
 <dd><p>An integer representing the year of desired NLCD product.
-Acceptable values are 2019 (default), 2016, 2011, 2008, 2006, 2004, and 2001.</p></dd>
+Acceptable values are 2021 (default), 2019, 2016, 2011, 2008, 2006, 2004, and 2001.</p></dd>
 
 
 <dt>dataset</dt>
 <dd><p>A character string representing type of the NLCD product.
 Acceptable values are 'landcover' (default), 'impervious', and
-'canopy' (2016 and 2011, L48 only).</p></dd>
+'canopy'.</p></dd>
 
 
 <dt>landmass</dt>
