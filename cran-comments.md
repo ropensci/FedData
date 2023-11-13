@@ -6,7 +6,7 @@ editor_options:
 
 # CRAN comments
 
-This is a major release from FedData v3.0.4 to FedData v4.0.0. Please
+This is a patch release from FedData v4.0.0 to FedData v4.0.1. Please
 see NEWS.md for release details. 
 
 Please note that in recent CRAN submissions, CRAN maintainers have been 

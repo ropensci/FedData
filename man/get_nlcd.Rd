@@ -9,7 +9,7 @@
 get_nlcd(
   template,
   label,
-  year = 2019,
+  year = 2021,
   dataset = "landcover",
   landmass = "L48",
   extraction.dir = file.path(tempdir(), "FedData", "extractions", "nlcd", label),
@@ -28,11 +28,11 @@ or \code{\link[terra:SpatRaster-class]{terra}} object to serve as a template for
 \item{label}{A character string naming the study area.}
 
 \item{year}{An integer representing the year of desired NLCD product.
-Acceptable values are 2019 (default), 2016, 2011, 2008, 2006, 2004, and 2001.}
+Acceptable values are 2021 (default), 2019, 2016, 2011, 2008, 2006, 2004, and 2001.}
 
 \item{dataset}{A character string representing type of the NLCD product.
 Acceptable values are 'landcover' (default), 'impervious', and
-'canopy' (2016 and 2011, L48 only).}
+'canopy'.}
 
 \item{landmass}{A character string representing the landmass to be extracted
 Acceptable values are 'L48' (lower 48 US states, the default),

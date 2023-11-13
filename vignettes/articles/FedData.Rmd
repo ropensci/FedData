@@ -277,7 +277,7 @@ plot_map(ITRDB$metadata,
 # Returns a raster
 NLCD <- get_nlcd(
   template = FedData::meve,
-  year = 2011,
+  year = 2021,
   label = "meve"
 )
 
@@ -287,7 +287,7 @@ plot(NLCD)
 NLCD_impervious <-
   get_nlcd(
     template = FedData::meve,
-    year = 2011,
+    year = 2021,
     label = "meve_impervious",
     dataset = "impervious"
   )
@@ -297,7 +297,7 @@ plot(NLCD_impervious)
 NLCD_canopy <-
   get_nlcd(
     template = FedData::meve,
-    year = 2011,
+    year = 2021,
     label = "meve_canopy",
     dataset = "canopy"
   )

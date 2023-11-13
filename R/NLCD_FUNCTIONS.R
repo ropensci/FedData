@@ -9,10 +9,10 @@
 #' or [`terra`][terra::SpatRaster] object to serve as a template for cropping.
 #' @param label A character string naming the study area.
 #' @param year An integer representing the year of desired NLCD product.
-#' Acceptable values are 2019 (default), 2016, 2011, 2008, 2006, 2004, and 2001.
+#' Acceptable values are 2021 (default), 2019, 2016, 2011, 2008, 2006, 2004, and 2001.
 #' @param dataset A character string representing type of the NLCD product.
 #' Acceptable values are 'landcover' (default), 'impervious', and
-#' 'canopy' (2016 and 2011, L48 only).
+#' 'canopy'.
 #' @param landmass A character string representing the landmass to be extracted
 #' Acceptable values are 'L48' (lower 48 US states, the default),
 #' 'AK' (Alaska, 2011 and 2016 only), 'HI' (Hawaii, 2001 only), and
@@ -43,7 +43,7 @@
 #' }
 get_nlcd <- function(template,
                      label,
-                     year = 2019,
+                     year = 2021,
                      dataset = "landcover",
                      landmass = "L48",
                      extraction.dir = file.path(
