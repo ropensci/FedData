@@ -118,7 +118,7 @@ DAYMET <- get_daymet(
 )
 
 plot_map(DAYMET$tmax$`1985-10-23`,
-  layer.name = "TMAX on 23 Oct 1985 (ºC)",
+  layer.name = "TMAX on 23 Oct 1985 (Degrees C)",
   maxpixels = terra::ncell(DAYMET$tmax)
 )
 ```
@@ -182,7 +182,7 @@ plot_nhd(NHD, template = FedData::meve)
 NHD[purrr::map_lgl(NHD, ~ (nrow(.x) != 0))] %>%
   plot_map()
 
-# You can also retriev the Watershed Boundary Dataset
+# You can also retrieve the Watershed Boundary Dataset
 WBD <-
   get_wbd(
     template = FedData::meve,

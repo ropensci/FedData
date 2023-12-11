@@ -1,4 +1,5 @@
 # FedData (development version)
+- Updated the getting started article to not include a degree symbol in the Daymet graph, which caused compilation errors in Windows. Fixes [Issue #106](https://github.com/ropensci/FedData/issues/106).
 - Updated `get_nlcd()` to inlcude the 2021 NLCD as the default, in response to [Issue #105](https://github.com/ropensci/FedData/issues/105).
 - Updated outdated package description
 
