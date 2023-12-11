@@ -63,8 +63,14 @@ plot_map <-
       leaflet::addTiles(
         urlTemplate = "https://basemap.nationalmap.gov/ArcGIS/rest/services/USGSShadedReliefOnly/MapServer/tile/{z}/{y}/{x}"
       ) %>%
-      leaflet::addProviderTiles("Stamen.TonerLines") %>%
-      leaflet::addProviderTiles("Stamen.TonerLabels") %>%
+      leaflet::addTiles(
+        urlTemplate = "https://tiles.stadiamaps.com/tiles/stamen_toner_lines/{z}/{x}/{y}.png"
+      ) %>%
+      leaflet::addTiles(
+        urlTemplate = "https://tiles.stadiamaps.com/tiles/stamen_toner_labels/{z}/{x}/{y}.png"
+      ) %>%
+      # leaflet::addProviderTiles("Stamen.TonerLines") %>%
+      # leaflet::addProviderTiles("Stamen.TonerLabels") %>%
       leaflet::addPolygons(
         data = FedData::meve,
         color = "black",
