@@ -3,7 +3,7 @@ Package: FedData
 Title: Functions to Automate Downloading Geospatial Data Available from
     Several Federated Data Sources
 Version: 4.0.1
-Date: 2023-11-13
+Date: 2024-02-14
 Authors@R: 
     c(person(given = c("R.", "Kyle"),
              family = "Bocinsky",
@@ -42,7 +42,7 @@ License: MIT + file LICENSE
 URL: https://docs.ropensci.org/FedData/,
     https://github.com/ropensci/FedData
 BugReports: https://github.com/ropensci/FedData/issues
-SystemRequirements: GDAL (>= 3.0.0)
+SystemRequirements: GDAL (>= 3.1.0)
 Depends:
     R (>= 3.2.0)
 Imports:

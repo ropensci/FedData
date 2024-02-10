@@ -2,6 +2,7 @@
 - Updated the getting started article to not include a degree symbol in the Daymet graph, which caused compilation errors in Windows. Fixes [Issue #106](https://github.com/ropensci/FedData/issues/106).
 - Updated `get_nlcd()` to include the 2021 NLCD as the default, in response to [Issue #105](https://github.com/ropensci/FedData/issues/105).
 - Updated outdated package description
+- Bumped GDAL version req to >= 3.1.0 to accommodate storing spatial vectors as FlatGeoBufs
 
 # FedData 4.0.0
 -   Updated the [README](README.md) and moved examples to an article
