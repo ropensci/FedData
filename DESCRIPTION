@@ -61,13 +61,14 @@ Imports:
     purrr,
     readr,
     terra (>= 1.0),
-    sf (>= 1.0)
+    sf (>= 1.0),
+    arcgislayers (>= 0.1.0)
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
 Repository: CRAN
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Suggests: 
     covr,
     ggplot2,
@@ -80,3 +81,5 @@ Suggests:
     rmarkdown,
     leaflet,
     rmapshaper
+Remotes: 
+    R-ArcGIS/arcgislayers

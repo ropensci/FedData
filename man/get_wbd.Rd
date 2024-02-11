@@ -22,7 +22,7 @@ or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a templat
 \item{force.redo}{If an extraction for this template and label already exists, should a new one be created?}
 }
 \value{
-A  \code{sf} collection of the HUC 12 regions within
+An \code{sf} collection of the HUC 12 regions within
 the specified \code{template}.
 }
 \description{

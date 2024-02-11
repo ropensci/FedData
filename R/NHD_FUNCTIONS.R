@@ -50,51 +50,85 @@ get_nhd <-
     }
 
     template %<>%
-      template_to_sf()
+      template_to_sf() %>%
+      sf::st_as_sfc() %>%
+      sf::st_union() %>%
+      sf::st_cast("POLYGON")
 
     if (nhdplus) {
+      layers <-
+        c(
+          "NHDPoint",
+          "NetworkNHDFlowline",
+          "NonNetworkNHDFlowline",
+          "NHDLine",
+          "NHDArea",
+          "NHDWaterbody"
+        )
+
       nhd_out <-
-        esri_query(
-          url = "https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer",
-          geom = template,
-          layers = c(
-            "NHDPoint",
-            "NetworkNHDFlowline",
-            "NonNetworkNHDFlowline",
-            "NHDLine",
-            "NHDArea",
-            "NHDWaterbody"
+        "https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer" %>%
+        arcgislayers::arc_open() %>%
+        arcgislayers::get_layers(
+          name = layers
+        ) %>%
+        purrr::map(
+          ~ tryCatch(
+            arcgislayers::arc_select(
+              .x,
+              filter_geom =
+                template
+            ),
+            error = function(e) {
+              NULL
+            }
           )
-        ) %$%
+        ) %>%
+        magrittr::set_names(layers) %$%
         list(
           Point = NHDPoint,
           Flowline = list(
-            nhd_out$NetworkNHDFlowline,
-            nhd_out$NonNetworkNHDFlowline
+            NetworkNHDFlowline,
+            NonNetworkNHDFlowline
           ) %>%
-            purrr::map_dfr(tibble::as_tibble) %>%
-            sf::st_as_sf(),
+            dplyr::bind_rows(),
           Line = NHDLine,
           Area = NHDArea,
           Waterbody = NHDWaterbody
         )
     } else {
+      layers <-
+        c(
+          "Point",
+          "Flowline - Large Scale",
+          "Line - Large Scale ",
+          "Area - Large Scale",
+          "Waterbody - Large Scale"
+        )
+
       nhd_out <-
-        esri_query(
-          url = "https://hydro.nationalmap.gov/arcgis/rest/services/nhd/MapServer",
-          geom = template,
-          layers = c(
-            "Point",
-            "Flowline - Large Scale",
-            "Line - Large Scale",
-            "Area - Large Scale",
-            "Waterbody - Large Scale"
+        "https://hydro.nationalmap.gov/arcgis/rest/services/nhd/MapServer" %>%
+        arcgislayers::arc_open() %>%
+        arcgislayers::get_layers(
+          name = layers
+        ) %>%
+        purrr::map(
+          ~ tryCatch(
+            arcgislayers::arc_select(
+              .x,
+              filter_geom =
+                template
+            ),
+            error = function(e) {
+              NULL
+            }
           )
-        ) %$%
+        ) %>%
+        magrittr::set_names(layers) %$%
         list(
           Point = Point,
           Flowline = `Flowline - Large Scale`,
-          Line = `Line - Large Scale`,
+          Line = `Line - Large Scale `,
           Area = `Area - Large Scale`,
           Waterbody = `Waterbody - Large Scale`
         )
@@ -194,7 +228,7 @@ plot_nhd <-
 #' @param label A character string naming the study area.
 #' @param extraction.dir A character string indicating where the extracted and cropped NHD data should be put.
 #' @param force.redo If an extraction for this template and label already exists, should a new one be created?
-#' @return A  `sf` collection of the HUC 12 regions within
+#' @return An `sf` collection of the HUC 12 regions within
 #' the specified \code{template}.
 #' @export
 get_wbd <- function(template,
@@ -221,20 +255,20 @@ get_wbd <- function(template,
     return(read_sf_all(out_dsn))
   }
 
-  template %<>%
-    template_to_sf()
-
-  wbd_out <-
-    "https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/" %>%
-    esri_query(
-      geom = template,
-      layers = "WBDHU12"
+  "https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/" %>%
+    arcgislayers::arc_open() %>%
+    arcgislayers::get_layer(
+      name = "WBDHU12"
     ) %>%
-    magrittr::extract2(1)
-
-
-  wbd_out %>%
+    arcgislayers::arc_select(
+      filter_geom =
+        template %>%
+          template_to_sf() %>%
+          sf::st_as_sfc()
+    ) %>%
     sf::write_sf(dsn = out_dsn)
 
-  return(sf::read_sf(out_dsn))
+  return(
+    sf::read_sf(out_dsn)
+  )
 }

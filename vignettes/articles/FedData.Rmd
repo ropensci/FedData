@@ -217,6 +217,7 @@ SSURGO.MEVE$spatial %>%
     by = c("MUKEY" = "mukey")
   ) %>%
   dplyr::mutate(label = paste0(MUKEY, ": ", muname)) %>%
+  dplyr::select(-musym) %>%
   plot_map(
     zcol = "label",
     legend = FALSE
@@ -239,6 +240,7 @@ SSURGO.areas$spatial %>%
     by = c("MUKEY" = "mukey")
   ) %>%
   dplyr::mutate(label = paste0(MUKEY, ": ", muname)) %>%
+  dplyr::select(-musym) %>%
   plot_map(
     zcol = "brockdepmin",
     layer.name = "Minimum Bedrock Depth (cm)",

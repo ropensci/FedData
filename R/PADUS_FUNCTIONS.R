@@ -109,26 +109,37 @@ get_padus <-
         purrr::map(
           function(x) {
             file.path(padus_base_url, x, "FeatureServer/") %>%
-              esri_feature_query(
-                where = paste0("Unit_Nm IN (", paste(paste0("'", template, "'"), collapse = ","), ")")
-              ) %>%
-              magrittr::extract2(1)
+              arcgislayers::arc_open() %>%
+              arcgislayers::get_layer(id = 0) %>%
+              arcgislayers::arc_select(
+                where =
+                  paste0(
+                    "Unit_Nm IN (",
+                    paste(paste0("'", template, "'"), collapse = ","),
+                    ")"
+                  )
+              )
           }
         )
     } else {
       template %<>%
         template_to_sf() %>%
-        sf::st_transform(4326)
+        sf::st_transform(4326) %>%
+        sf::st_as_sfc() %>%
+        sf::st_union() %>%
+        sf::st_cast("POLYGON")
 
       padus_out <-
         padus_services[layer] %>%
         purrr::map(
           function(x) {
             file.path(padus_base_url, x, "FeatureServer/") %>%
-              esri_feature_query(
-                geom = template
-              ) %>%
-              magrittr::extract2(1)
+              arcgislayers::arc_open() %>%
+              arcgislayers::get_layer(id = 0) %>%
+              arcgislayers::arc_select(
+                filter_geom =
+                  template
+              )
           }
         )
     }
