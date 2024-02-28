@@ -3,7 +3,7 @@ Package: FedData
 Title: Functions to Automate Downloading Geospatial Data Available from
     Several Federated Data Sources
 Version: 4.0.1
-Date: 2024-02-14
+Date: 2024-02-28
 Authors@R: 
     c(person(given = c("R.", "Kyle"),
              family = "Bocinsky",
@@ -62,7 +62,7 @@ Imports:
     readr,
     terra (>= 1.0),
     sf (>= 1.0),
-    arcgislayers (>= 0.1.0)
+    arcgislayers (>= 0.2.0)
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
@@ -81,5 +81,3 @@ Suggests:
     rmarkdown,
     leaflet,
     rmapshaper
-Remotes: 
-    R-ArcGIS/arcgislayers

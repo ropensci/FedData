@@ -404,12 +404,18 @@
       "@type": "SoftwareApplication",
       "identifier": "arcgislayers",
       "name": "arcgislayers",
-      "version": ">= 0.1.0",
-      "sameAs": "https://github.com/R-ArcGIS/arcgislayers"
+      "version": ">= 0.2.0",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=arcgislayers"
     },
     "SystemRequirements": "GDAL (>= 3.1.0)"
   },
-  "fileSize": "1492.683KB",
+  "fileSize": "1492.59KB",
   "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/main/README.md",
   "contIntegration": ["https://github.com/ropensci/FedData/actions/workflows/check-standard.yaml", "https://app.codecov.io/gh/ropensci/FedData?branch=master"],
