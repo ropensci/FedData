@@ -104,7 +104,7 @@ Project](https://crowcanyon.github.io/veparchaeology/) through grants
 awarded to the University of Montana, the [Crow Canyon Archaeological
 Center](https://crowcanyon.org/), and Washington State University by the
 National Science Foundation. This software is licensed under the [MIT
-license](https://opensource.org/license/mit/). Continuing development is
+license](https://opensource.org/license/mit). Continuing development is
 supported by the [Montana Climate Office](https://climate.umt.edu).
 
 FedData was reviewed for [rOpenSci](https://ropensci.org) by

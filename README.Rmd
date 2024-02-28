@@ -68,7 +68,7 @@ Follow instructions for installing `sf` available at <https://r-spatial.github.i
 Check out our [Getting Started article](https://docs.ropensci.org/FedData/articles/FedData.html).
 
 ### Acknowledgements
-This package is a product of SKOPE ([Synthesizing Knowledge of Past Environments](https://www.openskope.org/)) and the [Village Ecodynamics Project](https://crowcanyon.github.io/veparchaeology/) through grants awarded to the University of Montana, the [Crow Canyon Archaeological Center](https://crowcanyon.org/), and Washington State University by the National Science Foundation. This software is licensed under the [MIT license](https://opensource.org/license/mit/). Continuing development is supported by the [Montana Climate Office](https://climate.umt.edu).
+This package is a product of SKOPE ([Synthesizing Knowledge of Past Environments](https://www.openskope.org/)) and the [Village Ecodynamics Project](https://crowcanyon.github.io/veparchaeology/) through grants awarded to the University of Montana, the [Crow Canyon Archaeological Center](https://crowcanyon.org/), and Washington State University by the National Science Foundation. This software is licensed under the [MIT license](https://opensource.org/license/mit). Continuing development is supported by the [Montana Climate Office](https://climate.umt.edu).
 
 FedData was reviewed for [rOpenSci](https://ropensci.org) by [\@jooolia](https://github.com/jooolia), and was greatly improved as a result. [rOpenSci](https://ropensci.org) on-boarding was coordinated by [\@sckott](https://github.com/sckott).
 
