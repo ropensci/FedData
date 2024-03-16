@@ -3,7 +3,7 @@ Package: FedData
 Title: Functions to Automate Downloading Geospatial Data Available from
     Several Federated Data Sources
 Version: 4.0.1
-Date: 2024-02-28
+Date: 2024-03-14
 Authors@R: 
     c(person(given = c("R.", "Kyle"),
              family = "Bocinsky",
