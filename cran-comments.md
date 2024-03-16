@@ -67,7 +67,7 @@ servers outside the USA.
 
 `rhub::check_for_cran()` result:
 
-**Test environment:** Ubuntu Linux 20.04.1 LTS, R-release, GCC
+**Test environment:** Ubuntu Linux 20.04.6 LTS, R-release, GCC
 
 **0 errors ✔ \| 0 warnings ✔ \| 1 notes ✖**
 
