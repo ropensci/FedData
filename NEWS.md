@@ -1,4 +1,9 @@
 # FedData (development version)
+- Removed {styler} and several other packages from the Suggests field in the DESCRIPTION file.
+- Moved {ggplot2} and {ncdf4} to the Imports field.
+- `get_nass()` now throws an error (soft deprecated since v3.0.0).
+
+# FedData 4.0.1
 - Updated the getting started article to not include a degree symbol in the Daymet graph, which caused compilation errors in Windows. Fixes [Issue #106](https://github.com/ropensci/FedData/issues/106).
 - Updated `get_nlcd()` to include the 2021 NLCD as the default, in response to [Issue #105](https://github.com/ropensci/FedData/issues/105).
 - Updated outdated package description
