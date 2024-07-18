@@ -65,6 +65,7 @@ Imports:
     arcgislayers (>= 0.2.0),
     ggplot2,
     ncdf4
+Suggests: rmapshaper
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
