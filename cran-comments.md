@@ -9,8 +9,8 @@ editor_options:
 This is a minor release from FedData v4.0.1 to FedData v4.1.0. Please
 see NEWS.md for release details.
 
-FedData was removed from CRAN due to the removal of an dependency. That
-package has since been restored.
+FedData was Archived on 2024-08-19 as requires archived package 'arcgislayers'.
+The 'arcgislayers' package has since been restored.
 
 Please note that in recent CRAN submissions, CRAN maintainers have been 
 seeing URL check issues in checks by servers hosted outside the USA. This is
@@ -61,22 +61,15 @@ servers outside the USA.
 
 `devtools::check_win_devel()` result:
 
-**Test environment:** Windows Server 2022, R-devel, 64 bit
+**Test environment:** Windows Server 2022 x64 (build 20348), R-devel, 64 bit
 
 **0 errors ✔ \| 0 warnings ✔ \| 1 note ✖**
 
-- NOTE: Found the following (possibly) invalid URLs:
-  - URL: https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily
-    - From: README.md
-    - Status: Error
-    - Message: Empty reply from server
-  - URL: https://www.ncei.noaa.gov/products/paleoclimatology/tree-ring
-    - From: README.md
-    - Status: Error
-    - Message: Empty reply from server
-- Explanation: Manually accessed each URL, 
-and confirmed a http 200 status for each. Possibly due to check 
-server outside USA trying to access USA .gov URLs.
+- CRAN repository db overrides:
+  - X-CRAN-Comment: Archived on 2024-08-19 as requires archived package
+    'arcgislayers'.
+- Explanation: This is a resubmission and update; 
+'arcgislayers' is back on CRAN.
 
 ------------------------------------------------------------------------
 
