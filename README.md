@@ -24,8 +24,9 @@ sources.
 
 Currently, the package enables extraction from nine datasets:
 
-- The [National Elevation Dataset (NED)](https://ned.usgs.gov) digital
-  elevation models (1 and 1/3 arc-second; USGS)
+- The [National Elevation Dataset
+  (NED)](https://www.usgs.gov/3d-elevation-program) digital elevation
+  models (1 and 1/3 arc-second; USGS)
 - The [National Hydrography Dataset
   (NHD)](https://www.usgs.gov/national-hydrography/national-hydrography-dataset)
   (USGS)
