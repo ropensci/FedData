@@ -23,7 +23,7 @@ servers outside the USA.
 
 `devtools::check()` result:
 
-**Test environment:** aarch64-apple-darwin20 (64-bit), R 4.3.1 (2023-06-16)
+**Test environment:** aarch64-apple-darwin20 (64-bit), R 4.4.2 (2024-10-31)
 
 **0 errors ✔ \| 0 warnings ✔ \| 0 notes ✔**
 
