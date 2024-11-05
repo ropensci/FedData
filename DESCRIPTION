@@ -2,8 +2,8 @@ Type: Package
 Package: FedData
 Title: Functions to Automate Downloading Geospatial Data Available from
     Several Federated Data Sources
-Version: 4.0.1
-Date: 2024-03-14
+Version: 4.1.0
+Date: 2024-11-05
 Authors@R: 
     c(person(given = c("R.", "Kyle"),
              family = "Bocinsky",
@@ -64,10 +64,17 @@ Imports:
     sf (>= 1.0),
     arcgislayers (>= 0.2.0),
     ggplot2,
-    ncdf4
+    glue
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
 Repository: CRAN
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
+Suggests: 
+    knitr,
+    leaflet,
+    mapview,
+    ncdf4,
+    rmapshaper,
+    testthat

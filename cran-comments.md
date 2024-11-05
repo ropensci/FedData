@@ -6,8 +6,11 @@ editor_options:
 
 # CRAN comments
 
-This is a patch release from FedData v4.0.0 to FedData v4.0.1. Please
-see NEWS.md for release details. 
+This is a minor release from FedData v4.0.1 to FedData v4.1.0. Please
+see NEWS.md for release details.
+
+FedData was removed from CRAN due to the removal of an dependency. That
+package has since been restored.
 
 Please note that in recent CRAN submissions, CRAN maintainers have been 
 seeing URL check issues in checks by servers hosted outside the USA. This is

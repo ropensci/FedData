@@ -222,6 +222,345 @@ get_nlcd <- function(template,
   return(terra::rast(outfile))
 }
 
+#' Download and crop the Annual National Land Cover Database.
+#'
+#' \code{get_nlcd_annual} returns a [`SpatRaster`][terra::SpatRaster] of NLCD data cropped to a given
+#' template study area. The Annual NLCD is currently only available for the conterminous United States.
+#' More information about the Annual NLCD product is available on the
+#' [Annual NLCD web page](https://www.mrlc.gov/data/project/annual-nlcd).
+#'
+#' @param template An [`Simple Feature`][sf::sf]
+#' or [`terra`][terra::SpatRaster] object to serve as a template for cropping.
+#' @param label A character string naming the study area.
+#' @param year An integer vector representing the year of desired NLCD product.
+#' Acceptable values are currently 1985 through 2023 (defaults to 2023).
+#' @param product A character vector representing type of the NLCD product.
+#' Defaults to 'LndCov' (Land Cover).\cr
+#' LndCov = Land Cover\cr
+#' LndChg = Land Cover Change\cr
+#' LndCnf = Land Cover Confidence\cr
+#' FctImp = Fractional Impervious Surface\cr
+#' ImpDsc = Impervious Descriptor\cr
+#' SpcChg = Spectral Change Day of Year\cr
+#' @param region A character string representing the region to be extracted
+#' Acceptable values are 'CU' (Conterminous US, the default),
+#' 'AK' (Alaska), and 'HI' (Hawaii). **Currently, only 'CU' is available.**
+#' @param collection An integer representing the collection number.
+#' **Currently, only '1' is available.**
+#' @param version An integer representing the version number.
+#' **Currently, only '0' is available.**
+#' @param extraction.dir A character string indicating where the extracted
+#' and cropped NLCD data should be put. The directory will be created if missing.
+#' @param raster.options a vector of GDAL options passed to [terra::writeRaster].
+#' @param force.redo If an extraction for this template and label already exists,
+#' should a new one be created?
+#' @return A \code{RasterLayer} cropped to the bounding box of the template.
+#' @export
+#' @importFrom magrittr %>% %<>%
+#' @examples
+#' \dontrun{
+#' # Extract data for the Mesa Verde National Park:
+#'
+#' # Get the NLCD (USA ONLY)
+#' # Returns a raster
+#' NLCD_ANNUAL <-
+#'   get_nlcd_annual(
+#'     template = FedData::meve,
+#'     label = "meve",
+#'     year = seq(1990, 2020, 10),
+#'     product =
+#'       c(
+#'         "LndCov",
+#'         "LndChg",
+#'         "LndCnf",
+#'         "FctImp",
+#'         "ImpDsc",
+#'         "SpcChg"
+#'       )
+#'   )
+#' }
+get_nlcd_annual <-
+  function(template,
+           label,
+           year = 2023,
+           product = "LndCov",
+           region = "CU",
+           collection = 1,
+           version = 0,
+           extraction.dir = file.path(
+             tempdir(),
+             "FedData",
+             "extractions",
+             "nlcd_annual",
+             label
+           ),
+           raster.options = c(
+             "COMPRESS=DEFLATE",
+             "ZLEVEL=9"
+           ),
+           force.redo = FALSE) {
+    nlcd_annual_bucket <- "https://s3-us-west-2.amazonaws.com/mrlc"
+
+    if (any(!(year %in% 1985:2023))) {
+      stop("'year' must only contain integers between 1985 and 2023.")
+    }
+
+    if (
+      any(
+        !(
+          product %in%
+            c(
+              "LndCov",
+              "LndChg",
+              "LndCnf",
+              "FctImp",
+              "ImpDsc",
+              "SpcChg"
+            )
+        )
+      )
+    ) {
+      stop(
+        "'product' must be one or more of 'LndCov', 'LndChg', 'LndCnf', 'FctImp', 'ImpDsc', 'SpcChg'."
+      )
+    }
+
+    if (
+      any(
+        !(
+          region %in%
+            c("CU")
+        )
+      )
+    ) {
+      stop(
+        "'region' currently must be 'CU' (the default)."
+      )
+    }
+
+    if (
+      any(
+        !(
+          collection %in%
+            c(1)
+        )
+      )
+    ) {
+      stop(
+        "'collection' currently must be '1' (the default)."
+      )
+    }
+
+    if (
+      any(
+        !(
+          version %in%
+            c(0)
+        )
+      )
+    ) {
+      stop(
+        "'version' currently must be '0' (the default)."
+      )
+    }
+
+    extraction.dir <-
+      normalizePath(extraction.dir, mustWork = FALSE)
+
+    dir.create(extraction.dir, showWarnings = FALSE, recursive = TRUE)
+
+    template %<>% template_to_sf()
+
+    files <-
+      tidyr::expand_grid(
+        product = product |>
+          unique() |>
+          factor(
+            levels = c(
+              "LndCov",
+              "LndChg",
+              "LndCnf",
+              "FctImp",
+              "ImpDsc",
+              "SpcChg"
+            ),
+            ordered = TRUE
+          ),
+        year = year |>
+          unique() |>
+          sort() |>
+          as.integer(),
+        region = region |>
+          unique() |>
+          factor(
+            levels = c(
+              "CU",
+              "AK",
+              "HI"
+            ),
+            ordered = TRUE
+          ),
+        collection = collection |>
+          unique() |>
+          sort() |>
+          as.integer(),
+        version = version |>
+          unique() |>
+          sort() |>
+          as.integer()
+      ) %>%
+      dplyr::mutate(
+        file =
+          glue::glue("Annual_NLCD_{product}_{year}_{region}_C{collection}V{version}.tif"),
+        outfile =
+          glue::glue("{extraction.dir}/{label}_{file}")
+      )
+
+    suppressWarnings(
+      template_nlcd <-
+        file.path(
+          "/vsicurl",
+          nlcd_annual_bucket,
+          files$file[[1]]
+        ) |>
+        terra::rast() |>
+        terra::rast()
+    )
+
+    template %<>%
+      sf::st_transform(
+        terra::crs(template_nlcd)
+      )
+
+    tryCatch(
+      template_nlcd %<>%
+        terra::crop(template,
+          snap = "out"
+        ),
+      error =
+        function(e) {
+          stop("The provided template is not within the specified region.")
+        }
+    )
+
+    read_nlcd_annual <-
+      function(x, outfile) {
+        if (!force.redo) {
+          if (
+            file.exists(outfile)
+          ) {
+            if (
+              compare_rast_dims(terra::rast(outfile), template_nlcd)
+            ) {
+              return(outfile)
+            }
+          }
+        }
+
+        tmp <- tempfile(fileext = ".tif")
+
+        suppressWarnings(
+          out <-
+            terra::rast(
+              file.path(
+                "/vsicurl",
+                nlcd_annual_bucket,
+                x
+              )
+            ) |>
+            terra::crop(template_nlcd)
+        )
+
+        if (stringr::str_detect(x, "LndCov")) {
+          levels(out) <-
+            nlcd_colors() %>%
+            as.data.frame()
+
+          terra::coltab(out) <-
+            nlcd_colors() |>
+            dplyr::select(ID, Color) |>
+            as.data.frame()
+
+          terra::writeRaster(
+            x = out,
+            filename = outfile,
+            datatype = "INT1U",
+            gdal = raster.options,
+            overwrite = TRUE
+          )
+        }
+
+        if (stringr::str_detect(x, "LndChg")) {
+          terra::writeRaster(
+            x = as.factor(out),
+            filename = outfile,
+            datatype = "INT2U",
+            gdal = raster.options,
+            overwrite = TRUE
+          )
+        }
+
+        if (stringr::str_detect(x, "LndCnf|FctImp")) {
+          terra::writeRaster(
+            x = out,
+            filename = outfile,
+            datatype = "INT1U",
+            gdal = raster.options,
+            overwrite = TRUE
+          )
+        }
+
+        if (stringr::str_detect(x, "ImpDsc")) {
+          levels(out) <-
+            tibble::tibble(
+              ID = 0:2,
+              Class = c(
+                "Non-Urban",
+                "Roads",
+                "Urban"
+              )
+            ) %>%
+            as.data.frame()
+
+          terra::coltab(out) <-
+            terra::coltab(out)[[1]] |>
+            dplyr::filter(value %in% 0:2) |>
+            as.data.frame()
+
+          terra::writeRaster(
+            x = out,
+            filename = outfile,
+            datatype = "INT1U",
+            gdal = raster.options,
+            overwrite = TRUE
+          )
+        }
+
+        if (stringr::str_detect(x, "SpcChg")) {
+          terra::writeRaster(
+            x = out,
+            filename = outfile,
+            datatype = "INT2U",
+            gdal = raster.options,
+            overwrite = TRUE
+          )
+        }
+
+        return(outfile)
+      }
+
+    return(
+      files |>
+        dplyr::rowwise() |>
+        dplyr::mutate(
+          rast = read_nlcd_annual(file, outfile) |>
+            terra::rast() |>
+            list()
+        ) |>
+        dplyr::select(!file)
+    )
+  }
+
 #' @export
 #' @rdname get_nlcd
 nlcd_colors <- function() {

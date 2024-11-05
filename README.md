@@ -43,7 +43,8 @@ Currently, the package enables extraction from nine datasets:
 - The [International Tree Ring Data Bank
   (ITRDB)](https://www.ncei.noaa.gov/products/paleoclimatology/tree-ring),
   coordinated by National Climatic Data Center at NOAA
-- The [National Land Cover Database (NLCD)](https://www.mrlc.gov/)
+- The [National Land Cover Database (NLCD)](https://www.mrlc.gov/),
+  including the annual NLCD data
 - The [NASS Cropland Data
   Layer](https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php)
   from the National Agricultural Statistics Service

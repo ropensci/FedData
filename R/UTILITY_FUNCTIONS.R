@@ -57,7 +57,8 @@ if (getRversion() >= "2.15.1") {
     "cats",
     "STATION",
     "DAY",
-    "DATE"
+    "DATE",
+    "outfile"
   ))
 }
 
@@ -374,3 +375,22 @@ list_to_tibble <-
 split_n <- function(x, n) {
   split(x, ceiling(seq_along(x) / n))
 }
+
+compare_rast_dims <-
+  function(x, y) {
+    x_dims <-
+      c(
+        terra::ncol(x),
+        terra::nrow(x),
+        terra::res(x)
+      )
+
+    y_dims <-
+      c(
+        terra::ncol(y),
+        terra::nrow(y),
+        terra::res(y)
+      )
+
+    all(x_dims == y_dims)
+  }
