@@ -19,7 +19,7 @@ The name of each list item is the station ID.
 
     <a class="navbar-brand me-2" href="../index.html">FedData</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">4.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">4.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,8 +62,8 @@ The name of each list item is the station ID.</p></li>
 <span>  years <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  raw.dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"FedData"</span>, <span class="st">"raw"</span>, <span class="st">"ghcn"</span><span class="op">)</span>,</span>
 <span>  extraction.dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"FedData"</span>, <span class="st">"extractions"</span>, <span class="st">"ned"</span>, <span class="va">label</span><span class="op">)</span>,</span>
-<span>  standardize <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>  force.redo <span class="op">=</span> <span class="cn">F</span></span>
+<span>  standardize <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  force.redo <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -245,7 +245,7 @@ The directory will be created if missing. Defaults to './EXTRACTIONS/GHCN/'.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># Get the daily GHCN data (GLOBAL)</span></span></span>
 <span class="r-in"><span><span class="co"># Returns a list: the first element is the spatial locations of stations,</span></span></span>
 <span class="r-in"><span><span class="co"># and the second is a list of the stations and their daily data</span></span></span>
@@ -255,31 +255,49 @@ The directory will be created if missing. Defaults to './EXTRACTIONS/GHCN/'.</p>
 <span class="r-in"><span>    label <span class="op">=</span> <span class="st">"meve"</span>,</span></span>
 <span class="r-in"><span>    elements <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"prcp"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> (Down)Loading GHCN station inventory.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> (Down)Loading GHCN station data for station US1COMZ0017</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading file: https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/US1COMZ0017.dly</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> (Down)Loading GHCN station data for station USW00003061</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading file: https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/USW00003061.dly</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> (Down)Loading GHCN station data for station USC00055531</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading file: https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/USC00055531.dly</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Plot the VEP polygon</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">meve</span><span class="op">$</span><span class="va">geometry</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">meve</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Plot the spatial locations</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">GHCN.prcp</span><span class="op">$</span><span class="va">spatial</span>, pch <span class="op">=</span> <span class="fl">1</span>, add <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">GHCN.prcp</span><span class="op">$</span><span class="va">spatial</span><span class="op">$</span><span class="va">geometry</span>, pch <span class="op">=</span> <span class="fl">1</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"bottomleft"</span>, pch <span class="op">=</span> <span class="fl">1</span>, legend <span class="op">=</span> <span class="st">"GHCN Precipitation Records"</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="get_ghcn_daily-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Elements for which you require the same data</span></span></span>
 <span class="r-in"><span><span class="co"># (i.e., minimum and maximum temperature for the same days)</span></span></span>
-<span class="r-in"><span><span class="co"># can be standardized using standardize==T</span></span></span>
+<span class="r-in"><span><span class="co"># can be standardized using `standardize = TRUE`</span></span></span>
 <span class="r-in"><span><span class="va">GHCN.temp</span> <span class="op">&lt;-</span> <span class="fu">get_ghcn_daily</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  template <span class="op">=</span> <span class="fu">FedData</span><span class="fu">::</span><span class="va"><a href="meve.html">meve</a></span>,</span></span>
 <span class="r-in"><span>  label <span class="op">=</span> <span class="st">"meve"</span>,</span></span>
 <span class="r-in"><span>  elements <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tmin"</span>, <span class="st">"tmax"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  standardize <span class="op">=</span> <span class="cn">T</span></span></span>
+<span class="r-in"><span>  standardize <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> (Down)Loading GHCN station inventory.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> (Down)Loading GHCN station data for station USR0000CMRF</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading file: https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/USR0000CMRF.dly</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> (Down)Loading GHCN station data for station USW00003061</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading file (if necessary): https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/USW00003061.dly</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> (Down)Loading GHCN station data for station USR0000CCHN</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading file: https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/USR0000CCHN.dly</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> (Down)Loading GHCN station data for station USC00055531</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Downloading file (if necessary): https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/USC00055531.dly</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Plot the VEP polygon</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">meve</span><span class="op">$</span><span class="va">geometry</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">meve</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Plot the spatial locations</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">GHCN.temp</span><span class="op">$</span><span class="va">spatial</span>, pch <span class="op">=</span> <span class="fl">1</span>, add <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rspatial.github.io/terra/reference/plot.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">GHCN.temp</span><span class="op">$</span><span class="va">spatial</span><span class="op">$</span><span class="va">geometry</span>, pch <span class="op">=</span> <span class="fl">1</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"bottomleft"</span>, pch <span class="op">=</span> <span class="fl">1</span>, legend <span class="op">=</span> <span class="st">"GHCN Temperature Records"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-plt img"><img src="get_ghcn_daily-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

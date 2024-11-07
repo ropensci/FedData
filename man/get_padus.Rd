@@ -56,7 +56,7 @@ directly by managing agencies, coordinated through the Federal Geographic
 Data Committee Federal Lands Working Group.
 }
 \examples{
-\dontrun{
+\donttest{
 # Get the PAD-US (USA ONLY)
 PADUS <- get_padus(
   template = FedData::meve,

@@ -153,7 +153,7 @@ write_sf_all <-
 #' @return A logical vector of the same length as x.
 #' @export
 #' @keywords internal
-sequential_duplicated <- function(x, rows = F) {
+sequential_duplicated <- function(x, rows = FALSE) {
   if (!rows) {
     duplicates <- c(FALSE, unlist(lapply(1:(length(x) - 1), function(i) {
       duplicated(x[i:(i + 1)])[2]
@@ -276,7 +276,8 @@ download_data <-
     } else if (timestamping & file.exists(destfile)) {
       message("Downloading file (if necessary): ", url)
       opts <- list(
-        verbose = verbose, noprogress = !progress, fresh_connect = TRUE, ftp_use_epsv = FALSE, forbid_reuse = TRUE,
+        verbose = verbose, noprogress = !progress,
+        fresh_connect = TRUE, ftp_use_epsv = FALSE, forbid_reuse = TRUE,
         timecondition = TRUE, timevalue = base::file.info(destfile)$mtime
       )
       hand <- curl::new_handle()
@@ -292,7 +293,7 @@ download_data <-
       )
 
       if (file.info(temp.file)$size > 0) {
-        file.copy(temp.file, destfile, overwrite = T)
+        file.copy(temp.file, destfile, overwrite = TRUE)
       }
       return(destfile)
     } else {
@@ -350,6 +351,7 @@ url_base <- function(x) {
 #'
 #' @description Replace all the empty values in a list
 #' @param x A list
+#' @returns A list with NULLs replaced by NA
 #' @examples
 #' list(a = NULL, b = 1, c = list(foo = NULL, bar = NULL)) %>% replace_null()
 #' @export

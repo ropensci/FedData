@@ -9,6 +9,9 @@ replace_null(x)
 \arguments{
 \item{x}{A list}
 }
+\value{
+A list with NULLs replaced by NA
+}
 \description{
 Replace all the empty values in a list
 }

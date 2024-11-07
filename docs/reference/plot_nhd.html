@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">FedData</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">4.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">4.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,16 +63,79 @@ or <code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.ht
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># Get the NHD (USA ONLY)</span></span></span>
 <span class="r-in"><span><span class="va">NHD</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_nhd.html">get_nhd</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  template <span class="op">=</span> <span class="fu">FedData</span><span class="fu">::</span><span class="va"><a href="meve.html">meve</a></span>,</span></span>
 <span class="r-in"><span>  label <span class="op">=</span> <span class="st">"meve"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">NHD</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Point</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 2 features and 10 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POINT</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: -12083250 ymin: 4469345 xmax: -12062340 ymax: 4474361</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: WGS 84 / Pseudo-Mercator</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 11</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   OBJECTID FDATE               RESOLUTION GNIS_ID  GNIS_NAME    REACHCODE FTYPE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>    <span style="text-decoration: underline;">16</span>724 2003-07-01 <span style="color: #949494;">18:00:00</span>          2 00179195 Rock Springs <span style="color: #BB0000;">NA</span>          458</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>   <span style="text-decoration: underline;">481</span>568 2015-03-06 <span style="color: #949494;">03:56:39</span>          2 <span style="color: #BB0000;">NA</span>       <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span>          367</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 4 more variables: FCODE &lt;dbl&gt;, PERMANENT_IDENTIFIER &lt;chr&gt;, GLOBALID &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   geom &lt;POINT [m]&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Flowline</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 424 features and 17 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTILINESTRING</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: -12084260 ymin: 4460933 xmax: -12060340 ymax: 4487920</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: WGS 84 / Pseudo-Mercator</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 424 × 18</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    OBJECTID permanent_identifier fdate               resolution gnis_id </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>    <span style="text-decoration: underline;">25</span>888 89636109             2012-02-18 <span style="color: #949494;">05:02:41</span>          2 <span style="color: #BB0000;">NA</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>    <span style="text-decoration: underline;">25</span>988 89636095             2012-02-18 <span style="color: #949494;">05:00:10</span>          2 00902295</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>   <span style="text-decoration: underline;">143</span>005 89639153             2015-09-07 <span style="color: #949494;">18:00:00</span>          2 00902295</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>   <span style="text-decoration: underline;">471</span>453 89639251             2012-02-18 <span style="color: #949494;">05:01:07</span>          2 00902295</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>   <span style="text-decoration: underline;">472</span>018 89636103             2012-02-18 <span style="color: #949494;">05:00:10</span>          2 00902295</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>   <span style="text-decoration: underline;">472</span>099 89638687             2012-02-18 <span style="color: #949494;">05:01:27</span>          2 <span style="color: #BB0000;">NA</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>   <span style="text-decoration: underline;">586</span>689 89635471             2012-02-18 <span style="color: #949494;">05:00:33</span>          2 <span style="color: #BB0000;">NA</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>   <span style="text-decoration: underline;">586</span>796 89638705             2012-02-18 <span style="color: #949494;">05:00:14</span>          2 <span style="color: #BB0000;">NA</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>   <span style="text-decoration: underline;">809</span>460 89634465             2015-06-30 <span style="color: #949494;">18:00:00</span>          2 <span style="color: #BB0000;">NA</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>   <span style="text-decoration: underline;">887</span>363 82523370             2020-10-08 <span style="color: #949494;">18:00:00</span>          2 <span style="color: #BB0000;">NA</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 414 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 13 more variables: gnis_name &lt;chr&gt;, lengthkm &lt;dbl&gt;, reachcode &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   flowdir &lt;dbl&gt;, wbarea_permanent_identifier &lt;chr&gt;, ftype &lt;dbl&gt;, fcode &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   innetwork &lt;dbl&gt;, mainpath &lt;dbl&gt;, visibilityfilter &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Shape_Length &lt;dbl&gt;, globalid &lt;chr&gt;, geom &lt;MULTILINESTRING [m]&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Waterbody</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 10 features and 15 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: POLYGON</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: -12081810 ymin: 4465756 xmax: -12067270 ymax: 4484894</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: WGS 84 / Pseudo-Mercator</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 16</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    OBJECTID PERMANENT_IDENTIFIER FDATE               RESOLUTION GNIS_ID</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>  1<span style="text-decoration: underline;">326</span>666 89638655             2003-07-01 <span style="color: #949494;">18:00:00</span>          2 <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>  2<span style="text-decoration: underline;">436</span>074 89634565             2003-07-01 <span style="color: #949494;">18:00:00</span>          2 <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>  2<span style="text-decoration: underline;">532</span>090 89638207             2003-07-01 <span style="color: #949494;">18:00:00</span>          2 <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>  2<span style="text-decoration: underline;">893</span>566 89634585             2003-07-01 <span style="color: #949494;">18:00:00</span>          2 <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>  3<span style="text-decoration: underline;">640</span>339 89634605             2003-07-01 <span style="color: #949494;">18:00:00</span>          2 <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  4<span style="text-decoration: underline;">339</span>039 89634591             2003-07-01 <span style="color: #949494;">18:00:00</span>          2 <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  4<span style="text-decoration: underline;">459</span>618 89634587             2003-07-01 <span style="color: #949494;">18:00:00</span>          2 <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  4<span style="text-decoration: underline;">821</span>810 89638209             2003-07-01 <span style="color: #949494;">18:00:00</span>          2 <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  5<span style="text-decoration: underline;">304</span>625 89634583             2003-07-01 <span style="color: #949494;">18:00:00</span>          2 <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  5<span style="text-decoration: underline;">906</span>925 89634589             2003-07-01 <span style="color: #949494;">18:00:00</span>          2 <span style="color: #BB0000;">NA</span>     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 11 more variables: GNIS_NAME &lt;chr&gt;, AREASQKM &lt;dbl&gt;, ELEVATION &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   REACHCODE &lt;chr&gt;, FTYPE &lt;dbl&gt;, FCODE &lt;dbl&gt;, VISIBILITYFILTER &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   SHAPE_Length &lt;dbl&gt;, SHAPE_Area &lt;dbl&gt;, GLOBALID &lt;chr&gt;, geom &lt;POLYGON [m]&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="va">NHD</span> <span class="op"><a href="pipe.html">%&gt;%</a></span></span></span>
 <span class="r-in"><span>  <span class="fu">plot_nhd</span><span class="op">(</span>template <span class="op">=</span> <span class="fu">FedData</span><span class="fu">::</span><span class="va"><a href="meve.html">meve</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-plt img"><img src="plot_nhd-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

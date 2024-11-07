@@ -4,7 +4,7 @@
 \alias{sequential_duplicated}
 \title{Get a logical vector of which elements in a vector are sequentially duplicated.}
 \usage{
-sequential_duplicated(x, rows = F)
+sequential_duplicated(x, rows = FALSE)
 }
 \arguments{
 \item{x}{An vector of any type, or, if \code{rows}, a matrix.}

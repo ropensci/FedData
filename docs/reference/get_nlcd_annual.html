@@ -13,7 +13,7 @@ Annual NLCD web page."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">FedData</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">4.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">4.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -129,7 +129,7 @@ should a new one be created?</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># Extract data for the Mesa Verde National Park:</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Get the NLCD (USA ONLY)</span></span></span>
@@ -138,16 +138,30 @@ should a new one be created?</p></dd>
 <span class="r-in"><span>  <span class="fu">get_nlcd_annual</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    template <span class="op">=</span> <span class="fu">FedData</span><span class="fu">::</span><span class="va"><a href="meve.html">meve</a></span>,</span></span>
 <span class="r-in"><span>    label <span class="op">=</span> <span class="st">"meve"</span>,</span></span>
-<span class="r-in"><span>    year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1990</span>,<span class="fl">2020</span>,<span class="fl">10</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    product <span class="op">=</span> </span></span>
-<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"LndCov"</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"LndChg"</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"LndCnf"</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"FctImp"</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"ImpDsc"</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"SpcChg"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    year <span class="op">=</span> <span class="fl">2020</span>,</span></span>
+<span class="r-in"><span>    product <span class="op">=</span></span></span>
+<span class="r-in"><span>      <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="st">"LndCov"</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"LndChg"</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"LndCnf"</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"FctImp"</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"ImpDsc"</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"SpcChg"</span></span></span>
+<span class="r-in"><span>      <span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-in"><span>  </span></span>
+<span class="r-in"><span>  <span class="va">NLCD_ANNUAL</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Rowwise: </span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   product  year region collection version outfile             rast              </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;glue&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> LndCov   <span style="text-decoration: underline;">2</span>020 CU              1       0 /var/folders/rp/s0… <span style="color: #949494;">&lt;SpatRstr[,627,1]&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> LndChg   <span style="text-decoration: underline;">2</span>020 CU              1       0 /var/folders/rp/s0… <span style="color: #949494;">&lt;SpatRstr[,627,1]&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> LndCnf   <span style="text-decoration: underline;">2</span>020 CU              1       0 /var/folders/rp/s0… <span style="color: #949494;">&lt;SpatRstr[,627,1]&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> FctImp   <span style="text-decoration: underline;">2</span>020 CU              1       0 /var/folders/rp/s0… <span style="color: #949494;">&lt;SpatRstr[,627,1]&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> ImpDsc   <span style="text-decoration: underline;">2</span>020 CU              1       0 /var/folders/rp/s0… <span style="color: #949494;">&lt;SpatRstr[,627,1]&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> SpcChg   <span style="text-decoration: underline;">2</span>020 CU              1       0 /var/folders/rp/s0… <span style="color: #949494;">&lt;SpatRstr[,627,1]&gt;</span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

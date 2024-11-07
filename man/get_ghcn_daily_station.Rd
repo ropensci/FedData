@@ -9,8 +9,8 @@ get_ghcn_daily_station(
   elements = NULL,
   years = NULL,
   raw.dir,
-  standardize = F,
-  force.redo = F
+  standardize = FALSE,
+  force.redo = FALSE
 )
 }
 \arguments{

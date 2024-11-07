@@ -63,7 +63,7 @@ More information about the Annual NLCD product is available on the
 \href{https://www.mrlc.gov/data/project/annual-nlcd}{Annual NLCD web page}.
 }
 \examples{
-\dontrun{
+\donttest{
 # Extract data for the Mesa Verde National Park:
 
 # Get the NLCD (USA ONLY)
@@ -72,7 +72,7 @@ NLCD_ANNUAL <-
   get_nlcd_annual(
     template = FedData::meve,
     label = "meve",
-    year = seq(1990, 2020, 10),
+    year = 2020,
     product =
       c(
         "LndCov",
@@ -83,5 +83,7 @@ NLCD_ANNUAL <-
         "SpcChg"
       )
   )
+  
+  NLCD_ANNUAL
 }
 }

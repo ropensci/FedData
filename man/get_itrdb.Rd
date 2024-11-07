@@ -82,15 +82,16 @@ and names of extracted ITRDB chronologies,
 }
 }
 \examples{
-\dontrun{
+\donttest{
 # Get the ITRDB records
-ITRDB <- get_itrdb(template = FedData::meve, label = "meve", makeSpatial = T)
+ITRDB <- get_itrdb(template = FedData::meve, 
+label = "meve")
 
 # Plot the VEP polygon
-plot(meve$geometry)
+plot(meve)
 
 # Map the locations of the tree ring chronologies
-plot(ITRDB$metadata, pch = 1, add = T)
+plot(ITRDB$metadata$geometry, pch = 1, add = TRUE)
 legend("bottomleft", pch = 1, legend = "ITRDB chronologies")
 }
 }

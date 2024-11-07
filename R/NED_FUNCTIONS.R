@@ -16,7 +16,7 @@
 #' @export
 #' @importFrom magrittr %>%
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Get the NED (USA ONLY)
 #' # Returns a `SpatRaster`
 #' NED <-
@@ -26,7 +26,7 @@
 #'   )
 #'
 #' # Plot with terra::plot
-#' plot(NED)
+#' terra::plot(NED)
 #' }
 get_ned <- function(template,
                     label,

@@ -23,28 +23,48 @@
 #' @export
 #' @importFrom readr read_csv write_csv
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Get the NRCS SSURGO data (USA ONLY)
-#' SSURGO.MEVE <- get_ssurgo(template = FedData::meve, label = "meve")
+#' SSURGO.MEVE <-
+#'   get_ssurgo(
+#'     template = FedData::meve,
+#'     label = "meve"
+#'   )
 #'
 #' # Plot the VEP polygon
-#' plot(meve$geometry)
+#' plot(meve)
 #'
 #' # Plot the SSURGO mapunit polygons
-#' plot(SSURGO.MEVE$spatial, lwd = 0.1, add = T)
+#' plot(SSURGO.MEVE$spatial["MUKEY"],
+#'   lwd = 0.1,
+#'   add = TRUE
+#' )
 #'
 #' # Or, download by Soil Survey Area names
-#' SSURGO.areas <- get_ssurgo(template = c("CO670", "CO075"), label = "CO_TEST")
+#' SSURGO.areas <-
+#'   get_ssurgo(
+#'     template = c("CO670", "CO075"),
+#'     label = "CO_TEST"
+#'   )
 #'
 #' # Let's just look at spatial data for CO675
-#' SSURGO.areas.CO675 <- SSURGO.areas$spatial[SSURGO.areas$spatial$AREASYMBOL == "CO075", ]
+#' SSURGO.areas.CO675 <-
+#'   SSURGO.areas$spatial[SSURGO.areas$spatial$AREASYMBOL == "CO075", ]
 #'
 #' # And get the NED data under them for pretty plotting
-#' NED.CO675 <- get_ned(template = SSURGO.areas.CO675, label = "SSURGO_CO675")
+#' NED.CO675 <-
+#'   get_ned(
+#'     template = SSURGO.areas.CO675,
+#'     label = "SSURGO_CO675"
+#'   )
 #'
 #' # Plot the SSURGO mapunit polygons, but only for CO675
-#' plot(NED.CO675)
-#' plot(SSURGO.areas.CO675, lwd = 0.1, add = T)
+#' terra::plot(NED.CO675)
+#' plot(
+#'   SSURGO.areas.CO675$geom,
+#'   lwd = 0.1,
+#'   add = TRUE
+#' )
 #' }
 get_ssurgo <- function(template,
                        label,
@@ -348,7 +368,7 @@ download_ssurgo_study_area <- function(area, date, raw.dir) {
   # Try to download with the state database, otherwise grab the US
   url <- paste("http://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/wss_SSA_", area, "_[", date, "].zip", sep = "")
   destdir <- raw.dir
-  download_data(url = url, destdir = destdir, nc = T)
+  download_data(url = url, destdir = destdir, nc = TRUE)
 
   return(normalizePath(paste(destdir, "/wss_SSA_", area, "_[", date, "].zip", sep = "")))
 }
@@ -394,7 +414,7 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
   # Read in all tables
   tablesData <-
     paste0(tmpdir, "/", area, "/tabular") %>%
-    list.files(full.names = T) %>%
+    list.files(full.names = TRUE) %>%
     magrittr::set_names(
       .,
       tools::file_path_sans_ext(basename(.))
@@ -409,7 +429,7 @@ get_ssurgo_study_area <- function(template = NULL, area, date, raw.dir) {
         tryCatch(
           return(
             readr::read_delim(file,
-              col_names = F,
+              col_names = FALSE,
               col_types = readr::cols(.default = readr::col_character()),
               delim = "|"
             )

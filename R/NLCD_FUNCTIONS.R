@@ -26,7 +26,7 @@
 #' @export
 #' @importFrom magrittr %>% %<>%
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Extract data for the Mesa Verde National Park:
 #'
 #' # Get the NLCD (USA ONLY)
@@ -39,7 +39,7 @@
 #'   )
 #'
 #' # Plot with terra::plot
-#' plot(NLCD)
+#' terra::plot(NLCD)
 #' }
 get_nlcd <- function(template,
                      label,
@@ -258,7 +258,7 @@ get_nlcd <- function(template,
 #' @export
 #' @importFrom magrittr %>% %<>%
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Extract data for the Mesa Verde National Park:
 #'
 #' # Get the NLCD (USA ONLY)
@@ -267,7 +267,7 @@ get_nlcd <- function(template,
 #'   get_nlcd_annual(
 #'     template = FedData::meve,
 #'     label = "meve",
-#'     year = seq(1990, 2020, 10),
+#'     year = 2020,
 #'     product =
 #'       c(
 #'         "LndCov",
@@ -278,6 +278,8 @@ get_nlcd <- function(template,
 #'         "SpcChg"
 #'       )
 #'   )
+#'
+#' NLCD_ANNUAL
 #' }
 get_nlcd_annual <-
   function(template,
@@ -373,23 +375,25 @@ get_nlcd_annual <-
 
     files <-
       tidyr::expand_grid(
-        product = product |>
-          unique() |>
-          factor(
-            levels = c(
-              "LndCov",
-              "LndChg",
-              "LndCnf",
-              "FctImp",
-              "ImpDsc",
-              "SpcChg"
+        product =
+          product |>
+            unique() |>
+            factor(
+              levels = c(
+                "LndCov",
+                "LndChg",
+                "LndCnf",
+                "FctImp",
+                "ImpDsc",
+                "SpcChg"
+              ),
+              ordered = TRUE
             ),
-            ordered = TRUE
-          ),
-        year = year |>
-          unique() |>
-          sort() |>
-          as.integer(),
+        year =
+          year |>
+            unique() |>
+            sort() |>
+            as.integer(),
         region = region |>
           unique() |>
           factor(
@@ -492,7 +496,7 @@ get_nlcd_annual <-
 
         if (stringr::str_detect(x, "LndChg")) {
           terra::writeRaster(
-            x = as.factor(out),
+            x = terra::as.factor(out),
             filename = outfile,
             datatype = "INT2U",
             gdal = raster.options,

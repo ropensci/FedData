@@ -4,7 +4,7 @@
 \alias{download_ghcn_daily_station}
 \title{Download the daily data for a GHCN weather station.}
 \usage{
-download_ghcn_daily_station(ID, raw.dir, force.redo = F)
+download_ghcn_daily_station(ID, raw.dir, force.redo = FALSE)
 }
 \arguments{
 \item{ID}{A character string giving the station ID.}

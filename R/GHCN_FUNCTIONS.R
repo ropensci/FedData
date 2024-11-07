@@ -165,7 +165,7 @@
 #' @importFrom readr read_fwf
 #' @importFrom magrittr %>%
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Get the daily GHCN data (GLOBAL)
 #' # Returns a list: the first element is the spatial locations of stations,
 #' # and the second is a list of the stations and their daily data
@@ -177,27 +177,27 @@
 #'   )
 #'
 #' # Plot the VEP polygon
-#' plot(meve$geometry)
+#' plot(meve)
 #'
 #' # Plot the spatial locations
-#' plot(GHCN.prcp$spatial, pch = 1, add = T)
+#' plot(GHCN.prcp$spatial$geometry, pch = 1, add = TRUE)
 #' legend("bottomleft", pch = 1, legend = "GHCN Precipitation Records")
 #'
 #' # Elements for which you require the same data
 #' # (i.e., minimum and maximum temperature for the same days)
-#' # can be standardized using standardize==T
+#' # can be standardized using `standardize = TRUE`
 #' GHCN.temp <- get_ghcn_daily(
 #'   template = FedData::meve,
 #'   label = "meve",
 #'   elements = c("tmin", "tmax"),
-#'   standardize = T
+#'   standardize = TRUE
 #' )
 #'
 #' # Plot the VEP polygon
-#' plot(meve$geometry)
+#' plot(meve)
 #'
 #' # Plot the spatial locations
-#' plot(GHCN.temp$spatial, pch = 1, add = T)
+#' plot(GHCN.temp$spatial$geometry, pch = 1, add = TRUE)
 #' legend("bottomleft", pch = 1, legend = "GHCN Temperature Records")
 #' }
 get_ghcn_daily <- function(template = NULL,
@@ -219,8 +219,8 @@ get_ghcn_daily <- function(template = NULL,
                                "ned",
                                label
                              ),
-                           standardize = F,
-                           force.redo = F) {
+                           standardize = FALSE,
+                           force.redo = FALSE) {
   # raw.dir <- normalizePath(paste0(raw.dir, "/."), mustWork = FALSE)
   # extraction.dir <- normalizePath(paste0(extraction.dir, "/."), mustWork = FALSE)
 
@@ -272,7 +272,7 @@ get_ghcn_daily <- function(template = NULL,
   if (standardize) {
     stations.sf.splits <- split(as.character(stations.sf$ELEMENT),
       f = stations.sf$ID,
-      drop = T
+      drop = TRUE
     )
     stations.sf.splits.all <- sapply(stations.sf.splits, function(x) {
       all(sapply(toupper(elements), function(y) {
@@ -353,14 +353,14 @@ get_ghcn_daily <- function(template = NULL,
 #' @return A character string representing the full local path of the GHCN station data.
 #' @export
 #' @keywords internal
-download_ghcn_daily_station <- function(ID, raw.dir, force.redo = F) {
-  dir.create(raw.dir, recursive = T, showWarnings = F)
+download_ghcn_daily_station <- function(ID, raw.dir, force.redo = FALSE) {
+  dir.create(raw.dir, recursive = TRUE, showWarnings = FALSE)
 
   url <- paste("https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/", ID, ".dly", sep = "")
   if (!force.redo) {
-    download_data(url = url, destdir = raw.dir, timestamping = T)
+    download_data(url = url, destdir = raw.dir, timestamping = TRUE)
   } else {
-    download_data(url = url, destdir = raw.dir, timestamping = F)
+    download_data(url = url, destdir = raw.dir, timestamping = FALSE)
   }
 
   return(normalizePath(paste0(raw.dir, "/", ID, ".dly")))
@@ -522,8 +522,8 @@ get_ghcn_daily_station <- function(ID,
                                    elements = NULL,
                                    years = NULL,
                                    raw.dir,
-                                   standardize = F,
-                                   force.redo = F) {
+                                   standardize = FALSE,
+                                   force.redo = FALSE) {
   file <- download_ghcn_daily_station(ID = ID, raw.dir = paste(raw.dir, "/DAILY/", sep = ""), force.redo = force.redo)
 
   # GHCN files are fixed-width. The numbers here refer to those column widths.

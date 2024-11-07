@@ -43,27 +43,44 @@ in the template, and
 }
 }
 \examples{
-\dontrun{
+\donttest{
 # Get the NRCS SSURGO data (USA ONLY)
-SSURGO.MEVE <- get_ssurgo(template = FedData::meve, label = "meve")
+SSURGO.MEVE <-
+  get_ssurgo(template = FedData::meve,
+             label = "meve")
 
 # Plot the VEP polygon
-plot(meve$geometry)
+plot(meve)
 
 # Plot the SSURGO mapunit polygons
-plot(SSURGO.MEVE$spatial, lwd = 0.1, add = T)
+plot(SSURGO.MEVE$spatial['MUKEY'], 
+     lwd = 0.1, 
+     add = TRUE)
 
 # Or, download by Soil Survey Area names
-SSURGO.areas <- get_ssurgo(template = c("CO670", "CO075"), label = "CO_TEST")
+SSURGO.areas <- 
+  get_ssurgo(
+    template = c("CO670", "CO075"), 
+    label = "CO_TEST"
+  )
 
 # Let's just look at spatial data for CO675
-SSURGO.areas.CO675 <- SSURGO.areas$spatial[SSURGO.areas$spatial$AREASYMBOL == "CO075", ]
+SSURGO.areas.CO675 <- 
+  SSURGO.areas$spatial[SSURGO.areas$spatial$AREASYMBOL == "CO075", ]
 
 # And get the NED data under them for pretty plotting
-NED.CO675 <- get_ned(template = SSURGO.areas.CO675, label = "SSURGO_CO675")
+NED.CO675 <- 
+  get_ned(
+    template = SSURGO.areas.CO675, 
+    label = "SSURGO_CO675"
+  )
 
 # Plot the SSURGO mapunit polygons, but only for CO675
-plot(NED.CO675)
-plot(SSURGO.areas.CO675, lwd = 0.1, add = T)
+terra::plot(NED.CO675)
+plot(
+  SSURGO.areas.CO675$geom, 
+  lwd = 0.1, 
+  add = TRUE
+  )
 }
 }

@@ -1,9 +1,9 @@
 Type: Package
 Package: FedData
-Title: Functions to Automate Downloading Geospatial Data Available from
+Title: Download Geospatial Data Available from
     Several Federated Data Sources
 Version: 4.1.0
-Date: 2024-11-05
+Date: 2024-11-06
 Authors@R: 
     c(person(given = c("R.", "Kyle"),
              family = "Bocinsky",
@@ -22,22 +22,26 @@ Authors@R:
       person(given = "Julia",
              family = "Gustavsen",
              role = "rev"))
-Description: Functions to automate downloading geospatial data available
+Description: Download geospatial data available
     from several federated data sources (mainly sources maintained by the
     US Federal government). Currently, the package enables extraction from
     nine datasets: The National Elevation Dataset digital elevation
-    models (1 and 1/3 arc-second; USGS); The National Hydrography Dataset
-    (USGS); The Soil Survey Geographic (SSURGO) database from the National
-    Cooperative Soil Survey (NCSS), which is led by the Natural Resources
-    Conservation Service (NRCS) under the USDA; the Global Historical
-    Climatology Network (GHCN), coordinated by National Climatic Data
+    models (<https://www.usgs.gov/3d-elevation-program> 1 and 1/3 arc-second; 
+    USGS); The National Hydrography Dataset
+    (<https://www.usgs.gov/national-hydrography/national-hydrography-dataset>; 
+    USGS); The Soil Survey Geographic (SSURGO) database from the National
+    Cooperative Soil Survey (<https://websoilsurvey.sc.egov.usda.gov/>; NCSS), 
+    which is led by the Natural Resources
+    Conservation Service (NRCS) under the USDA; 
+    the Global Historical Climatology Network (<https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily>; GHCN), coordinated by National Climatic Data
     Center at NOAA; the Daymet gridded estimates of daily weather
     parameters for North America, version 4, available from the Oak Ridge
-    National Laboratory's Distributed Active Archive Center (DAAC); the
+    National Laboratory's Distributed Active Archive Center 
+    (<https://daymet.ornl.gov/>; DAAC); the
     International Tree Ring Data Bank; the National Land Cover
-    Database (NLCD); the Cropland Data Layer from the National Agricultural 
-    Statistics Service; and the PAD-US dataset of protected area boundaries 
-    from the USGS.
+    Database (<https://www.mrlc.gov/>; NLCD); the Cropland Data Layer from the National Agricultural 
+    Statistics Service (<https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php>; NASS); 
+    and the PAD-US dataset of protected area boundaries (<https://www.usgs.gov/programs/gap-analysis-project/science/pad-us-data-overview>; USGS).
 License: MIT + file LICENSE
 URL: https://docs.ropensci.org/FedData/,
     https://github.com/ropensci/FedData
@@ -56,7 +60,6 @@ Imports:
     xml2,
     lifecycle,
     lubridate,
-    magrittr,
     progress,
     purrr,
     readr,
@@ -64,7 +67,8 @@ Imports:
     sf (>= 1.0),
     arcgislayers (>= 0.2.0),
     ggplot2,
-    glue
+    glue,
+    magrittr
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
@@ -77,4 +81,5 @@ Suggests:
     mapview,
     ncdf4,
     rmapshaper,
-    testthat
+    testthat,
+    usethis

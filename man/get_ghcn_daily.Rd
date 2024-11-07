@@ -11,8 +11,8 @@ get_ghcn_daily(
   years = NULL,
   raw.dir = file.path(tempdir(), "FedData", "raw", "ghcn"),
   extraction.dir = file.path(tempdir(), "FedData", "extractions", "ned", label),
-  standardize = F,
-  force.redo = F
+  standardize = FALSE,
+  force.redo = FALSE
 )
 }
 \arguments{
@@ -187,7 +187,7 @@ The name of each list item is the station ID.
 }
 }
 \examples{
-\dontrun{
+\donttest{
 # Get the daily GHCN data (GLOBAL)
 # Returns a list: the first element is the spatial locations of stations,
 # and the second is a list of the stations and their daily data
@@ -199,27 +199,27 @@ GHCN.prcp <-
   )
 
 # Plot the VEP polygon
-plot(meve$geometry)
+plot(meve)
 
 # Plot the spatial locations
-plot(GHCN.prcp$spatial, pch = 1, add = T)
+plot(GHCN.prcp$spatial$geometry, pch = 1, add = TRUE)
 legend("bottomleft", pch = 1, legend = "GHCN Precipitation Records")
 
 # Elements for which you require the same data
 # (i.e., minimum and maximum temperature for the same days)
-# can be standardized using standardize==T
+# can be standardized using `standardize = TRUE`
 GHCN.temp <- get_ghcn_daily(
   template = FedData::meve,
   label = "meve",
   elements = c("tmin", "tmax"),
-  standardize = T
+  standardize = TRUE
 )
 
 # Plot the VEP polygon
-plot(meve$geometry)
+plot(meve)
 
 # Plot the spatial locations
-plot(GHCN.temp$spatial, pch = 1, add = T)
+plot(GHCN.temp$spatial$geometry, pch = 1, add = TRUE)
 legend("bottomleft", pch = 1, legend = "GHCN Temperature Records")
 }
 }

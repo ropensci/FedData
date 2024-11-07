@@ -10,12 +10,12 @@ context("International Tree Ring Data Bank tests")
 
 # test_that("ITRDB version files are available", {
 #   opts <- list(
-#     verbose = F,
-#     noprogress = T,
-#     fresh_connect = T,
-#     ftp_use_epsv = T,
-#     forbid_reuse = T,
-#     dirlistonly = T)
+#     verbose = FALSE,
+#     noprogress = TRUE,
+#     fresh_connect = TRUE,
+#     ftp_use_epsv = TRUE,
+#     forbid_reuse = TRUE,
+#     dirlistonly = TRUE)
 #   hand <- curl::new_handle()
 #   curl::handle_setopt(hand, .list = opts)
 #

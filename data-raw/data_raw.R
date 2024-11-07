@@ -29,7 +29,7 @@ library(sf)
 # zip("./data-raw/nhd_huc4.gpkg.zip", "./data-raw/nhd_huc4.gpkg")
 #
 # # devtools::use_data(nhd_huc4,
-# #                    overwrite = T)
+# #                    overwrite = TRUE)
 #
 # unlink("./data-raw/wbdhu4_a_us_september2017.zip")
 #

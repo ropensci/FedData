@@ -34,7 +34,8 @@
 #' @importFrom magrittr %>% %$% %<>% %T>%
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' library(terra)
 #'
 #' # Get the DAYMET (North America only)
 #' # Returns a list of raster bricks
@@ -42,11 +43,11 @@
 #'   template = FedData::meve,
 #'   label = "meve",
 #'   elements = c("prcp", "tmin", "tmax"),
-#'   years = 1980:1985
+#'   years = 1985
 #' )
 #'
 #' # Plot with terra::plot
-#' plot(DAYMET$tmin$X1985.10.23)
+#' plot(DAYMET$tmin$`1985-10-23`)
 #' }
 get_daymet <- function(template,
                        label,

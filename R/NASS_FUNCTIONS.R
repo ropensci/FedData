@@ -18,7 +18,7 @@
 #' @export
 #' @importFrom magrittr %>%
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Extract data for the Mesa Verde National Park:
 #'
 #' # Get the NASS CDL (USA ONLY)
@@ -31,7 +31,7 @@
 #'   )
 #'
 #' # Plot with terra::plot
-#' plot(NASS)
+#' terra::plot(NASS)
 #' }
 get_nass_cdl <- function(template,
                          label,
@@ -115,7 +115,7 @@ get_nass_cdl <- function(template,
   terra::coltab(out) <-
     cdl_colors() %>%
     dplyr::select(ID, Color) %>%
-    dplyr::filter(ID %in% cats(out)[[1]]$ID) %>%
+    dplyr::filter(ID %in% terra::cats(out)[[1]]$ID) %>%
     as.data.frame()
 
   out %T>%

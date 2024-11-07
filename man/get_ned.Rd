@@ -37,7 +37,7 @@ A \code{SpatRaster} DEM cropped to the extent of the template.
 template study area.
 }
 \examples{
-\dontrun{
+\donttest{
 # Get the NED (USA ONLY)
 # Returns a `SpatRaster`
 NED <-
@@ -47,6 +47,6 @@ NED <-
   )
 
 # Plot with terra::plot
-plot(NED)
+terra::plot(NED)
 }
 }

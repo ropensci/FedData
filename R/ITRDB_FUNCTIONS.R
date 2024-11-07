@@ -51,15 +51,18 @@
 #' @export
 #' @importFrom sf st_as_sf st_transform st_intersection
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Get the ITRDB records
-#' ITRDB <- get_itrdb(template = FedData::meve, label = "meve", makeSpatial = T)
+#' ITRDB <- get_itrdb(
+#'   template = FedData::meve,
+#'   label = "meve"
+#' )
 #'
 #' # Plot the VEP polygon
-#' plot(meve$geometry)
+#' plot(meve)
 #'
 #' # Map the locations of the tree ring chronologies
-#' plot(ITRDB$metadata, pch = 1, add = T)
+#' plot(ITRDB$metadata$geometry, pch = 1, add = TRUE)
 #' legend("bottomleft", pch = 1, legend = "ITRDB chronologies")
 #' }
 get_itrdb <- function(template = NULL,
@@ -174,11 +177,11 @@ get_itrdb <- function(template = NULL,
     )
 
   widths <- sapply(all.data, function(df) {
-    data.matrix(df[, "WIDTH", drop = F])
+    data.matrix(df[, "WIDTH", drop = FALSE])
   })
 
   depths <- sapply(all.data, function(df) {
-    data.matrix(df[, "DEPTH", drop = F])
+    data.matrix(df[, "DEPTH", drop = FALSE])
   })
 
   colnames(widths) <- colnames(depths) <- names(all.data)
@@ -211,7 +214,11 @@ get_itrdb <- function(template = NULL,
 download_itrdb <- function(raw.dir = paste0(tempdir(), "/FedData/raw/itrdb"), force.redo = FALSE) {
   dir.create(raw.dir, showWarnings = FALSE, recursive = TRUE)
 
-  opts <- list(verbose = F, noprogress = T, fresh_connect = T, ftp_use_epsv = T, forbid_reuse = T, dirlistonly = T)
+  opts <- list(
+    verbose = FALSE,
+    noprogress = TRUE, fresh_connect = TRUE, ftp_use_epsv = TRUE,
+    forbid_reuse = TRUE, dirlistonly = TRUE
+  )
   hand <- curl::new_handle()
   curl::handle_setopt(hand, .list = opts)
 
@@ -234,7 +241,10 @@ download_itrdb <- function(raw.dir = paste0(tempdir(), "/FedData/raw/itrdb"), fo
   version <- max(as.numeric(gsub("[^0-9]", "", basename(zips))))
   zips <- zips[grepl(paste0("v", version), zips)]
 
-  message("Extracting chronology data from ITRDB version ", version, " dated ", as.character(as.Date(base::file.info(zips[[1]])$mtime)))
+  message(
+    "Extracting chronology data from ITRDB version ", version,
+    " dated ", as.character(as.Date(base::file.info(zips[[1]])$mtime))
+  )
 
   if (!force.redo && file.exists(paste(raw.dir, "/ITRDB_", version, ".Rds", sep = ""))) {
     itrdb.metadata <- readr::read_rds(paste(raw.dir, "/ITRDB_", version, ".Rds", sep = ""))
@@ -247,7 +257,7 @@ download_itrdb <- function(raw.dir = paste0(tempdir(), "/FedData/raw/itrdb"), fo
 
       utils::unzip(file, exdir = tmpdir)
 
-      crns <- list.files(tmpdir, full.names = T)
+      crns <- list.files(tmpdir, full.names = TRUE)
       crns <- crns[grepl("\\.crn", crns)]
 
       message("Extracting chronology data from ", length(crns), " files in ", file)
@@ -266,12 +276,12 @@ download_itrdb <- function(raw.dir = paste0(tempdir(), "/FedData/raw/itrdb"), fo
         message("File(s) likely malformed!")
       }
 
-      records <- unlist(records, recursive = F)
+      records <- unlist(records, recursive = FALSE)
 
       return(records)
     })
 
-    all.data <- unlist(all.data, recursive = F)
+    all.data <- unlist(all.data, recursive = FALSE)
 
     ## Nulling out to appease R CMD CHECK
     LAT <- LON <- START <- END <- data <- NULL
@@ -316,7 +326,10 @@ download_itrdb <- function(raw.dir = paste0(tempdir(), "/FedData/raw/itrdb"), fo
 read_crn <- function(file) {
   id <- toupper(gsub(".crn", "", basename(file)))
 
-  all.data <- scan(file, what = "character", multi.line = F, fill = T, sep = "\n", quiet = T)
+  all.data <- scan(file,
+    what = "character", multi.line = FALSE, fill = TRUE,
+    sep = "\n", quiet = TRUE
+  )
   all.data <- iconv(all.data, from = "latin1", to = "")
 
   # This removes blank lines
@@ -326,9 +339,9 @@ read_crn <- function(file) {
 
   tails <- substr_right(all.data, 3)
   if (any(tails == "RAW")) {
-    SCHWEINGRUBER <- T
+    SCHWEINGRUBER <- TRUE
   } else {
-    SCHWEINGRUBER <- F
+    SCHWEINGRUBER <- FALSE
   }
 
   meta <- read_crn_metadata(file, SCHWEINGRUBER)
@@ -536,16 +549,16 @@ read_crn_metadata <- function(file, SCHWEINGRUBER) {
   if (!SCHWEINGRUBER) {
     # Parse the header of the CRN file
     meta.1 <- as.character(utils::read.fwf(file, c(6, 3, 52, 4),
-      skip = 0, n = 1, colClasses = "character", strip.white = T,
-      stringsAsFactors = F
+      skip = 0, n = 1, colClasses = "character", strip.white = TRUE,
+      stringsAsFactors = FALSE
     ))
     meta.2 <- as.character(utils::read.fwf(file, c(6, 3, 13, 18, 6, 5, 6, 9, 6, 5),
       skip = 1, n = 1, colClasses = "character",
-      strip.white = T, stringsAsFactors = F
+      strip.white = TRUE, stringsAsFactors = FALSE
     ))
     meta.3 <- as.character(utils::read.fwf(file, c(6, 3, 52, 2, 12),
-      skip = 2, n = 1, colClasses = "character", strip.white = T,
-      stringsAsFactors = F
+      skip = 2, n = 1, colClasses = "character", strip.white = TRUE,
+      stringsAsFactors = FALSE
     ))
 
     meta <- c(id, meta.1[3:4], type.measurement, type.chronology, meta.2[c(5:7, 9:10)], meta.3[3])
@@ -555,7 +568,10 @@ read_crn_metadata <- function(file, SCHWEINGRUBER) {
       "END", "CONTRIBUTOR"
     )
   } else {
-    meta <- scan(file, what = "character", n = 3, multi.line = F, fill = T, sep = "\n", quiet = T)
+    meta <- scan(file,
+      what = "character", n = 3, multi.line = FALSE,
+      fill = TRUE, sep = "\n", quiet = TRUE
+    )
     meta <- sub("  RAW", "", meta)
 
     meta[1] <- gsub(substr(meta[1], 1, 9), "", meta[1])
@@ -676,7 +692,7 @@ read_crn_data <- function(file, SCHWEINGRUBER) {
   if (!SCHWEINGRUBER) {
     years <- as.character(utils::read.fwf(file, c(6, 3, 13, 18, 6, 5, 6, 9, 6, 5),
       skip = 1, n = 1, colClasses = "character",
-      strip.white = T, stringsAsFactors = F
+      strip.white = TRUE, stringsAsFactors = FALSE
     ))[9:10]
 
     if (any(grepl(" ", years))) {
@@ -722,7 +738,7 @@ read_crn_data <- function(file, SCHWEINGRUBER) {
     ## Get chron stats if needed
     suppressWarnings(chron.stats <- utils::read.fwf(con, c(yearStart, digits.year, 6, 6, 6, 7, 9, 9, 10),
       skip = nlines - 1,
-      strip.white = TRUE, colClasses = "character", stringsAsFactors = F
+      strip.white = TRUE, colClasses = "character", stringsAsFactors = FALSE
     ))
     ## Unintuitively, the connection object seems to have been destroyed by the previous read.fwf.  We need to create a new one.
     con <- file(file)
@@ -733,12 +749,12 @@ read_crn_data <- function(file, SCHWEINGRUBER) {
 
       ## Really read file
       dat <- utils::read.fwf(con, c(yearStart, digits.year, rep(c(4, 3), 10)), skip = skip.lines, n = nlines - skip.lines -
-        1, strip.white = TRUE, colClasses = "character", stringsAsFactors = F)
+        1, strip.white = TRUE, colClasses = "character", stringsAsFactors = FALSE)
     } else {
       ## Really read file
       dat <- utils::read.fwf(con, c(yearStart, digits.year, rep(c(4, 3), 10)),
         skip = skip.lines, n = nlines - skip.lines,
-        strip.white = TRUE, colClasses = "character", stringsAsFactors = F
+        strip.white = TRUE, colClasses = "character", stringsAsFactors = FALSE
       )
     }
 
@@ -789,7 +805,11 @@ read_crn_data <- function(file, SCHWEINGRUBER) {
 
     return(data.frame(crn.mat))
   } else {
-    raw.data <- scan(file, what = "character", multi.line = F, fill = T, sep = "\n", strip.white = T, quiet = T)
+    raw.data <- scan(file,
+      what = "character",
+      multi.line = FALSE, fill = TRUE, sep = "\n",
+      strip.white = TRUE, quiet = TRUE
+    )
     tails <- toupper(substr_right(raw.data, 3))
     raw.data <- split(raw.data, tails)
 
@@ -797,7 +817,10 @@ read_crn_data <- function(file, SCHWEINGRUBER) {
       x[-c(1:3)]
     })
 
-    meta <- scan(file, what = "character", n = 3, multi.line = F, fill = T, sep = "\n", quiet = T)
+    meta <- scan(file,
+      what = "character", n = 3, multi.line = FALSE,
+      fill = TRUE, sep = "\n", quiet = TRUE
+    )
     meta <- sub("  RAW", "", meta)
 
     meta[2] <- gsub(substr(meta[2], 1, 9), "", meta[2])
@@ -825,7 +848,7 @@ read_crn_data <- function(file, SCHWEINGRUBER) {
         sapply(1:length(starts), function(ii) {
           substr(x, starts[ii], stops[ii])
         })
-      })), ncol = 22, byrow = T))
+      })), ncol = 22, byrow = TRUE))
 
       dat[[1]] <- as.character(dat[[1]])
       for (i in 2:22) {

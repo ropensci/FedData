@@ -13,7 +13,7 @@
 #' @importFrom magrittr %>% %<>%
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Get the NHD (USA ONLY)
 #' NHD <- get_nhd(
 #'   template = FedData::meve,
@@ -168,7 +168,7 @@ get_nhd <-
 #' @importFrom magrittr %>% %<>%
 #' @export
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Get the NHD (USA ONLY)
 #' NHD <- get_nhd(
 #'   template = FedData::meve,

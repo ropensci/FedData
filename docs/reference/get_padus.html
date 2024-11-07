@@ -11,7 +11,7 @@ PAD-US ArcGIS Web Services."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">FedData</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">4.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">4.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,14 +109,39 @@ Data Committee Federal Lands Working Group.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># Get the PAD-US (USA ONLY)</span></span></span>
 <span class="r-in"><span><span class="va">PADUS</span> <span class="op">&lt;-</span> <span class="fu">get_padus</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  template <span class="op">=</span> <span class="fu">FedData</span><span class="fu">::</span><span class="va"><a href="meve.html">meve</a></span>,</span></span>
 <span class="r-in"><span>  label <span class="op">=</span> <span class="st">"meve"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">PADUS</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Manager_Name</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Simple feature collection with 8 features and 38 fields</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Geometry type: MULTIPOLYGON</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dimension:     XY</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Bounding box:  xmin: -12084260 ymin: 4460933 xmax: -12060370 ymax: 4488079</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Projected CRS: WGS 84 / Pseudo-Mercator</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 8 × 39</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   OBJECTID FeatClass    Category   Own_Type Own_Name Loc_Own Mang_Type Mang_Name</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>     <span style="text-decoration: underline;">1</span>301 Proclamation Proclamat… DESG     DESG     <span style="color: #949494;">""</span>      TRIB      TRIB     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span>     <span style="text-decoration: underline;">3</span>806 Fee          Fee        FED      BLM      <span style="color: #949494;">""</span>      FED       BLM      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span>     <span style="text-decoration: underline;">5</span>120 Fee          Fee        FED      NPS      <span style="color: #949494;">"</span>NPS<span style="color: #949494;">"</span>   FED       NPS      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span>    <span style="text-decoration: underline;">17</span>519 Fee          Fee        STAT     SLB      <span style="color: #949494;">"</span>Color… STAT      SLB      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span>   <span style="text-decoration: underline;">256</span>179 Designation  Designati… DESG     DESG     <span style="color: #949494;">""</span>      FED       BLM      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span>   <span style="text-decoration: underline;">261</span>051 Designation  Designati… DESG     DESG     <span style="color: #949494;">""</span>      FED       BLM      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span>   <span style="text-decoration: underline;">264</span>452 Designation  Designati… DESG     DESG     <span style="color: #949494;">""</span>      FED       NPS      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span>   <span style="text-decoration: underline;">429</span>477 Easement     Easement   PVT      PVT      <span style="color: #949494;">"</span>PVT<span style="color: #949494;">"</span>   NGO       NGO      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 31 more variables: Loc_Mang &lt;chr&gt;, Des_Tp &lt;chr&gt;, Loc_Ds &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Unit_Nm &lt;chr&gt;, Loc_Nm &lt;chr&gt;, State_Nm &lt;chr&gt;, Agg_Src &lt;chr&gt;, GIS_Src &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Src_Date &lt;chr&gt;, GIS_Acres &lt;dbl&gt;, Source_PAID &lt;chr&gt;, WDPA_Cd &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   Pub_Access &lt;chr&gt;, Access_Src &lt;chr&gt;, Access_Dt &lt;chr&gt;, GAP_Sts &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   GAPCdSrc &lt;chr&gt;, GAPCdDt &lt;chr&gt;, IUCN_Cat &lt;chr&gt;, IUCNCtSrc &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   IUCNCtDt &lt;chr&gt;, Date_Est &lt;chr&gt;, Comments &lt;chr&gt;, EsmtHldr &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   EHoldTyp &lt;chr&gt;, WebMercAc &lt;dbl&gt;, TranspPct &lt;dbl&gt;, Shape__Area &lt;dbl&gt;, …</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

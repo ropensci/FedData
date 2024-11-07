@@ -19,7 +19,7 @@ A \code{ggplot2} panel of plots
 This is more of an example than anything
 }
 \examples{
-\dontrun{
+\donttest{
 # Get the NHD (USA ONLY)
 NHD <- get_nhd(
   template = FedData::meve,
