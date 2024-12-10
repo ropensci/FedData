@@ -2,6 +2,7 @@
 
 export("%>%")
 export(agol_filter)
+export(agol_filter_httr)
 export(cdl_colors)
 export(check_service)
 export(download_data)

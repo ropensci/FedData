@@ -113,6 +113,7 @@ get_padus <-
               httr::modify_url(.,
                 path = c(.$path, 0, "query"),
                 query = list(
+                  outFields = "*",
                   f = "pgeojson",
                   where =
                     paste0(
@@ -126,41 +127,15 @@ get_padus <-
           }
         )
     } else {
-      geom <-
-        template %>%
-        template_to_sf() %>%
-        sf::st_transform(4326) %>%
-        sf::st_as_sfc() %>%
-        sf::st_union() %>%
-        sf::st_cast("POLYGON") %>%
-        jsonlite::toJSON() %>%
-        jsonlite::fromJSON(flatten = TRUE) %$%
-        coordinates %>%
-        purrr::map(\(x){
-          x |>
-            purrr::array_tree() |>
-            unlist(recursive = FALSE) |>
-            purrr::map(unlist)
-        }) %>%
-        list(rings = .) %>%
-        jsonlite::toJSON()
-
       padus_out <-
         padus_services[layer] %>%
         purrr::map(
           function(x) {
-            file.path(padus_base_url, x, "FeatureServer", 0, "query") %>%
-              httr::POST(
-                body =
-                  list(
-                    where = "1=1",
-                    f = "pgeojson",
-                    geometry = geom,
-                    geometryType = "esriGeometryPolygon",
-                    spatialRel = "esriSpatialRelIntersects"
-                  )
-              ) %>%
-              sf::read_sf()
+            agol_filter_httr(
+              url = file.path(padus_base_url, x, "FeatureServer"),
+              layer_name = 0,
+              geom = template
+            )
           }
         )
     }

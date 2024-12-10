@@ -55,6 +55,20 @@ get_nhd <-
       sf::st_union() %>%
       sf::st_cast("POLYGON")
 
+    geom <-
+      template %>%
+      jsonlite::toJSON() %>%
+      jsonlite::fromJSON(flatten = TRUE) %$%
+      coordinates %>%
+      purrr::map(\(x){
+        x |>
+          purrr::array_tree() |>
+          unlist(recursive = FALSE) |>
+          purrr::map(unlist)
+      }) %>%
+      list(rings = .) %>%
+      jsonlite::toJSON()
+
     if (nhdplus) {
       layers <-
         c(
@@ -67,7 +81,7 @@ get_nhd <-
         )
 
       nhd_out <-
-        agol_filter(
+        agol_filter_httr(
           url = "https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer",
           layer_name = layers,
           geom = template
@@ -94,7 +108,7 @@ get_nhd <-
         )
 
       nhd_out <-
-        agol_filter(
+        agol_filter_httr(
           url = "https://hydro.nationalmap.gov/arcgis/rest/services/nhd/MapServer",
           layer_name = layers,
           geom = template
