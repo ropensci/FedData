@@ -83,7 +83,7 @@ NLCD_ANNUAL <-
         "SpcChg"
       )
   )
-  
-  NLCD_ANNUAL
+
+NLCD_ANNUAL
 }
 }

@@ -1,5 +1,8 @@
 # FedData (development version)
 
+# FedData (4.2.0)
+- Removed `arcgislayers` dependency, as we weren't using it much anyway. Re-Closes [Issue #109](https://github.com/ropensci/FedData/issues/109).
+
 # FedData (4.1.0)
 - Removed {styler} and several other packages from the Suggests field in the DESCRIPTION file.
 - Moved {ggplot2} and {ncdf4} to the Suggests field.

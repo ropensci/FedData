@@ -84,8 +84,10 @@ and names of extracted ITRDB chronologies,
 \examples{
 \donttest{
 # Get the ITRDB records
-ITRDB <- get_itrdb(template = FedData::meve, 
-label = "meve")
+ITRDB <- get_itrdb(
+  template = FedData::meve,
+  label = "meve"
+)
 
 # Plot the VEP polygon
 plot(meve)

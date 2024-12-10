@@ -67,24 +67,11 @@ get_nhd <-
         )
 
       nhd_out <-
-        "https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer" %>%
-        arcgislayers::arc_open() %>%
-        arcgislayers::get_layers(
-          name = layers
-        ) %>%
-        purrr::map(
-          ~ tryCatch(
-            arcgislayers::arc_select(
-              .x,
-              filter_geom =
-                template
-            ),
-            error = function(e) {
-              NULL
-            }
-          )
-        ) %>%
-        magrittr::set_names(layers) %$%
+        agol_filter(
+          url = "https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer",
+          layer_name = layers,
+          geom = template
+        ) %$%
         list(
           Point = NHDPoint,
           Flowline = list(
@@ -107,24 +94,11 @@ get_nhd <-
         )
 
       nhd_out <-
-        "https://hydro.nationalmap.gov/arcgis/rest/services/nhd/MapServer" %>%
-        arcgislayers::arc_open() %>%
-        arcgislayers::get_layers(
-          name = layers
-        ) %>%
-        purrr::map(
-          ~ tryCatch(
-            arcgislayers::arc_select(
-              .x,
-              filter_geom =
-                template
-            ),
-            error = function(e) {
-              NULL
-            }
-          )
-        ) %>%
-        magrittr::set_names(layers) %$%
+        agol_filter(
+          url = "https://hydro.nationalmap.gov/arcgis/rest/services/nhd/MapServer",
+          layer_name = layers,
+          geom = template
+        ) %$%
         list(
           Point = Point,
           Flowline = `Flowline - Large Scale`,
@@ -255,17 +229,14 @@ get_wbd <- function(template,
     return(read_sf_all(out_dsn))
   }
 
-  "https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/" %>%
-    arcgislayers::arc_open() %>%
-    arcgislayers::get_layer(
-      name = "WBDHU12"
-    ) %>%
-    arcgislayers::arc_select(
-      filter_geom =
-        template %>%
-          template_to_sf() %>%
-          sf::st_as_sfc()
-    ) %>%
+  agol_filter(
+    url = "https://hydro.nationalmap.gov/arcgis/rest/services/NHDPlus_HR/MapServer/",
+    layer_name = "WBDHU12",
+    geom =
+      template |>
+        template_to_sf() |>
+        sf::st_as_sfc()
+  ) |>
     sf::write_sf(dsn = out_dsn)
 
   return(

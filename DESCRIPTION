@@ -2,8 +2,8 @@ Type: Package
 Package: FedData
 Title: Download Geospatial Data Available from
     Several Federated Data Sources
-Version: 4.1.0
-Date: 2024-11-06
+Version: 4.2.0
+Date: 2024-12-10
 Authors@R: 
     c(person(given = c("R.", "Kyle"),
              family = "Bocinsky",
@@ -65,10 +65,10 @@ Imports:
     readr,
     terra (>= 1.0),
     sf (>= 1.0),
-    arcgislayers (>= 0.2.0),
     ggplot2,
     glue,
-    magrittr
+    magrittr,
+    jsonlite
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
@@ -76,6 +76,7 @@ Repository: CRAN
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Suggests: 
+    arcgislayers (>= 0.2.0),
     knitr,
     leaflet,
     mapview,

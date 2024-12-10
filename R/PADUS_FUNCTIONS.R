@@ -108,38 +108,59 @@ get_padus <-
         padus_services[layer] %>%
         purrr::map(
           function(x) {
-            file.path(padus_base_url, x, "FeatureServer/") %>%
-              arcgislayers::arc_open() %>%
-              arcgislayers::get_layer(id = 0) %>%
-              arcgislayers::arc_select(
-                where =
-                  paste0(
-                    "Unit_Nm IN (",
-                    paste(paste0("'", template, "'"), collapse = ","),
-                    ")"
-                  )
-              )
+            file.path(padus_base_url, x, "FeatureServer") %>%
+              httr::parse_url() %>%
+              httr::modify_url(.,
+                path = c(.$path, 0, "query"),
+                query = list(
+                  f = "pgeojson",
+                  where =
+                    paste0(
+                      "Unit_Nm IN (",
+                      paste(paste0("'", template, "'"), collapse = ","),
+                      ")"
+                    )
+                )
+              ) %>%
+              sf::read_sf()
           }
         )
     } else {
-      template %<>%
+      geom <-
+        template %>%
         template_to_sf() %>%
         sf::st_transform(4326) %>%
         sf::st_as_sfc() %>%
         sf::st_union() %>%
-        sf::st_cast("POLYGON")
+        sf::st_cast("POLYGON") %>%
+        jsonlite::toJSON() %>%
+        jsonlite::fromJSON(flatten = TRUE) %$%
+        coordinates %>%
+        purrr::map(\(x){
+          x |>
+            purrr::array_tree() |>
+            unlist(recursive = FALSE) |>
+            purrr::map(unlist)
+        }) %>%
+        list(rings = .) %>%
+        jsonlite::toJSON()
 
       padus_out <-
         padus_services[layer] %>%
         purrr::map(
           function(x) {
-            file.path(padus_base_url, x, "FeatureServer/") %>%
-              arcgislayers::arc_open() %>%
-              arcgislayers::get_layer(id = 0) %>%
-              arcgislayers::arc_select(
-                filter_geom =
-                  template
-              )
+            file.path(padus_base_url, x, "FeatureServer", 0, "query") %>%
+              httr::POST(
+                body =
+                  list(
+                    where = "1=1",
+                    f = "pgeojson",
+                    geometry = geom,
+                    geometryType = "esriGeometryPolygon",
+                    spatialRel = "esriSpatialRelIntersects"
+                  )
+              ) %>%
+              sf::read_sf()
           }
         )
     }

@@ -4,17 +4,23 @@
   "identifier": "FedData",
   "description": "Download geospatial data available from several federated data sources (mainly sources maintained by the US Federal government). Currently, the package enables extraction from nine datasets: The National Elevation Dataset digital elevation models (<https://www.usgs.gov/3d-elevation-program> 1 and 1/3 arc-second; USGS); The National Hydrography Dataset (<https://www.usgs.gov/national-hydrography/national-hydrography-dataset>; USGS); The Soil Survey Geographic (SSURGO) database from the National Cooperative Soil Survey (<https://websoilsurvey.sc.egov.usda.gov/>; NCSS), which is led by the Natural Resources Conservation Service (NRCS) under the USDA; the Global Historical Climatology Network (<https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily>; GHCN), coordinated by National Climatic Data Center at NOAA; the Daymet gridded estimates of daily weather parameters for North America, version 4, available from the Oak Ridge National Laboratory's Distributed Active Archive Center (<https://daymet.ornl.gov/>; DAAC); the International Tree Ring Data Bank; the National Land Cover Database (<https://www.mrlc.gov/>; NLCD); the Cropland Data Layer from the National Agricultural Statistics Service (<https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php>; NASS); and the PAD-US dataset of protected area boundaries (<https://www.usgs.gov/programs/gap-analysis-project/science/pad-us-data-overview>; USGS).",
   "name": "FedData: Download Geospatial Data Available from\n    Several Federated Data Sources",
-  "relatedLink": "https://docs.ropensci.org/FedData/",
+  "relatedLink": ["https://docs.ropensci.org/FedData/", "https://CRAN.R-project.org/package=FedData"],
   "codeRepository": "https://github.com/ropensci/FedData",
   "issueTracker": "https://github.com/ropensci/FedData/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
   "runtimePlatform": "R version 4.4.2 (2024-10-31)",
+  "provider": {
+    "@id": "https://cran.r-project.org",
+    "@type": "Organization",
+    "name": "Comprehensive R Archive Network (CRAN)",
+    "url": "https://cran.r-project.org"
+  },
   "author": [
     {
       "@type": "Person",
@@ -60,6 +66,19 @@
     }
   ],
   "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "arcgislayers",
+      "name": "arcgislayers",
+      "version": ">= 0.2.0",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=arcgislayers"
+    },
     {
       "@type": "SoftwareApplication",
       "identifier": "knitr",
@@ -336,19 +355,6 @@
     },
     "17": {
       "@type": "SoftwareApplication",
-      "identifier": "arcgislayers",
-      "name": "arcgislayers",
-      "version": ">= 0.2.0",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Comprehensive R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      },
-      "sameAs": "https://CRAN.R-project.org/package=arcgislayers"
-    },
-    "18": {
-      "@type": "SoftwareApplication",
       "identifier": "ggplot2",
       "name": "ggplot2",
       "provider": {
@@ -359,7 +365,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=ggplot2"
     },
-    "19": {
+    "18": {
       "@type": "SoftwareApplication",
       "identifier": "glue",
       "name": "glue",
@@ -371,7 +377,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=glue"
     },
-    "20": {
+    "19": {
       "@type": "SoftwareApplication",
       "identifier": "magrittr",
       "name": "magrittr",
@@ -383,9 +389,21 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=magrittr"
     },
+    "20": {
+      "@type": "SoftwareApplication",
+      "identifier": "jsonlite",
+      "name": "jsonlite",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=jsonlite"
+    },
     "SystemRequirements": "GDAL (>= 3.1.0)"
   },
-  "fileSize": "1506.228KB",
+  "fileSize": "1512.089KB",
   "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/main/README.md",
   "contIntegration": ["https://github.com/ropensci/FedData/actions/workflows/check-standard.yaml", "https://app.codecov.io/gh/ropensci/FedData?branch=master"],
