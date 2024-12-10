@@ -59,7 +59,8 @@ if (getRversion() >= "2.15.1") {
     "DAY",
     "DATE",
     "outfile",
-    "coordinates"
+    "coordinates",
+    "id"
   ))
 }
 
@@ -621,7 +622,7 @@ agol_filter_httr <-
 
     all_layers <-
       httr::GET(url,
-        query = list(f = "pjson")
+        query = list(f = "json")
       ) |>
       httr::content(as = "text") |>
       jsonlite::fromJSON() |>
