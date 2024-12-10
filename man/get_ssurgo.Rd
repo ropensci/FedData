@@ -43,7 +43,7 @@ in the template, and
 }
 }
 \examples{
-\donttest{
+\dontrun{
 # Get the NRCS SSURGO data (USA ONLY)
 SSURGO.MEVE <-
   get_ssurgo(

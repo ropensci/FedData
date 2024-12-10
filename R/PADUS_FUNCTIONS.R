@@ -36,7 +36,7 @@
 #' @importFrom magrittr %>% %<>%
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Get the PAD-US (USA ONLY)
 #' PADUS <- get_padus(
 #'   template = FedData::meve,

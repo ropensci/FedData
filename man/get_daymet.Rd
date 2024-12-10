@@ -63,7 +63,7 @@ A named list of \code{SpatRaster}s of weather data cropped to the extent of the 
 template study area.
 }
 \examples{
-\donttest{
+\dontrun{
 library(terra)
 
 # Get the DAYMET (North America only)

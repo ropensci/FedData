@@ -57,7 +57,7 @@ legend and color palette, as available through the
 \href{https://www.mrlc.gov/data/legends/national-land-cover-database-class-legend-and-description}{MLRC website}.
 }
 \examples{
-\donttest{
+\dontrun{
 # Extract data for the Mesa Verde National Park:
 
 # Get the NLCD (USA ONLY)

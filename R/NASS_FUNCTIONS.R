@@ -18,7 +18,7 @@
 #' @export
 #' @importFrom magrittr %>%
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Extract data for the Mesa Verde National Park:
 #'
 #' # Get the NASS CDL (USA ONLY)

@@ -63,7 +63,7 @@ More information about the Annual NLCD product is available on the
 \href{https://www.mrlc.gov/data/project/annual-nlcd}{Annual NLCD web page}.
 }
 \examples{
-\donttest{
+\dontrun{
 # Extract data for the Mesa Verde National Park:
 
 # Get the NLCD (USA ONLY)

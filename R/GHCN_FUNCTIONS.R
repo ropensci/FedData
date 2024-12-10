@@ -165,7 +165,7 @@
 #' @importFrom readr read_fwf
 #' @importFrom magrittr %>%
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Get the daily GHCN data (GLOBAL)
 #' # Returns a list: the first element is the spatial locations of stations,
 #' # and the second is a list of the stations and their daily data

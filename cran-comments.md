@@ -55,13 +55,7 @@ see NEWS.md for release details.
 
 **Test environment:** Windows Server 2022 x64 (build 20348), R-devel, 64 bit
 
-**0 errors ✔ \| 0 warnings ✔ \| 1 note ✖**
-
-- CRAN repository db overrides:
-  - X-CRAN-Comment: Archived on 2024-08-19 as requires archived package
-    'arcgislayers'.
-- Explanation: This is a resubmission and update; 
-'arcgislayers' is back on CRAN.
+**0 errors ✔ \| 0 warnings ✔ \| 0 notes ✖**
 
 ------------------------------------------------------------------------
 

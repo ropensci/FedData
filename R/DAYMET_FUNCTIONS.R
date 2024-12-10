@@ -34,7 +34,7 @@
 #' @importFrom magrittr %>% %$% %<>% %T>%
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' library(terra)
 #'
 #' # Get the DAYMET (North America only)

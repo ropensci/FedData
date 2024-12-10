@@ -64,10 +64,10 @@ agol_filter(
     "NonNetworkNHDFlowline",
     "NHDLine",
     "NHDArea",
-    "NHDWaterbody"),
+    "NHDWaterbody"
+  ),
   geom = FedData::meve
 )
-
 }
 
 }

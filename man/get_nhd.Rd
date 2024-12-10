@@ -32,7 +32,7 @@ A list of \code{sf} collections extracted from the National Hydrography Dataset.
 from the National Hydrography Dataset.
 }
 \examples{
-\donttest{
+\dontrun{
 # Get the NHD (USA ONLY)
 NHD <- get_nhd(
   template = FedData::meve,

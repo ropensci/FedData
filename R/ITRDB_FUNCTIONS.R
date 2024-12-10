@@ -51,7 +51,7 @@
 #' @export
 #' @importFrom sf st_as_sf st_transform st_intersection
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Get the ITRDB records
 #' ITRDB <- get_itrdb(
 #'   template = FedData::meve,

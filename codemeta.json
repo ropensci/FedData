@@ -403,7 +403,7 @@
     },
     "SystemRequirements": "GDAL (>= 3.1.0)"
   },
-  "fileSize": "1512.089KB",
+  "fileSize": "1512.069KB",
   "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/main/README.md",
   "contIntegration": ["https://github.com/ropensci/FedData/actions/workflows/check-standard.yaml", "https://app.codecov.io/gh/ropensci/FedData?branch=master"],

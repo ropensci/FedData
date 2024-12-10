@@ -51,7 +51,7 @@ A \code{\link[terra:SpatRaster-class]{SpatRaster}} cropped to the bounding box o
 template study area.
 }
 \examples{
-\donttest{
+\dontrun{
 # Extract data for the Mesa Verde National Park:
 
 # Get the NASS CDL (USA ONLY)

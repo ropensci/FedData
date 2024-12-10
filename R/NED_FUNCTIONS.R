@@ -16,7 +16,7 @@
 #' @export
 #' @importFrom magrittr %>%
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' # Get the NED (USA ONLY)
 #' # Returns a `SpatRaster`
 #' NED <-
