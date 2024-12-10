@@ -5,10 +5,10 @@ context("NRCS soils database (SSURGO) tests")
 test_that("The SSURGO inventory dataset is available at the correct URL", {
   skip_on_cran()
 
-  url <- "http://websoilsurvey.sc.egov.usda.gov/DataAvailability/SoilDataAvailabilityShapefile.zip"
+  url <- "https://websoilsurvey.sc.egov.usda.gov/DataAvailability/SoilDataAvailabilityShapefile.zip"
   expect_false(suppressWarnings(httr::http_error(url)))
 
-  url <- "http://websoilsurvey.sc.egov.usda.gov/DataAvailability/blah.zip"
+  url <- "https://websoilsurvey.sc.egov.usda.gov/DataAvailability/blah.zip"
   expect_true(suppressWarnings(httr::http_error(url)))
 })
 
