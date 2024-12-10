@@ -120,7 +120,7 @@ DAYMET <- get_daymet(
   template = FedData::meve,
   label = "meve",
   elements = c("prcp", "tmax"),
-  years = 1980:1985
+  years = 1985
 )
 
 plot_map(DAYMET$tmax$`1985-10-23`,
@@ -312,6 +312,33 @@ NLCD_canopy <-
 
 plot(NLCD_canopy)
 ```
+
+### Annual National Landcover Dataset
+```{r NLCD-annual, message=FALSE}
+# Get the NLCD (USA ONLY)
+# Returns a raster
+NLCD_ANNUAL <-
+  get_nlcd_annual(
+    template = FedData::meve,
+    label = "meve",
+    year = 2020,
+    product =
+      c(
+        "LndCov",
+        "LndChg",
+        "LndCnf",
+        "FctImp",
+        "ImpDsc",
+        "SpcChg"
+      )
+  )
+
+# Returns a data.frame of all downloaded data
+NLCD_ANNUAL
+
+plot(NLCD_ANNUAL$rast[[1]])
+```
+
 
 ### USDA NASS Cropland Data Layer
 ```{r NASS-CDL, message=FALSE}
