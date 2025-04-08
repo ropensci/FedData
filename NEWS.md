@@ -1,5 +1,8 @@
 # FedData (development version)
 
+# FedData (4.3.0)
+- Updated `get_padus()` to pull PAD-US 4.0 data. Closes [Issue #124](https://github.com/ropensci/FedData/issues/124).
+
 # FedData (4.2.0)
 - Removed `arcgislayers` dependency, as we weren't using it much anyway. Re-Closes [Issue #109](https://github.com/ropensci/FedData/issues/109).
 

@@ -70,8 +70,175 @@ tablesHeaders <-
 nlcd <-
   readr::read_csv("data-raw/nlcd_rat.csv")
 
+(httr::GET(
+  "https://www.mrlc.gov/geoserver/ows",
+  query = list(
+    service = "WCS",
+    version = "2.0.1",
+    request = "GetCapabilities"
+  )
+) |>
+  httr::content() |>
+  xml2::as_list())$Capabilities$Contents |>
+  purrr::map(\(x)
+  list(
+    Title = x$Title[[1]],
+    id = x$CoverageId[[1]]
+  )) |>
+  magrittr::set_names(NULL) |>
+  purrr::transpose() |>
+  purrr::map(unlist) |>
+  tibble::as_tibble() |>
+  dplyr::filter(
+    stringr::str_starts(id, "mrlc_download"),
+    stringr::str_detect(id, "NLCD|nlcd"),
+    stringr::str_detect(id, "Science_Product", negate = TRUE),
+    stringr::str_detect(id, "Disturbance_Date", negate = TRUE),
+    stringr::str_detect(id, "Fractional_Component", negate = TRUE),
+    stringr::str_detect(id, "descriptor", negate = TRUE),
+    stringr::str_detect(id, "Descriptor", negate = TRUE),
+    stringr::str_detect(id, "Pixels", negate = TRUE),
+    stringr::str_detect(id, "Annual_NLCD", negate = TRUE),
+    stringr::str_detect(id, "Count", negate = TRUE),
+    stringr::str_detect(id, "Index", negate = TRUE)
+  ) |>
+  dplyr::mutate(
+    Title = stringr::str_replace(
+      Title,
+      "nlcd_tcc_conus",
+      "NLCD"
+    ),
+    Title = stringr::str_replace(
+      Title,
+      "v2021-4",
+      "Tree_Canopy_L48"
+    ),
+    Title = stringr::str_replace(
+      Title,
+      "Land_Cover",
+      "landcover"
+    ),
+    Title = stringr::str_replace(
+      Title,
+      "Impervious",
+      "impervious"
+    ),
+    Title = stringr::str_replace(
+      Title,
+      "Tree_Canopy",
+      "canopy"
+    )
+  ) |>
+  tidyr::separate_wider_delim(
+    cols = Title,
+    delim = "_",
+    names = c(
+      "NLCD",
+      "year",
+      "dataset",
+      "landmass"
+    )
+  ) |>
+  dplyr::select(!NLCD) |>
+  dplyr::mutate(
+    year = as.integer(year),
+    dataset = factor(dataset,
+      levels = c(
+        "landcover",
+        "impervious",
+        "canopy"
+      ),
+      ordered = TRUE
+    ),
+    landmass = factor(landmass,
+      levels = c(
+        "L48",
+        "AK",
+        "HI",
+        "PR"
+      ),
+      ordered = TRUE
+    )
+  ) |>
+  dplyr::arrange(landmass, dataset, year) |>
+  dplyr::mutate(
+    available =
+      purrr::map_lgl(
+        id,
+        \(x){
+          out <-
+            tryCatch(
+              paste0(
+                "WCS:",
+                httr::modify_url(
+                  "https://dmsdata.cr.usgs.gov/geoserver/ows",
+                  query =
+                    list(
+                      version = "2.0.1",
+                      coverageid = x
+                    )
+                )
+              ) |>
+                terra::rast(),
+              error = function(e) FALSE
+            )
+          if (identical(out, FALSE)) {
+            FALSE
+          } else {
+            TRUE
+          }
+        }
+      )
+  ) |>
+  print(n = 1000)
 
 
+bigger_dim <- "https://www.mrlc.gov/geoserver/rcmap_anhb/wcs?request=GetCoverage&service=WCS&version=2.0.1&coverageid=rcmap_anhb__rcmap_annual_herbaceous_2020&subset=X(-1054529.13659319,-1022600.05347719)&subset=Y(2020307.11783295,2056926.21900819)"
+
+httr::GET(
+  "https://www.mrlc.gov/geoserver/mrlc_download/NLCD_2001_Land_Cover_AK/wcs",
+  query =
+    list(
+      service = "WCS",
+      request = "DescribeCoverage",
+      version = "2.0.1",
+      coverageid = "NLCD_2001_Land_Cover_AK"
+    )
+) %>%
+  httr::content() %>%
+  xml2::as_list()
+
+FedData::meve %>%
+  sf::st_transform(5070) %>%
+  sf::st_bbox()
+
+test <-
+  httr::modify_url(
+    "https://www.mrlc.gov/geoserver/mrlc_download/NLCD_2001_Land_Cover_AK/wcs",
+    query =
+      list(
+        service = "WCS",
+        request = "GetCoverage",
+        version = "2.0.1",
+        coverageid = "NLCD_2001_Land_Cover_AK"
+      )
+  ) |>
+  terra::rast()
+
+paste0("WCS:", )
+
+httr::modify_url(
+  "https://www.mrlc.gov/geoserver/mrlc_download/NLCD_2001_Land_Cover_AK/wcs",
+  query =
+    list(
+      version = "1.1.1",
+      identifiers = "mrlc_download:NLCD_2001_Land_Cover_AK"
+    )
+) |>
+  terra::rast(drivers = "WCS")
+
+
+sf::st_crs(test)
 
 ##### National Park Spatial Polygon
 meve <-

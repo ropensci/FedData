@@ -6,7 +6,7 @@ editor_options:
 
 # CRAN comments
 
-This is a minor release from FedData v4.1.0 to FedData v4.2.0. Please
+This is a minor release from FedData v4.2.0 to FedData v4.3.0. Please
 see NEWS.md for release details.
 
 ------------------------------------------------------------------------
@@ -15,7 +15,7 @@ see NEWS.md for release details.
 
 `devtools::check()` result:
 
-**Test environment:** aarch64-apple-darwin20 (64-bit), R 4.4.2 (2024-10-31)
+**Test environment:** aarch64-apple-darwin20 (64-bit), R 4.4.3 (2025-02-28)
 
 **0 errors ✔ \| 0 warnings ✔ \| 0 notes ✔**
 

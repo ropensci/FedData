@@ -60,7 +60,11 @@ if (getRversion() >= "2.15.1") {
     "DATE",
     "outfile",
     "coordinates",
-    "id"
+    "id",
+    "Title",
+    "NLCD",
+    "landmass",
+    "dataset"
   ))
 }
 

@@ -2,8 +2,8 @@ Type: Package
 Package: FedData
 Title: Download Geospatial Data Available from
     Several Federated Data Sources
-Version: 4.2.0
-Date: 2024-12-10
+Version: 4.3.0
+Date: 2025-04-08
 Authors@R: 
     c(person(given = c("R.", "Kyle"),
              family = "Bocinsky",

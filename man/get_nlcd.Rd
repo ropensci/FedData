@@ -28,7 +28,9 @@ or \code{\link[terra:SpatRaster-class]{terra}} object to serve as a template for
 \item{label}{A character string naming the study area.}
 
 \item{year}{An integer representing the year of desired NLCD product.
-Acceptable values are 2021 (default), 2019, 2016, 2011, 2008, 2006, 2004, and 2001.}
+Acceptable values are 2019 (default), 2016, 2011, 2008, 2006, 2004, and 2001.
+The L48 data set for 2021 is corrupted on the NLCD Mapserver, and is thus
+not available through FedData.}
 
 \item{dataset}{A character string representing type of the NLCD product.
 Acceptable values are 'landcover' (default), 'impervious', and
@@ -36,7 +38,7 @@ Acceptable values are 'landcover' (default), 'impervious', and
 
 \item{landmass}{A character string representing the landmass to be extracted
 Acceptable values are 'L48' (lower 48 US states, the default),
-'AK' (Alaska, 2011 and 2016 only), 'HI' (Hawaii, 2001 only), and
+'AK' (Alaska, 2001, 2011 and 2016 only), 'HI' (Hawaii, 2001 only), and
 'PR' (Puerto Rico, 2001 only).}
 
 \item{extraction.dir}{A character string indicating where the extracted

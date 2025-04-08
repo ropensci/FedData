@@ -8,13 +8,13 @@
   "codeRepository": "https://github.com/ropensci/FedData",
   "issueTracker": "https://github.com/ropensci/FedData/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.4.2 (2024-10-31)",
+  "runtimePlatform": "R version 4.4.3 (2025-02-28)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -403,7 +403,7 @@
     },
     "SystemRequirements": "GDAL (>= 3.1.0)"
   },
-  "fileSize": "1512.071KB",
+  "fileSize": "1518.261KB",
   "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/main/README.md",
   "contIntegration": ["https://github.com/ropensci/FedData/actions/workflows/check-standard.yaml", "https://app.codecov.io/gh/ropensci/FedData?branch=master"],
