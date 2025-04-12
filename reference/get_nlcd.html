@@ -13,7 +13,7 @@ MLRC website."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">FedData</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">4.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">4.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -80,7 +80,9 @@ or <code><a href="https://rspatial.github.io/terra/reference/SpatRaster-class.ht
 
 <dt id="arg-year">year<a class="anchor" aria-label="anchor" href="#arg-year"></a></dt>
 <dd><p>An integer representing the year of desired NLCD product.
-Acceptable values are 2021 (default), 2019, 2016, 2011, 2008, 2006, 2004, and 2001.</p></dd>
+Acceptable values are 2019 (default), 2016, 2011, 2008, 2006, 2004, and 2001.
+The L48 data set for 2021 is corrupted on the NLCD Mapserver, and is thus
+not available through FedData.</p></dd>
 
 
 <dt id="arg-dataset">dataset<a class="anchor" aria-label="anchor" href="#arg-dataset"></a></dt>
@@ -92,7 +94,7 @@ Acceptable values are 'landcover' (default), 'impervious', and
 <dt id="arg-landmass">landmass<a class="anchor" aria-label="anchor" href="#arg-landmass"></a></dt>
 <dd><p>A character string representing the landmass to be extracted
 Acceptable values are 'L48' (lower 48 US states, the default),
-'AK' (Alaska, 2011 and 2016 only), 'HI' (Hawaii, 2001 only), and
+'AK' (Alaska, 2001, 2011 and 2016 only), 'HI' (Hawaii, 2001 only), and
 'PR' (Puerto Rico, 2001 only).</p></dd>
 
 
