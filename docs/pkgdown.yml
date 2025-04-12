@@ -1,9 +1,9 @@
-pandoc: '3.2'
+pandoc: 3.6.4
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   articles/FedData: FedData.html
-last_built: 2024-11-07T03:44Z
+last_built: 2025-04-12T20:16Z
 urls:
   reference: https://docs.ropensci.org/FedData/reference
   article: https://docs.ropensci.org/FedData/articles
