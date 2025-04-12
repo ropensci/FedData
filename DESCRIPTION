@@ -3,7 +3,7 @@ Package: FedData
 Title: Download Geospatial Data Available from
     Several Federated Data Sources
 Version: 4.3.0
-Date: 2025-04-08
+Date: 2025-04-12
 Authors@R: 
     c(person(given = c("R.", "Kyle"),
              family = "Bocinsky",
@@ -48,7 +48,7 @@ URL: https://docs.ropensci.org/FedData/,
 BugReports: https://github.com/ropensci/FedData/issues
 SystemRequirements: GDAL (>= 3.1.0)
 Depends:
-    R (>= 3.2.0)
+    R (>= 4.1.0)
 Imports:
     curl,
     httr,

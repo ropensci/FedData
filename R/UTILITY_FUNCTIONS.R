@@ -474,12 +474,12 @@ agol_filter <-
     }
 
     geom <-
-      geom |>
-      template_to_sf() |>
+      geom %>%
+      template_to_sf() %>%
       sf::st_as_sfc()
 
     service <-
-      url |>
+      url %>%
       arcgislayers::arc_open()
 
     if (is.numeric(layer_name)) {
@@ -492,8 +492,8 @@ agol_filter <-
 
     if (is.null(layer_name)) {
       layers <-
-        service |>
-        arcgislayers::get_all_layers() |>
+        service %>%
+        arcgislayers::get_all_layers() %>%
         magrittr::extract2("layers")
 
       layer_name <-
@@ -507,21 +507,21 @@ agol_filter <-
           )
       }
       layers <-
-        service |>
+        service %>%
         arcgislayers::get_layers(
           name = layer_name
         )
     } else {
       layers <-
-        service |>
+        service %>%
         arcgislayers::get_layer(
           name = layer_name
-        ) |>
-        list(`0` = _)
+        ) %>%
+        list(`0` = .)
     }
 
     out <-
-      layers |>
+      layers %>%
       purrr::map(
         ~ tryCatch(
           arcgislayers::arc_select(
@@ -533,7 +533,7 @@ agol_filter <-
             NULL
           }
         )
-      ) |>
+      ) %>%
       magrittr::set_names(layer_name)
 
     if (simplify && length(out) == 1) {
@@ -606,30 +606,30 @@ agol_filter <-
 agol_filter_httr <-
   function(url, layer_name = NULL, geom, simplify = TRUE) {
     geom <-
-      geom |>
-      template_to_sf() |>
-      sf::st_transform(4326) |>
-      sf::st_as_sfc() |>
-      sf::st_union() |>
-      sf::st_cast("POLYGON") |>
-      jsonlite::toJSON() |>
-      jsonlite::fromJSON(flatten = TRUE) |>
-      magrittr::extract2("coordinates") |>
+      geom %>%
+      template_to_sf() %>%
+      sf::st_transform(4326) %>%
+      sf::st_as_sfc() %>%
+      sf::st_union() %>%
+      sf::st_cast("POLYGON") %>%
+      jsonlite::toJSON() %>%
+      jsonlite::fromJSON(flatten = TRUE) %>%
+      magrittr::extract2("coordinates") %>%
       purrr::map(\(x){
-        x |>
-          purrr::array_tree() |>
-          unlist(recursive = FALSE) |>
+        x %>%
+          purrr::array_tree() %>%
+          unlist(recursive = FALSE) %>%
           purrr::map(unlist)
-      }) |>
-      list(rings = _) |>
+      }) %>%
+      list(rings = .) %>%
       jsonlite::toJSON()
 
     all_layers <-
       httr::GET(url,
         query = list(f = "json")
-      ) |>
-      httr::content(as = "text") |>
-      jsonlite::fromJSON() |>
+      ) %>%
+      httr::content(as = "text") %>%
+      jsonlite::fromJSON() %>%
       magrittr::extract2("layers") %$%
       magrittr::set_names(id, name)
 
@@ -643,7 +643,7 @@ agol_filter_httr <-
     }
 
     out <-
-      layers |>
+      layers %>%
       purrr::map(
         \(x){
           tryCatch(

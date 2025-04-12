@@ -15,7 +15,7 @@ see NEWS.md for release details.
 
 `devtools::check()` result:
 
-**Test environment:** aarch64-apple-darwin20 (64-bit), R 4.4.3 (2025-02-28)
+**Test environment:** aarch64-apple-darwin20 (64-bit), R 4.5.0 (2025-04-11)
 
 **0 errors ✔ \| 0 warnings ✔ \| 0 notes ✔**
 
@@ -30,20 +30,6 @@ see NEWS.md for release details.
 -   ubuntu-latest, R devel
 -   ubuntu-latest, R release
 -   ubuntu-latest, R oldrel-1
-
-**0 errors ✔ \| 0 warnings ✔ \| 0 notes ✔**
-
-------------------------------------------------------------------------
-
-## R-hub check results:
-
-**Test environments:**
-
--   ubuntu-release
--   linux (R-devel)
--   macos (R-devel)
--   macos-arm64 (R-devel)
--   windows (R-devel)
 
 **0 errors ✔ \| 0 warnings ✔ \| 0 notes ✔**
 

@@ -14,7 +14,6 @@
 ^data-raw$
 ^CRAN-RELEASE$
 ^_pkgdown\.yml$
-^\.pre-commit-config\.yaml$
 ^codemeta\.json$
 ^\.github$
 ^revdep$
