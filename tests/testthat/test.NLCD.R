@@ -5,6 +5,7 @@ context("National Land Cover Dataset tests")
 
 test_that("The NLCD web coverage service is available at the correct URL", {
   skip_on_cran()
+  skip_if_service_unavailable("https://www.mrlc.gov/")
 
   year <- 2016
   dataset <- "Land_Cover"
@@ -58,6 +59,7 @@ test_that(
   "The NLCD provides the same data as a raw download",
   {
     skip_on_cran()
+    skip_if_service_unavailable("https://www.mrlc.gov/")
 
     ## Raw NLCD (Puerto Rico, 2001)
     raw_zip <- tempfile(fileext = ".zip")
@@ -82,6 +84,7 @@ test_that(
 
 test_that("The Annual NLCD web coverage services are available", {
   skip_on_cran()
+  skip_if_service_unavailable("https://dmsdata.cr.usgs.gov/geoserver/web/")
 
   for (workspace in FedData:::nlcd_annual_wcs_coverages) {
     expect_identical(
@@ -104,6 +107,7 @@ test_that("The Annual NLCD web coverage services are available", {
 
 test_that("get_nlcd_annual returns rasters on the native grid", {
   skip_on_cran()
+  skip_if_service_unavailable("https://dmsdata.cr.usgs.gov/geoserver/web/")
 
   out <-
     get_nlcd_annual(

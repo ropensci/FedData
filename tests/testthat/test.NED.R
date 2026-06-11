@@ -4,6 +4,7 @@ context("National Elevation Dataset tests")
 
 test_that("The NED tiles are available at the correct URL", {
   skip_on_cran()
+  skip_if_service_unavailable("https://prd-tnm.s3.amazonaws.com/")
 
   res <- "1"
   tileNorthing <- "35"
