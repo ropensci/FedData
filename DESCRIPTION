@@ -74,7 +74,6 @@ LazyData: true
 NeedsCompilation: no
 Repository: CRAN
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
 Suggests: 
     arcgislayers (>= 0.2.0),
     knitr,
@@ -84,3 +83,4 @@ Suggests:
     rmapshaper,
     testthat,
     usethis
+Config/roxygen2/version: 8.0.0

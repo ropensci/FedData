@@ -25,7 +25,7 @@ cdl_colors()
 }
 \arguments{
 \item{template}{An \code{\link[sf:sf]{Simple Feature}}
-or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.}
+or \code{\link[terra:SpatRaster]{SpatRaster}} object to serve as a template for cropping.}
 
 \item{label}{A character string naming the study area.}
 
@@ -44,10 +44,10 @@ The directory will be created if missing.}
 \item{...}{Other parameters passed on to \link{get_nass_cdl}.}
 }
 \value{
-A \code{\link[terra:SpatRaster-class]{SpatRaster}} cropped to the bounding box of the template.
+A \code{\link[terra:SpatRaster]{SpatRaster}} cropped to the bounding box of the template.
 }
 \description{
-\code{get_nass_cdl} returns a \code{\link[terra:SpatRaster-class]{SpatRaster}} of NASS Cropland Data Layer cropped to a given
+\code{get_nass_cdl} returns a \code{\link[terra:SpatRaster]{SpatRaster}} of NASS Cropland Data Layer cropped to a given
 template study area.
 }
 \examples{

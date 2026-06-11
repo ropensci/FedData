@@ -8,7 +8,7 @@ get_ghcn_inventory(template = NULL, elements = NULL, raw.dir)
 }
 \arguments{
 \item{template}{An \code{\link[sf:sf]{Simple Feature}}
-or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.}
+or \code{\link[terra:SpatRaster]{SpatRaster}} object to serve as a template for cropping.}
 
 \item{elements}{A character vector of elements to extract.
 Common elements include 'tmin', 'tmax', and 'prcp'.}

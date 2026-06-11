@@ -8,7 +8,7 @@ get_ned_tile(template = NULL, res = "1", tileNorthing, tileWesting)
 }
 \arguments{
 \item{template}{An \code{\link[sf:sf]{Simple Feature}}
-or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.
+or \code{\link[terra:SpatRaster]{SpatRaster}} object to serve as a template for cropping.
 If missing, entire tile is returned.}
 
 \item{res}{A character string representing the desired resolution of the NED. '1'

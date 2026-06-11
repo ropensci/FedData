@@ -21,7 +21,7 @@ get_itrdb(
 }
 \arguments{
 \item{template}{An \code{\link[sf:sf]{Simple Feature}}
-or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.
+or \code{\link[terra:SpatRaster]{SpatRaster}} object to serve as a template for cropping.
 If missing,
 all available global chronologies are returned.}
 

@@ -8,7 +8,7 @@ get_ssurgo_study_area(template = NULL, area, date, raw.dir)
 }
 \arguments{
 \item{template}{An \code{\link[sf:sf]{Simple Feature}}
-or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.
+or \code{\link[terra:SpatRaster]{SpatRaster}} object to serve as a template for cropping.
 If missing, whose study area is returned}
 
 \item{area}{A character string indicating the SSURGO study area to be downloaded.}
