@@ -4,9 +4,10 @@ context("NRCS soils database (SSURGO) tests")
 
 test_that("The SSURGO inventory dataset is available at the correct URL", {
   skip_on_cran()
-  skip_if_service_unavailable("https://websoilsurvey.sc.egov.usda.gov/")
 
   url <- "https://websoilsurvey.sc.egov.usda.gov/DataAvailability/SoilDataAvailabilityShapefile.zip"
+  skip_if_service_unavailable(url)
+
   expect_false(suppressWarnings(httr::http_error(url)))
 
   url <- "https://websoilsurvey.sc.egov.usda.gov/DataAvailability/blah.zip"
@@ -29,7 +30,6 @@ test_that("The SoilDB data queries work", {
 test_that("The SSURGO datasets are available at the correct URL", {
   skip_on_cran()
   skip_if_service_unavailable("https://sdmdataaccess.nrcs.usda.gov/")
-  skip_if_service_unavailable("https://websoilsurvey.sc.egov.usda.gov/")
 
   template <- "CO670"
   q <- paste0("SELECT areasymbol, saverest FROM sacatalog WHERE areasymbol IN (", paste(paste0("'", template, "'"), collapse = ","), ");")
@@ -37,6 +37,8 @@ test_that("The SSURGO datasets are available at the correct URL", {
   q$saverest <- as.Date(q$saverest, format = "%m/%d/%Y")
 
   url <- paste("https://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/wss_SSA_", q$areasymbol, "_[", q$saverest, "].zip", sep = "")
+  skip_if_service_unavailable(url)
+
   expect_error(suppressWarnings(curl::curl(url) %>% readLines(n = 1)), NA)
 
   url <- "https://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/blah.zip"

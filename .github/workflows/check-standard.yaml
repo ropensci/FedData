@@ -42,10 +42,16 @@ jobs:
           use-public-rspm: true
 
       # CRAN does not provide macOS package binaries for R-devel, so
-      # spatial packages build from source and need system libraries
+      # spatial packages build from source and need system libraries.
+      # R does not look in the Homebrew prefix when compiling packages,
+      # so point it there via ~/.R/Makevars.
       - name: Install macOS system dependencies
         if: runner.os == 'macOS' && matrix.config.r == 'devel'
-        run: brew install gdal geos proj netcdf udunits libpng jpeg libtiff freetype fontconfig harfbuzz fribidi
+        run: |
+          brew install gdal geos proj netcdf udunits libpng jpeg libtiff freetype fontconfig harfbuzz fribidi
+          mkdir -p ~/.R
+          echo "CPPFLAGS += -I$(brew --prefix)/include" >> ~/.R/Makevars
+          echo "LDFLAGS += -L$(brew --prefix)/lib" >> ~/.R/Makevars
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:

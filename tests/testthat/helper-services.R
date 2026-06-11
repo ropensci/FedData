@@ -9,7 +9,13 @@ skip_if_service_unavailable <- function(url) {
   status <-
     tryCatch(
       httr::status_code(
-        httr::GET(url, httr::timeout(60))
+        httr::GET(
+          url,
+          # Only request the first byte, so that resource URLs
+          # can be probed without downloading them
+          httr::add_headers(Range = "bytes=0-0"),
+          httr::timeout(60)
+        )
       ),
       error = function(e) NA_integer_
     )
