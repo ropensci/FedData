@@ -10,7 +10,7 @@ plot_nhd(x, template = NULL)
 \item{x}{The result of \link{get_nhd}.}
 
 \item{template}{An \code{\link[sf:sf]{Simple Feature}}
-or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.}
+or \code{\link[terra:SpatRaster]{SpatRaster}} object to serve as a template for cropping.}
 }
 \value{
 A \code{ggplot2} panel of plots

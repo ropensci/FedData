@@ -35,6 +35,6 @@ test_that("The SSURGO datasets are available at the correct URL", {
   url <- paste("https://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/wss_SSA_", q$areasymbol, "_[", q$saverest, "].zip", sep = "")
   expect_error(suppressWarnings(curl::curl(url) %>% readLines(n = 1)), NA)
 
-  url <- "http://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/blah.zip"
+  url <- "https://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/blah.zip"
   expect_error(suppressWarnings(curl::curl(url) %>% readLines(n = 1)))
 })

@@ -366,7 +366,7 @@ get_ssurgo_inventory <- function(template = NULL, raw.dir) {
 #' @keywords internal
 download_ssurgo_study_area <- function(area, date, raw.dir) {
   # Try to download with the state database, otherwise grab the US
-  url <- paste("http://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/wss_SSA_", area, "_[", date, "].zip", sep = "")
+  url <- paste("https://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/wss_SSA_", area, "_[", date, "].zip", sep = "")
   destdir <- raw.dir
   download_data(url = url, destdir = destdir, nc = TRUE)
 
