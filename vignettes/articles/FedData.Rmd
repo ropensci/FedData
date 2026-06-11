@@ -113,7 +113,20 @@ plot_map(NED,
 ```
 
 ### ORNL Daymet
-```{r DAYMET, message=FALSE, warning=FALSE}
+`get_daymet()` is deprecated, and currently non-functional. In 2025, the ORNL
+Distributed Active Archive Center retired the public THREDDS data server that
+FedData used to subset and download gridded Daymet data. Gridded Daymet data
+are now distributed through the NASA Earthdata Cloud, which requires (free)
+authentication with a [NASA Earthdata Login](https://urs.earthdata.nasa.gov),
+and are also available from
+[Google Earth Engine](https://developers.google.com/earth-engine/datasets/catalog/NASA_ORNL_DAYMET_V4).
+Point ("single-pixel") extractions remain freely available via the
+[Daymet single-pixel extraction tool](https://daymet.ornl.gov/getdata),
+accessible from R with the [daymetr](https://github.com/bluegreen-labs/daymetr)
+package. Support for gridded Daymet downloads with Earthdata authentication may
+return in a future release of FedData.
+
+```{r DAYMET, message=FALSE, warning=FALSE, eval=FALSE}
 # Get the DAYMET (North America only)
 # Returns a raster
 DAYMET <- get_daymet(

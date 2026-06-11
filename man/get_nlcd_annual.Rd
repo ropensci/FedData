@@ -19,7 +19,7 @@ get_nlcd_annual(
 }
 \arguments{
 \item{template}{An \code{\link[sf:sf]{Simple Feature}}
-or \code{\link[terra:SpatRaster-class]{terra}} object to serve as a template for cropping.}
+or \code{\link[terra:SpatRaster]{terra}} object to serve as a template for cropping.}
 
 \item{label}{A character string naming the study area.}
 
@@ -57,7 +57,7 @@ should a new one be created?}
 A \code{RasterLayer} cropped to the bounding box of the template.
 }
 \description{
-\code{get_nlcd_annual} returns a \code{\link[terra:SpatRaster-class]{SpatRaster}} of NLCD data cropped to a given
+\code{get_nlcd_annual} returns a \code{\link[terra:SpatRaster]{SpatRaster}} of NLCD data cropped to a given
 template study area. The Annual NLCD is currently only available for the conterminous United States.
 More information about the Annual NLCD product is available on the
 \href{https://www.mrlc.gov/data/project/annual-nlcd}{Annual NLCD web page}.

@@ -40,7 +40,9 @@ Currently, the package enables extraction from nine datasets:
 - The [Daymet](https://daymet.ornl.gov/) gridded estimates of daily
   weather parameters for North America, version 4, available from the
   Oak Ridge National Laboratory’s Distributed Active Archive Center
-  (DAAC)
+  (DAAC). **Access to gridded Daymet data is currently deprecated**, as
+  the data have moved to the NASA Earthdata Cloud and now require
+  authentication
 - The [International Tree Ring Data Bank
   (ITRDB)](https://www.ncei.noaa.gov/products/paleoclimatology/tree-ring),
   coordinated by National Climatic Data Center at NOAA

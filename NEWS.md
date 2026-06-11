@@ -1,4 +1,6 @@
 # FedData (development version)
+- `get_daymet()` is deprecated, and now throws an informative error. In 2025, the ORNL Distributed Active Archive Center retired the public THREDDS data server that FedData used to subset and download gridded Daymet data; the data now live in the NASA Earthdata Cloud, which requires (free) authentication with a NASA Earthdata Login. No publicly-accessible, up-to-date, authentication-free source of gridded Daymet data currently exists. Point extractions remain available via the [daymetr](https://github.com/bluegreen-labs/daymetr) package, and support for gridded downloads with Earthdata authentication may return in a future release. Closes [Issue #129](https://github.com/ropensci/FedData/issues/129).
+- Removed the (now non-functional) Daymet example from the getting started article, which was causing pkgdown site builds to fail. Closes [Issue #130](https://github.com/ropensci/FedData/issues/130).
 
 # FedData (4.3.0)
 - Updated `get_padus()` to pull PAD-US 4.0 data. Closes [Issue #124](https://github.com/ropensci/FedData/issues/124).

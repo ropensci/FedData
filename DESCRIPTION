@@ -36,8 +36,9 @@ Description: Download geospatial data available
     the Global Historical Climatology Network (<https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily>; GHCN), coordinated by National Climatic Data
     Center at NOAA; the Daymet gridded estimates of daily weather
     parameters for North America, version 4, available from the Oak Ridge
-    National Laboratory's Distributed Active Archive Center 
-    (<https://daymet.ornl.gov/>; DAAC); the
+    National Laboratory's Distributed Active Archive Center
+    (<https://daymet.ornl.gov/>; DAAC; currently deprecated, as the data
+    now require authentication to download); the
     International Tree Ring Data Bank; the National Land Cover
     Database (<https://www.mrlc.gov/>; NLCD); the Cropland Data Layer from the National Agricultural 
     Statistics Service (<https://www.nass.usda.gov/Research_and_Science/Cropland/SARS1a.php>; NASS); 
@@ -74,7 +75,6 @@ LazyData: true
 NeedsCompilation: no
 Repository: CRAN
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
 Suggests: 
     arcgislayers (>= 0.2.0),
     knitr,
@@ -84,3 +84,4 @@ Suggests:
     rmapshaper,
     testthat,
     usethis
+Config/roxygen2/version: 8.0.0
