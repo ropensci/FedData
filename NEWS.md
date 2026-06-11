@@ -1,4 +1,5 @@
 # FedData (development version)
+- `get_nlcd()` now falls back to requesting coverages directly from the MRLC web coverage service when the GDAL WCS driver cannot read them. Several coverages (including the Alaska land cover products) advertise a CRS code that does not exist, which made `get_nlcd()` fail for Alaska; the GeoTIFFs returned by the service embed the correct CRS, so FedData now probes for it and requests the data directly. Closes [Issue #128](https://github.com/ropensci/FedData/issues/128).
 
 # FedData (4.3.0)
 - Updated `get_padus()` to pull PAD-US 4.0 data. Closes [Issue #124](https://github.com/ropensci/FedData/issues/124).
