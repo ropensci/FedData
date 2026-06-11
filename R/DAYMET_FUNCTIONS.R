@@ -1,6 +1,20 @@
 #' Download and crop the 1-km DAYMET v4 daily weather dataset.
 #'
-#' \code{get_daymet} returns a [`SpatRaster`][terra::SpatRaster] of weather data cropped to a given
+#' @description
+#' `get_daymet()` is deprecated, and currently non-functional.
+#' In 2025, the ORNL Distributed Active Archive Center retired the public
+#' THREDDS data server that FedData used to subset and download gridded
+#' Daymet data. Gridded Daymet data are now distributed through the NASA
+#' Earthdata Cloud, which requires (free) authentication with a
+#' [NASA Earthdata Login](https://urs.earthdata.nasa.gov), and are also
+#' available from [Google Earth Engine](https://developers.google.com/earth-engine/datasets/catalog/NASA_ORNL_DAYMET_V4).
+#' Point ("single-pixel") extractions remain freely available via the
+#' [Daymet single-pixel extraction tool](https://daymet.ornl.gov/getdata),
+#' accessible from R with the [daymetr](https://github.com/bluegreen-labs/daymetr)
+#' package. Support for gridded Daymet downloads with Earthdata
+#' authentication may return in a future release of FedData.
+#'
+#' \code{get_daymet} returned a [`SpatRaster`][terra::SpatRaster] of weather data cropped to a given
 #' template study area.
 #'
 #' @param template An [`Simple Feature`][sf::sf]
@@ -77,6 +91,17 @@ get_daymet <- function(template,
                        ),
                        force.redo = FALSE,
                        progress = TRUE) {
+  lifecycle::deprecate_stop(
+    "4.4.0",
+    "get_daymet()",
+    details = c(
+      "In 2025, the ORNL Distributed Active Archive Center retired the public THREDDS data server that FedData used to subset and download gridded Daymet data.",
+      "Gridded Daymet data are now distributed through the NASA Earthdata Cloud, which requires (free) authentication with a NASA Earthdata Login (https://urs.earthdata.nasa.gov), and are also available from Google Earth Engine.",
+      "Point ('single-pixel') extractions remain freely available via the {daymetr} package.",
+      "Support for gridded Daymet downloads with Earthdata authentication may return in a future release of FedData."
+    )
+  )
+
   if (!requireNamespace("ncdf4", quietly = TRUE)) {
     stop("Package \"ncdf4\" needed for this function to work. Please install it.",
       call. = FALSE
