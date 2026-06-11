@@ -14,7 +14,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.5.0 (2025-04-11)",
+  "runtimePlatform": "R version 4.6.0 (2026-04-24)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -403,8 +403,8 @@
     },
     "SystemRequirements": "GDAL (>= 3.1.0)"
   },
-  "fileSize": "1518.289KB",
-  "releaseNotes": "https://github.com/ropensci/FedData/blob/master/NEWS.md",
+  "fileSize": "1524.26KB",
+  "releaseNotes": "https://github.com/ropensci/FedData/blob/main/NEWS.md",
   "readme": "https://github.com/ropensci/FedData/blob/main/README.md",
   "contIntegration": ["https://github.com/ropensci/FedData/actions/workflows/check-standard.yaml", "https://app.codecov.io/gh/ropensci/FedData?branch=master"],
   "developmentStatus": "https://www.repostatus.org/#active",

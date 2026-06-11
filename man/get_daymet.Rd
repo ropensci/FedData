@@ -19,7 +19,7 @@ get_daymet(
 }
 \arguments{
 \item{template}{An \code{\link[sf:sf]{Simple Feature}}
-or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.}
+or \code{\link[terra:SpatRaster]{SpatRaster}} object to serve as a template for cropping.}
 
 \item{label}{A character string naming the study area.}
 
@@ -59,7 +59,7 @@ should a new one be created?}
 A named list of \code{SpatRaster}s of weather data cropped to the extent of the template.
 }
 \description{
-\code{get_daymet} returns a \code{\link[terra:SpatRaster-class]{SpatRaster}} of weather data cropped to a given
+\code{get_daymet} returns a \code{\link[terra:SpatRaster]{SpatRaster}} of weather data cropped to a given
 template study area.
 }
 \examples{

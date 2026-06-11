@@ -1,4 +1,6 @@
 # FedData (development version)
+- Rewrote `get_nlcd_annual()` to download data from the USGS web coverage service for the Annual NLCD; the Amazon S3 bucket it previously read from was converted to requester-pays and is no longer publicly accessible. Data are still delivered in the native CRS and resolution (CONUS Albers, EPSG:5070, 30 m), snapped to the native grid. Closes [Issue #125](https://github.com/ropensci/FedData/issues/125) and [Issue #131](https://github.com/ropensci/FedData/issues/131).
+- `get_nlcd_annual()` now accepts (and defaults to) `year = 2024`, and downloads Collection 1, Version 1 (the current release) of the Annual NLCD products. Closes [Issue #132](https://github.com/ropensci/FedData/issues/132).
 - Updated `download_ssurgo_study_area()` to download over HTTPS; the Web Soil Survey no longer responds to plain HTTP requests, which caused all `get_ssurgo()` downloads to fail. Closes [Issue #133](https://github.com/ropensci/FedData/issues/133).
 
 # FedData (4.3.0)

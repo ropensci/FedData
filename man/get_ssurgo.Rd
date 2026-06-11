@@ -14,7 +14,7 @@ get_ssurgo(
 }
 \arguments{
 \item{template}{An \code{\link[sf:sf]{Simple Feature}}
-or \code{\link[terra:SpatRaster-class]{SpatRaster}} object to serve as a template for cropping.
+or \code{\link[terra:SpatRaster]{SpatRaster}} object to serve as a template for cropping.
 Optionally, a vector of area names, e.g., \code{c('IN087','IN088')} may be provided.}
 
 \item{label}{A character string naming the study area.}
