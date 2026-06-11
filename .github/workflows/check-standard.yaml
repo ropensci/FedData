@@ -41,6 +41,12 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
+      # CRAN does not provide macOS package binaries for R-devel, so
+      # spatial packages build from source and need system libraries
+      - name: Install macOS system dependencies
+        if: runner.os == 'macOS' && matrix.config.r == 'devel'
+        run: brew install gdal geos proj netcdf udunits
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
