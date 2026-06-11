@@ -3,7 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   articles/FedData: FedData.html
-last_built: 2026-06-11T02:58Z
+last_built: 2026-06-11T03:23Z
 urls:
   reference: https://docs.ropensci.org/FedData/reference
   article: https://docs.ropensci.org/FedData/articles

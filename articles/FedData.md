@@ -394,12 +394,12 @@ NLCD_ANNUAL
 #> # Rowwise: 
 #>   product  year region collection version outfile             rast              
 #>   <ord>   <int> <ord>       <int>   <int> <glue>              <list>            
-#> 1 LndCov   2020 CU              1       1 /tmp/Rtmp5OgzMF/Fe… <SpatRstr[,627,1]>
-#> 2 LndChg   2020 CU              1       1 /tmp/Rtmp5OgzMF/Fe… <SpatRstr[,627,1]>
-#> 3 LndCnf   2020 CU              1       1 /tmp/Rtmp5OgzMF/Fe… <SpatRstr[,627,1]>
-#> 4 FctImp   2020 CU              1       1 /tmp/Rtmp5OgzMF/Fe… <SpatRstr[,627,1]>
-#> 5 ImpDsc   2020 CU              1       1 /tmp/Rtmp5OgzMF/Fe… <SpatRstr[,627,1]>
-#> 6 SpcChg   2020 CU              1       1 /tmp/Rtmp5OgzMF/Fe… <SpatRstr[,627,1]>
+#> 1 LndCov   2020 CU              1       1 /tmp/RtmpYDg9LG/Fe… <SpatRstr[,627,1]>
+#> 2 LndChg   2020 CU              1       1 /tmp/RtmpYDg9LG/Fe… <SpatRstr[,627,1]>
+#> 3 LndCnf   2020 CU              1       1 /tmp/RtmpYDg9LG/Fe… <SpatRstr[,627,1]>
+#> 4 FctImp   2020 CU              1       1 /tmp/RtmpYDg9LG/Fe… <SpatRstr[,627,1]>
+#> 5 ImpDsc   2020 CU              1       1 /tmp/RtmpYDg9LG/Fe… <SpatRstr[,627,1]>
+#> 6 SpcChg   2020 CU              1       1 /tmp/RtmpYDg9LG/Fe… <SpatRstr[,627,1]>
 
 plot(NLCD_ANNUAL$rast[[1]])
 ```

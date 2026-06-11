@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">FedData</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">4.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">4.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,18 +33,6 @@
       <small>Source: <a href="https://github.com/ropensci/FedData/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="feddata-development-version">FedData (development version)<a class="anchor" aria-label="anchor" href="#feddata-development-version"></a></h2>
-<ul><li>
-<code><a href="../reference/get_daymet.html">get_daymet()</a></code> is deprecated, and now throws an informative error. In 2025, the ORNL Distributed Active Archive Center retired the public THREDDS data server that FedData used to subset and download gridded Daymet data; the data now live in the NASA Earthdata Cloud, which requires (free) authentication with a NASA Earthdata Login. No publicly-accessible, up-to-date, authentication-free source of gridded Daymet data currently exists. Point extractions remain available via the <a href="https://github.com/bluegreen-labs/daymetr" class="external-link">daymetr</a> package, and support for gridded downloads with Earthdata authentication may return in a future release. Closes <a href="https://github.com/ropensci/FedData/issues/129" class="external-link">Issue </a><a href="https://github.com/ropensci/FedData/issues/129" class="external-link">#129</a>.</li>
-<li>Removed the (now non-functional) Daymet example from the getting started article, which was causing pkgdown site builds to fail. Closes <a href="https://github.com/ropensci/FedData/issues/130" class="external-link">Issue </a><a href="https://github.com/ropensci/FedData/issues/130" class="external-link">#130</a>.</li>
-<li>
-<code><a href="../reference/get_nlcd.html">get_nlcd()</a></code> now falls back to requesting coverages directly from the MRLC web coverage service when the GDAL WCS driver cannot read them. Several coverages (including the Alaska land cover products) advertise a CRS code that does not exist, which made <code><a href="../reference/get_nlcd.html">get_nlcd()</a></code> fail for Alaska; the GeoTIFFs returned by the service embed the correct CRS, so FedData now probes for it and requests the data directly. Closes <a href="https://github.com/ropensci/FedData/issues/128" class="external-link">Issue </a><a href="https://github.com/ropensci/FedData/issues/128" class="external-link">#128</a>.</li>
-<li>Rewrote <code><a href="../reference/get_nlcd_annual.html">get_nlcd_annual()</a></code> to download data from the USGS web coverage service for the Annual NLCD; the Amazon S3 bucket it previously read from was converted to requester-pays and is no longer publicly accessible. Data are still delivered in the native CRS and resolution (CONUS Albers, EPSG:5070, 30 m), snapped to the native grid. Closes <a href="https://github.com/ropensci/FedData/issues/125" class="external-link">Issue </a><a href="https://github.com/ropensci/FedData/issues/125" class="external-link">#125</a> and <a href="https://github.com/ropensci/FedData/issues/131" class="external-link">Issue </a><a href="https://github.com/ropensci/FedData/issues/131" class="external-link">#131</a>.</li>
-<li>
-<code><a href="../reference/get_nlcd_annual.html">get_nlcd_annual()</a></code> now accepts (and defaults to) <code>year = 2024</code>, and downloads Collection 1, Version 1 (the current release) of the Annual NLCD products. Closes <a href="https://github.com/ropensci/FedData/issues/132" class="external-link">Issue </a><a href="https://github.com/ropensci/FedData/issues/132" class="external-link">#132</a>.</li>
-<li>Updated <code><a href="../reference/download_ssurgo_study_area.html">download_ssurgo_study_area()</a></code> to download over HTTPS; the Web Soil Survey no longer responds to plain HTTP requests, which caused all <code><a href="../reference/get_ssurgo.html">get_ssurgo()</a></code> downloads to fail. Closes <a href="https://github.com/ropensci/FedData/issues/133" class="external-link">Issue </a><a href="https://github.com/ropensci/FedData/issues/133" class="external-link">#133</a>.</li>
-</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="4.0.1" id="feddata-401">FedData 4.0.1<a class="anchor" aria-label="anchor" href="#feddata-401"></a></h2><p class="text-muted">CRAN release: 2024-03-16</p>
 <ul><li>Updated the getting started article to not include a degree symbol in the Daymet graph, which caused compilation errors in Windows. Fixes <a href="https://github.com/ropensci/FedData/issues/106" class="external-link">Issue </a><a href="https://github.com/ropensci/FedData/issues/106" class="external-link">#106</a>.</li>
