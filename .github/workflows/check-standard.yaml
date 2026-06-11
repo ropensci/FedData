@@ -45,7 +45,7 @@ jobs:
       # spatial packages build from source and need system libraries
       - name: Install macOS system dependencies
         if: runner.os == 'macOS' && matrix.config.r == 'devel'
-        run: brew install gdal geos proj netcdf udunits
+        run: brew install gdal geos proj netcdf udunits libpng jpeg libtiff freetype fontconfig harfbuzz fribidi
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
