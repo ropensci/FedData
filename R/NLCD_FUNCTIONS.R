@@ -103,6 +103,16 @@ get_nlcd <- function(template,
 
 
 
+  source <-
+    httr::modify_url(
+      nlcd_base_url,
+      query =
+        list(
+          version = "2.0.1",
+          coverageid = coverage
+        )
+    )
+
   # This code uses the (oft-changing) MRLC web services.
   if (nlcd_base_url %>%
     httr::GET(query = list(
@@ -121,24 +131,26 @@ get_nlcd <- function(template,
     )
   }
 
-  source <-
-    httr::modify_url(
-      nlcd_base_url,
-      query =
-        list(
-          version = "2.0.1",
-          coverageid = coverage
-        )
-    )
-
   out <-
     tryCatch(
       paste0("WCS:", source) |>
         terra::rast(),
       error = function(e) {
-        stop(
-          "Web coverage service at ",
-          source, " is corrupted. You may have better luck downloading the file at https://www.mrlc.gov/data."
+        # Some coverages (e.g., NLCD_2016_Land_Cover_AK) advertise a
+        # CRS code that GDAL cannot interpret, which makes the WCS driver
+        # error out. Fall back to requesting the coverage directly.
+        tryCatch(
+          get_nlcd_wcs_direct(
+            nlcd_base_url = nlcd_base_url,
+            coverage = coverage,
+            template = template
+          ),
+          error = function(e) {
+            stop(
+              "Web coverage service at ",
+              source, " is corrupted. You may have better luck downloading the file at https://www.mrlc.gov/data."
+            )
+          }
         )
       }
     )
@@ -185,6 +197,143 @@ get_nlcd <- function(template,
   return(terra::rast(outfile))
 }
 
+# Request an NLCD coverage directly with a WCS GetCoverage request,
+# subset to the (snapped) bounding box of the template.
+#
+# This is a fallback for coverages whose DescribeCoverage response
+# advertises a CRS that GDAL cannot interpret (e.g., the Alaska NLCD
+# coverages, which advertise the nonexistent code EPSG:675225); the
+# GeoTIFFs returned by GetCoverage embed the true CRS. Because the
+# advertised CRS cannot be used to project the template into coverage
+# coordinates, a small probe request at the corner of the coverage
+# envelope is made first to learn the true CRS.
+get_nlcd_wcs_direct <- function(nlcd_base_url, coverage, template) {
+  describe <-
+    httr::GET(
+      nlcd_base_url,
+      query = list(
+        service = "WCS",
+        version = "2.0.1",
+        request = "DescribeCoverage",
+        coverageid = coverage
+      )
+    ) %>%
+    httr::content(encoding = "UTF-8")
+
+  envelope <-
+    xml2::xml_find_first(describe, "//*[local-name()='Envelope']")
+
+  axes <-
+    strsplit(xml2::xml_attr(envelope, "axisLabels"), " ")[[1]]
+
+  lower <-
+    envelope |>
+    xml2::xml_find_first("./*[local-name()='lowerCorner']") |>
+    xml2::xml_text() |>
+    strsplit(" ") |>
+    unlist() |>
+    as.numeric()
+
+  upper <-
+    envelope |>
+    xml2::xml_find_first("./*[local-name()='upperCorner']") |>
+    xml2::xml_text() |>
+    strsplit(" ") |>
+    unlist() |>
+    as.numeric()
+
+  cells <-
+    describe |>
+    xml2::xml_find_first(
+      "//*[local-name()='GridEnvelope']/*[local-name()='high']"
+    ) |>
+    xml2::xml_text() |>
+    strsplit(" ") |>
+    unlist() |>
+    as.numeric() |>
+    magrittr::add(1)
+
+  res <- (upper - lower) / cells
+
+  get_coverage <- function(xmin, xmax, ymin, ymax) {
+    tmp <- tempfile(fileext = ".tif")
+
+    resp <-
+      httr::GET(
+        nlcd_base_url,
+        query = list(
+          service = "WCS",
+          version = "2.0.1",
+          request = "GetCoverage",
+          coverageid = coverage,
+          format = "image/geotiff",
+          subset = paste0(axes[[1]], "(", xmin, ",", xmax, ")"),
+          subset = paste0(axes[[2]], "(", ymin, ",", ymax, ")")
+        ),
+        httr::write_disk(tmp, overwrite = TRUE)
+      )
+
+    if (
+      httr::http_error(resp) ||
+        !grepl("tiff", httr::headers(resp)[["content-type"]])
+    ) {
+      stop("GetCoverage request for ", coverage, " failed.")
+    }
+
+    terra::rast(tmp)
+  }
+
+  # Probe the corner of the coverage to learn its true CRS
+  probe <-
+    get_coverage(
+      xmin = lower[[1]],
+      xmax = lower[[1]] + 3 * res[[1]],
+      ymin = lower[[2]],
+      ymax = lower[[2]] + 3 * res[[2]]
+    )
+
+  bbox <-
+    template |>
+    sf::st_transform(terra::crs(probe)) |>
+    sf::st_bbox()
+
+  # Snap the template bounding box outward to the coverage grid,
+  # and clamp it to the coverage envelope
+  bbox <-
+    c(
+      xmin = lower[[1]] +
+        floor((bbox[["xmin"]] - lower[[1]]) / res[[1]]) * res[[1]],
+      ymin = lower[[2]] +
+        floor((bbox[["ymin"]] - lower[[2]]) / res[[2]]) * res[[2]],
+      xmax = lower[[1]] +
+        ceiling((bbox[["xmax"]] - lower[[1]]) / res[[1]]) * res[[1]],
+      ymax = lower[[2]] +
+        ceiling((bbox[["ymax"]] - lower[[2]]) / res[[2]]) * res[[2]]
+    )
+
+  bbox <-
+    c(
+      xmin = max(bbox[["xmin"]], lower[[1]]),
+      ymin = max(bbox[["ymin"]], lower[[2]]),
+      xmax = min(bbox[["xmax"]], upper[[1]]),
+      ymax = min(bbox[["ymax"]], upper[[2]])
+    )
+
+  if (
+    bbox[["xmin"]] >= bbox[["xmax"]] ||
+      bbox[["ymin"]] >= bbox[["ymax"]]
+  ) {
+    stop("The provided template does not overlap the coverage ", coverage, ".")
+  }
+
+  get_coverage(
+    xmin = bbox[["xmin"]],
+    xmax = bbox[["xmax"]],
+    ymin = bbox[["ymin"]],
+    ymax = bbox[["ymax"]]
+  )
+}
+
 #' Download and crop the Annual National Land Cover Database.
 #'
 #' \code{get_nlcd_annual} returns a [`SpatRaster`][terra::SpatRaster] of NLCD data cropped to a given
@@ -192,11 +341,16 @@ get_nlcd <- function(template,
 #' More information about the Annual NLCD product is available on the
 #' [Annual NLCD web page](https://www.mrlc.gov/data/project/annual-nlcd).
 #'
+#' Data are downloaded using the
+#' [USGS Web Coverage Service](https://dmsdata.cr.usgs.gov/geoserver/web/)
+#' for the Annual NLCD, in the native coordinate reference system and resolution
+#' (CONUS Albers, EPSG:5070, at 30 m) and snapped to the native grid.
+#'
 #' @param template An [`Simple Feature`][sf::sf]
 #' or [`terra`][terra::SpatRaster] object to serve as a template for cropping.
 #' @param label A character string naming the study area.
 #' @param year An integer vector representing the year of desired NLCD product.
-#' Acceptable values are currently 1985 through 2023 (defaults to 2023).
+#' Acceptable values are currently 1985 through 2024 (defaults to 2024).
 #' @param product A character vector representing type of the NLCD product.
 #' Defaults to 'LndCov' (Land Cover).\cr
 #' LndCov = Land Cover\cr
@@ -211,7 +365,7 @@ get_nlcd <- function(template,
 #' @param collection An integer representing the collection number.
 #' **Currently, only '1' is available.**
 #' @param version An integer representing the version number.
-#' **Currently, only '0' is available.**
+#' **Currently, only '1' is available.**
 #' @param extraction.dir A character string indicating where the extracted
 #' and cropped NLCD data should be put. The directory will be created if missing.
 #' @param raster.options a vector of GDAL options passed to [terra::writeRaster].
@@ -247,11 +401,11 @@ get_nlcd <- function(template,
 get_nlcd_annual <-
   function(template,
            label,
-           year = 2023,
+           year = 2024,
            product = "LndCov",
            region = "CU",
            collection = 1,
-           version = 0,
+           version = 1,
            extraction.dir = file.path(
              tempdir(),
              "FedData",
@@ -264,10 +418,8 @@ get_nlcd_annual <-
              "ZLEVEL=9"
            ),
            force.redo = FALSE) {
-    nlcd_annual_bucket <- "https://s3-us-west-2.amazonaws.com/mrlc"
-
-    if (any(!(year %in% 1985:2023))) {
-      stop("'year' must only contain integers between 1985 and 2023.")
+    if (any(!(year %in% 1985:2024))) {
+      stop("'year' must only contain integers between 1985 and 2024.")
     }
 
     if (
@@ -320,12 +472,12 @@ get_nlcd_annual <-
       any(
         !(
           version %in%
-            c(0)
+            c(1)
         )
       )
     ) {
       stop(
-        "'version' currently must be '0' (the default)."
+        "'version' currently must be '1' (the default)."
       )
     }
 
@@ -383,35 +535,61 @@ get_nlcd_annual <-
           glue::glue("{extraction.dir}/{label}_{file}")
       )
 
-    suppressWarnings(
-      template_nlcd <-
-        file.path(
-          "/vsicurl",
-          nlcd_annual_bucket,
-          files$file[[1]]
-        ) |>
-        terra::rast() |>
-        terra::rast()
-    )
-
-    template %<>%
-      sf::st_transform(
-        terra::crs(template_nlcd)
+    # The native grid of the Annual NLCD Collection 1 products:
+    # CONUS Albers (EPSG:5070), 30m resolution, with cell edges
+    # on multiples of 30m
+    nlcd_annual_crs <- "EPSG:5070"
+    nlcd_annual_res <- 30
+    nlcd_annual_extent <-
+      c(
+        xmin = -2415600,
+        ymin = 164820,
+        xmax = 2384400,
+        ymax = 3314820
       )
 
-    tryCatch(
-      template_nlcd %<>%
-        terra::crop(template,
-          snap = "out"
-        ),
-      error =
-        function(e) {
-          stop("The provided template is not within the specified region.")
-        }
-    )
+    template %<>%
+      sf::st_transform(nlcd_annual_crs)
+
+    # Snap the template bounding box outward to the native NLCD grid
+    bbox <- sf::st_bbox(template)
+    bbox <-
+      c(
+        xmin = floor(bbox[["xmin"]] / nlcd_annual_res) * nlcd_annual_res,
+        ymin = floor(bbox[["ymin"]] / nlcd_annual_res) * nlcd_annual_res,
+        xmax = ceiling(bbox[["xmax"]] / nlcd_annual_res) * nlcd_annual_res,
+        ymax = ceiling(bbox[["ymax"]] / nlcd_annual_res) * nlcd_annual_res
+      )
+
+    if (
+      bbox[["xmin"]] >= nlcd_annual_extent[["xmax"]] ||
+        bbox[["xmax"]] <= nlcd_annual_extent[["xmin"]] ||
+        bbox[["ymin"]] >= nlcd_annual_extent[["ymax"]] ||
+        bbox[["ymax"]] <= nlcd_annual_extent[["ymin"]]
+    ) {
+      stop("The provided template is not within the specified region.")
+    }
+
+    bbox <-
+      c(
+        xmin = max(bbox[["xmin"]], nlcd_annual_extent[["xmin"]]),
+        ymin = max(bbox[["ymin"]], nlcd_annual_extent[["ymin"]]),
+        xmax = min(bbox[["xmax"]], nlcd_annual_extent[["xmax"]]),
+        ymax = min(bbox[["ymax"]], nlcd_annual_extent[["ymax"]])
+      )
+
+    template_nlcd <-
+      terra::rast(
+        xmin = bbox[["xmin"]],
+        xmax = bbox[["xmax"]],
+        ymin = bbox[["ymin"]],
+        ymax = bbox[["ymax"]],
+        resolution = nlcd_annual_res,
+        crs = nlcd_annual_crs
+      )
 
     read_nlcd_annual <-
-      function(x, outfile) {
+      function(x, prod, yr, outfile) {
         if (!force.redo) {
           if (
             file.exists(outfile)
@@ -426,17 +604,66 @@ get_nlcd_annual <-
 
         tmp <- tempfile(fileext = ".tif")
 
+        workspace <- nlcd_annual_wcs_coverages[[as.character(prod)]]
+
+        wcs_url <-
+          httr::modify_url(
+            "https://dmsdata.cr.usgs.gov/geoserver/",
+            path = c("geoserver", workspace, "wcs"),
+            query = list(
+              service = "WCS",
+              version = "1.0.0",
+              request = "GetCoverage",
+              coverage = paste0(
+                workspace, ":", sub("^mrlc_", "", workspace)
+              ),
+              CRS = nlcd_annual_crs,
+              BBOX = paste(
+                bbox[["xmin"]], bbox[["ymin"]],
+                bbox[["xmax"]], bbox[["ymax"]],
+                sep = ","
+              ),
+              time = paste0(yr, "-01-01T00:00:00.000Z"),
+              format = "image/geotiff",
+              resx = nlcd_annual_res,
+              resy = nlcd_annual_res
+            )
+          )
+
+        resp <-
+          httr::GET(
+            wcs_url,
+            httr::write_disk(tmp, overwrite = TRUE)
+          )
+
+        if (
+          httr::http_error(resp) ||
+            !grepl("tiff", httr::headers(resp)[["content-type"]])
+        ) {
+          stop(
+            "Download of ", x, " from the Annual NLCD web coverage service at ",
+            "https://dmsdata.cr.usgs.gov/geoserver/", workspace, "/wcs failed! ",
+            "You may have better luck downloading the data manually from ",
+            "https://www.mrlc.gov/data."
+          )
+        }
+
         suppressWarnings(
           out <-
-            terra::rast(
-              file.path(
-                "/vsicurl",
-                nlcd_annual_bucket,
-                x
-              )
-            ) |>
-            terra::crop(template_nlcd)
+            terra::rast(tmp)
         )
+
+        # The web coverage service introduces sub-millimeter floating-point
+        # jitter in the returned geotransform; snap back to the native grid
+        if (
+          identical(terra::ncol(out), terra::ncol(template_nlcd)) &&
+            identical(terra::nrow(out), terra::nrow(template_nlcd))
+        ) {
+          terra::ext(out) <- terra::ext(template_nlcd)
+        } else {
+          out %<>%
+            terra::resample(template_nlcd, method = "near")
+        }
 
         if (stringr::str_detect(x, "LndCov")) {
           levels(out) <-
@@ -478,6 +705,8 @@ get_nlcd_annual <-
         }
 
         if (stringr::str_detect(x, "ImpDsc")) {
+          impdsc_coltab <- terra::coltab(out)[[1]]
+
           levels(out) <-
             tibble::tibble(
               ID = 0:2,
@@ -489,8 +718,19 @@ get_nlcd_annual <-
             ) %>%
             as.data.frame()
 
+          if (is.null(impdsc_coltab)) {
+            impdsc_coltab <-
+              tibble::tibble(
+                value = 0:2,
+                red = c(0L, 230L, 38L),
+                green = c(0L, 0L, 115L),
+                blue = c(0L, 0L, 0L),
+                alpha = c(0L, 255L, 255L)
+              )
+          }
+
           terra::coltab(out) <-
-            terra::coltab(out)[[1]] |>
+            impdsc_coltab |>
             dplyr::filter(value %in% 0:2) |>
             as.data.frame()
 
@@ -520,13 +760,25 @@ get_nlcd_annual <-
       files |>
         dplyr::rowwise() |>
         dplyr::mutate(
-          rast = read_nlcd_annual(file, outfile) |>
+          rast = read_nlcd_annual(file, product, year, outfile) |>
             terra::rast() |>
             list()
         ) |>
         dplyr::select(!file)
     )
   }
+
+# The USGS web coverage service workspaces serving each
+# Annual NLCD product in its native CRS and resolution
+nlcd_annual_wcs_coverages <-
+  c(
+    LndCov = "mrlc_Land-Cover-Native_conus_year_data",
+    LndChg = "mrlc_Land-Cover-Change-Native_conus_year_data",
+    LndCnf = "mrlc_Land-Cover-Confidence-Native_conus_year_data",
+    FctImp = "mrlc_Fractional-Impervious-Surface-Native_conus_year_data",
+    ImpDsc = "mrlc_Impervious-Descriptor-Native_conus_year_data",
+    SpcChg = "mrlc_Spectral-Change-Day-of-Year-Native_conus_year_data"
+  )
 
 #' @export
 #' @rdname get_nlcd
@@ -615,3 +867,4 @@ list_nlcd <-
       dplyr::arrange(landmass, dataset, year) |>
       print(n = 200)
   }
+

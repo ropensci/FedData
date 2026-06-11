@@ -7,11 +7,11 @@
 get_nlcd_annual(
   template,
   label,
-  year = 2023,
+  year = 2024,
   product = "LndCov",
   region = "CU",
   collection = 1,
-  version = 0,
+  version = 1,
   extraction.dir = file.path(tempdir(), "FedData", "extractions", "nlcd_annual", label),
   raster.options = c("COMPRESS=DEFLATE", "ZLEVEL=9"),
   force.redo = FALSE
@@ -24,7 +24,7 @@ or \code{\link[terra:SpatRaster]{terra}} object to serve as a template for cropp
 \item{label}{A character string naming the study area.}
 
 \item{year}{An integer vector representing the year of desired NLCD product.
-Acceptable values are currently 1985 through 2023 (defaults to 2023).}
+Acceptable values are currently 1985 through 2024 (defaults to 2024).}
 
 \item{product}{A character vector representing type of the NLCD product.
 Defaults to 'LndCov' (Land Cover).\cr
@@ -43,7 +43,7 @@ Acceptable values are 'CU' (Conterminous US, the default),
 \strong{Currently, only '1' is available.}}
 
 \item{version}{An integer representing the version number.
-\strong{Currently, only '0' is available.}}
+\strong{Currently, only '1' is available.}}
 
 \item{extraction.dir}{A character string indicating where the extracted
 and cropped NLCD data should be put. The directory will be created if missing.}
@@ -61,6 +61,12 @@ A \code{RasterLayer} cropped to the bounding box of the template.
 template study area. The Annual NLCD is currently only available for the conterminous United States.
 More information about the Annual NLCD product is available on the
 \href{https://www.mrlc.gov/data/project/annual-nlcd}{Annual NLCD web page}.
+}
+\details{
+Data are downloaded using the
+\href{https://dmsdata.cr.usgs.gov/geoserver/web/}{USGS Web Coverage Service}
+for the Annual NLCD, in the native coordinate reference system and resolution
+(CONUS Albers, EPSG:5070, at 30 m) and snapped to the native grid.
 }
 \examples{
 \dontrun{
