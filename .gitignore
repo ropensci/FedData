@@ -30,3 +30,6 @@ R/.DS_Store
 inst/doc
 /doc/
 /Meta/
+
+# Claude Code local settings
+.claude/

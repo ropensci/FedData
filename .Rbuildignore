@@ -19,6 +19,7 @@
 ^revdep$
 ^CRAN-SUBMISSION$
 ^\.DS_Store$
+^\.claude$
 ^doc$
 ^Meta$
 ^vignettes/articles$
