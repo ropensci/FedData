@@ -1,4 +1,5 @@
 # FedData (development version)
+- Updated `download_ssurgo_study_area()` to download over HTTPS; the Web Soil Survey no longer responds to plain HTTP requests, which caused all `get_ssurgo()` downloads to fail. Closes [Issue #133](https://github.com/ropensci/FedData/issues/133).
 
 # FedData (4.3.0)
 - Updated `get_padus()` to pull PAD-US 4.0 data. Closes [Issue #124](https://github.com/ropensci/FedData/issues/124).
