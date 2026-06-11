@@ -6,9 +6,7 @@ test_that("The SSURGO inventory dataset is available at the correct URL", {
   skip_on_cran()
 
   url <- "https://websoilsurvey.sc.egov.usda.gov/DataAvailability/SoilDataAvailabilityShapefile.zip"
-  skip_if_service_unavailable(url)
-
-  expect_false(suppressWarnings(httr::http_error(url)))
+  expect_resource_available(url)
 
   url <- "https://websoilsurvey.sc.egov.usda.gov/DataAvailability/blah.zip"
   expect_true(suppressWarnings(httr::http_error(url)))
@@ -37,9 +35,7 @@ test_that("The SSURGO datasets are available at the correct URL", {
   q$saverest <- as.Date(q$saverest, format = "%m/%d/%Y")
 
   url <- paste("https://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/wss_SSA_", q$areasymbol, "_[", q$saverest, "].zip", sep = "")
-  skip_if_service_unavailable(url)
-
-  expect_error(suppressWarnings(curl::curl(url) %>% readLines(n = 1)), NA)
+  expect_resource_available(url)
 
   url <- "https://websoilsurvey.sc.egov.usda.gov/DSD/Download/Cache/SSA/blah.zip"
   expect_error(suppressWarnings(curl::curl(url) %>% readLines(n = 1)))
