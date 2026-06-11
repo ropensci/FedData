@@ -103,6 +103,16 @@ get_nlcd <- function(template,
 
 
 
+  source <-
+    httr::modify_url(
+      nlcd_base_url,
+      query =
+        list(
+          version = "2.0.1",
+          coverageid = coverage
+        )
+    )
+
   # This code uses the (oft-changing) MRLC web services.
   if (nlcd_base_url %>%
     httr::GET(query = list(
@@ -121,24 +131,26 @@ get_nlcd <- function(template,
     )
   }
 
-  source <-
-    httr::modify_url(
-      nlcd_base_url,
-      query =
-        list(
-          version = "2.0.1",
-          coverageid = coverage
-        )
-    )
-
   out <-
     tryCatch(
       paste0("WCS:", source) |>
         terra::rast(),
       error = function(e) {
-        stop(
-          "Web coverage service at ",
-          source, " is corrupted. You may have better luck downloading the file at https://www.mrlc.gov/data."
+        # Some coverages (e.g., NLCD_2016_Land_Cover_AK) advertise a
+        # CRS code that GDAL cannot interpret, which makes the WCS driver
+        # error out. Fall back to requesting the coverage directly.
+        tryCatch(
+          get_nlcd_wcs_direct(
+            nlcd_base_url = nlcd_base_url,
+            coverage = coverage,
+            template = template
+          ),
+          error = function(e) {
+            stop(
+              "Web coverage service at ",
+              source, " is corrupted. You may have better luck downloading the file at https://www.mrlc.gov/data."
+            )
+          }
         )
       }
     )
@@ -183,6 +195,143 @@ get_nlcd <- function(template,
   )
 
   return(terra::rast(outfile))
+}
+
+# Request an NLCD coverage directly with a WCS GetCoverage request,
+# subset to the (snapped) bounding box of the template.
+#
+# This is a fallback for coverages whose DescribeCoverage response
+# advertises a CRS that GDAL cannot interpret (e.g., the Alaska NLCD
+# coverages, which advertise the nonexistent code EPSG:675225); the
+# GeoTIFFs returned by GetCoverage embed the true CRS. Because the
+# advertised CRS cannot be used to project the template into coverage
+# coordinates, a small probe request at the corner of the coverage
+# envelope is made first to learn the true CRS.
+get_nlcd_wcs_direct <- function(nlcd_base_url, coverage, template) {
+  describe <-
+    httr::GET(
+      nlcd_base_url,
+      query = list(
+        service = "WCS",
+        version = "2.0.1",
+        request = "DescribeCoverage",
+        coverageid = coverage
+      )
+    ) %>%
+    httr::content(encoding = "UTF-8")
+
+  envelope <-
+    xml2::xml_find_first(describe, "//*[local-name()='Envelope']")
+
+  axes <-
+    strsplit(xml2::xml_attr(envelope, "axisLabels"), " ")[[1]]
+
+  lower <-
+    envelope |>
+    xml2::xml_find_first("./*[local-name()='lowerCorner']") |>
+    xml2::xml_text() |>
+    strsplit(" ") |>
+    unlist() |>
+    as.numeric()
+
+  upper <-
+    envelope |>
+    xml2::xml_find_first("./*[local-name()='upperCorner']") |>
+    xml2::xml_text() |>
+    strsplit(" ") |>
+    unlist() |>
+    as.numeric()
+
+  cells <-
+    describe |>
+    xml2::xml_find_first(
+      "//*[local-name()='GridEnvelope']/*[local-name()='high']"
+    ) |>
+    xml2::xml_text() |>
+    strsplit(" ") |>
+    unlist() |>
+    as.numeric() |>
+    magrittr::add(1)
+
+  res <- (upper - lower) / cells
+
+  get_coverage <- function(xmin, xmax, ymin, ymax) {
+    tmp <- tempfile(fileext = ".tif")
+
+    resp <-
+      httr::GET(
+        nlcd_base_url,
+        query = list(
+          service = "WCS",
+          version = "2.0.1",
+          request = "GetCoverage",
+          coverageid = coverage,
+          format = "image/geotiff",
+          subset = paste0(axes[[1]], "(", xmin, ",", xmax, ")"),
+          subset = paste0(axes[[2]], "(", ymin, ",", ymax, ")")
+        ),
+        httr::write_disk(tmp, overwrite = TRUE)
+      )
+
+    if (
+      httr::http_error(resp) ||
+        !grepl("tiff", httr::headers(resp)[["content-type"]])
+    ) {
+      stop("GetCoverage request for ", coverage, " failed.")
+    }
+
+    terra::rast(tmp)
+  }
+
+  # Probe the corner of the coverage to learn its true CRS
+  probe <-
+    get_coverage(
+      xmin = lower[[1]],
+      xmax = lower[[1]] + 3 * res[[1]],
+      ymin = lower[[2]],
+      ymax = lower[[2]] + 3 * res[[2]]
+    )
+
+  bbox <-
+    template |>
+    sf::st_transform(terra::crs(probe)) |>
+    sf::st_bbox()
+
+  # Snap the template bounding box outward to the coverage grid,
+  # and clamp it to the coverage envelope
+  bbox <-
+    c(
+      xmin = lower[[1]] +
+        floor((bbox[["xmin"]] - lower[[1]]) / res[[1]]) * res[[1]],
+      ymin = lower[[2]] +
+        floor((bbox[["ymin"]] - lower[[2]]) / res[[2]]) * res[[2]],
+      xmax = lower[[1]] +
+        ceiling((bbox[["xmax"]] - lower[[1]]) / res[[1]]) * res[[1]],
+      ymax = lower[[2]] +
+        ceiling((bbox[["ymax"]] - lower[[2]]) / res[[2]]) * res[[2]]
+    )
+
+  bbox <-
+    c(
+      xmin = max(bbox[["xmin"]], lower[[1]]),
+      ymin = max(bbox[["ymin"]], lower[[2]]),
+      xmax = min(bbox[["xmax"]], upper[[1]]),
+      ymax = min(bbox[["ymax"]], upper[[2]])
+    )
+
+  if (
+    bbox[["xmin"]] >= bbox[["xmax"]] ||
+      bbox[["ymin"]] >= bbox[["ymax"]]
+  ) {
+    stop("The provided template does not overlap the coverage ", coverage, ".")
+  }
+
+  get_coverage(
+    xmin = bbox[["xmin"]],
+    xmax = bbox[["xmax"]],
+    ymin = bbox[["ymin"]],
+    ymax = bbox[["ymax"]]
+  )
 }
 
 #' Download and crop the Annual National Land Cover Database.
